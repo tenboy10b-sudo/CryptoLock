@@ -4,7 +4,7 @@
 
 const siteConfig = {
   // Назва сайту
-  name: 'CryptoLock',
+  name: 'PCTips.ua',
 
   // Домен (без слешу в кінці)
   url: 'https://pctips.ua',
@@ -26,8 +26,8 @@ const siteConfig = {
 
   // Соцмережі (залиш порожнім якщо нема)
   social: {
-    telegram: 'https://t.me/cryptolock888',
-    tiktok: 'https://www.tiktok.com/@cryptolock_01?_r=1',
+    telegram: 'https://t.me/your_channel',
+    tiktok: '',
   },
 
   // Навігація
