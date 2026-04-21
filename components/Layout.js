@@ -30,7 +30,7 @@ export default function Layout({ children, title, description, canonical }) {
 
         {/* Language */}
         <meta httpEquiv="content-language" content={siteConfig.language} />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
 
         {/* Google AdSense — вставляється автоматично якщо є ID */}
         {siteConfig.adsenseId && (
