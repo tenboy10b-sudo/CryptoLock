@@ -1,36 +1,16 @@
-// ============================================================
-// ЗМІНЮЙ ЦЕЙ ФАЙЛ ДЛЯ КОЖНОГО НОВОГО САЙТУ В СІТЦІ
-// ============================================================
-
 const siteConfig = {
-  // Назва сайту
-  name: 'PCTips.ua',
-
-  // Домен (без слешу в кінці)
-  url: 'https://pctips.ua',
-
-  // Опис для SEO / OG
-  description: 'Покрокові гайди по налаштуванню Windows, безпеці та оптимізації ПК українською мовою.',
-
-  // Мова
+  name: 'CryptoLock',
+  domain: 'cryptolock.ua',
+  url: 'https://cryptolock.ua',
+  description: 'Покрокові гайди з налаштування Windows, інформаційної безпеки та захисту ПК українською мовою.',
   language: 'uk',
-
-  // Google AdSense ID (залиш порожнім поки не підтвердять)
   adsenseId: '',
-
-  // Google Analytics 4 ID (залиш порожнім якщо не треба)
   gaId: '',
-
-  // Кількість статей на головній
   postsPerPage: 10,
-
-  // Соцмережі (залиш порожнім якщо нема)
   social: {
-    telegram: 'https://t.me/your_channel',
-    tiktok: '',
+    telegram: 'https://t.me/cryptolock888',
+    tiktok: 'https://www.tiktok.com/@cryptolock_01',
   },
-
-  // Навігація
   nav: [
     { label: 'Статті', href: '/' },
     { label: 'Теги', href: '/tags' },

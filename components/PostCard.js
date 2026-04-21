@@ -2,66 +2,77 @@ import Link from 'next/link'
 
 export default function PostCard({ post, featured }) {
   return (
-    <article style={{ ...s.card, ...(featured ? s.featured : {}) }}>
+    <article style={{ ...s.card, ...(featured ? s.cardFeatured : {}) }}>
       <Link href={`/${post.slug}`} style={s.link}>
-        {post.tags && post.tags.length > 0 && (
-          <div style={s.tagRow}>
-            {post.tags.slice(0, 3).map(tag => (
-              <span key={tag} className="tag-chip">{tag}</span>
-            ))}
-          </div>
-        )}
+        <div style={s.tagRow}>
+          {post.tags && post.tags.slice(0, 3).map(tag => (
+            <span key={tag} className="tag-chip">{tag}</span>
+          ))}
+        </div>
         <h2 style={{ ...s.title, ...(featured ? s.titleFeatured : {}) }}>{post.title}</h2>
         {post.description && <p style={s.excerpt}>{post.description}</p>}
-        <div style={s.meta}>
-          {post.date && <span style={s.metaItem}>{formatDate(post.date)}</span>}
-          {post.readTime && (
-            <><span style={s.dot}/><span style={s.metaItem}>{post.readTime} хв читання</span></>
-          )}
-          <span style={s.arrow}>Читати →</span>
+        <div style={s.footer}>
+          <div style={s.meta}>
+            {post.date && <span style={s.metaItem}>{fmt(post.date)}</span>}
+            {post.readTime && <><span style={s.dot}/><span style={s.metaItem}>{post.readTime} хв</span></>}
+          </div>
+          <span style={s.readBtn}>Читати →</span>
         </div>
       </Link>
     </article>
   )
 }
 
-function formatDate(d) {
+function fmt(d) {
   if (!d) return ''
-  return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
+  return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 const s = {
   card: {
-    background: 'var(--bg-card)',
-    border: '1px solid var(--border)',
-    borderRadius: 'var(--radius-lg)',
-    transition: 'border-color .2s, box-shadow .2s',
+    background: '#fff',
+    border: '1px solid #e2e8f0',
+    borderRadius: '12px',
     overflow: 'hidden',
+    transition: 'border-color .2s, box-shadow .2s, transform .15s',
   },
-  featured: {
+  cardFeatured: {
+    borderLeft: '4px solid #2563eb',
     borderColor: '#bfdbfe',
-    borderLeft: '4px solid var(--accent)',
   },
-  link: { display: 'block', padding: '1.25rem 1.5rem' },
-  tagRow: { display: 'flex', gap: '6px', marginBottom: '10px', flexWrap: 'wrap' },
+  link: { display: 'block', padding: '1.25rem 1.4rem' },
+  tagRow: { display: 'flex', gap: '5px', marginBottom: '10px', flexWrap: 'wrap' },
   title: {
-    fontFamily: 'var(--font-display)',
-    fontSize: '1.05rem',
+    fontFamily: "'Unbounded', sans-serif",
+    fontSize: '1rem',
     fontWeight: 700,
     lineHeight: 1.3,
     marginBottom: '8px',
-    color: 'var(--text)',
+    color: '#0f172a',
     letterSpacing: '-.2px',
   },
-  titleFeatured: { fontSize: '1.15rem' },
+  titleFeatured: { fontSize: '1.1rem' },
   excerpt: {
-    fontSize: '.9rem',
-    color: 'var(--muted)',
+    fontSize: '.88rem',
+    color: '#475569',
     lineHeight: 1.6,
-    marginBottom: '12px',
+    marginBottom: '14px',
   },
-  meta: { display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' },
-  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--faint)' },
-  dot: { width: '3px', height: '3px', borderRadius: '50%', background: 'var(--faint)', flexShrink: 0 },
-  arrow: { marginLeft: 'auto', fontSize: '13px', fontWeight: 500, color: 'var(--accent)' },
+  footer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  meta: { display: 'flex', alignItems: 'center', gap: '6px' },
+  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
+  dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0 },
+  readBtn: {
+    fontSize: '12px',
+    fontWeight: 600,
+    color: '#2563eb',
+    background: '#eff6ff',
+    padding: '4px 10px',
+    borderRadius: '20px',
+    border: '1px solid #dbeafe',
+  },
 }

@@ -1,5 +1,5 @@
 {
-  "name": "pctips-template",
+  "name": "cryptolock",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,8 @@
     "react-dom": "^18",
     "gray-matter": "^4.0.3",
     "remark": "^15.0.1",
-    "remark-html": "^16.0.1"
+    "remark-html": "^16.0.1",
+    "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
     "next-sitemap": "^4.2.3"
