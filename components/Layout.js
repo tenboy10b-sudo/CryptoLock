@@ -14,6 +14,7 @@ export default function Layout({ children, title, description, canonical }) {
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href={pageUrl} />
+        <meta name="google-site-verification" content="NkedD2H8r10fGABfYIJ8GgTERAKYoZzMhN693enehRw" />
 
         {/* Open Graph */}
         <meta property="og:title" content={pageTitle} />
