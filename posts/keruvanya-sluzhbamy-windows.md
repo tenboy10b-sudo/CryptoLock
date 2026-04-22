@@ -1,6 +1,6 @@
 ---
 title: "Як керувати службами Windows через CMD і PowerShell"
-date: "2025-05-17"
+date: "2026-04-06"
 description: "Запуск, зупинка, перезапуск і зміна типу запуску служб Windows через sc, net start і PowerShell. Корисні служби для вимкнення."
 tags: ["cmd", "powershell", "інструменти", "оптимізація"]
 readTime: 5

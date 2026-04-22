@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
@@ -15,8 +15,5 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "remark-gfm": "^4.0.0"
-  },
-  "devDependencies": {
-    "next-sitemap": "^4.2.3"
   }
 }

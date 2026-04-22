@@ -1,6 +1,6 @@
 ---
 title: "Як перевірити оперативну пам'ять на помилки в Windows"
-date: "2025-05-16"
+date: "2026-04-10"
 description: "Діагностика RAM через Windows Memory Diagnostic, MemTest86 і PowerShell. Симптоми поганої пам'яті та як їх виявити."
 tags: ["ram", "діагностика", "обладнання", "windows"]
 readTime: 5

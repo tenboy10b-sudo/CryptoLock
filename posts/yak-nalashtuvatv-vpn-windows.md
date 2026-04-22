@@ -1,6 +1,6 @@
 ---
 title: "Як налаштувати VPN на Windows 10 і 11 без сторонніх програм"
-date: "2025-05-08"
+date: "2026-04-16"
 description: "Підключення до VPN через вбудовані засоби Windows: L2TP/IPsec, PPTP і IKEv2 через Settings і PowerShell."
 tags: ["vpn", "мережа", "приватність", "windows"]
 readTime: 5

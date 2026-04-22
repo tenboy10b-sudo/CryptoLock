@@ -1,6 +1,6 @@
 ---
 title: "Як вимкнути UAC через GPO і реєстр в Windows"
-date: "2025-05-05"
+date: "2026-04-02"
 description: "Налаштування User Account Control через Group Policy і реєстр: вимкнення, зниження рівня або тихий режим для адміністраторів."
 tags: ["uac", "gpo", "групова-політика", "безпека"]
 readTime: 4

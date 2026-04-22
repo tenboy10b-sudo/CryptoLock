@@ -10,6 +10,7 @@ const siteConfig = {
   social: {
     telegram: 'https://t.me/cryptolock888',
     tiktok: 'https://www.tiktok.com/@cryptolock_01',
+    youtube: 'https://youtube.com/@cryptolock_01',
   },
   nav: [
     { label: 'Статті', href: '/' },

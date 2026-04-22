@@ -1,6 +1,6 @@
 ---
 title: "Як налаштувати Windows Defender через GPO"
-date: "2025-04-24"
+date: "2026-04-16"
 description: "Управління Windows Defender через Group Policy: вимкнення, налаштування сканування, виключення і захист в реальному часі."
 tags: ["windows-defender", "gpo", "групова-політика", "безпека"]
 readTime: 5

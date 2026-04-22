@@ -1,6 +1,6 @@
 ---
 title: "Як налаштувати Remote Desktop (RDP) в Windows 10 і 11"
-date: "2025-05-14"
+date: "2026-04-07"
 description: "Увімкнення і налаштування Remote Desktop Protocol в Windows: через Settings, PowerShell і через GPO. Безпечне підключення до ПК віддалено."
 tags: ["rdp", "мережа", "windows", "адміністрування"]
 readTime: 6

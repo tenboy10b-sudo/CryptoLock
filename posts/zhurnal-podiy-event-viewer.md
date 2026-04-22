@@ -1,6 +1,6 @@
 ---
 title: "Як переглянути журнал подій Windows через Event Viewer і PowerShell"
-date: "2025-05-09"
+date: "2026-04-07"
 description: "Читання системних логів через Event Viewer і PowerShell: помилки, входи в систему, вимкнення ПК і критичні події."
 tags: ["моніторинг", "інструменти", "windows", "безпека"]
 readTime: 5

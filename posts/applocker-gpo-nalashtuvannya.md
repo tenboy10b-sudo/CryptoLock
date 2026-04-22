@@ -1,6 +1,6 @@
 ---
 title: "Як налаштувати AppLocker в Windows через GPO"
-date: "2025-04-30"
+date: "2026-04-01"
 description: "Покрокове налаштування AppLocker для блокування несанкціонованих програм через Group Policy в Windows 10/11 Enterprise і Education."
 tags: ["applocker", "gpo", "групова-політика", "безпека"]
 readTime: 6

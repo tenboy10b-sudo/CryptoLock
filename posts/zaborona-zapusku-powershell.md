@@ -1,6 +1,6 @@
 ---
 title: "Як заблокувати запуск PowerShell через групову політику"
-date: "2025-04-21"
+date: "2026-04-06"
 description: "Покрокова інструкція як заборонити запуск PowerShell для звичайних користувачів через gpedit або AppLocker в Windows."
 tags: ["powershell", "групова-політика", "безпека", "gpedit"]
 readTime: 5

@@ -1,6 +1,6 @@
 ---
 title: "Як увімкнути BitLocker в Windows 11: покроковий гайд"
-date: "2025-04-22"
+date: "2026-04-19"
 description: "Детальна інструкція як активувати BitLocker в Windows 11, налаштувати PIN при завантаженні і зберегти ключ відновлення."
 tags: ["bitlocker", "шифрування", "безпека", "windows"]
 readTime: 6

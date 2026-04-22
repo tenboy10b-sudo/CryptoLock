@@ -1,6 +1,6 @@
 ---
 title: "Як вимкнути Wi-Fi через GPO в Windows"
-date: "2025-04-22"
+date: "2026-04-02"
 description: "Покроковий гайд як вимкнути Wi-Fi адаптер для всіх користувачів через Group Policy Editor (gpedit.msc) в Windows 10 і 11."
 tags: ["wifi", "gpo", "групова-політика", "мережа"]
 readTime: 4

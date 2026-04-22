@@ -1,6 +1,6 @@
 ---
 title: "Як увімкнути Bluetooth в Windows 10 і 11"
-date: "2025-04-21"
+date: "2026-04-19"
 description: "Покрокове вмикання Bluetooth в Windows: через Параметри, Диспетчер пристроїв і CMD. Що робити якщо Bluetooth відсутній у системі."
 tags: ["bluetooth", "налаштування", "драйвери", "windows"]
 readTime: 4

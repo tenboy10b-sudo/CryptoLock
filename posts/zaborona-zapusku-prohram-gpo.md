@@ -1,6 +1,6 @@
 ---
 title: "Як заборонити запуск програм через групову політику Windows"
-date: "2025-04-21"
+date: "2026-04-06"
 description: "Налаштування AppLocker і Software Restriction Policies для блокування запуску конкретних програм або всього невстановленого ПЗ."
 tags: ["групова-політика", "applocker", "безпека", "gpedit"]
 readTime: 6
