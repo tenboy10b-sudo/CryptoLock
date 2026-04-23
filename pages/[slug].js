@@ -5,10 +5,9 @@ import Head from 'next/head'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 
-const SITE_URL = siteConfig.url // https://crypto-lock-five.vercel.app
+const SITE_URL = siteConfig.url
 
 export default function Post({ post, related, isPending }) {
-  // Стаття запланована — показуємо noindex-сторінку без контенту
   if (isPending) {
     return (
       <>
@@ -51,7 +50,10 @@ export default function Post({ post, related, isPending }) {
             <Link href="/" style={s.bcLink}>Головна</Link>
             <span style={s.bcSep}>/</span>
             {post.tags && post.tags[0] && (
-              <><Link href={`/tags/${post.tags[0]}`} style={s.bcLink}>{post.tags[0]}</Link><span style={s.bcSep}>/</span></>
+              <>
+                <Link href={`/tags/${post.tags[0]}`} style={s.bcLink}>{post.tags[0]}</Link>
+                <span style={s.bcSep}>/</span>
+              </>
             )}
             <span style={s.bcCur}>{post.title}</span>
           </nav>
@@ -76,7 +78,11 @@ export default function Post({ post, related, isPending }) {
           {siteConfig.adsenseId && (
             <div style={{ margin: '1.5rem 0' }}>
               <ins className="adsbygoogle" style={{ display: 'block' }}
-                data-ad-client={siteConfig.adsenseId} data-ad-slot="TOP" data-ad-format="auto" data-full-width-responsive="true" />
+                data-ad-client={siteConfig.adsenseId}
+                data-ad-slot="TOP"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+              />
             </div>
           )}
 
@@ -85,7 +91,11 @@ export default function Post({ post, related, isPending }) {
           {siteConfig.adsenseId && (
             <div style={{ margin: '2rem 0' }}>
               <ins className="adsbygoogle" style={{ display: 'block' }}
-                data-ad-client={siteConfig.adsenseId} data-ad-slot="BOTTOM" data-ad-format="auto" data-full-width-responsive="true" />
+                data-ad-client={siteConfig.adsenseId}
+                data-ad-slot="BOTTOM"
+                data-ad-format="auto"
+                data-full-width-responsive="true"
+              />
             </div>
           )}
 
@@ -109,23 +119,28 @@ export default function Post({ post, related, isPending }) {
 
 function fmt(d) {
   if (!d) return ''
-  return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
+  return new Date(d).toLocaleDateString('uk-UA', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })
 }
 
 export async function getStaticPaths() {
-  // Генеруємо шляхи тільки для опублікованих статей
   return { paths: getAllSlugs(), fallback: 'blocking' }
 }
 
 export async function getStaticProps({ params }) {
   const post = await getPostBySlug(params.slug)
 
-  // Runtime перевірка publishDate — без 404, але з noindex
   const publishDate = post.publishDate || post.date
   const isPending = publishDate && new Date(publishDate) > new Date()
 
   if (isPending) {
-    return { props: { post: { slug: post.slug }, isPending: true }, revalidate: 300 }
+    return {
+      props: { post: { slug: post.slug }, isPending: true },
+      revalidate: 300
+    }
   }
 
   const all = getAllPosts()
@@ -133,7 +148,10 @@ export async function getStaticProps({ params }) {
     .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
     .slice(0, 3)
 
-  return { props: { post, related, isPending: false }, revalidate: 3600 }
+  return {
+    props: { post, related, isPending: false },
+    revalidate: 3600
+  }
 }
 
 const s = {
@@ -167,49 +185,15 @@ const s = {
   },
   related: { marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #e2e8f0' },
   relatedTitle: {
-    fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 500,
-    color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '14px',
+    fontFamily: 'var(--font-mono)',
+    fontSize: '11px',
+    fontWeight: 500,
+    color: '#94a3b8',
+    letterSpacing: '1px',
+    textTransform: 'uppercase',
+    marginBottom: '14px',
   },
   relatedGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '10px' },
   back: { marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0' },
-  backLink: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#2563eb', fontWeight: 500 },
-}
-
-const s = {
-  wrap: { padding: '1.75rem 0 3rem' },
-  bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem', flexWrap: 'wrap' },
-  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8' },
-  bcSep: { fontSize: '12px', color: '#cbd5e1' },
-  bcCur: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '300px' },
-  header: { marginBottom: '2rem' },
-  tagRow: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '14px' },
-  title: {
-    fontFamily: "'Unbounded', sans-serif",
-    fontSize: 'clamp(1.35rem, 3.5vw, 1.85rem)',
-    fontWeight: 700,
-    lineHeight: 1.2,
-    letterSpacing: '-.5px',
-    marginBottom: '12px',
-    color: '#0f172a',
-  },
-  meta: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem', flexWrap: 'wrap' },
-  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
-  dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0 },
-  lead: {
-    fontSize: '1rem',
-    color: '#475569',
-    lineHeight: 1.65,
-    padding: '1rem 1.25rem',
-    background: '#eff6ff',
-    borderRadius: '0 10px 10px 0',
-    borderLeft: '3px solid #2563eb',
-  },
-  related: { marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #e2e8f0' },
-  relatedTitle: {
-    fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 500,
-    color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '14px',
-  },
-  relatedGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '10px' },
-  back: { marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0' },
-  backLink: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#2563eb', fontWeight: 500 },
+  backLink: { fontFamily: 'var(--font-mono', fontSize: '13px', color: '#2563eb', fontWeight: 500 },
 }
