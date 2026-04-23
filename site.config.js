@@ -1,7 +1,9 @@
+const SITE_URL = 'https://crypto-lock-five.vercel.app'
+
 const siteConfig = {
   name: 'CryptoLock',
-  domain: 'cryptolock.ua',
-  url: 'https://cryptolock.ua',
+  domain: 'crypto-lock-five.vercel.app',
+  url: SITE_URL,
   description: 'Покрокові гайди з налаштування Windows, інформаційної безпеки та захисту ПК українською мовою.',
   language: 'uk',
   adsenseId: '',

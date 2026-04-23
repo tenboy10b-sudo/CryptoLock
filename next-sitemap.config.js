@@ -1,8 +1,8 @@
-const siteConfig = require('./site.config')
+const SITE_URL = 'https://crypto-lock-five.vercel.app'
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: siteConfig.url,
+  siteUrl: SITE_URL,
   generateRobotsTxt: true,
   changefreq: 'weekly',
   priority: 0.7,
@@ -13,7 +13,7 @@ module.exports = {
       { userAgent: 'Googlebot', allow: '/' },
       { userAgent: 'Googlebot-Image', allow: '/' },
     ],
-    additionalSitemaps: [`${siteConfig.url}/sitemap.xml`],
+    additionalSitemaps: [`${SITE_URL}/sitemap.xml`],
   },
   transform: async (config, path) => {
     if (path === '/') {
