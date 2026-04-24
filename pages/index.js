@@ -79,17 +79,7 @@ export default function Home({ posts, tags }) {
             </div>
             <div className="hero-logo" style={s.heroLogoWrap} aria-hidden="true">
               <div style={s.heroLogoBlock}>
-                {/* SVG знак */}
-                <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="72" height="72" rx="18" fill="#1e40af"/>
-                  <path d="M50 18 C24 18 18 26 18 36 C18 46 24 54 50 54"
-                        fill="none" stroke="#93c5fd" stroke-width="7" stroke-linecap="round"/>
-                  <line x1="25" y1="36" x2="38" y2="36" stroke="#bfdbfe" stroke-width="5" stroke-linecap="round"/>
-                  <circle cx="24" cy="36" r="4" fill="#dbeafe"/>
-                  <rect x="32" y="40" width="16" height="12" rx="3" fill="#2563eb"/>
-                  <path d="M36 40 L36 37 C36 34.8 37.8 33 40 33 C42.2 33 44 34.8 44 37 L44 40" fill="none" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round"/>
-                  <circle cx="40" cy="45" r="1.5" fill="#bfdbfe"/>
-                </svg>
+                <img src="/logo.png" alt="" width="110" height="110" style={s.heroLogoImg} />
                 <span style={s.heroLogoCaption}>CryptoLock</span>
               </div>
             </div>
@@ -205,6 +195,10 @@ const s = {
     border: '1px solid rgba(96,165,250,0.3)',
     borderRadius: '20px',
     padding: '28px 32px',
+  },
+  heroLogoImg: {
+    objectFit: 'contain',
+    borderRadius: '14px',
   },
   heroLogoCaption: {
     fontFamily: "'Unbounded',sans-serif",

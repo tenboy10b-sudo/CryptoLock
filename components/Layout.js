@@ -276,7 +276,7 @@ const s = {
   navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '62px', width: '100%', padding: '0 20px' },
   logoWrap: { display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none', flexShrink: 0 },
   logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: '#0f172a' },
-  logoAccent: { color: '#2563eb' },
+  logoAccent: { color: '#0f172a' },
   rightSide: { display: 'flex', alignItems: 'center', gap: '4px', minWidth: 0 },
   navLink: { fontSize: '14px', fontWeight: 500, color: '#475569', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
   searchBtn: {
