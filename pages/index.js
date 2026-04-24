@@ -79,7 +79,7 @@ export default function Home({ posts, tags }) {
             </div>
             <div className="hero-logo" style={s.heroLogoWrap} aria-hidden="true">
               <div style={s.heroLogoBlock}>
-                <img src="/logo.png" alt="" width="110" height="110" style={s.heroLogoImg} />
+                <img src="/logo.png" alt="" width="130" height="138" style={s.heroLogoImg} />
                 <span style={s.heroLogoCaption}>CryptoLock</span>
               </div>
             </div>
@@ -190,15 +190,15 @@ const s = {
   heroBtnSecondary: { padding: '8px 18px', background: 'rgba(255,255,255,0.07)', color: '#cbd5e1', borderRadius: '20px', fontSize: '13px', fontWeight: 500, border: '1px solid rgba(255,255,255,0.1)' },
   heroLogoWrap: { flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' },
   heroLogoBlock: {
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px',
-    background: 'rgba(37,99,235,0.15)',
-    border: '1px solid rgba(96,165,250,0.3)',
-    borderRadius: '20px',
-    padding: '28px 32px',
+    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px',
+    background: 'rgba(37,99,235,0.18)',
+    border: '1px solid rgba(96,165,250,0.35)',
+    borderRadius: '24px',
+    padding: '32px 36px',
   },
   heroLogoImg: {
     objectFit: 'contain',
-    borderRadius: '14px',
+    filter: 'drop-shadow(0 4px 16px rgba(59,130,246,0.3))',
   },
   heroLogoCaption: {
     fontFamily: "'Unbounded',sans-serif",
