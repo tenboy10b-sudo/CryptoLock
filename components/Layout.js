@@ -166,7 +166,6 @@ export default function Layout({ children, title, description, canonical, isArti
 
           {/* Логотип — SVG-іконка + текст (без PNG) */}
           <Link href="/" style={s.logoWrap} aria-label={`${siteConfig.name} — на головну`}>
-            <LogoIcon />
             <span style={s.logoText}>Crypto<span style={s.logoAccent}>Lock</span></span>
           </Link>
 
@@ -241,7 +240,6 @@ export default function Layout({ children, title, description, canonical, isArti
       <footer style={s.footer}>
         <div className="container" style={s.footerInner}>
           <div style={s.footerLogo}>
-            <LogoIcon />
             <span style={s.footerName}>CryptoLock</span>
           </div>
           <nav style={s.footerLinks} aria-label="Навігація в підвалі">

@@ -1,8 +1,7 @@
 import Layout from '../components/Layout'
 import PostCard from '../components/PostCard'
 import Link from 'next/link'
-import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { getAllPosts, getAllTags } from '../lib/posts'
 import siteConfig from '../site.config'
 
@@ -21,6 +20,17 @@ const CATEGORIES = [
 
 export default function Home({ posts, tags }) {
   const [openCats, setOpenCats] = useState({ security: true, windows: true })
+  const [visibleCount, setVisibleCount] = useState(12)
+  const loadMoreRef = useRef(null)
+
+  useEffect(() => {
+    if (!loadMoreRef.current) return
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setVisibleCount(c => c + 12)
+    }, { rootMargin: '200px' })
+    obs.observe(loadMoreRef.current)
+    return () => obs.disconnect()
+  }, [])
   const tagMap = Object.fromEntries(tags.map(t => [t.tag, t.count]))
 
   const toggle = (id) => setOpenCats(prev => ({ ...prev, [id]: !prev[id] }))
@@ -68,14 +78,20 @@ export default function Home({ posts, tags }) {
               </nav>
             </div>
             <div className="hero-logo" style={s.heroLogoWrap} aria-hidden="true">
-              <Image
-                src="/logo.png"
-                alt=""
-                width={170}
-                height={170}
-                style={{ objectFit: 'contain', filter: 'drop-shadow(0 8px 24px rgba(59,130,246,0.25))' }}
-                priority
-              />
+              <div style={s.heroLogoBlock}>
+                {/* SVG знак */}
+                <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="72" height="72" rx="18" fill="#1e40af"/>
+                  <path d="M50 18 C24 18 18 26 18 36 C18 46 24 54 50 54"
+                        fill="none" stroke="#93c5fd" stroke-width="7" stroke-linecap="round"/>
+                  <line x1="25" y1="36" x2="38" y2="36" stroke="#bfdbfe" stroke-width="5" stroke-linecap="round"/>
+                  <circle cx="24" cy="36" r="4" fill="#dbeafe"/>
+                  <rect x="32" y="40" width="16" height="12" rx="3" fill="#2563eb"/>
+                  <path d="M36 40 L36 37 C36 34.8 37.8 33 40 33 C42.2 33 44 34.8 44 37 L44 40" fill="none" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="40" cy="45" r="1.5" fill="#bfdbfe"/>
+                </svg>
+                <span style={s.heroLogoCaption}>CryptoLock</span>
+              </div>
             </div>
           </div>
         </div>
@@ -149,12 +165,15 @@ export default function Home({ posts, tags }) {
           )}
           <p style={s.sectionLabel} aria-hidden="true">Всі статті</p>
           <div style={s.grid} role="list" aria-label="Список статей">
-            {rest.map(post => (
+            {rest.slice(0, visibleCount).map(post => (
               <div key={post.slug} role="listitem">
                 <PostCard post={post} />
               </div>
             ))}
           </div>
+          {visibleCount < rest.length && (
+            <div ref={loadMoreRef} style={{ height: '40px', marginTop: '1rem' }} aria-hidden="true" />
+          )}
         </div>
       </section>
     </Layout>
@@ -180,6 +199,20 @@ const s = {
   heroBtnPrimary: { padding: '8px 18px', background: '#2563eb', color: '#fff', borderRadius: '20px', fontSize: '13px', fontWeight: 600 },
   heroBtnSecondary: { padding: '8px 18px', background: 'rgba(255,255,255,0.07)', color: '#cbd5e1', borderRadius: '20px', fontSize: '13px', fontWeight: 500, border: '1px solid rgba(255,255,255,0.1)' },
   heroLogoWrap: { flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  heroLogoBlock: {
+    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px',
+    background: 'rgba(37,99,235,0.15)',
+    border: '1px solid rgba(96,165,250,0.3)',
+    borderRadius: '20px',
+    padding: '28px 32px',
+  },
+  heroLogoCaption: {
+    fontFamily: "'Unbounded',sans-serif",
+    fontSize: '1rem',
+    fontWeight: 700,
+    letterSpacing: '-0.3px',
+    color: '#ffffff',
+  },
 
   catsSection: { padding: '2rem 0', background: '#fff', borderBottom: '1px solid #e2e8f0' },
   catsSectionHead: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' },

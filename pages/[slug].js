@@ -1,6 +1,7 @@
 import Layout from '../components/Layout'
 import PostCard from '../components/PostCard'
 import Link from 'next/link'
+import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 
@@ -103,6 +104,7 @@ export default function Post({ post, related }) {
               </div>
             )}
 
+            <TableOfContents contentHtml={post.contentHtml} />
             <div className="prose" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
 
             {siteConfig.adsenseId && (
