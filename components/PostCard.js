@@ -2,21 +2,36 @@ import Link from 'next/link'
 
 export default function PostCard({ post, featured }) {
   return (
-    <article style={{ ...s.card, ...(featured ? s.cardFeatured : {}) }}>
-      <Link href={`/${post.slug}`} style={s.link}>
-        <div style={s.tagRow}>
+    <article
+      className="post-card"
+      style={{ ...s.card, ...(featured ? s.cardFeatured : {}) }}
+    >
+      <Link
+        href={`/${post.slug}`}
+        style={s.link}
+        aria-label={post.title}
+      >
+        <div style={s.tagRow} aria-hidden="true">
           {post.tags && post.tags.slice(0, 3).map(tag => (
             <span key={tag} className="tag-chip">{tag}</span>
           ))}
         </div>
-        <h2 style={{ ...s.title, ...(featured ? s.titleFeatured : {}) }}>{post.title}</h2>
-        {post.description && <p style={s.excerpt}>{post.description}</p>}
+        <h2 style={{ ...s.title, ...(featured ? s.titleFeatured : {}) }}>
+          {post.title}
+        </h2>
+        {post.description && (
+          <p style={s.excerpt}>{post.description}</p>
+        )}
         <div style={s.footer}>
           <div style={s.meta}>
-            {post.date && <span style={s.metaItem}>{fmt(post.date)}</span>}
-            {post.readTime && <><span style={s.dot}/><span style={s.metaItem}>{post.readTime} хв</span></>}
+            {post.date && (
+              <time dateTime={post.date} style={s.metaItem}>{fmt(post.date)}</time>
+            )}
+            {post.readTime && (
+              <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} хв</span></>
+            )}
           </div>
-          <span style={s.readBtn}>Читати →</span>
+          <span style={s.readBtn} aria-hidden="true">Читати →</span>
         </div>
       </Link>
     </article>
@@ -52,20 +67,11 @@ const s = {
     letterSpacing: '-.2px',
   },
   titleFeatured: { fontSize: '1.1rem' },
-  excerpt: {
-    fontSize: '.88rem',
-    color: '#475569',
-    lineHeight: 1.6,
-    marginBottom: '14px',
-  },
-  footer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
+  excerpt: { fontSize: '.88rem', color: '#475569', lineHeight: 1.6, marginBottom: '14px' },
+  footer: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
   meta: { display: 'flex', alignItems: 'center', gap: '6px' },
   metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
-  dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0 },
+  dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0, display: 'inline-block' },
   readBtn: {
     fontSize: '12px',
     fontWeight: 600,

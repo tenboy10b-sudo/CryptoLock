@@ -1,106 +1,121 @@
 import Layout from '../components/Layout'
 import PostCard from '../components/PostCard'
 import Link from 'next/link'
-import Head from 'next/head'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 
-const SITE_URL = siteConfig.url
+const SITE = siteConfig.url
 
-export default function Post({ post, related, isPending }) {
-  if (isPending) {
-    return (
-      <>
-        <Head>
-          <title>Незабаром — {siteConfig.name}</title>
-          <meta name="robots" content="noindex, follow" />
-        </Head>
-        <Layout title="Незабаром">
-          <div style={{ padding: '4rem 20px', textAlign: 'center', color: '#94a3b8' }}>
-            <p style={{ fontSize: '1.1rem' }}>Ця стаття ще не опублікована. Поверніться пізніше.</p>
-            <Link href="/" style={{ display: 'inline-block', marginTop: '1.5rem', color: '#2563eb', fontSize: '14px' }}>
-              ← На головну
-            </Link>
-          </div>
-        </Layout>
-      </>
-    )
-  }
+export default function Post({ post, related }) {
+  const postUrl = `${SITE}/${post.slug}`
 
-  const schema = {
+  const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
+    '@id': `${postUrl}/#article`,
     headline: post.title,
     description: post.description || '',
     datePublished: post.date,
     dateModified: post.updated || post.date,
-    author: { '@type': 'Organization', name: siteConfig.name, url: SITE_URL },
-    publisher: { '@type': 'Organization', name: siteConfig.name, url: SITE_URL },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/${post.slug}` },
+    image: {
+      '@type': 'ImageObject',
+      url: `${SITE}/logo.png`,
+      width: 1200,
+      height: 630,
+    },
+    author: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: SITE,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: SITE,
+      logo: { '@type': 'ImageObject', url: `${SITE}/logo.png` },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
     inLanguage: 'uk',
+    url: postUrl,
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Головна', item: SITE },
+      ...(post.tags && post.tags[0]
+        ? [{ '@type': 'ListItem', position: 2, name: post.tags[0], item: `${SITE}/tags/${post.tags[0]}` }]
+        : []),
+      { '@type': 'ListItem', position: post.tags && post.tags[0] ? 3 : 2, name: post.title, item: postUrl },
+    ],
   }
 
   return (
-    <Layout title={post.title} description={post.description} canonical={`${SITE_URL}/${post.slug}`} isArticle>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+    <Layout
+      title={post.title}
+      description={post.description}
+      canonical={postUrl}
+      isArticle
+      ogImage={`${SITE}/logo.png`}
+    >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <div style={s.wrap}>
         <div className="container">
-          <nav style={s.bc}>
+
+          <nav aria-label="Хлібні крихти" style={s.bc}>
             <Link href="/" style={s.bcLink}>Головна</Link>
-            <span style={s.bcSep}>/</span>
+            <span style={s.bcSep} aria-hidden="true">/</span>
             {post.tags && post.tags[0] && (
               <>
                 <Link href={`/tags/${post.tags[0]}`} style={s.bcLink}>{post.tags[0]}</Link>
-                <span style={s.bcSep}>/</span>
+                <span style={s.bcSep} aria-hidden="true">/</span>
               </>
             )}
-            <span style={s.bcCur}>{post.title}</span>
+            <span style={s.bcCur} aria-current="page">{post.title}</span>
           </nav>
 
-          <header style={s.header}>
-            {post.tags && (
-              <div style={s.tagRow}>
-                {post.tags.map(tag => (
-                  <Link key={tag} href={`/tags/${tag}`} className="tag-chip">{tag}</Link>
-                ))}
+          <article>
+            <header style={s.header}>
+              {post.tags && (
+                <div style={s.tagRow}>
+                  {post.tags.map(tag => (
+                    <Link key={tag} href={`/tags/${tag}`} className="tag-chip">{tag}</Link>
+                  ))}
+                </div>
+              )}
+              <h1 style={s.title}>{post.title}</h1>
+              <div style={s.meta}>
+                {post.date && <time dateTime={post.date} style={s.metaItem}>{fmt(post.date)}</time>}
+                {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} хв читання</span></>}
+                {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>Оновлено <time dateTime={post.updated}>{fmt(post.updated)}</time></span></>}
+              </div>
+              {post.description && <p style={s.lead}>{post.description}</p>}
+            </header>
+
+            {siteConfig.adsenseId && (
+              <div style={{ margin: '1.5rem 0' }}>
+                <ins className="adsbygoogle" style={{ display: 'block' }}
+                  data-ad-client={siteConfig.adsenseId} data-ad-slot="TOP"
+                  data-ad-format="auto" data-full-width-responsive="true" />
               </div>
             )}
-            <h1 style={s.title}>{post.title}</h1>
-            <div style={s.meta}>
-              {post.date && <span style={s.metaItem}>{fmt(post.date)}</span>}
-              {post.readTime && <><span style={s.dot}/><span style={s.metaItem}>{post.readTime} хв читання</span></>}
-              {post.updated && <><span style={s.dot}/><span style={s.metaItem}>Оновлено {fmt(post.updated)}</span></>}
-            </div>
-            {post.description && <p style={s.lead}>{post.description}</p>}
-          </header>
 
-          {siteConfig.adsenseId && (
-            <div style={{ margin: '1.5rem 0' }}>
-              <ins className="adsbygoogle" style={{ display: 'block' }}
-                data-ad-client={siteConfig.adsenseId}
-                data-ad-slot="TOP"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-              />
-            </div>
-          )}
+            <div className="prose" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
 
-          <div className="prose" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
-
-          {siteConfig.adsenseId && (
-            <div style={{ margin: '2rem 0' }}>
-              <ins className="adsbygoogle" style={{ display: 'block' }}
-                data-ad-client={siteConfig.adsenseId}
-                data-ad-slot="BOTTOM"
-                data-ad-format="auto"
-                data-full-width-responsive="true"
-              />
-            </div>
-          )}
+            {siteConfig.adsenseId && (
+              <div style={{ margin: '2rem 0' }}>
+                <ins className="adsbygoogle" style={{ display: 'block' }}
+                  data-ad-client={siteConfig.adsenseId} data-ad-slot="BOTTOM"
+                  data-ad-format="auto" data-full-width-responsive="true" />
+              </div>
+            )}
+          </article>
 
           {related && related.length > 0 && (
-            <section style={s.related}>
+            <section style={s.related} aria-label="Схожі статті">
               <p style={s.relatedTitle}>Схожі статті</p>
               <div style={s.relatedGrid}>
                 {related.map(r => <PostCard key={r.slug} post={r} />)}
@@ -119,38 +134,33 @@ export default function Post({ post, related, isPending }) {
 
 function fmt(d) {
   if (!d) return ''
-  return new Date(d).toLocaleDateString('uk-UA', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  })
+  return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 export async function getStaticPaths() {
+  // Тільки опубліковані статті отримують URL
+  // Майбутні статті → URL не існує → 404 (чисто для Google)
   return { paths: getAllSlugs(), fallback: 'blocking' }
 }
 
 export async function getStaticProps({ params }) {
-  const post = await getPostBySlug(params.slug)
+  try {
+    const post = await getPostBySlug(params.slug)
 
-  const publishDate = post.publishDate || post.date
-  const isPending = publishDate && new Date(publishDate) > new Date()
-
-  if (isPending) {
-    return {
-      props: { post: { slug: post.slug }, isPending: true },
-      revalidate: 300
+    // Якщо стаття ще не опублікована — повертаємо 404
+    const publishDate = post.publishDate || post.date
+    if (publishDate && new Date(publishDate) > new Date()) {
+      return { notFound: true }
     }
-  }
 
-  const all = getAllPosts()
-  const related = all
-    .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
-    .slice(0, 3)
+    const all = getAllPosts()
+    const related = all
+      .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
+      .slice(0, 3)
 
-  return {
-    props: { post, related, isPending: false },
-    revalidate: 3600
+    return { props: { post, related }, revalidate: 3600 }
+  } catch (e) {
+    return { notFound: true }
   }
 }
 
@@ -159,7 +169,7 @@ const s = {
   bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem', flexWrap: 'wrap' },
   bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8' },
   bcSep: { fontSize: '12px', color: '#cbd5e1' },
-  bcCur: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '300px' },
+  bcCur: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#64748b', wordBreak: 'break-word', maxWidth: '300px' },
   header: { marginBottom: '2rem' },
   tagRow: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '14px' },
   title: {
@@ -173,27 +183,18 @@ const s = {
   },
   meta: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem', flexWrap: 'wrap' },
   metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
-  dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0 },
+  dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0, display: 'inline-block' },
   lead: {
-    fontSize: '1rem',
-    color: '#475569',
-    lineHeight: 1.65,
-    padding: '1rem 1.25rem',
-    background: '#eff6ff',
-    borderRadius: '0 10px 10px 0',
-    borderLeft: '3px solid #2563eb',
+    fontSize: '1rem', color: '#475569', lineHeight: 1.65,
+    padding: '1rem 1.25rem', background: '#eff6ff',
+    borderRadius: '0 10px 10px 0', borderLeft: '3px solid #2563eb',
   },
   related: { marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #e2e8f0' },
   relatedTitle: {
-    fontFamily: 'var(--font-mono)',
-    fontSize: '11px',
-    fontWeight: 500,
-    color: '#94a3b8',
-    letterSpacing: '1px',
-    textTransform: 'uppercase',
-    marginBottom: '14px',
+    fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 500,
+    color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '14px',
   },
   relatedGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '10px' },
   back: { marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0' },
-  backLink: { fontFamily: 'var(--font-mono', fontSize: '13px', color: '#2563eb', fontWeight: 500 },
+  backLink: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#2563eb', fontWeight: 500 },
 }

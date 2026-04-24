@@ -1,7 +1,6 @@
-import { getAllPosts } from '../lib/posts'
+import { getAllPosts, getAllTags } from '../lib/posts'
 import siteConfig from '../site.config'
 
-// Жорстка гарантія: тільки статті з publishDate <= зараз
 function getPublishedPosts() {
   const now = new Date()
   return getAllPosts().filter(post => {
@@ -11,22 +10,35 @@ function getPublishedPosts() {
   })
 }
 
-function generateSitemap(posts) {
-  const SITE = siteConfig.url // https://crypto-lock-five.vercel.app
+function generateSitemap(posts, tags) {
+  const SITE = siteConfig.url
   const today = new Date().toISOString()
 
   const staticPages = [
-    { url: '', priority: '1.0', changefreq: 'daily' },
-    { url: '/tags', priority: '0.6', changefreq: 'weekly' },
-    { url: '/about', priority: '0.4', changefreq: 'monthly' },
-    { url: '/privacy', priority: '0.3', changefreq: 'monthly' },
+    { url: '',        priority: '1.0', changefreq: 'daily'   },
+    { url: '/tags',   priority: '0.6', changefreq: 'weekly'  },
+    { url: '/about',  priority: '0.4', changefreq: 'monthly' },
+    { url: '/privacy',priority: '0.3', changefreq: 'monthly' },
   ]
+
+  const tagPages = tags.map(({ tag }) => ({
+    url: `/tags/${tag}`,
+    priority: '0.6',
+    changefreq: 'weekly',
+    lastmod: today,
+  }))
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticPages.map(p => `  <url>
     <loc>${SITE}${p.url}</loc>
     <lastmod>${today}</lastmod>
+    <changefreq>${p.changefreq}</changefreq>
+    <priority>${p.priority}</priority>
+  </url>`).join('\n')}
+${tagPages.map(p => `  <url>
+    <loc>${SITE}${p.url}</loc>
+    <lastmod>${p.lastmod}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
   </url>`).join('\n')}
@@ -45,10 +57,10 @@ export default function Sitemap() {
 
 export async function getServerSideProps({ res }) {
   const posts = getPublishedPosts()
-  const sitemap = generateSitemap(posts)
+  const tags = getAllTags()
+  const sitemap = generateSitemap(posts, tags)
 
   res.setHeader('Content-Type', 'text/xml')
-  // Оновлення кожні 10 хв, але CDN може обслуговувати до 24 год
   res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400')
   res.write(sitemap)
   res.end()

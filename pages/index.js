@@ -6,40 +6,17 @@ import { useState } from 'react'
 import { getAllPosts, getAllTags } from '../lib/posts'
 import siteConfig from '../site.config'
 
-// Категорії з підтегами — URL статей не змінюються
+const SITE = siteConfig.url
+
 const CATEGORIES = [
-  {
-    id: 'security', label: 'Безпека', icon: '🔒',
-    tags: ['безпека', 'паролі', 'bitlocker', 'шифрування', 'облікові-записи', 'захист'],
-  },
-  {
-    id: 'windows', label: 'Windows', icon: '🪟',
-    tags: ['windows', 'оновлення', 'windows-update', 'персоналізація', 'темна-тема', 'налаштування'],
-  },
-  {
-    id: 'system', label: 'Система', icon: '⚙️',
-    tags: ['драйвери', 'bios', 'uefi', 'диск', 'chkdsk', 'sfc', 'dism', 'обладнання'],
-  },
-  {
-    id: 'network', label: 'Мережа', icon: '📶',
-    tags: ['wifi', 'dns', 'bluetooth', 'мережа'],
-  },
-  {
-    id: 'optimization', label: 'Оптимізація', icon: '⚡',
-    tags: ['оптимізація', 'продуктивність', 'автозавантаження', 'очищення', 'прискорення'],
-  },
-  {
-    id: 'tools', label: 'Інструменти', icon: '🧰',
-    tags: ['cmd', 'powershell', 'реєстр', 'моніторинг'],
-  },
-  {
-    id: 'gpo', label: 'Групова політика', icon: '🛡️',
-    tags: ['групова-політика', 'gpedit', 'secpol', 'applocker', 'gpo'],
-  },
-  {
-    id: 'recovery', label: 'Відновлення', icon: '🔄',
-    tags: ['відновлення', 'скидання', 'переустановка'],
-  },
+  { id: 'security',     label: 'Безпека',          icon: '🔒', tags: ['безпека','паролі','bitlocker','шифрування','облікові-записи','захист'] },
+  { id: 'windows',      label: 'Windows',           icon: '🪟', tags: ['windows','оновлення','windows-update','персоналізація','темна-тема','налаштування'] },
+  { id: 'system',       label: 'Система',           icon: '⚙️', tags: ['драйвери','bios','uefi','диск','chkdsk','sfc','dism','обладнання'] },
+  { id: 'network',      label: 'Мережа',            icon: '📶', tags: ['wifi','dns','bluetooth','мережа'] },
+  { id: 'optimization', label: 'Оптимізація',       icon: '⚡', tags: ['оптимізація','продуктивність','автозавантаження','очищення','прискорення'] },
+  { id: 'tools',        label: 'Інструменти',       icon: '🧰', tags: ['cmd','powershell','реєстр','моніторинг'] },
+  { id: 'gpo',          label: 'Групова політика',  icon: '🛡️', tags: ['групова-політика','gpedit','secpol','applocker','gpo'] },
+  { id: 'recovery',     label: 'Відновлення',       icon: '🔄', tags: ['відновлення','скидання','переустановка'] },
 ]
 
 export default function Home({ posts, tags }) {
@@ -51,14 +28,28 @@ export default function Home({ posts, tags }) {
   const featured = posts[0]
   const rest = posts.slice(1)
 
+  // WebPage schema для головної
+  const webPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${SITE}/#webpage`,
+    url: SITE,
+    name: `${siteConfig.name} — налаштування Windows та захист ПК українською`,
+    description: siteConfig.description,
+    inLanguage: 'uk',
+    isPartOf: { '@id': `${SITE}/#website` },
+  }
+
   return (
     <Layout>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+
       {/* Hero */}
-      <section style={s.hero}>
+      <section style={s.hero} aria-label="Про сайт">
         <div className="container">
           <div style={s.heroGrid}>
             <div style={s.heroText}>
-              <div style={s.heroBadge}>
+              <div style={s.heroBadge} aria-hidden="true">
                 <span style={s.heroBadgeDot} />
                 Гайди українською · {posts.length} статей
               </div>
@@ -70,31 +61,41 @@ export default function Home({ posts, tags }) {
                 Покрокові інструкції з Windows, захисту даних,
                 групових політик і системного адміністрування.
               </p>
-              <div style={s.heroActions}>
+              <nav style={s.heroActions} aria-label="Популярні теми">
                 <Link href="/tags/безпека" style={s.heroBtnPrimary}>Безпека</Link>
                 <Link href="/tags/windows" style={s.heroBtnSecondary}>Windows</Link>
                 <Link href="/tags/групова-політика" style={s.heroBtnSecondary}>Групова політика</Link>
-              </div>
+              </nav>
             </div>
-            <div style={s.heroLogoWrap}>
-              <Image src="/logo.jpg" alt="CryptoLock" width={170} height={170}
-                style={{ objectFit: 'contain', filter: 'drop-shadow(0 8px 24px rgba(59,130,246,0.25))' }} priority />
+            <div className="hero-logo" style={s.heroLogoWrap} aria-hidden="true">
+              <Image
+                src="/logo.png"
+                alt=""
+                width={170}
+                height={170}
+                style={{ objectFit: 'contain', filter: 'drop-shadow(0 8px 24px rgba(59,130,246,0.25))' }}
+                priority
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Categories block */}
-      <section style={s.catsSection}>
+      {/* Categories */}
+      <section style={s.catsSection} aria-label="Теми статей">
         <div className="container">
           <div style={s.catsSectionHead}>
             <h2 style={s.catsSectionTitle}>Теми</h2>
-            <button style={s.expandAllBtn} onClick={() => {
-              const allOpen = CATEGORIES.every(c => openCats[c.id])
-              const next = {}
-              CATEGORIES.forEach(c => { next[c.id] = !allOpen })
-              setOpenCats(next)
-            }}>
+            <button
+              style={s.expandAllBtn}
+              onClick={() => {
+                const allOpen = CATEGORIES.every(c => openCats[c.id])
+                const next = {}
+                CATEGORIES.forEach(c => { next[c.id] = !allOpen })
+                setOpenCats(next)
+              }}
+              aria-label={CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі категорії' : 'Розгорнути всі категорії'}
+            >
               {CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі ↑' : 'Розгорнути всі ↓'}
             </button>
           </div>
@@ -103,22 +104,27 @@ export default function Home({ posts, tags }) {
             {CATEGORIES.map(cat => {
               const isOpen = !!openCats[cat.id]
               const catTags = cat.tags.filter(t => tagMap[t])
-              const totalCount = catTags.reduce((s, t) => s + (tagMap[t] || 0), 0)
+              const totalCount = catTags.reduce((sum, t) => sum + (tagMap[t] || 0), 0)
               if (catTags.length === 0) return null
               return (
                 <div key={cat.id} style={s.catCard}>
-                  <button style={s.catHeader} onClick={() => toggle(cat.id)}>
+                  <button
+                    style={s.catHeader}
+                    onClick={() => toggle(cat.id)}
+                    aria-expanded={isOpen}
+                    aria-controls={`cat-${cat.id}`}
+                  >
                     <div style={s.catLeft}>
-                      <span style={s.catIcon}>{cat.icon}</span>
+                      <span style={s.catIcon} aria-hidden="true">{cat.icon}</span>
                       <span style={s.catLabel}>{cat.label}</span>
-                      <span style={s.catTotal}>{totalCount}</span>
+                      <span style={s.catTotal} aria-label={`${totalCount} статей`}>{totalCount}</span>
                     </div>
-                    <span style={{ ...s.catArrow, transform: isOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+                    <span style={{ ...s.catArrow, transform: isOpen ? 'rotate(180deg)' : 'none' }} aria-hidden="true">▾</span>
                   </button>
                   {isOpen && (
-                    <div style={s.catTags}>
+                    <div id={`cat-${cat.id}`} style={s.catTags}>
                       {catTags.map(tag => (
-                        <Link key={tag} href={`/tags/${tag}`} style={s.catTagItem}>
+                        <Link key={tag} href={`/tags/${tag}`} style={s.catTagItem} className="cat-tag-item">
                           <span style={s.catTagName}>{tag}</span>
                           <span style={s.catTagCount}>{tagMap[tag]}</span>
                         </Link>
@@ -133,17 +139,21 @@ export default function Home({ posts, tags }) {
       </section>
 
       {/* Posts */}
-      <section style={s.postsSection}>
+      <section style={s.postsSection} aria-label="Статті">
         <div className="container">
           {featured && (
             <div style={s.featuredWrap}>
-              <p style={s.sectionLabel}>Остання стаття</p>
+              <p style={s.sectionLabel} aria-hidden="true">Остання стаття</p>
               <PostCard post={featured} featured />
             </div>
           )}
-          <p style={s.sectionLabel}>Всі статті</p>
-          <div style={s.grid}>
-            {rest.map(post => <PostCard key={post.slug} post={post} />)}
+          <p style={s.sectionLabel} aria-hidden="true">Всі статті</p>
+          <div style={s.grid} role="list" aria-label="Список статей">
+            {rest.map(post => (
+              <div key={post.slug} role="listitem">
+                <PostCard post={post} />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -158,10 +168,7 @@ export async function getStaticProps() {
 }
 
 const s = {
-  hero: {
-    background: 'linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#0f172a 100%)',
-    padding: '3rem 0',
-  },
+  hero: { background: 'linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#0f172a 100%)', padding: '3rem 0' },
   heroGrid: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' },
   heroText: { flex: 1, minWidth: '280px' },
   heroBadge: { display: 'inline-flex', alignItems: 'center', gap: '7px', fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', marginBottom: '16px', letterSpacing: '.3px' },
@@ -178,9 +185,7 @@ const s = {
   catsSectionHead: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' },
   catsSectionTitle: { fontFamily: "'Unbounded',sans-serif", fontSize: '1rem', fontWeight: 700, color: '#0f172a' },
   expandAllBtn: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500, padding: '4px 8px' },
-
   catsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '8px' },
-
   catCard: { border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', background: '#f8fafc' },
   catHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' },
   catLeft: { display: 'flex', alignItems: 'center', gap: '8px' },
@@ -188,7 +193,6 @@ const s = {
   catLabel: { fontFamily: "'Unbounded',sans-serif", fontSize: '12px', fontWeight: 700, color: '#0f172a' },
   catTotal: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#94a3b8', background: '#e2e8f0', padding: '1px 6px', borderRadius: '10px' },
   catArrow: { fontSize: '12px', color: '#94a3b8', transition: 'transform .2s', display: 'inline-block' },
-
   catTags: { padding: '0 10px 10px', display: 'flex', flexDirection: 'column', gap: '2px' },
   catTagItem: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', borderRadius: '7px', background: '#fff', border: '1px solid #e2e8f0', transition: 'border-color .15s,background .15s' },
   catTagName: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#334155', fontWeight: 500 },
