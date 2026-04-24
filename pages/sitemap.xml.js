@@ -22,7 +22,7 @@ function generateSitemap(posts, tags) {
   ]
 
   const tagPages = tags.map(({ tag }) => ({
-    url: `/tags/${tag}`,
+    url: `/tags/${encodeURIComponent(tag)}`,
     priority: '0.6',
     changefreq: 'weekly',
     lastmod: today,
