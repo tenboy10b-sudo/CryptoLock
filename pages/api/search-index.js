@@ -1,4 +1,4 @@
-import { getAllPosts } from '../lib/posts'
+import { getAllPosts } from '../../lib/posts'
 
 export default function handler(req, res) {
   const posts = getAllPosts().map(p => ({
