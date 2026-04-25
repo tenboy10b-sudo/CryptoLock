@@ -17,7 +17,6 @@ function generateSitemap(posts, tags) {
   const staticPages = [
     { url: '',         priority: '1.0', changefreq: 'daily'   },
     { url: '/tags',    priority: '0.6', changefreq: 'weekly'  },
-    { url: '/search',  priority: '0.5', changefreq: 'monthly' },
     { url: '/about',   priority: '0.4', changefreq: 'monthly' },
     { url: '/privacy', priority: '0.3', changefreq: 'monthly' },
   ]

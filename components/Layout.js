@@ -39,7 +39,7 @@ const LogoIcon = () => (
   </svg>
 )
 
-export default function Layout({ children, title, description, canonical, isArticle, ogImage }) {
+export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex }) {
   const pageTitle = title
     ? `${title} — ${siteConfig.name}`
     : `${siteConfig.name} — налаштування Windows та захист ПК українською`
@@ -114,11 +114,13 @@ export default function Layout({ children, title, description, canonical, isArti
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta httpEquiv="content-language" content="uk" />
         <link rel="canonical" href={pageUrl} />
         <link rel="alternate" hrefLang="uk" href={pageUrl} />
         <link rel="alternate" hrefLang="x-default" href={pageUrl} />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+        {siteConfig.googleVerification && (
+          <meta name="google-site-verification" content={siteConfig.googleVerification} />
+        )}
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDesc} />
         <meta property="og:url" content={pageUrl} />

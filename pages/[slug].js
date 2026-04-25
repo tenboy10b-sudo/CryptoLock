@@ -38,6 +38,7 @@ export default function Post({ post, related }) {
     mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
     inLanguage: 'uk',
     url: postUrl,
+    wordCount: post.contentHtml ? post.contentHtml.replace(/<[^>]+>/g, '').split(/\s+/).length : undefined,
   }
 
   const breadcrumbSchema = {

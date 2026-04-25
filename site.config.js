@@ -8,6 +8,7 @@ const siteConfig = {
   language: 'uk',
   adsenseId: '',
   gaId: '',
+  googleVerification: '', // вставити код з Google Search Console
   postsPerPage: 10,
   social: {
     telegram: 'https://t.me/cryptolock888',

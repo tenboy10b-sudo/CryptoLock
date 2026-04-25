@@ -166,7 +166,7 @@ function DesktopSearch({ index, loadIndex }) {
         />
         {query
           ? <button onClick={() => { setQuery(''); inputRef.current?.focus() }} style={d.clearBtn} tabIndex={-1}><CloseIcon /></button>
-          : <kbd style={d.kbd}>⌃K</kbd>
+          : null
         }
       </div>
       {show && (
@@ -260,7 +260,6 @@ const d = {
   icon:    { color:'#94a3b8', display:'flex', flexShrink:0, pointerEvents:'none' },
   input:   { flex:1, border:'none', outline:'none', background:'transparent', fontSize:'13px', fontFamily:'var(--font-body)', color:'#0f172a', minWidth:0 },
   clearBtn:{ display:'flex', alignItems:'center', background:'none', border:'none', cursor:'pointer', color:'#94a3b8', padding:'2px', flexShrink:0 },
-  kbd:     { fontFamily:'var(--font-mono)', fontSize:'10px', color:'#94a3b8', background:'#e2e8f0', border:'1px solid #cbd5e1', borderRadius:'4px', padding:'1px 5px', flexShrink:0 },
   dropdown:{ position:'absolute', top:'calc(100% + 6px)', left:0, right:0, background:'#fff', border:'1px solid #e2e8f0', borderRadius:'12px', boxShadow:'0 8px 32px rgba(15,23,42,0.12)', zIndex:100, overflow:'hidden' },
   item:    { display:'flex', alignItems:'center', gap:'10px', padding:'10px 14px', textDecoration:'none', borderBottom:'1px solid #f8fafc', transition:'background .1s' },
   itemActive:{ background:'#eff6ff' },
