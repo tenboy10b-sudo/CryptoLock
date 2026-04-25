@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
-import SearchBar from './SearchBar'
+import SearchBar, { SearchButton } from './SearchBar'
 import siteConfig from '../site.config'
 
 const SITE = siteConfig.url
@@ -169,8 +169,9 @@ export default function Layout({ children, title, description, canonical, isArti
 
             <div className="nav-divider" aria-hidden="true" />
 
-            {/* Inline пошук */}
-            <SearchBar />
+            {/* Пошук — десктоп: inline, мобайл: іконка-кнопка */}
+            <div className="search-desktop"><SearchBar /></div>
+            <div className="search-mobile-btn"><SearchButton onClick={() => setMenuOpen(false)} /></div>
 
             {/* Social */}
             <div className="nav-social">
@@ -196,10 +197,7 @@ export default function Layout({ children, title, description, canonical, isArti
         {/* Мобільне меню */}
         {menuOpen && (
           <div id="mobile-menu" style={s.mobileMenu} role="navigation" aria-label="Мобільна навігація">
-            {/* Пошук у мобільному меню */}
-            <div style={{ padding: '8px 14px 4px' }}>
-              <SearchBar />
-            </div>
+
             {siteConfig.nav.map(item => (
               <Link key={item.href} href={item.href} style={s.mobileLink} onClick={() => setMenuOpen(false)}>
                 {item.label}

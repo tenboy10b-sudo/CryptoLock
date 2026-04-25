@@ -125,9 +125,16 @@ a.cat-tag-item:hover{border-color:#93c5fd!important;background:#eff6ff!important
 }
 
 /* ── SearchBar ── */
-/* Dropdown не виходить за межі на мобайлі */
-@media(max-width:480px){
-  [style*="minWidth: 360px"]{min-width:calc(100vw - 40px)!important;left:-10px!important;right:-10px!important}
+/* Десктоп: показуємо inline пошук, ховаємо кнопку-іконку */
+.search-desktop{display:flex;flex:1;max-width:380px;min-width:0}
+.search-mobile-btn{display:none}
+
+@media(max-width:680px){
+  /* Мобайл: ховаємо inline пошук, показуємо кнопку-іконку */
+  .search-desktop{display:none!important}
+  .search-mobile-btn{display:flex!important}
 }
+
 /* Прибрати стандартне X у input type=text в IE/Edge */
 input[type="text"]::-ms-clear{display:none}
+input[type="search"]::-webkit-search-cancel-button{display:none}
