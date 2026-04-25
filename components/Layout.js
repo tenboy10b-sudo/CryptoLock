@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
+import SearchBar from './SearchBar'
 import siteConfig from '../site.config'
 
 const SITE = siteConfig.url
@@ -47,7 +48,6 @@ export default function Layout({ children, title, description, canonical, isArti
   const ogImg    = ogImage || `${SITE}/logo.png`
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const searchRef = useRef(null)
 
   useEffect(() => {
     const btn = document.getElementById('back-to-top')
@@ -73,18 +73,6 @@ export default function Layout({ children, title, description, canonical, isArti
     document.addEventListener('click', h)
     return () => document.removeEventListener('click', h)
   }, [menuOpen])
-
-  // Keyboard shortcut Ctrl+K → відкрити пошук
-  useEffect(() => {
-    const h = (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault()
-        window.location.href = '/search'
-      }
-    }
-    window.addEventListener('keydown', h)
-    return () => window.removeEventListener('keydown', h)
-  }, [])
 
   const socialLinks = [
     { key: 'telegram', icon: <TelegramIcon />, label: 'Telegram', cls: 'telegram' },
@@ -181,11 +169,8 @@ export default function Layout({ children, title, description, canonical, isArti
 
             <div className="nav-divider" aria-hidden="true" />
 
-            {/* Кнопка пошуку */}
-            <Link href="/search" style={s.searchBtn} aria-label="Пошук по статтях" title="Пошук (Ctrl+K)">
-              <SearchIcon />
-              <span className="search-hint">Ctrl K</span>
-            </Link>
+            {/* Inline пошук */}
+            <SearchBar />
 
             {/* Social */}
             <div className="nav-social">
@@ -212,10 +197,9 @@ export default function Layout({ children, title, description, canonical, isArti
         {menuOpen && (
           <div id="mobile-menu" style={s.mobileMenu} role="navigation" aria-label="Мобільна навігація">
             {/* Пошук у мобільному меню */}
-            <Link href="/search" style={s.mobileSearchLink} onClick={() => setMenuOpen(false)}>
-              <SearchIcon />
-              <span>Пошук по статтях</span>
-            </Link>
+            <div style={{ padding: '8px 14px 4px' }}>
+              <SearchBar />
+            </div>
             {siteConfig.nav.map(item => (
               <Link key={item.href} href={item.href} style={s.mobileLink} onClick={() => setMenuOpen(false)}>
                 {item.label}
@@ -245,7 +229,6 @@ export default function Layout({ children, title, description, canonical, isArti
           <nav style={s.footerLinks} aria-label="Навігація в підвалі">
             <Link href="/about" style={s.footerLink}>Про нас</Link>
             <Link href="/tags" style={s.footerLink}>Теги</Link>
-            <Link href="/search" style={s.footerLink}>Пошук</Link>
             <Link href="/privacy" style={s.footerLink}>Конфіденційність</Link>
           </nav>
           <div style={s.footerSocial}>
@@ -273,11 +256,11 @@ export default function Layout({ children, title, description, canonical, isArti
 
 const s = {
   header: { background: '#fff', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 50 },
-  navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '62px', width: '100%', padding: '0 20px' },
+  navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', height: '62px', width: '100%', padding: '0 20px' },
   logoWrap: { display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none', flexShrink: 0 },
   logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: '#0f172a' },
   logoAccent: { color: '#0f172a' },
-  rightSide: { display: 'flex', alignItems: 'center', gap: '4px', minWidth: 0 },
+  rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end' },
   navLink: { fontSize: '14px', fontWeight: 500, color: '#475569', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
   searchBtn: {
     display: 'flex', alignItems: 'center', gap: '6px',

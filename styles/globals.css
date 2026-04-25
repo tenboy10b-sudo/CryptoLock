@@ -124,30 +124,10 @@ a.cat-tag-item:hover{border-color:#93c5fd!important;background:#eff6ff!important
   .hero-logo{display:none!important}
 }
 
-/* ── Search button hint ── */
-.search-hint{
-  font-family:var(--font-mono);
-  font-size:11px;
-  color:#94a3b8;
-  background:#f1f5f9;
-  border:1px solid #e2e8f0;
-  border-radius:4px;
-  padding:1px 5px;
-  letter-spacing:.02em;
+/* ── SearchBar ── */
+/* Dropdown не виходить за межі на мобайлі */
+@media(max-width:480px){
+  [style*="minWidth: 360px"]{min-width:calc(100vw - 40px)!important;left:-10px!important;right:-10px!important}
 }
-@media(max-width:680px){
-  .search-hint{display:none}
-}
-
-/* ── Search button hover ── */
-a[href="/search"]:hover{
-  color:#2563eb!important;
-  border-color:#2563eb!important;
-  background:#eff6ff!important;
-}
-
-/* ── Search input focus ── */
-input[type="search"]:focus{
-  border-color:#2563eb!important;
-  box-shadow:0 0 0 3px rgba(37,99,235,0.1)!important;
-}
+/* Прибрати стандартне X у input type=text в IE/Edge */
+input[type="text"]::-ms-clear{display:none}
