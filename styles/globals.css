@@ -125,16 +125,14 @@ a.cat-tag-item:hover{border-color:#93c5fd!important;background:#eff6ff!important
 }
 
 /* ── SearchBar ── */
-/* Десктоп: показуємо inline пошук, ховаємо кнопку-іконку */
+/* Десктоп: inline пошук видимий, мобайл кнопка прихована */
 .search-desktop{display:flex;flex:1;max-width:380px;min-width:0}
-.search-mobile-btn{display:none}
+.search-mobile-btn{display:none!important}
 
 @media(max-width:680px){
-  /* Мобайл: ховаємо inline пошук, показуємо кнопку-іконку */
   .search-desktop{display:none!important}
   .search-mobile-btn{display:flex!important}
 }
 
-/* Прибрати стандартне X у input type=text в IE/Edge */
 input[type="text"]::-ms-clear{display:none}
 input[type="search"]::-webkit-search-cancel-button{display:none}
