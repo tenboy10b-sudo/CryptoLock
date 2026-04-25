@@ -7,6 +7,7 @@ export default function handler(req, res) {
     description: p.description || '',
     tags: p.tags || [],
   }))
+
   res.setHeader('Cache-Control', 'public, max-age=3600')
-  res.json(posts)
+  res.status(200).json(posts)
 }
