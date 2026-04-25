@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 const SearchIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -17,13 +16,11 @@ export default function SearchBar() {
   const [active, setActive]     = useState(-1)
   const inputRef  = useRef(null)
   const wrapRef   = useRef(null)
-  const router    = useRouter()
-
   // Завантажити індекс один раз ліниво при першому фокусі
   const loadIndex = useCallback(async () => {
     if (index) return
     try {
-      const res = await fetch('/search-index.json')
+      const res = await fetch('/api/search-index')
       const data = await res.json()
       setIndex(data)
     } catch {}
@@ -77,13 +74,6 @@ export default function SearchBar() {
     return () => window.removeEventListener('keydown', h)
   }, [])
 
-  // Закрити при навігації
-  useEffect(() => {
-    setOpen(false)
-    setQuery('')
-    setResults([])
-  }, [router.asPath])
-
   // Навігація стрілками
   const onKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
@@ -93,7 +83,7 @@ export default function SearchBar() {
       e.preventDefault()
       setActive(a => Math.max(a - 1, -1))
     } else if (e.key === 'Enter' && active >= 0 && results[active]) {
-      router.push('/' + results[active].slug)
+      window.location.href = '/' + results[active].slug
     }
   }
 

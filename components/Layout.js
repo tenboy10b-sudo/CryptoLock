@@ -33,8 +33,8 @@ const LogoIcon = () => (
   <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <rect width="30" height="30" rx="7" fill="#0f172a"/>
     <path d="M20 7 C10 7 7 10 7 15 C7 20 10 23 20 23"
-          fill="none" stroke="#3b82f6" stroke-width="3.2" stroke-linecap="round"/>
-    <line x1="10" y1="15" x2="16" y2="15" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+          fill="none" stroke="#3b82f6" strokeWidth="3.2" strokeLinecap="round"/>
+    <line x1="10" y1="15" x2="16" y2="15" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round"/>
     <circle cx="9.5" cy="15" r="1.5" fill="#93c5fd"/>
   </svg>
 )
