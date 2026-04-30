@@ -17,6 +17,18 @@ const nextConfig = {
       },
     ]
   },
+
+  // 301 редирект зі старого домену на новий
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'crypto-lock-five.vercel.app' }],
+        destination: 'https://cryptolockua.com/:path*',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
