@@ -170,9 +170,9 @@ export default function Home({ posts, tags }) {
   )
 }
 
-export async function getStaticProps() {
-  const posts = getAllPosts()
-  const tags = getAllTags()
+export async function getStaticProps({ locale }) {
+  const posts = getAllPosts(locale)
+  const tags = getAllTags(locale)
   return { props: { posts, tags } }
 }
 

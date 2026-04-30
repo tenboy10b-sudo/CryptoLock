@@ -28,26 +28,31 @@ function generateSitemap(posts, tags) {
     lastmod: today,
   }))
 
+  // Хелпер для запису URL з hreflang
+  const urlEntry = (ukUrl, lastmod, priority, changefreq) => {
+    const enUrl = ukUrl === '' ? `${SITE}/en` : `${SITE}/en${ukUrl}`
+    return `  <url>
+    <loc>${SITE}${ukUrl}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+    <xhtml:link rel="alternate" hreflang="uk" href="${SITE}${ukUrl}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${ukUrl}"/>
+  </url>`
+  }
+
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${staticPages.map(p => `  <url>
-    <loc>${SITE}${p.url}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${p.changefreq}</changefreq>
-    <priority>${p.priority}</priority>
-  </url>`).join('\n')}
-${tagPages.map(p => `  <url>
-    <loc>${SITE}${p.url}</loc>
-    <lastmod>${p.lastmod}</lastmod>
-    <changefreq>${p.changefreq}</changefreq>
-    <priority>${p.priority}</priority>
-  </url>`).join('\n')}
-${posts.map(post => `  <url>
-    <loc>${SITE}/${post.slug}</loc>
-    <lastmod>${post.updated || post.date || today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>`).join('\n')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${staticPages.map(p => urlEntry(p.url, today, p.priority, p.changefreq)).join('\n')}
+${tagPages.map(p => urlEntry(p.url, p.lastmod, p.priority, p.changefreq)).join('\n')}
+${posts.map(post => urlEntry(
+  `/${post.slug}`,
+  post.date || today,
+  '0.9',
+  'monthly'
+)).join('\n')}
 </urlset>`
 }
 

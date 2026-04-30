@@ -65,15 +65,15 @@ function plural(n) {
 }
 
 export async function getStaticPaths() {
-  const tags = getAllTags()
+  const tags = getAllTags('uk')
   return {
     paths: tags.map(({ tag }) => ({ params: { tag } })),
     fallback: false,
   }
 }
 
-export async function getStaticProps({ params }) {
-  const posts = getPostsByTag(params.tag)
+export async function getStaticProps({ params, locale }) {
+  const posts = getPostsByTag(params.tag, locale)
   return { props: { tag: params.tag, posts } }
 }
 

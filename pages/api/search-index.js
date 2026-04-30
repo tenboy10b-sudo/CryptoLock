@@ -1,7 +1,8 @@
 import { getAllPosts } from '../../lib/posts'
 
 export default function handler(req, res) {
-  const posts = getAllPosts().map(p => ({
+  const locale = req.query.locale || 'uk'
+  const posts = getAllPosts(locale).map(p => ({
     slug: p.slug,
     title: p.title || '',
     description: p.description || '',

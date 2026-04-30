@@ -46,8 +46,8 @@ function plural(n) {
   return 'статей'
 }
 
-export async function getStaticProps() {
-  const tags = getAllTags()
+export async function getStaticProps({ locale }) {
+  const tags = getAllTags(locale)
   return { props: { tags } }
 }
 

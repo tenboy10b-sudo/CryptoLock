@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Прибрано unoptimized:true — Next.js тепер оптимізує зображення (WebP, lazy load, srcset)
-  // Це покращує LCP і Core Web Vitals
   images: {},
+
+  // i18n — українська за замовчуванням, /en/ для англійської
+  i18n: {
+    locales: ['uk', 'en'],
+    defaultLocale: 'uk',
+    localeDetection: false, // вимкнено — не редиректить автоматично, користувач сам обирає
+  },
 
   // Заголовки безпеки
   async headers() {

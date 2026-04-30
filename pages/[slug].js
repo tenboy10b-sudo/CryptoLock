@@ -36,7 +36,7 @@ export default function Post({ post, related }) {
       logo: { '@type': 'ImageObject', url: `${SITE}/logo.png` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
-    inLanguage: 'uk',
+    inLanguage: locale || 'uk',
     url: postUrl,
     wordCount: post.contentHtml ? post.contentHtml.replace(/<[^>]+>/g, '').split(/\s+/).length : undefined,
   }
@@ -141,14 +141,14 @@ function fmt(d) {
 }
 
 export async function getStaticPaths() {
-  // Тільки опубліковані статті отримують URL
-  // Майбутні статті → URL не існує → 404 (чисто для Google)
-  return { paths: getAllSlugs(), fallback: 'blocking' }
+  const ukPaths = getAllSlugs('uk').map(p => ({ ...p, locale: 'uk' }))
+  const enPaths = getAllSlugs('en').map(p => ({ ...p, locale: 'en' }))
+  return { paths: [...ukPaths, ...enPaths], fallback: 'blocking' }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale }) {
   try {
-    const post = await getPostBySlug(params.slug)
+    const post = await getPostBySlug(params.slug, locale)
 
     // Якщо стаття ще не опублікована — повертаємо 404
     const publishDate = post.publishDate || post.date
@@ -156,7 +156,7 @@ export async function getStaticProps({ params }) {
       return { notFound: true }
     }
 
-    const all = getAllPosts()
+    const all = getAllPosts(locale)
     const related = all
       .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
       .slice(0, 3)

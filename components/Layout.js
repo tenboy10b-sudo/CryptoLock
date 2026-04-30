@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState, useRef } from 'react'
+import { useRouter } from 'next/router'
 import SearchBar from './SearchBar'
 import siteConfig from '../site.config'
 
@@ -48,6 +49,8 @@ export default function Layout({ children, title, description, canonical, isArti
   const ogImg    = ogImage || `${SITE}/logo.png`
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const router = useRouter()
+  const { locale, asPath } = router
 
   useEffect(() => {
     const btn = document.getElementById('back-to-top')
@@ -115,8 +118,9 @@ export default function Layout({ children, title, description, canonical, isArti
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href={pageUrl} />
-        <link rel="alternate" hrefLang="uk" href={pageUrl} />
-        <link rel="alternate" hrefLang="x-default" href={pageUrl} />
+        <link rel="alternate" hrefLang="uk" href={`${SITE}${asPath === '/' ? '' : asPath}`} />
+        <link rel="alternate" hrefLang="en" href={`${SITE}/en${asPath === '/' ? '' : asPath}`} />
+        <link rel="alternate" hrefLang="x-default" href={`${SITE}${asPath === '/' ? '' : asPath}`} />
         <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
         {siteConfig.googleVerification && (
           <meta name="google-site-verification" content={siteConfig.googleVerification} />
@@ -129,7 +133,8 @@ export default function Layout({ children, title, description, canonical, isArti
         <meta property="og:image" content={ogImg} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:locale" content="uk_UA" />
+        <meta property="og:locale" content={locale === "en" ? "en_US" : "uk_UA"} />
+        <meta property="og:locale:alternate" content={locale === "en" ? "uk_UA" : "en_US"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDesc} />
@@ -173,6 +178,16 @@ export default function Layout({ children, title, description, canonical, isArti
 
             {/* Пошук — SearchBar сам рендерить десктоп/мобайл */}
             <SearchBar />
+
+            {/* Перемикач мови */}
+            <div style={s.langSwitch} aria-label="Вибір мови">
+              <Link href={asPath} locale="uk" style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }} aria-label="Українська" title="Українська">
+                UA
+              </Link>
+              <Link href={asPath} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
+                EN
+              </Link>
+            </div>
 
             {/* Social */}
             <div className="nav-social">
@@ -290,4 +305,7 @@ const s = {
   footerSocialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', color: '#94a3b8', border: '1px solid #e2e8f0', background: '#f8fafc' },
   footerCopy: { borderTop: '1px solid #f1f5f9', padding: '.75rem 0' },
   footerCopyText: { fontFamily: "'JetBrains Mono', monospace", fontSize: '11px', color: '#cbd5e1', textAlign: 'center' },
+  langSwitch: { display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0, border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', background: '#f8fafc' },
+  langBtn: { fontSize: '11px', fontWeight: 600, fontFamily: 'var(--font-mono)', padding: '5px 9px', color: '#64748b', textDecoration: 'none', transition: 'background .15s, color .15s', letterSpacing: '.03em' },
+  langBtnActive: { background: '#0f172a', color: '#fff' },
 }
