@@ -7,7 +7,7 @@ import siteConfig from '../site.config'
 
 const SITE = siteConfig.url
 
-export default function Post({ post, related, locale }) {
+export default function Post({ post, related }) {
   const postUrl = `${SITE}/${post.slug}`
 
   const articleSchema = {
@@ -161,7 +161,7 @@ export async function getStaticProps({ params, locale }) {
       .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
       .slice(0, 3)
 
-    return { props: { post, related, locale: locale || 'uk' }, revalidate: 3600 }
+    return { props: { post, related }, revalidate: 3600 }
   } catch (e) {
     return { notFound: true }
   }
