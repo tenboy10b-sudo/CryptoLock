@@ -50,7 +50,9 @@ export default function Layout({ children, title, description, canonical, isArti
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const router = useRouter()
-  const { locale, asPath } = router
+  const { locale, asPath, pathname, query } = router
+  // Чистий шлях без locale prefix для перемикача мов
+  const cleanPath = asPath.replace(/^\/(uk|en)(\/|$)/, '/$2').replace(/^\/$/, '/') || '/'
 
   useEffect(() => {
     const btn = document.getElementById('back-to-top')
@@ -167,7 +169,10 @@ export default function Layout({ children, title, description, canonical, isArti
           <div style={s.rightSide}>
             {/* Desktop nav */}
             <nav className="nav-desktop" aria-label="Головна навігація">
-              {siteConfig.nav.map(item => (
+              {(locale === 'en'
+                ? [{ label: 'Articles', href: '/' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
+                : siteConfig.nav
+              ).map(item => (
                 <Link key={item.href} href={item.href} style={s.navLink} className="nav-link">
                   {item.label}
                 </Link>
@@ -181,10 +186,10 @@ export default function Layout({ children, title, description, canonical, isArti
 
             {/* Перемикач мови */}
             <div style={s.langSwitch} aria-label="Вибір мови">
-              <Link href={asPath} locale="uk" style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }} aria-label="Українська" title="Українська">
+              <Link href={cleanPath} locale="uk" style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }} aria-label="Українська" title="Українська">
                 UA
               </Link>
-              <Link href={asPath} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
+              <Link href={cleanPath} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
                 EN
               </Link>
             </div>

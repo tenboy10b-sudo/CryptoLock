@@ -4,10 +4,12 @@ import Link from 'next/link'
 import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
+import { useRouter } from 'next/router'
 
 const SITE = siteConfig.url
 
 export default function Post({ post, related, locale }) {
+  const isEn = locale === 'en'
   const postUrl = `${SITE}/${post.slug}`
 
   const articleSchema = {
@@ -67,8 +69,8 @@ export default function Post({ post, related, locale }) {
       <div style={s.wrap}>
         <div className="container">
 
-          <nav aria-label="Хлібні крихти" style={s.bc}>
-            <Link href="/" style={s.bcLink}>Головна</Link>
+          <nav aria-label={isEn ? "Breadcrumbs" : "Хлібні крихти"} style={s.bc}>
+            <Link href="/" style={s.bcLink}>{isEn ? "Home" : "Головна"}</Link>
             <span style={s.bcSep} aria-hidden="true">/</span>
             {post.tags && post.tags[0] && (
               <>
@@ -90,9 +92,9 @@ export default function Post({ post, related, locale }) {
               )}
               <h1 style={s.title}>{post.title}</h1>
               <div style={s.meta}>
-                {post.date && <time dateTime={post.date} style={s.metaItem}>{fmt(post.date)}</time>}
-                {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} хв читання</span></>}
-                {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>Оновлено <time dateTime={post.updated}>{fmt(post.updated)}</time></span></>}
+                {post.date && <time dateTime={post.date} style={s.metaItem}>{fmt(post.date, locale)}</time>}
+                {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min read' : 'хв читання'}</span></>}
+                {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <time dateTime={post.updated}>{fmt(post.updated, locale)}</time></span></>}
               </div>
               {post.description && <p style={s.lead}>{post.description}</p>}
             </header>
@@ -118,8 +120,8 @@ export default function Post({ post, related, locale }) {
           </article>
 
           {related && related.length > 0 && (
-            <section style={s.related} aria-label="Схожі статті">
-              <p style={s.relatedTitle}>Схожі статті</p>
+            <section style={s.related} aria-label={isEn ? "Related articles" : "Схожі статті"}>
+              <p style={s.relatedTitle}>{isEn ? "Related articles" : "Схожі статті"}</p>
               <div style={s.relatedGrid}>
                 {related.map(r => <PostCard key={r.slug} post={r} />)}
               </div>
@@ -127,7 +129,7 @@ export default function Post({ post, related, locale }) {
           )}
 
           <div style={s.back}>
-            <Link href="/" style={s.backLink}>← Всі статті</Link>
+            <Link href="/" style={s.backLink}>{isEn ? "← All articles" : "← Всі статті"}</Link>
           </div>
         </div>
       </div>
@@ -135,7 +137,7 @@ export default function Post({ post, related, locale }) {
   )
 }
 
-function fmt(d) {
+function fmt(d, locale = 'uk') {
   if (!d) return ''
   return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
 }

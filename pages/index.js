@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import PostCard from '../components/PostCard'
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { getAllPosts, getAllTags } from '../lib/posts'
 import siteConfig from '../site.config'
 
@@ -19,6 +20,8 @@ const CATEGORIES = [
 ]
 
 export default function Home({ posts, tags }) {
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
   const [openCats, setOpenCats] = useState({ security: true, windows: true })
   const [visibleCount, setVisibleCount] = useState(12)
   const loadMoreRef = useRef(null)
@@ -61,20 +64,30 @@ export default function Home({ posts, tags }) {
             <div style={s.heroText}>
               <div style={s.heroBadge} aria-hidden="true">
                 <span style={s.heroBadgeDot} />
-                Гайди українською · {posts.length} статей
+                {isEn ? `English guides · ${posts.length} articles` : `Гайди українською · ${posts.length} статей`}
               </div>
               <h1 style={s.heroTitle}>
-                Безпека та<br />
-                <span style={s.heroAccent}>налаштування ПК</span>
+                {isEn ? <>Security &amp;<br /><span style={s.heroAccent}>Windows Tips</span></> : <>Безпека та<br /><span style={s.heroAccent}>налаштування ПК</span></>}
               </h1>
               <p style={s.heroSub}>
-                Покрокові інструкції з Windows, захисту даних,
-                групових політик і системного адміністрування.
+                {isEn
+                  ? 'Step-by-step guides on Windows settings, security, group policies and system administration.'
+                  : 'Покрокові інструкції з Windows, захисту даних, групових політик і системного адміністрування.'}
               </p>
-              <nav style={s.heroActions} aria-label="Популярні теми">
-                <Link href="/tags/безпека" style={s.heroBtnPrimary}>Безпека</Link>
-                <Link href="/tags/windows" style={s.heroBtnSecondary}>Windows</Link>
-                <Link href="/tags/групова-політика" style={s.heroBtnSecondary}>Групова політика</Link>
+              <nav style={s.heroActions} aria-label={isEn ? 'Popular topics' : 'Популярні теми'}>
+                {isEn ? (
+                  <>
+                    <Link href="/tags/windows" style={s.heroBtnPrimary}>Windows</Link>
+                    <Link href="/tags/security" style={s.heroBtnSecondary}>Security</Link>
+                    <Link href="/tags/powershell" style={s.heroBtnSecondary}>PowerShell</Link>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/tags/безпека" style={s.heroBtnPrimary}>Безпека</Link>
+                    <Link href="/tags/windows" style={s.heroBtnSecondary}>Windows</Link>
+                    <Link href="/tags/групова-політика" style={s.heroBtnSecondary}>Групова політика</Link>
+                  </>
+                )}
               </nav>
             </div>
             <div className="hero-logo" style={s.heroLogoWrap} aria-hidden="true">
@@ -91,7 +104,7 @@ export default function Home({ posts, tags }) {
       <section style={s.catsSection} aria-label="Теми статей">
         <div className="container">
           <div style={s.catsSectionHead}>
-            <h2 style={s.catsSectionTitle}>Теми</h2>
+            <h2 style={s.catsSectionTitle}>{isEn ? "Topics" : "Теми"}</h2>
             <button
               style={s.expandAllBtn}
               onClick={() => {
@@ -149,11 +162,11 @@ export default function Home({ posts, tags }) {
         <div className="container">
           {featured && (
             <div style={s.featuredWrap}>
-              <p style={s.sectionLabel} aria-hidden="true">Остання стаття</p>
+              <p style={s.sectionLabel} aria-hidden="true">{isEn ? "Latest article" : "Остання стаття"}</p>
               <PostCard post={featured} featured />
             </div>
           )}
-          <p style={s.sectionLabel} aria-hidden="true">Всі статті</p>
+          <p style={s.sectionLabel} aria-hidden="true">{isEn ? "All articles" : "Всі статті"}</p>
           <div style={s.grid} role="list" aria-label="Список статей">
             {rest.slice(0, visibleCount).map(post => (
               <div key={post.slug} role="listitem">
