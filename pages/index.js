@@ -8,7 +8,7 @@ import siteConfig from '../site.config'
 
 const SITE = siteConfig.url
 
-const CATEGORIES = [
+const CATEGORIES_UK = [
   { id: 'security',     label: 'Безпека',          icon: '🔒', tags: ['безпека','паролі','bitlocker','шифрування','облікові-записи','захист'] },
   { id: 'windows',      label: 'Windows',           icon: '🪟', tags: ['windows','оновлення','windows-update','персоналізація','темна-тема','налаштування'] },
   { id: 'system',       label: 'Система',           icon: '⚙️', tags: ['драйвери','bios','uefi','диск','chkdsk','sfc','dism','обладнання'] },
@@ -18,10 +18,21 @@ const CATEGORIES = [
   { id: 'gpo',          label: 'Групова політика',  icon: '🛡️', tags: ['групова-політика','gpedit','secpol','applocker','gpo'] },
   { id: 'recovery',     label: 'Відновлення',       icon: '🔄', tags: ['відновлення','скидання','переустановка'] },
 ]
+const CATEGORIES_EN = [
+  { id: 'security',     label: 'Security',       icon: '🔒', tags: ['безпека','паролі','bitlocker','шифрування','облікові-записи','захист','security','viruses','encryption'] },
+  { id: 'windows',      label: 'Windows',        icon: '🪟', tags: ['windows','оновлення','windows-update','персоналізація','темна-тема','налаштування','optimization','performance'] },
+  { id: 'system',       label: 'System',         icon: '⚙️', tags: ['драйвери','bios','uefi','диск','chkdsk','sfc','dism','обладнання'] },
+  { id: 'network',      label: 'Network',        icon: '📶', tags: ['wifi','dns','bluetooth','мережа','network','rdp'] },
+  { id: 'optimization', label: 'Optimization',   icon: '⚡', tags: ['оптимізація','продуктивність','автозавантаження','очищення','прискорення'] },
+  { id: 'tools',        label: 'Tools',          icon: '🧰', tags: ['cmd','powershell','реєстр','моніторинг','tools','administration'] },
+  { id: 'gpo',          label: 'Group Policy',   icon: '🛡️', tags: ['групова-політика','gpedit','secpol','applocker','gpo'] },
+  { id: 'recovery',     label: 'Recovery',       icon: '🔄', tags: ['відновлення','скидання','переустановка'] },
+]
 
 export default function Home({ posts, tags }) {
   const { locale } = useRouter()
   const isEn = locale === 'en'
+  const CATEGORIES = isEn ? CATEGORIES_EN : CATEGORIES_UK
   const [openCats, setOpenCats] = useState({ security: true, windows: true })
   const [visibleCount, setVisibleCount] = useState(12)
   const loadMoreRef = useRef(null)
@@ -115,7 +126,7 @@ export default function Home({ posts, tags }) {
               }}
               aria-label={CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі категорії' : 'Розгорнути всі категорії'}
             >
-              {CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі ↑' : 'Розгорнути всі ↓'}
+              {isEn ? (CATEGORIES.every(c => openCats[c.id]) ? 'Collapse all ↑' : 'Expand all ↓') : (CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі ↑' : 'Розгорнути всі ↓')}
             </button>
           </div>
 

@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export default function PostCard({ post, featured }) {
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
   return (
     <article
       className="post-card"
@@ -31,7 +34,7 @@ export default function PostCard({ post, featured }) {
               <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} хв</span></>
             )}
           </div>
-          <span style={s.readBtn} aria-hidden="true">Читати →</span>
+          <span style={s.readBtn} aria-hidden="true">{isEn ? 'Read →' : 'Читати →'}</span>
         </div>
       </Link>
     </article>

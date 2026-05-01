@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const SearchIcon = () => (
@@ -68,7 +69,7 @@ function MobileOverlay({ onClose, index, loadIndex }) {
             ref={inputRef}
             type="search"
             value={query}
-            placeholder="Пошук по статтях..."
+            placeholder={isEn ? "Search articles..." : "Пошук по статтях..."}
             onChange={e => setQuery(e.target.value)}
             style={m.input}
             autoComplete="off"
@@ -157,7 +158,7 @@ function DesktopSearch({ index, loadIndex }) {
           ref={inputRef}
           type="text"
           value={query}
-          placeholder="Пошук..."
+          placeholder={isEn ? "Search..." : "Пошук..."}
           autoComplete="off"
           onFocus={() => { loadIndex(); setOpen(true) }}
           onChange={e => { setQuery(e.target.value); setOpen(true) }}
@@ -198,6 +199,8 @@ function DesktopSearch({ index, loadIndex }) {
 // Рендерить ОБИДВА варіанти одразу — CSS вирішує що показати
 // Це уникає hydration mismatch і проблем з SSR
 export default function SearchBar() {
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
   const [index, loadIndex] = useSearchIndex()
   const [overlayOpen, setOverlayOpen] = useState(false)
 
@@ -213,7 +216,7 @@ export default function SearchBar() {
         className="search-mobile-btn"
         onClick={() => { loadIndex(); setOverlayOpen(true) }}
         style={sb.btn}
-        aria-label="Пошук"
+        aria-label={isEn ? "Search" : "Пошук"}
       >
         <SearchIcon />
       </button>

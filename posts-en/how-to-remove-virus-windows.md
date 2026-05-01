@@ -5,6 +5,7 @@ publishDate: "2026-04-22"
 description: "Step-by-step guide to removing malware from Windows 10 and 11 using free built-in tools: Windows Defender, Safe Mode, Malwarebytes Free, and manual cleanup."
 tags: ["windows", "security", "viruses", "tools"]
 readTime: 6
+translatesUk: "yak-vydatyly-virus-z-windows"
 ---
 
 Your PC is infected but you don't want to pay for antivirus? Windows has powerful free tools that handle most malware. Here's exactly what to do.

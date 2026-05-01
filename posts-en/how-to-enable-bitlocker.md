@@ -5,6 +5,7 @@ publishDate: "2026-04-03"
 description: "Step-by-step guide to enabling BitLocker disk encryption in Windows 10 and 11: TPM requirements, recovery key backup, and encrypting external drives with BitLocker To Go."
 tags: ["windows", "security", "bitlocker", "encryption"]
 readTime: 5
+translatesUk: "yak-zashyfruvaty-dysk-bitlocker"
 ---
 
 BitLocker encrypts your entire drive — if your laptop is stolen, the data is unreadable without your password. Here's how to enable it.

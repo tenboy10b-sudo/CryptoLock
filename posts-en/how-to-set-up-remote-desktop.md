@@ -5,6 +5,7 @@ publishDate: "2026-04-07"
 description: "Complete guide to enabling and securing Remote Desktop Protocol (RDP) in Windows: enable RDP, configure firewall, connect from another PC, and secure against attacks."
 tags: ["windows", "network", "rdp", "administration", "security"]
 readTime: 6
+translatesUk: "nalashtuvannya-remote-desktop-rdp"
 ---
 
 Remote Desktop lets you control a Windows PC from anywhere. Here's how to enable it safely.

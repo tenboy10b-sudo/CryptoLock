@@ -5,6 +5,7 @@ publishDate: "2026-04-18"
 description: "Speed up Windows 10 and 11 with 15 proven methods: disable startup programs, clean temp files, optimize visual settings, and get faster boot without reinstalling."
 tags: ["windows", "optimization", "performance", "tools"]
 readTime: 7
+translatesUk: "yak-pryskoryt-windows"
 ---
 
 A slow Windows PC is fixable without reinstalling. These 15 methods go from quick wins to deeper optimizations.

@@ -1,12 +1,15 @@
 import Layout from '../../components/Layout'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { getAllTags } from '../../lib/posts'
 import siteConfig from '../../site.config'
 
 const SITE = siteConfig.url
 
 export default function TagsPage({ tags }) {
-  const title = `Всі теги — ${siteConfig.name}`
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
+  const title = isEn ? `All Tags — ${siteConfig.name}` : `Всі теги — ${siteConfig.name}`
   const desc = `Повний список тем та тегів на ${siteConfig.name}: Windows, безпека, GPO, CMD, PowerShell та інше.`
 
   return (
@@ -17,8 +20,8 @@ export default function TagsPage({ tags }) {
     >
       <div style={{ padding: '2.5rem 0' }}>
         <div className="container">
-          <h1 style={styles.title}>Всі теги</h1>
-          <p style={styles.subtitle}>{tags.length} тем · {tags.reduce((s, t) => s + t.count, 0)} статей</p>
+          <h1 style={styles.title}>{isEn ? 'All Tags' : 'Всі теги'}</h1>
+          <p style={styles.subtitle}>{tags.length} {isEn ? 'topics' : 'тем'} · {tags.reduce((s, t) => s + t.count, 0)} {isEn ? 'articles' : 'статей'}</p>
           <div style={styles.grid} role="list">
             {tags.map(({ tag, count }) => (
               <Link

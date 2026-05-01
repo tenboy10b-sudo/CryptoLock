@@ -246,9 +246,9 @@ export default function Layout({ children, title, description, canonical, isArti
             <span style={s.footerName}>CryptoLock</span>
           </div>
           <nav style={s.footerLinks} aria-label="Навігація в підвалі">
-            <Link href="/about" style={s.footerLink}>Про нас</Link>
-            <Link href="/tags" style={s.footerLink}>Теги</Link>
-            <Link href="/privacy" style={s.footerLink}>Конфіденційність</Link>
+            <Link href="/about" style={s.footerLink}>{locale === "en" ? "About" : "Про нас"}</Link>
+            <Link href="/tags" style={s.footerLink}>{locale === "en" ? "Tags" : "Теги"}</Link>
+            <Link href="/privacy" style={s.footerLink}>{locale === "en" ? "Privacy" : "Конфіденційність"}</Link>
           </nav>
           <div style={s.footerSocial}>
             {socialLinks.map(({ key, icon, label }) => (
@@ -262,7 +262,7 @@ export default function Layout({ children, title, description, canonical, isArti
         <div style={s.footerCopy}>
           <div className="container">
             <p style={s.footerCopyText}>
-              © {new Date().getFullYear()} CryptoLock. Всі матеріали українською мовою.
+              {locale === "en" ? `© ${new Date().getFullYear()} CryptoLock. Windows & Security guides.` : `© ${new Date().getFullYear()} CryptoLock. Всі матеріали українською мовою.`}
             </p>
           </div>
         </div>
