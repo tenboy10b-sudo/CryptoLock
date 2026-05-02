@@ -75,7 +75,7 @@ export default function Post({ post, related, locale }) {
             <span style={s.bcSep} aria-hidden="true">/</span>
             {post.tags && post.tags[0] && (
               <>
-                <Link href={`/tags/${post.tags[0]}`} style={s.bcLink}>{post.tags[0]}</Link>
+                <Link href={`/tags/${post.tags[0]}`} locale={locale} style={s.bcLink}>{post.tags[0]}</Link>
                 <span style={s.bcSep} aria-hidden="true">/</span>
               </>
             )}
@@ -87,7 +87,7 @@ export default function Post({ post, related, locale }) {
               {post.tags && (
                 <div style={s.tagRow}>
                   {post.tags.map(tag => (
-                    <Link key={tag} href={`/tags/${tag}`} className="tag-chip">{tag}</Link>
+                    <Link key={tag} href={`/tags/${tag}`} locale={locale} className="tag-chip">{tag}</Link>
                   ))}
                 </div>
               )}

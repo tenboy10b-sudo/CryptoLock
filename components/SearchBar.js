@@ -15,15 +15,15 @@ const CloseIcon = () => (
   </svg>
 )
 
-function useSearchIndex() {
+function useSearchIndex(locale) {
   const [index, setIndex] = useState(null)
   const load = useCallback(async () => {
     if (index) return
     try {
-      const res = await fetch('/api/search-index')
+      const res = await fetch(`/api/search-index?locale=${locale}`)
       setIndex(await res.json())
     } catch {}
-  }, [index])
+  }, [index, locale])
   return [index, load]
 }
 
@@ -201,7 +201,7 @@ function DesktopSearch({ index, loadIndex, isEn }) {
 export default function SearchBar() {
   const { locale } = useRouter()
   const isEn = locale === 'en'
-  const [index, loadIndex] = useSearchIndex()
+  const [index, loadIndex] = useSearchIndex(locale || 'uk')
   const [overlayOpen, setOverlayOpen] = useState(false)
 
   return (
