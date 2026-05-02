@@ -42,7 +42,7 @@ function useSearch(index, query) {
 }
 
 // ── Мобільний оверлей ────────────────────────────────────────────────────
-function MobileOverlay({ onClose, index, loadIndex, isEn }) {
+function MobileOverlay({ onClose, index, loadIndex, isEn, locale }) {
   const [query, setQuery] = useState('')
   const results = useSearch(index, query)
   const inputRef = useRef(null)
@@ -94,7 +94,7 @@ function MobileOverlay({ onClose, index, loadIndex, isEn }) {
           </div>
         )}
         {results.map(post => (
-          <Link key={post.slug} href={`/${post.slug}`} style={m.item} onClick={onClose}>
+          <Link key={post.slug} href={`/${post.slug}`} locale={locale} style={m.item} onClick={onClose}>
             <span style={m.itemIcon}><SearchIcon /></span>
             <span style={m.itemBody}>
               <span style={m.itemTitle}>{post.title}</span>
@@ -113,7 +113,7 @@ function MobileOverlay({ onClose, index, loadIndex, isEn }) {
 }
 
 // ── Десктопний inline ────────────────────────────────────────────────────
-function DesktopSearch({ index, loadIndex, isEn }) {
+function DesktopSearch({ index, loadIndex, isEn, locale }) {
   const [query, setQuery] = useState('')
   const [open, setOpen]   = useState(false)
   const [active, setActive] = useState(-1)
@@ -145,7 +145,7 @@ function DesktopSearch({ index, loadIndex, isEn }) {
   const onKeyDown = e => {
     if (e.key === 'ArrowDown') { e.preventDefault(); setActive(a => Math.min(a + 1, results.length - 1)) }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(a => Math.max(a - 1, -1)) }
-    else if (e.key === 'Enter' && results[active]) window.location.href = '/' + results[active].slug
+    else if (e.key === 'Enter' && results[active]) window.location.href = (locale === 'en' ? '/en/' : '/') + results[active].slug
   }
 
   const show = open && query.trim().length >= 2
@@ -173,7 +173,7 @@ function DesktopSearch({ index, loadIndex, isEn }) {
       {show && (
         <div style={d.dropdown}>
           {results.length > 0 ? results.map((post, i) => (
-            <Link key={post.slug} href={`/${post.slug}`}
+            <Link key={post.slug} href={`/${post.slug}`} locale={locale}
               style={{ ...d.item, ...(i === active ? d.itemActive : {}) }}
               onMouseEnter={() => setActive(i)}>
               <span style={d.itemIcon}><SearchIcon /></span>
@@ -208,7 +208,7 @@ export default function SearchBar() {
     <>
       {/* Десктоп — ховається через CSS на мобайлі */}
       <div className="search-desktop">
-        <DesktopSearch index={index} loadIndex={loadIndex} isEn={isEn} />
+        <DesktopSearch index={index} loadIndex={loadIndex} isEn={isEn} locale={locale} />
       </div>
 
       {/* Мобайл — кнопка-іконка, ховається на десктопі */}
@@ -228,6 +228,7 @@ export default function SearchBar() {
           index={index}
           loadIndex={loadIndex}
           isEn={isEn}
+          locale={locale}
         />
       )}
     </>
