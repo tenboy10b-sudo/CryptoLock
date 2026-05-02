@@ -184,15 +184,21 @@ export default function Layout({ children, title, description, canonical, isArti
             {/* Пошук — SearchBar сам рендерить десктоп/мобайл */}
             <SearchBar />
 
-            {/* Перемикач мови */}
-            <div style={s.langSwitch} aria-label="Вибір мови">
-              <Link href={translatesUk ? `/${translatesUk}` : cleanPath} locale="uk" style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }} aria-label="Українська" title="Українська">
-                UA
-              </Link>
-              <Link href={translatesEn ? `/${translatesEn}` : cleanPath} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
-                EN
-              </Link>
-            </div>
+            {/* Перемикач мови — тільки якщо є переклад */}
+            {(translatesUk || translatesEn) && (
+              <div style={s.langSwitch} aria-label="Вибір мови">
+                {translatesUk && (
+                  <Link href={`/${translatesUk}`} locale="uk" style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }} aria-label="Українська" title="Українська">
+                    UA
+                  </Link>
+                )}
+                {translatesEn && (
+                  <Link href={`/${translatesEn}`} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
+                    EN
+                  </Link>
+                )}
+              </div>
+            )}
 
             {/* Social */}
             <div className="nav-social">
