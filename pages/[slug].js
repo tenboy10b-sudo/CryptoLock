@@ -62,6 +62,7 @@ export default function Post({ post, related, locale }) {
       canonical={postUrl}
       isArticle
       ogImage={`${SITE}/logo.png`}
+      translatesUk={post.translatesUk}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
