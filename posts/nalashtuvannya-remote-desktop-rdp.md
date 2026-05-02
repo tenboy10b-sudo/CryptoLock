@@ -4,6 +4,7 @@ date: "2026-04-07"
 description: "Увімкнення і налаштування Remote Desktop Protocol в Windows: через Settings, PowerShell і через GPO. Безпечне підключення до ПК віддалено."
 tags: ["rdp", "мережа", "windows", "адміністрування"]
 readTime: 6
+translatesEn: "how-to-set-up-remote-desktop"
 ---
 
 Remote Desktop дозволяє підключатись до ПК віддалено — з іншого комп'ютера, ноутбука або телефону. Розберемо як налаштувати правильно і безпечно.

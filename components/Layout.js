@@ -40,7 +40,7 @@ const LogoIcon = () => (
   </svg>
 )
 
-export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk }) {
+export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn }) {
   const pageTitle = title
     ? `${title} — ${siteConfig.name}`
     : `${siteConfig.name} — налаштування Windows та захист ПК українською`
@@ -189,7 +189,7 @@ export default function Layout({ children, title, description, canonical, isArti
               <Link href={translatesUk ? `/${translatesUk}` : cleanPath} locale="uk" style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }} aria-label="Українська" title="Українська">
                 UA
               </Link>
-              <Link href={cleanPath} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
+              <Link href={translatesEn ? `/${translatesEn}` : cleanPath} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
                 EN
               </Link>
             </div>
