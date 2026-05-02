@@ -90,17 +90,17 @@ function MobileOverlay({ onClose, index, loadIndex, isEn, locale }) {
             </button>
           )}
         </div>
-        <button onClick={onClose} style={m.cancel}>Скасувати</button>
+        <button onClick={onClose} style={m.cancel}>{isEn ? 'Cancel' : 'Скасувати'}</button>
       </div>
       <div style={m.body}>
         {query.trim().length < 2 && (
-          <p style={m.hint}>Введи мінімум 2 символи</p>
+          <p style={m.hint}>{isEn ? 'Type at least 2 characters' : 'Введи мінімум 2 символи'}</p>
         )}
         {query.trim().length >= 2 && results.length === 0 && (
           <div style={m.empty}>
             <div style={{ fontSize: '32px' }}>🔍</div>
-            <p style={m.emptyTitle}>Нічого не знайдено</p>
-            <p style={m.emptyHint}>Спробуй інше слово</p>
+            <p style={m.emptyTitle}>{isEn ? 'Nothing found' : 'Нічого не знайдено'}</p>
+            <p style={m.emptyHint}>{isEn ? 'Try another word' : 'Спробуй інше слово'}</p>
           </div>
         )}
         {results.map(post => (
@@ -194,10 +194,10 @@ function DesktopSearch({ index, loadIndex, isEn, locale }) {
               <span style={d.arrow}>›</span>
             </Link>
           )) : (
-            <div style={d.empty}>Нічого не знайдено за «{query}»</div>
+            <div style={d.empty}>{isEn ? `No results for "${query}"` : `Нічого не знайдено за «${query}»`}</div>
           )}
           {results.length > 0 && (
-            <div style={d.footer}>{results.length} результат{results.length > 1 ? 'и' : ''} · ↑↓ · Enter</div>
+            <div style={d.footer}>{results.length} {isEn ? `result${results.length > 1 ? 's' : ''}` : `результат${results.length > 1 ? 'и' : ''}`} · ↑↓ · Enter</div>
           )}
         </div>
       )}
