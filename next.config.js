@@ -32,6 +32,34 @@ const nextConfig = {
         destination: 'https://cryptolockua.com/:path*',
         permanent: true,
       },
+      // Старі EN UK slugs → правильні EN slugs
+      {
+        source: '/yak-vydatyly-virus-z-windows',
+        locale: false,
+        has: [{ type: 'header', key: 'x-nextjs-locale', value: 'en' }],
+        destination: '/en/how-to-remove-virus-windows',
+        permanent: true,
+      },
+      {
+        source: '/en/yak-vydatyly-virus-z-windows',
+        destination: '/en/how-to-remove-virus-windows',
+        permanent: true,
+      },
+      {
+        source: '/en/yak-pryskoryt-windows',
+        destination: '/en/how-to-speed-up-windows',
+        permanent: true,
+      },
+      {
+        source: '/en/yak-zashyfruvaty-dysk-bitlocker',
+        destination: '/en/how-to-enable-bitlocker',
+        permanent: true,
+      },
+      {
+        source: '/en/nalashtuvannya-remote-desktop-rdp',
+        destination: '/en/how-to-set-up-remote-desktop',
+        permanent: true,
+      },
     ]
   },
 }
