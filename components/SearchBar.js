@@ -42,7 +42,7 @@ function useSearch(index, query) {
 }
 
 // ── Мобільний оверлей ────────────────────────────────────────────────────
-function MobileOverlay({ onClose, index, loadIndex }) {
+function MobileOverlay({ onClose, index, loadIndex, isEn }) {
   const [query, setQuery] = useState('')
   const results = useSearch(index, query)
   const inputRef = useRef(null)
@@ -113,7 +113,7 @@ function MobileOverlay({ onClose, index, loadIndex }) {
 }
 
 // ── Десктопний inline ────────────────────────────────────────────────────
-function DesktopSearch({ index, loadIndex }) {
+function DesktopSearch({ index, loadIndex, isEn }) {
   const [query, setQuery] = useState('')
   const [open, setOpen]   = useState(false)
   const [active, setActive] = useState(-1)
@@ -208,7 +208,7 @@ export default function SearchBar() {
     <>
       {/* Десктоп — ховається через CSS на мобайлі */}
       <div className="search-desktop">
-        <DesktopSearch index={index} loadIndex={loadIndex} />
+        <DesktopSearch index={index} loadIndex={loadIndex} isEn={isEn} />
       </div>
 
       {/* Мобайл — кнопка-іконка, ховається на десктопі */}
@@ -227,6 +227,7 @@ export default function SearchBar() {
           onClose={() => setOverlayOpen(false)}
           index={index}
           loadIndex={loadIndex}
+          isEn={isEn}
         />
       )}
     </>
