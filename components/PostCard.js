@@ -28,22 +28,22 @@ export default function PostCard({ post, featured }) {
         <div style={s.footer}>
           <div style={s.meta}>
             {post.date && (
-              <time dateTime={post.date} style={s.metaItem}>{fmt(post.date)}</time>
+              <time dateTime={post.date} style={s.metaItem}>{fmt(post.date, isEn)}</time>
             )}
             {post.readTime && (
-              <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} хв</span></>
+              <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min' : 'хв'}</span></>
             )}
           </div>
-          <span style={s.readBtn} aria-hidden="true">{isEn ? 'Read →' : 'Читати →'}</span>
+          <span style={s.readBtn} aria-hidden="true">{isEn ? 'Read' : 'Читати'}</span>
         </div>
       </Link>
     </article>
   )
 }
 
-function fmt(d) {
+function fmt(d, isEn = false) {
   if (!d) return ''
-  return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short', year: 'numeric' })
+  return new Date(d).toLocaleDateString(isEn ? 'en-US' : 'uk-UA', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 const s = {
@@ -80,8 +80,9 @@ const s = {
     fontWeight: 600,
     color: '#2563eb',
     background: '#eff6ff',
-    padding: '4px 10px',
-    borderRadius: '20px',
+    padding: '5px 14px',
+    borderRadius: '999px',
     border: '1px solid #dbeafe',
+    whiteSpace: 'nowrap',
   },
 }
