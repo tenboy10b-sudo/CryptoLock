@@ -17,13 +17,23 @@ const CloseIcon = () => (
 
 function useSearchIndex(locale) {
   const [index, setIndex] = useState(null)
+  const localeRef = useRef(null)
+
   const load = useCallback(async () => {
-    if (index) return
+    if (index && localeRef.current === locale) return
     try {
+      localeRef.current = locale
       const res = await fetch(`/api/search-index?locale=${locale}`)
       setIndex(await res.json())
     } catch {}
   }, [index, locale])
+
+  // Скидаємо індекс при зміні локалі
+  useEffect(() => {
+    setIndex(null)
+    localeRef.current = null
+  }, [locale])
+
   return [index, load]
 }
 

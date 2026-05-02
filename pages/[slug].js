@@ -164,7 +164,7 @@ export async function getStaticProps({ params, locale }) {
       .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
       .slice(0, 3)
 
-    return { props: { post, related, locale: locale || 'uk' }, revalidate: 3600 }
+    return { props: { post, related, locale: locale || 'uk' }, revalidate: 60 }
   } catch (e) {
     return { notFound: true }
   }
