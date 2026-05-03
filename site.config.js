@@ -7,7 +7,7 @@ const siteConfig = {
   description: 'Покрокові гайди з налаштування Windows, інформаційної безпеки та захисту ПК українською мовою.',
   language: 'uk',
   adsenseId: '',
-  gaId: '',
+  gaId: 'G-JV8812003S',
   googleVerification: '', // вставити код з Google Search Console
   postsPerPage: 10,
   social: {
