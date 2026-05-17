@@ -147,7 +147,7 @@ def generate_post(article: dict, include_link: bool) -> str:
 Стиль: дружній, технічний, як від досвідченого системного адміністратора."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-5",
         max_tokens=600,
         messages=[{"role": "user", "content": prompt}]
     )
