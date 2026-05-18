@@ -2,7 +2,7 @@ name: Telegram Bot Daily Post
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # щодня о 10:00 за Київським часом (UTC+2)
+  - cron: '0 8 * * *' #  ти щодня о 10:00 за Київським часом (UTC+2)
   workflow_dispatch:       # можна запустити вручну
 
 jobs:
