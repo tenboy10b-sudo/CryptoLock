@@ -8,7 +8,7 @@ const siteConfig = {
   language: 'uk',
   adsenseId: '',
   gaId: 'G-FQJ7326JW0',
-  googleVerification: '', // вставити код з Google Search Console
+  googleVerification: '',
   postsPerPage: 10,
   social: {
     telegram: 'https://t.me/cryptolock888',
@@ -17,6 +17,7 @@ const siteConfig = {
   },
   nav: [
     { label: 'Статті', href: '/' },
+    { label: 'Інструменти', href: '/tools' },
     { label: 'Теги', href: '/tags' },
     { label: 'Про нас', href: '/about' },
   ],
