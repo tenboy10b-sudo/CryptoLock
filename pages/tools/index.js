@@ -1,6 +1,6 @@
-import Layout from '../components/Layout'
+import Layout from '../../components/Layout'
 import Link from 'next/link'
-import siteConfig from '../site.config'
+import siteConfig from '../../site.config'
 
 const SITE = siteConfig.url
 
