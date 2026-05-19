@@ -2,7 +2,7 @@ name: Promo Post (11:30)
 
 on:
   schedule:
-    - cron: '30 9 * * *'  # 11:30 Kyiv (UTC+2)
+  - cron: '0 8 * * *'  # 10:00 Kyiv time (UTC+2) - daily content
   workflow_dispatch:
 
 jobs:
