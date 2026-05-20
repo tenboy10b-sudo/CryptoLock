@@ -1,12 +1,13 @@
 {
   "published": [
-    "windows-firewall-nalashtuvannya-pravyl"
+    "windows-firewall-nalashtuvannya-pravyl",
+    "yak-pratsyuvaty-z-reiestratorom-windows"
   ],
-  "count": 1,
+  "count": 2,
   "promo_index": 2,
   "last_post": {
-    "slug": "windows-firewall-nalashtuvannya-pravyl",
-    "title": "Брандмауер Windows: налаштування правил для програм і портів",
-    "time": "2026-05-19T17:42:12.148605"
+    "slug": "yak-pratsyuvaty-z-reiestratorom-windows",
+    "title": "Редактор реєстру Windows: що це і як безпечно з ним працювати",
+    "time": "2026-05-20T08:01:05.827643"
   }
 }
