@@ -1,8 +1,6 @@
 name: Promo Post (11:30)
 
 on:
-  schedule:
-    - cron: '30 9 * * *'  # 11:30 Kyiv (UTC+2)
   workflow_dispatch:
 
 permissions:
