@@ -3,13 +3,14 @@
     "windows-firewall-nalashtuvannya-pravyl",
     "yak-pratsyuvaty-z-reiestratorom-windows",
     "yak-nalashtuvaty-shyfruvalnyk-fayliv-windows",
-    "yak-nalashtuvanty-dvokrokov╤Г-autentyfikatsiyu-windows"
+    "yak-nalashtuvanty-dvokrokov╤Г-autentyfikatsiyu-windows",
+    "skynuti-parol-windows-cmd"
   ],
-  "count": 4,
+  "count": 5,
   "promo_index": 5,
   "last_post": {
-    "slug": "yak-nalashtuvanty-dvokrokov╤Г-autentyfikatsiyu-windows",
-    "title": "Двофакторна автентифікація в Windows: Microsoft Authenticator і апаратні ключі",
-    "time": "2026-05-21T08:01:06.605151"
+    "slug": "skynuti-parol-windows-cmd",
+    "title": "Як скинути пароль Windows через CMD без сторонніх програм",
+    "time": "2026-05-22T08:01:02.983197"
   }
 }
