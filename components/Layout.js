@@ -120,9 +120,12 @@ export default function Layout({ children, title, description, canonical, isArti
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href={pageUrl} />
-        <link rel="alternate" hrefLang="uk" href={`${SITE}${asPath === '/' ? '' : asPath}`} />
-        <link rel="alternate" hrefLang="en" href={`${SITE}/en${asPath === '/' ? '' : asPath}`} />
-        <link rel="alternate" hrefLang="x-default" href={`${SITE}${asPath === '/' ? '' : asPath}`} />
+        <link rel="alternate" hrefLang="uk"
+          href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
+        <link rel="alternate" hrefLang="en"
+          href={asPath.startsWith('/en') ? `${SITE}${asPath}` : `${SITE}/en${asPath === '/' ? '' : asPath}`} />
+        <link rel="alternate" hrefLang="x-default"
+          href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
         <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
         {siteConfig.googleVerification && (
           <meta name="google-site-verification" content={siteConfig.googleVerification} />

@@ -8,6 +8,40 @@ import { useRouter } from 'next/router'
 
 const SITE = siteConfig.url
 
+function extractFaqSchema(contentHtml) {
+  if (!contentHtml) return null
+  const lower = contentHtml.toLowerCase()
+  const markers = ['часті питання', 'питання і відповіді', 'питання та відповіді', 'faq']
+  let faqIdx = -1
+  for (const m of markers) {
+    const idx = lower.indexOf(m)
+    if (idx !== -1) { faqIdx = idx; break }
+  }
+  if (faqIdx === -1) return null
+  const faqPart = contentHtml.slice(Math.max(0, faqIdx - 50))
+  const pattern = /<h[23][^>]*>(.*?)<\/h[23]>[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/gi
+  const items = []
+  let m
+  while ((m = pattern.exec(faqPart)) !== null && items.length < 6) {
+    const q = m[1].replace(/<[^>]+>/g, '').trim()
+    const a = m[2].replace(/<[^>]+>/g, '').trim().slice(0, 300)
+    if (q && a && q.length > 5) {
+      items.push({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a }
+      })
+    }
+  }
+  if (!items.length) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items
+  }
+}
+
+
 export default function Post({ post, related, locale }) {
   const isEn = locale === 'en'
   const postUrl = `${SITE}/${post.slug}`
@@ -55,6 +89,8 @@ export default function Post({ post, related, locale }) {
     ],
   }
 
+  const faqSchema = extractFaqSchema(post.contentHtml)
+
   return (
     <Layout
       title={post.title}
@@ -67,6 +103,9 @@ export default function Post({ post, related, locale }) {
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {faqSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
 
       <div style={s.wrap}>
         <div className="container">

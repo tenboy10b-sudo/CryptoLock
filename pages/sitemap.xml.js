@@ -1,6 +1,24 @@
 import { getAllPosts, getAllTags } from '../lib/posts'
 import siteConfig from '../site.config'
 
+// Топ сторінки з GSC — підвищений пріоритет і частота
+const HIGH_PRIORITY = new Set([
+  'zaborona-zapusku-prohram-gpo',
+  'obmezhennya-kilkosti-sprob-parolyu',
+  'yak-nalashtuvanty-virtualnyi-stol-windows',
+  'yak-pereviryt-yadro-windows-bezpechno',
+  'applocker-gpo-nalashtuvannya',
+  'yak-nalashtuvanty-spilnyy-dostup-do-papky',
+  'cmd-komandy-dlya-perevirky-dysku',
+  'yak-pidklyuchyty-dva-monitory-windows',
+  'yak-nalashtuvanty-avtomatychne-blokuvannya-windows',
+  'yak-zashyfruvaty-dysk-bitlocker',
+  'yak-uvimknuty-secure-boot',
+  'siniy-ekran-pislya-onovlennya-windows-11',
+  'windows-11-ne-zapuskaetsya-yak-vypravyty',
+])
+
+
 function getPublishedPosts() {
   const now = new Date()
   return getAllPosts().filter(post => {
@@ -49,9 +67,9 @@ ${staticPages.map(p => urlEntry(p.url, today, p.priority, p.changefreq)).join('\
 ${tagPages.map(p => urlEntry(p.url, p.lastmod, p.priority, p.changefreq)).join('\n')}
 ${posts.map(post => urlEntry(
   `/${post.slug}`,
-  post.date || today,
-  '0.9',
-  'monthly'
+  post.updated || post.date || today,
+  HIGH_PRIORITY.has(post.slug) ? '1.0' : '0.7',
+  HIGH_PRIORITY.has(post.slug) ? 'weekly' : 'monthly'
 )).join('\n')}
 </urlset>`
 }
