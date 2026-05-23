@@ -22,10 +22,10 @@ export default function About() {
 
   return (
     <Layout
-      title={isEn ? 'About' : 'Про нас'}
+      title={isEn ? 'About CryptoLock — Windows & Security Guides' : 'Про CryptoLock — гайди Windows і безпека ПК'}
       description={isEn
-        ? 'CryptoLock — independent Windows & security guides: BitLocker, GPO, CMD, PowerShell, and system administration.'
-        : 'CryptoLock — незалежний україномовний ресурс з покрокових гайдів по Windows, безпеці та адмініструванню ПК.'}
+        ? 'CryptoLock — independent resource with practical Windows 10 and 11 guides. BitLocker, GPO, PowerShell, security and PC administration.'
+        : 'CryptoLock — незалежний ресурс з практичними гайдами Windows 10 і 11. BitLocker, GPO, PowerShell, безпека і адміністрування ПК.'}
       canonical={`${SITE}/about`}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />

@@ -1,6 +1,7 @@
 ---
 title: "How to Use System Restore in Windows 10 and 11"
 date: "2026-04-26"
+updated: "2026-05-23"
 publishDate: "2026-04-26"
 description: "System Restore can undo driver installations, bad updates, and software changes without deleting your files. Here's how to use it, create restore points, and fix it when it stops working."
 tags: ["windows", "recovery", "troubleshooting", "tools"]

@@ -1,6 +1,7 @@
 ---
 title: "Windows 11 Won't Boot: Complete Fix Guide for 2025-2026"
 date: "2026-05-23"
+updated: "2026-05-23"
 publishDate: "2026-05-23"
 description: "Windows 11 not starting, stuck on logo, black screen, or blue screen after update? Complete step-by-step fix from safe mode to bootloader repair and clean install."
 tags: ["windows", "troubleshooting", "bsod", "recovery", "boot"]

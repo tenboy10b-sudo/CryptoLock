@@ -44,7 +44,7 @@ function extractFaqSchema(contentHtml) {
 
 export default function Post({ post, related, locale }) {
   const isEn = locale === 'en'
-  const postUrl = `${SITE}/${post.slug}`
+  const postUrl = locale === 'en' ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
 
   const articleSchema = {
     '@context': 'https://schema.org',

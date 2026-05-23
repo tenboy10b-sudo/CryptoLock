@@ -1,6 +1,7 @@
 ---
 title: "How to Speed Up Windows 11 in 2026: Proven Methods"
 date: "2026-12-19"
+updated: "2026-05-23"
 publishDate: "2026-12-19"
 description: "Windows 11 running slow? These proven methods genuinely improve performance: disable startup apps, switch power plan, reduce visual effects, clean disk, and update drivers."
 tags: ["windows", "optimization", "performance", "settings"]

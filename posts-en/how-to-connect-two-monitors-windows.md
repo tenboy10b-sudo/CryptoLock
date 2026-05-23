@@ -1,6 +1,7 @@
 ---
 title: "How to Connect Two Monitors to Windows 10 and 11: Complete Guide"
 date: "2026-05-15"
+updated: "2026-05-23"
 publishDate: "2026-05-15"
 description: "Step-by-step guide to setting up dual monitors on Windows 10 and 11: choosing the right cable, configuring display arrangement, resolution, refresh rate, and scaling for each screen."
 tags: ["windows", "hardware", "settings", "productivity"]

@@ -1,4 +1,4 @@
-const SITE_URL = 'https://crypto-lock-five.vercel.app'
+const SITE_URL = 'https://cryptolockua.com'
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
