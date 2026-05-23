@@ -1,137 +1,126 @@
 ---
 title: "How to Manage Startup Programs in Windows 10 and 11"
-date: "2026-04-19"
-publishDate: "2026-04-19"
-description: "Slow Windows boot? Disable unnecessary startup programs using Task Manager, registry, and Group Policy. Includes which programs are safe to disable and which to keep."
-tags: ["windows", "optimization", "performance", "startup"]
+date: "2024-04-20"
+publishDate: "2024-04-20"
+updated: "2026-05-23"
+description: "Disable, enable, and manage startup programs in Windows 10 and 11. Task Manager, MSConfig, registry, and PowerShell methods to speed up Windows boot time."
+tags: ["windows", "optimization", "performance", "settings"]
 readTime: 5
 ---
 
-Every program that starts with Windows adds 1–5 seconds to boot time and uses RAM in the background. Most of them don't need to start automatically. Here's how to take control.
+Too many startup programs slow down Windows boot significantly. Disabling unnecessary ones is the single fastest way to improve startup time — no hardware needed.
 
 ---
 
-## Method 1: Task Manager (Fastest)
+## Method 1: Task Manager (Easiest)
 
 `Ctrl + Shift + Esc` → **Startup apps** tab
 
-Each item shows:
-- **Status**: Enabled / Disabled
-- **Startup impact**: High / Medium / Low / Not measured
+Columns:
+- **Name** — the app
+- **Publisher** — who made it
+- **Status** — Enabled/Disabled
+- **Startup impact** — Low/Medium/High
 
-Right-click any item → **Disable** to prevent it from starting automatically.
+Right-click any entry → **Disable** to prevent it from running at startup.
 
-This doesn't uninstall the program — it just won't start with Windows.
+**Safe to disable:** Spotify, Discord, Teams (personal), Steam, Adobe updaters, game launchers, OneDrive (if you don't use it), Slack, Skype.
+
+**Keep enabled:** antivirus, driver software (audio, GPU), cloud sync if you use it.
 
 ---
 
-## Method 2: Settings App (Windows 11)
+## Method 2: Settings (Windows 11)
 
 `Win + I` → **Apps** → **Startup**
 
-Toggle off anything you don't need running at boot. Same effect as Task Manager, cleaner interface.
+Same list as Task Manager with toggle switches. Shows impact rating for each app.
 
 ---
 
-## Method 3: Registry (Advanced)
+## Method 3: MSConfig
 
-Startup entries are stored in the registry:
+`Win + R` → `msconfig` → **Startup** tab → **Open Task Manager**
 
-```
-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run       ← current user
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run      ← all users
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce  ← runs once, then deletes
-```
-
-Open: `Win + R` → `regedit` → navigate to the key → delete unwanted entries.
-
-Via PowerShell:
-```powershell
-# List all startup entries
-Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
-Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
-
-# Remove a specific entry (replace AppName with actual name)
-Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "AppName"
-```
+On Windows 10/11 this redirects to Task Manager's Startup tab.
 
 ---
 
-## Method 4: Startup Folder
-
-Some programs add themselves to the startup folder instead of the registry:
-
-```
-C:\Users\YourName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
-C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
-```
-
-Open with: `Win + R` → `shell:startup` (current user) or `shell:common startup` (all users)
-
-Delete any shortcuts you don't want.
-
----
-
-## Method 5: Sysinternals Autoruns (Most Complete View)
-
-Task Manager only shows a subset of startup items. **Autoruns** from Microsoft Sysinternals shows everything:
-
-Download from [learn.microsoft.com/sysinternals/downloads/autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)
-
-Run as Administrator. Uncheck items to disable. Items highlighted in **yellow** have missing files — safe to delete.
-
----
-
-## What's Safe to Disable
-
-**Safe to disable:**
-- Spotify, Discord, Steam, Epic Games Launcher
-- OneDrive (if you don't use it)
-- Teams (if you don't use it at login)
-- Adobe Updater, Creative Cloud
-- Skype
-- Anything from `%APPDATA%` or `%TEMP%`
-
-**Keep enabled:**
-- Antivirus (Windows Defender, third-party)
-- Audio drivers (Realtek, NVIDIA audio)
-- GPU software if you use its features (NVIDIA Control Panel, AMD Software)
-- Cloud backup software if actively used
-- Hardware utilities for your specific device (Lenovo Vantage, Dell Update, etc.)
-
-**Never disable:**
-- `SecurityHealthSystray` — Windows Security tray icon
-- `ctfmon` — input method editor, needed for some keyboard layouts
-- Driver-related entries from your hardware manufacturer
-
----
-
-## Measure the Impact
-
-Check how much startup programs are slowing your boot:
+## Method 4: PowerShell
 
 ```powershell
-# Boot performance events
-Get-WinEvent -LogName "Microsoft-Windows-Diagnostics-Performance/Operational" |
-  Where-Object {$_.Id -eq 100} |
-  Select-Object -First 1 |
-  Select-Object -ExpandProperty Message
-```
+# View startup programs from registry
+Write-Host "=== Current User Startup ===" -ForegroundColor Yellow
+Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" |
+  Select-Object * -ExcludeProperty PS*
 
-Or: Event Viewer → **Applications and Services Logs** → **Microsoft** → **Windows** → **Diagnostics-Performance** → **Operational** → Event ID 100 shows total boot time and which apps delayed startup.
+Write-Host "=== All Users Startup ===" -ForegroundColor Yellow
+Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" |
+  Select-Object * -ExcludeProperty PS*
+
+# View startup folder contents
+Write-Host "=== Startup Folder ===" -ForegroundColor Yellow
+Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+Get-ChildItem "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup"
+```
 
 ---
 
-## Delay Instead of Disable
+## Method 5: Autoruns (Most Complete View)
 
-Some programs need to start with Windows but don't need to start immediately. Use Task Scheduler to delay them by 2–5 minutes after boot:
+Microsoft's **Autoruns** shows everything that runs at startup — more than Task Manager:
 
-`Win + R` → `taskschd.msc` → **Create Basic Task** → Trigger: **When the computer starts** → add a **1 minute delay** in the trigger settings.
+```powershell
+# Download Autoruns from Microsoft Sysinternals
+winget install Microsoft.Sysinternals.Autoruns
+```
+
+Or download from [learn.microsoft.com/sysinternals/downloads/autoruns](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns)
+
+Autoruns shows: registry run keys, startup folders, scheduled tasks, browser extensions, services, and more.
+
+---
+
+## Disable a Startup Item via Registry
+
+```powershell
+# Remove a startup entry (example: Spotify)
+Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Spotify" -EA 0
+
+# Add a startup entry
+Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "MyApp" -Value "C:\Path\To\App.exe"
+```
+
+---
+
+## Measure Boot Time Before and After
+
+```powershell
+# View boot time history from Event Log
+Get-WinEvent -FilterHashtable @{LogName='System'; Id=@(12,13)} |
+  Select-Object TimeCreated, Id,
+    @{n='Event';e={if($_.Id -eq 12){'Boot Start'}else{'Boot End'}}} |
+  Sort-Object TimeCreated -Descending | Select-Object -First 10
+
+# Current boot time
+(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+```
+
+---
+
+## What Actually Slows Down Boot
+
+In order of impact:
+1. **Too many startup apps** — biggest factor for most users
+2. **HDD instead of SSD** — 5-10x difference
+3. **Not enough RAM** — causes disk paging
+4. **Fast Startup disabled** — Windows 11 feature that pre-loads some boot data
+
+Enable Fast Startup:
+`Control Panel` → **Power Options** → **Choose what the power buttons do** → check **Turn on fast startup**
 
 ---
 
 ## Summary
 
-Start with Task Manager → Startup tab. Disable anything with **High** impact that you don't need immediately at login. For a complete view, use Autoruns. Don't disable your antivirus or audio drivers.
-
-Typical result: 20–40% faster boot time after disabling 3–5 unnecessary startup programs.
+Task Manager `Startup apps` tab is the quickest way — sort by **Startup impact** and disable everything **High** you don't need. PowerShell shows registry entries Task Manager might miss. Autoruns gives the most complete picture. After disabling startup apps, reboot and measure the difference — most users see 30-60% faster boot.
