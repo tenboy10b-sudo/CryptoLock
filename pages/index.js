@@ -52,20 +52,50 @@ export default function Home({ posts, tags }) {
   const featured = posts[0]
   const rest = posts.slice(1)
 
-  // WebPage schema для головної
+  // WebSite + WebPage schema з SearchAction
+  const webSiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE}/#website`,
+    url: SITE,
+    name: siteConfig.name,
+    description: isEn
+      ? 'Step-by-step Windows guides, security tools and PC administration in Ukrainian.'
+      : 'Покрокові гайди з налаштування Windows, безпеки та адміністрування ПК українською мовою.',
+    inLanguage: locale || 'uk',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: `${SITE}/search?q={search_term_string}` },
+      'query-input': 'required name=search_term_string',
+    },
+  }
+
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': `${SITE}/#webpage`,
     url: SITE,
-    name: `${siteConfig.name} — налаштування Windows та захист ПК українською`,
-    description: siteConfig.description,
-    inLanguage: 'uk',
+    name: isEn
+      ? `${siteConfig.name} — Windows guides and security tools`
+      : `${siteConfig.name} — налаштування Windows та захист ПК українською`,
+    description: isEn
+      ? 'Step-by-step Windows 10 and 11 guides, security audit tools, PowerShell commands and more.'
+      : 'Покрокові гайди з налаштування Windows 10 і 11, безпеки, PowerShell та адміністрування ПК.',
+    inLanguage: locale || 'uk',
     isPartOf: { '@id': `${SITE}/#website` },
   }
 
   return (
-    <Layout>
+    <Layout
+      title={isEn
+        ? `${siteConfig.name} — Windows Security Guides & Tools`
+        : `${siteConfig.name} — Гайди Windows, безпека та інструменти`}
+      description={isEn
+        ? `Step-by-step Windows 10 and 11 guides, security audit tools, PowerShell reference and more. ${posts.length}+ articles in Ukrainian.`
+        : `Покрокові гайди з налаштування Windows 10 і 11, безпеки та адміністрування ПК. ${posts.length}+ статей українською.`}
+      canonical={SITE}
+    >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
 
       {/* Hero */}

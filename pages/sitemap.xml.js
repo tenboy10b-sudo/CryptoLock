@@ -1,6 +1,23 @@
 import { getAllPosts, getAllTags } from '../lib/posts'
 import siteConfig from '../site.config'
 
+
+// Топ сторінки з GSC — підвищений пріоритет
+const HIGH_PRIORITY = new Set([
+  'zaborona-zapusku-prohram-gpo',
+  'obmezhennya-kilkosti-sprob-parolyu',
+  'yak-nalashtuvanty-virtualnyi-stol-windows',
+  'yak-pereviryt-yadro-windows-bezpechno',
+  'applocker-gpo-nalashtuvannya',
+  'yak-nalashtuvanty-spilnyy-dostup-do-papky',
+  'cmd-komandy-dlya-perevirky-dysku',
+  'yak-pidklyuchyty-dva-monitory-windows',
+  'yak-nalashtuvanty-avtomatychne-blokuvannya-windows',
+  'yak-zashyfruvaty-dysk-bitlocker',
+  'siniy-ekran-pislya-onovlennya-windows-11',
+  'windows-11-ne-zapuskaetsya-yak-vypravyty',
+])
+
 function getPublishedPosts() {
   const now = new Date()
   return getAllPosts().filter(post => {
@@ -15,10 +32,17 @@ function generateSitemap(posts, enPosts, tags) {
   const today = new Date().toISOString()
 
   const staticPages = [
-    { url: '',         priority: '1.0', changefreq: 'daily'   },
-    { url: '/tags',    priority: '0.6', changefreq: 'weekly'  },
-    { url: '/about',   priority: '0.4', changefreq: 'monthly' },
-    { url: '/privacy', priority: '0.3', changefreq: 'monthly' },
+    { url: '',                            priority: '1.0', changefreq: 'daily'   },
+    { url: '/tools',                      priority: '0.9', changefreq: 'weekly'  },
+    { url: '/tools/auditshield',          priority: '0.9', changefreq: 'weekly'  },
+    { url: '/tools/windows-error-decoder',priority: '0.8', changefreq: 'monthly' },
+    { url: '/tools/powershell-commands',  priority: '0.8', changefreq: 'monthly' },
+    { url: '/tools/windows-event-id',     priority: '0.8', changefreq: 'monthly' },
+    { url: '/tools/password-generator',   priority: '0.7', changefreq: 'monthly' },
+    { url: '/tools/subnet-calculator',    priority: '0.7', changefreq: 'monthly' },
+    { url: '/tags',                       priority: '0.6', changefreq: 'weekly'  },
+    { url: '/about',                      priority: '0.4', changefreq: 'monthly' },
+    { url: '/privacy',                    priority: '0.3', changefreq: 'monthly' },
   ]
 
   const tagPages = tags.map(({ tag }) => ({
