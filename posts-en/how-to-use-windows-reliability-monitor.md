@@ -118,6 +118,16 @@ Use Reliability Monitor first to identify the timeframe and event, then switch t
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Open with `perfmon /rel`. Look for the day when stability dropped. Check what was installed (blue circles) and what failed (red X) on that day. Click any event for technical details. Use this as the starting point before diving into Event Viewer logs.

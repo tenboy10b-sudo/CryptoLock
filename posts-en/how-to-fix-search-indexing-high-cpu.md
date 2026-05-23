@@ -111,6 +111,16 @@ Start-Service WSearch
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Wait 30–60 minutes after a fresh install — indexing high CPU is normal then. For persistent high CPU: switch to Classic mode, exclude large folders, or rebuild the corrupt index. To eliminate background indexing entirely: disable WSearch and use Everything for file search.

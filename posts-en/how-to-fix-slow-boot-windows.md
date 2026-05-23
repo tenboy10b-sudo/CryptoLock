@@ -142,6 +142,16 @@ If your SSD boots slower than expected — check startup programs and drivers fi
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Check Event Viewer (Event ID 100) to see total boot time and what's slowing it. Fix in order: disable high-impact startup programs → enable Fast Startup → check drive health → delay non-essential services. If nothing helps, upgrade from HDD to SSD — it's the single biggest improvement possible.

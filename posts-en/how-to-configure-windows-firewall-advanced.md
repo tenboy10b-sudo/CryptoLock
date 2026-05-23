@@ -166,6 +166,16 @@ This removes all custom rules and restores factory defaults. All custom Allow/Bl
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 Open `wf.msc` for granular control. Create inbound rules to allow specific ports or programs, outbound rules to restrict what apps can connect to. Use PowerShell `New-NetFirewallRule` for scripted deployments. Enable logging to audit blocked connections. Export rules before making major changes so you can restore them.

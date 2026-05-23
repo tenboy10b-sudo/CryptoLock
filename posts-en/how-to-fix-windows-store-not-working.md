@@ -132,6 +132,16 @@ Set-Service StorSvc -StartupType Automatic
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Start with `wsreset.exe` — fixes 80% of Store problems. If still broken: re-register Store via PowerShell. For sign-in errors: sign out and back in. For download failures: check disk space and proxy settings. For persistent issues: reset or reinstall Store via `winget`.

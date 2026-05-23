@@ -173,6 +173,16 @@ Write-Host "BitLocker C: $(if($bl.ProtectionStatus -eq 'On'){'✅ On'}else{'❌ 
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 Enable in order: **Secure Boot** in BIOS → **TPM** in BIOS → **Memory Integrity** in Windows Security → **Controlled Folder Access** for ransomware protection → **SmartScreen** set to Warn. Run the security check script to verify your current status at a glance.

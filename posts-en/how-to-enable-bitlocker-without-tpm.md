@@ -119,6 +119,16 @@ Decryption runs in the background — takes same time as encryption. PC usable d
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 `gpedit.msc` → Require additional authentication at startup → check **Allow BitLocker without TPM** → then enable BitLocker normally and choose password unlock. Save the recovery key somewhere safe — losing both the password and recovery key means permanent data loss.

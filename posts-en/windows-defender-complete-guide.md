@@ -158,6 +158,16 @@ Or in the UI: **Protection history** → find the item → **Actions** → **Res
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 Enable real-time protection, keep definitions updated, and run an offline scan if you suspect an active infection. For most home and business users, a properly configured Defender is all the antivirus you need.

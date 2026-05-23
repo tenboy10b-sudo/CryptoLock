@@ -1,118 +1,87 @@
 ---
-title: "How to Install Windows 11 Without TPM 2.0 (Bypass Requirements)"
-date: "2026-05-15"
-publishDate: "2026-05-15"
-description: "Windows 11 requires TPM 2.0 and Secure Boot, but older PCs can bypass these requirements. Here are the official and unofficial methods to install Windows 11 on unsupported hardware."
-tags: ["windows", "installation", "bios", "tools"]
-readTime: 6
+title: "How to Install Windows 11 Without TPM 2.0 in 2026"
+date: "2026-12-21"
+publishDate: "2026-12-21"
+description: "Windows 11 requires TPM 2.0 and Secure Boot, but you can install it on older hardware. Three methods: enable fTPM in BIOS, use Rufus bypass, or registry workaround."
+tags: ["windows", "installation", "bios", "settings"]
+readTime: 5
 ---
 
-Windows 11 officially requires TPM 2.0, Secure Boot, and a supported CPU. Many capable PCs fail only because of TPM. Here's how to install it anyway — with an understanding of what you're giving up.
+Windows 11 officially requires TPM 2.0, Secure Boot, and a CPU from 2017 or newer. But you can install it on older hardware using one of these methods.
 
 ---
 
-## Check What's Blocking You
+## Method 1: Enable fTPM in BIOS (Try This First)
 
-Download and run the official **PC Health Check** app from Microsoft. It tells you exactly which requirements your PC fails.
+Many older CPUs have a built-in TPM module that's simply disabled in BIOS:
 
-Or check via PowerShell:
+1. Restart and enter BIOS (Del, F2, or F12 depending on manufacturer)
+2. Look for **fTPM** (AMD), **PTT** (Intel Platform Trust Technology), or **Security Device**
+3. Enable → Save → Restart
+4. Verify: `Win + R` → `tpm.msc` → should show **TPM is ready for use**
+
+If this works, Windows 11 installs normally — no workarounds needed.
+
+---
+
+## Method 2: Rufus with Bypass (Recommended)
+
+Rufus can create a Windows 11 USB with TPM and Secure Boot checks disabled:
+
+1. Download **Rufus** from rufus.ie or `winget install Rufus.Rufus`
+2. Insert USB (min. 8 GB)
+3. In Rufus → click **Download** next to Boot selection → download Windows 11 ISO directly
+4. Click **Start** → a dialog appears with options:
+   - ✅ **Remove requirement for TPM 2.0**
+   - ✅ **Remove requirement for Secure Boot**
+   - ✅ **Remove requirement for 4GB+ RAM** (optional)
+5. Click OK → Rufus writes the USB
+
+Boot from the USB and install normally.
+
+---
+
+## Method 3: Registry Workaround During Setup
+
+When the "This PC can't run Windows 11" screen appears during setup:
+
+1. Press `Shift + F10` → CMD opens
+2. Type `regedit` → Registry Editor opens
+3. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\Setup\MoSetup`
+4. Create the key if it doesn't exist
+5. Create a DWORD value: `AllowUpgradesWithUnsupportedTPMOrCPU` = `1`
+6. Close regedit and CMD → continue setup
+
+This method works for in-place upgrades from Windows 10.
+
+---
+
+## Check Requirements Before Installing
 
 ```powershell
-# Check TPM
-Get-Tpm
+# TPM status
+Get-Tpm | Select-Object TpmPresent, TpmReady
 
-# Check Secure Boot
+# Secure Boot
 Confirm-SecureBootUEFI
+
+# RAM
+[math]::Round((Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB, 1)
+
+# CPU name (check compatibility at aka.ms/CPUlist)
+(Get-WmiObject Win32_Processor).Name
 ```
 
-If `TpmPresent: False` or `TpmReady: False` — your PC either has no TPM or it's disabled in BIOS.
+Or use Microsoft's official **PC Health Check** app.
 
 ---
 
-## Method 1: Enable TPM in BIOS (Try This First)
+## What to Expect on Unsupported Hardware
 
-Many PCs have TPM but it's disabled by default.
-
-1. Restart → enter BIOS (`Del`, `F2`, or `F10` at startup)
-2. Look for **TPM**, **PTT** (Intel Platform Trust Technology), or **fTPM** (AMD firmware TPM)
-3. Enable it → save and exit
-
-After enabling, run PC Health Check again. If it now passes — install Windows 11 normally.
-
----
-
-## Method 2: Registry Bypass (Microsoft's Own Workaround)
-
-Microsoft documented this bypass for organizations. It skips TPM and RAM checks but still requires Secure Boot and a supported CPU.
-
-```cmd
-reg add "HKLM\SYSTEM\Setup\MoSetup" /v AllowUpgradesWithUnsupportedTPMOrCPU /t REG_DWORD /d 1 /f
-```
-
-Then run the Windows 11 installer normally. This works for upgrades from Windows 10.
-
----
-
-## Method 3: Rufus (Clean Install, Full Bypass)
-
-**Rufus** is a free tool that creates installation USB drives with the TPM requirement removed.
-
-1. Download [Rufus](https://rufus.ie) (free, no install needed)
-2. Plug in a USB drive (8GB+)
-3. In Rufus: select your Windows 11 ISO → under **Image option** select **Extended Windows 11 Installation (no TPM / no Secure Boot)**
-4. Click **Start**
-
-Boot from the USB and install Windows 11 — no TPM, no Secure Boot check.
-
----
-
-## Method 4: appraiserres.dll Removal (During In-Place Upgrade)
-
-For upgrading without using Rufus:
-
-1. Mount the Windows 11 ISO (double-click in Windows Explorer)
-2. Copy the entire ISO contents to a folder on your PC
-3. Delete or rename `sources\appraiserres.dll`
-4. Run `setup.exe` from that folder
-
-The installer skips hardware compatibility checks.
-
----
-
-## What You Lose on Unsupported Hardware
-
-Microsoft is clear about this: PCs that bypass requirements may not receive future Windows 11 updates — including security patches. Currently updates still work, but Microsoft reserves the right to stop them.
-
-You also won't get support from Microsoft if something goes wrong.
-
-Practically speaking: most people bypass these requirements without issues. But be aware of the tradeoff.
-
----
-
-## Should You Do This?
-
-**Yes, if:**
-- Your PC is fast enough (runs Windows 10 well)
-- You have no TPM but everything else is fine
-- You want to avoid buying new hardware just for an OS requirement
-
-**No, if:**
-- Your PC is slow on Windows 10 already
-- You're in a business or corporate environment
-- Security updates stopping matters to you
-
----
-
-## Check TPM Status After Installing
-
-```powershell
-Get-Tpm | Select-Object TpmPresent, TpmReady, TpmEnabled
-```
-
-If you bypassed TPM, this will still show your TPM status — if TPM is present but was disabled in BIOS, you can enable it later without reinstalling.
+Microsoft officially states that unsupported PCs **may not receive future updates**. In practice, updates have continued arriving — but this could change. For very old hardware (pre-2012), consider **Linux Mint** as a free, Windows-like alternative with 5 years of support.
 
 ---
 
 ## Summary
 
-Try enabling TPM/fTPM in BIOS first — many PCs already have it disabled. If that fails: use Rufus with the extended Windows 11 option for a clean install, or the registry tweak for an upgrade. Be aware that Microsoft may restrict updates on unsupported hardware in the future.
+**If your CPU has fTPM/PTT** — enable it in BIOS, problem solved. **Otherwise** — use Rufus with bypass: fastest, most reliable method. **For in-place upgrade from Windows 10** — registry method. After installing on unsupported hardware, monitor Windows Update to ensure updates continue arriving.

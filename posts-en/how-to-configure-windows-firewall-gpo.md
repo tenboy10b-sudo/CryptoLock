@@ -127,6 +127,16 @@ gpupdate /force
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 Use GPO **Windows Defender Firewall with Advanced Security** node to deploy rules domain-wide. Set profiles to block inbound by default and add explicit allow rules for needed services. Use startup scripts to import complex rule sets via `netsh advfirewall import`. Verify applied rules with `Get-NetFirewallRule | Where-Object {$_.PolicyStoreSourceType -eq 'GroupPolicy'}`.

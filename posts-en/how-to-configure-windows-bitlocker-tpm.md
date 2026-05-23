@@ -159,6 +159,16 @@ Add-BitLockerKeyProtector -MountPoint C: -ADAccountOrGroupProtector `
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 Enable via Settings or `Enable-BitLocker -MountPoint C: -TpmProtector`. Always save recovery key to Microsoft account and a second location. Add recovery password protector with `Add-BitLockerKeyProtector -RecoveryPasswordProtector`. Suspend before BIOS changes. Verify at `account.microsoft.com/devices/recoverykey`.

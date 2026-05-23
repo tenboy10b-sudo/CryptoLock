@@ -156,3 +156,12 @@ Computer Configuration → Administrative Templates → System → Group Policy
 ## Підсумок
 
 `gpresult /r` — швидка перевірка. `gpresult /h report.html` — детальний звіт. `gpupdate /force` — примусове застосування. Якщо GPO в "not applied" — перевір Security Filtering, WMI Filter і чи прив'язана до правильного OU.
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+

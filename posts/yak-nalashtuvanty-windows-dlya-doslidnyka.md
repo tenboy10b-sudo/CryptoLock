@@ -169,3 +169,12 @@ Restore-VMSnapshot -VMName "AnalysisVM" -Name "Before Analysis"
 ## Підсумок
 
 Базовий набір: Autoruns + Process Monitor + TCPView (Sysinternals) + Wireshark. Для аналізу файлів: `Get-FileHash` → перевір на VirusTotal → `strings.exe` → аналіз у Sandbox або VM. Завжди роби snapshot VM перед запуском підозрілого коду — відновлення займе секунди.
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+

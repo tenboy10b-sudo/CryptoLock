@@ -1,152 +1,148 @@
 ---
-title: "How to Add Exclusions to Windows Defender (and When to Do It)"
-date: "2026-08-05"
-publishDate: "2026-08-05"
-description: "Windows Defender flagging legitimate files or slowing down your dev folder? Add exclusions safely — for files, folders, processes, and file types — without weakening your security."
-tags: ["windows", "security", "windows-defender", "tools"]
+title: "How to Add Exclusions to Windows Defender Without Disabling Protection"
+date: "2026-12-17"
+publishDate: "2026-12-17"
+description: "Windows Defender blocking a legitimate app or slowing down your dev environment? Add folder, file, process, or extension exclusions without turning off antivirus protection."
+tags: ["windows", "security", "windows-defender", "settings"]
 readTime: 5
 ---
 
-Defender exclusions tell Windows Security to stop scanning specific files, folders, or processes. Add them when Defender false-positives legitimate software or when real-time scanning slows down a development environment.
+Windows Defender sometimes flags legitimate software — dev tools, build artifacts, VMs, or older software. The right solution is targeted exclusions, not disabling protection entirely.
 
 ---
 
-## When Exclusions Make Sense
+## Via Settings (Easiest)
 
-**Good reasons to add exclusions:**
-- Development folders (`node_modules`, build output, compiled binaries)
-- Virtual machine disk files (`.vmdk`, `.vhd`, `.vhdx`)
-- Backup software working directories
-- Game modding tools that get flagged as false positives
+`Win + I` → **Privacy & Security** → **Windows Security** → **Virus & threat protection** → **Manage settings** → scroll to **Exclusions** → **Add or remove exclusions**
 
-**Bad reasons:**
-- "My antivirus is slowing things down" on a normal PC
-- Someone told you to exclude a folder to run their software
-- Excluding system directories or AppData broadly
+Click **+ Add an exclusion** → choose type:
+- **Folder** — entire directory and subdirectories
+- **File** — specific file
+- **File type** — all files with that extension
+- **Process** — all files opened by this process
 
 ---
 
-## Add Exclusion via Windows Security
-
-`Win + I` → **Privacy & Security** → **Windows Security** → **Virus & threat protection** → **Manage settings** → scroll to **Exclusions** → **Add or remove exclusions** → **Add an exclusion**
-
-Types:
-- **File** — single specific file
-- **Folder** — entire folder and all subfolders
-- **File type** — by extension (e.g., `.log`)
-- **Process** — by executable name (e.g., `node.exe`)
-
----
-
-## Add Exclusions via PowerShell
+## Via PowerShell
 
 ```powershell
-# Exclude a folder
+# View current exclusions
+Get-MpPreference | Select-Object ExclusionPath, ExclusionExtension, ExclusionProcess
+
+# Add folder exclusion (most common)
 Add-MpPreference -ExclusionPath "C:\Dev\Projects"
-Add-MpPreference -ExclusionPath "D:\VMs"
+Add-MpPreference -ExclusionPath "D:\VirtualMachines"
+Add-MpPreference -ExclusionPath "$env:USERPROFILE\AppData\Local\JetBrains"
 
-# Exclude by file extension
-Add-MpPreference -ExclusionExtension ".log"
+# Add file type exclusion
 Add-MpPreference -ExclusionExtension ".vmdk"
+Add-MpPreference -ExclusionExtension ".vhd"
 
-# Exclude a process
+# Add process exclusion (files opened by this process are not scanned)
 Add-MpPreference -ExclusionProcess "node.exe"
 Add-MpPreference -ExclusionProcess "python.exe"
+Add-MpPreference -ExclusionProcess "java.exe"
 
-# View all current exclusions
-Get-MpPreference | Select-Object ExclusionPath, ExclusionExtension, ExclusionProcess
-```
-
----
-
-## Remove Exclusions
-
-```powershell
-# Remove a folder exclusion
+# Remove exclusion
 Remove-MpPreference -ExclusionPath "C:\Dev\Projects"
-
-# Remove a process exclusion
-Remove-MpPreference -ExclusionProcess "node.exe"
-
-# Remove file type exclusion
-Remove-MpPreference -ExclusionExtension ".log"
 ```
 
 ---
 
-## Exclusions via Group Policy
+## Common Legitimate Exclusions
 
-For managed environments (multiple PCs):
-
-`gpedit.msc` → **Computer Configuration** → **Administrative Templates** → **Windows Components** → **Microsoft Defender Antivirus** → **Exclusions**
-
-- **Path Exclusions** — folders and files
-- **Extension Exclusions** — file types
-- **Process Exclusions** — executables
-
----
-
-## Common Developer Exclusions
-
+**Development:**
 ```powershell
-# Node.js development
+# Node.js projects (node_modules gets massive)
 Add-MpPreference -ExclusionPath "C:\Dev"
 Add-MpPreference -ExclusionProcess "node.exe"
+Add-MpPreference -ExclusionProcess "npm.exe"
 
-# Python development
+# Python
 Add-MpPreference -ExclusionProcess "python.exe"
 Add-MpPreference -ExclusionProcess "python3.exe"
 
-# Virtual machines
-Add-MpPreference -ExclusionPath "D:\VirtualMachines"
+# .NET / Visual Studio build output
+Add-MpPreference -ExclusionPath "C:\Users\$env:USERNAME\source\repos"
+Add-MpPreference -ExclusionExtension ".pdb"
+```
+
+**Virtual Machines:**
+```powershell
 Add-MpPreference -ExclusionExtension ".vmdk"
+Add-MpPreference -ExclusionExtension ".vmx"
 Add-MpPreference -ExclusionExtension ".vhd"
 Add-MpPreference -ExclusionExtension ".vhdx"
+Add-MpPreference -ExclusionPath "D:\VMs"
+```
 
-# Docker
-Add-MpPreference -ExclusionPath "$env:USERPROFILE\.docker"
-Add-MpPreference -ExclusionProcess "com.docker.backend.exe"
+**Games and launchers:**
+```powershell
+Add-MpPreference -ExclusionPath "D:\SteamLibrary"
+Add-MpPreference -ExclusionPath "C:\Program Files\Epic Games"
 ```
 
 ---
 
-## Verify Exclusion is Working
+## Why Not Just Disable Defender?
+
+Disabling Defender removes all protection — exclusions surgically exclude only what's needed. The rest of your system stays protected.
 
 ```powershell
-# Check if a specific path is excluded
+# BAD — turns off all protection
+Set-MpPreference -DisableRealtimeMonitoring $true
+
+# GOOD — only excludes specific folder
+Add-MpPreference -ExclusionPath "C:\Dev\MyTool"
+```
+
+---
+
+## Check if Defender is Blocking Something
+
+If an app fails to run or files disappear — check the protection history:
+
+```powershell
+# Recent detections and actions
+Get-MpThreatDetection | Select-Object -Last 10 ThreatName, ActionSuccess, Resources,
+  @{n='Time';e={$_.InitialDetectionTime}} | Sort-Object Time -Descending
+```
+
+Or: **Windows Security** → **Protection history** — shows everything Defender quarantined or blocked recently.
+
+---
+
+## Audit Your Exclusions
+
+Exclusions are a security risk if set too broadly. Review regularly:
+
+```powershell
+# Full exclusion audit
 $prefs = Get-MpPreference
-$prefs.ExclusionPath -contains "C:\Dev\Projects"
+Write-Host "=== Folder Exclusions ===" -ForegroundColor Yellow
+$prefs.ExclusionPath | ForEach-Object { Write-Host "  $_" }
 
-# Full exclusion list
-Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
+Write-Host "=== Extension Exclusions ===" -ForegroundColor Yellow
+$prefs.ExclusionExtension | ForEach-Object { Write-Host "  $_" }
+
+Write-Host "=== Process Exclusions ===" -ForegroundColor Yellow
+$prefs.ExclusionProcess | ForEach-Object { Write-Host "  $_" }
 ```
+
+**Red flags:** excluding entire `C:\`, `%TEMP%`, or `%APPDATA%` — these are exactly where malware lives.
 
 ---
 
-## Security Considerations
-
-Exclusions are a trade-off — excluded paths are completely unscanned. Keep these principles:
-
-- **Exclude narrowly** — specific folder, not entire drives
-- **Never exclude**: `C:\Windows`, `C:\Users`, `%APPDATA%`, `%TEMP%`
-- **Review quarterly** — remove exclusions no longer needed
-- **Document why** each exclusion exists
-
-```powershell
-# Audit: check if excluded paths still exist
-Get-MpPreference | Select-Object -ExpandProperty ExclusionPath |
-  ForEach-Object {
-    [PSCustomObject]@{
-      Path = $_
-      Exists = (Test-Path $_)
-    }
-  }
-```
-
-Remove exclusions for paths that no longer exist — they're just dead entries.
 
 ---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
 
 ## Summary
 
-Add exclusions via **Windows Security** UI or `Add-MpPreference` in PowerShell. Be specific — exclude the exact folder or process, not broad paths. View all exclusions with `Get-MpPreference`. Audit quarterly and remove stale entries. Never exclude temp folders or user profile directories — those are prime malware locations.
+Use `Add-MpPreference -ExclusionPath` for folders, `-ExclusionProcess` for apps. Never exclude `C:\`, `%TEMP%`, or `%AppData%` — those are high-risk locations. Check Protection History to identify what Defender is blocking before adding exclusions. Audit exclusions quarterly — remove any that are no longer needed.

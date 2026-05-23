@@ -115,6 +115,16 @@ If malware keeps coming back after removal, or you suspect a rootkit — reinsta
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 Safe Mode → Windows Defender full scan → Malwarebytes Free → clean temp files → check startup and registry. This sequence removes 95% of common malware for free. For persistent infections — a clean Windows reinstall is the safest solution.

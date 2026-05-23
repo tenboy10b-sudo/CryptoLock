@@ -145,6 +145,16 @@ Keep at least **10 GB free** on C: — updates need space to download and extrac
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 In order: wait 2+ hours → restart → run troubleshooter → reset update components (`net stop wuauserv` then rename SoftwareDistribution folder) → DISM + SFC → manual KB download. The component reset (Step 4) fixes the majority of stuck update cases.

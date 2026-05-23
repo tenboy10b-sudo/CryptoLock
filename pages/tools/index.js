@@ -1,6 +1,6 @@
-import Layout from '../components/Layout'
+import Layout from '../../components/Layout'
 import Link from 'next/link'
-import siteConfig from '../site.config'
+import siteConfig from '../../site.config'
 
 const SITE = siteConfig.url
 
@@ -21,14 +21,46 @@ const tools = [
     badge: 'Безкоштовно',
     icon: '🔍',
   },
+  {
+    slug: 'powershell-commands',
+    name: 'PowerShell довідник',
+    tagline: 'Шукай команду за задачею',
+    description: '40+ PowerShell і CMD команд з пошуком. Мережа, файли, процеси, безпека, диски. Копіюй одним кліком.',
+    badge: 'Безкоштовно',
+    icon: '⚡',
+  },
+  {
+    slug: 'windows-event-id',
+    name: 'Event ID довідник',
+    tagline: 'Що означає подія з Event Viewer',
+    description: 'Розшифруй Event ID з журналу Windows. 20+ ключових подій безпеки: входи, акаунти, процеси, служби з описом і рекомендаціями.',
+    badge: 'Безкоштовно',
+    icon: '📋',
+  },
+  {
+    slug: 'password-generator',
+    name: 'Генератор паролів',
+    tagline: 'Надійні паролі за секунду',
+    description: 'Генеруй криптографічно надійні паролі в браузері. Налаштуй довжину, символи, кількість. Нічого не передається на сервер.',
+    badge: 'Безкоштовно',
+    icon: '🔑',
+  },
+  {
+    slug: 'subnet-calculator',
+    name: 'Subnet калькулятор',
+    tagline: 'IP і підмережі онлайн',
+    description: 'Введи IP/CIDR — отримай маску, мережу, broadcast, діапазон хостів і бінарне представлення. Таблиця поширених масок.',
+    badge: 'Безкоштовно',
+    icon: '🌐',
+  },
 ]
 
 export default function Tools() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: `Інструменти для безпеки Windows — ${siteConfig.name}`,
-    description: 'Практичні інструменти для перевірки та захисту Windows ПК.',
+    name: `Інструменти для Windows — ${siteConfig.name}`,
+    description: 'Безкоштовні інструменти для діагностики, безпеки та адміністрування Windows. Декодер помилок, PowerShell довідник, Event ID, аудит безпеки.',
     url: `${SITE}/tools`,
     publisher: { '@type': 'Organization', name: siteConfig.name, url: SITE },
     inLanguage: 'uk',
@@ -36,8 +68,8 @@ export default function Tools() {
 
   return (
     <Layout
-      title="Інструменти для безпеки Windows"
-      description="Практичні інструменти для перевірки та захисту Windows ПК. Аудит безпеки, перевірка витоків даних та інше."
+      title="Інструменти для Windows — діагностика, безпека, адміністрування"
+      description="Безкоштовні онлайн інструменти для Windows: декодер помилок, PowerShell довідник, Event ID, генератор паролів, аудит безпеки ПК."
       canonical={`${SITE}/tools`}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -55,8 +87,8 @@ export default function Tools() {
           {/* Header */}
           <h1 style={s.title}>Інструменти для Windows</h1>
           <p style={s.lead}>
-            Практичні утиліти для перевірки безпеки, аудиту та захисту Windows ПК.
-            Кожен інструмент вирішує конкретну задачу — без зайвого.
+            Практичні безкоштовні утиліти для діагностики, безпеки та адміністрування Windows.
+            Без реєстрації — все працює прямо в браузері.
           </p>
 
           {/* Tools grid */}
@@ -80,7 +112,9 @@ export default function Tools() {
           {/* Coming soon */}
           <div style={s.soon}>
             <p style={s.soonTitle}>Незабаром</p>
-            <p style={s.soonText}>Більше інструментів у розробці. Слідкуй за оновленнями у{' '}
+            <p style={s.soonText}>
+              Генератор паролів, IP/Subnet калькулятор та інші інструменти у розробці.
+              Слідкуй за оновленнями у{' '}
               <a href={siteConfig.social.telegram} style={s.link}>Telegram каналі</a>.
             </p>
           </div>
@@ -93,90 +127,53 @@ export default function Tools() {
 
 const s = {
   bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem' },
-  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8' },
+  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', textDecoration: 'none' },
   bcSep: { fontSize: '12px', color: '#cbd5e1' },
   title: {
     fontFamily: "'Unbounded', sans-serif",
     fontSize: 'clamp(1.5rem, 4vw, 2rem)',
-    fontWeight: 700,
-    color: '#0f172a',
-    marginBottom: '1rem',
+    fontWeight: 700, color: '#0f172a', marginBottom: '1rem',
   },
   lead: {
-    fontSize: '1rem',
-    color: '#475569',
-    lineHeight: 1.7,
-    padding: '1.25rem 1.5rem',
-    background: '#eff6ff',
-    borderRadius: '0 10px 10px 0',
-    borderLeft: '3px solid #2563eb',
+    fontSize: '1rem', color: '#475569', lineHeight: 1.7,
+    padding: '1.25rem 1.5rem', background: '#eff6ff',
+    borderRadius: '0 10px 10px 0', borderLeft: '3px solid #2563eb',
     marginBottom: '2.5rem',
   },
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-    gap: '16px',
-    marginBottom: '3rem',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+    gap: '14px', marginBottom: '2.5rem',
   },
   card: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '16px',
-    padding: '1.5rem',
-    background: '#fff',
-    border: '1px solid #e2e8f0',
-    borderRadius: '12px',
-    textDecoration: 'none',
-    transition: 'border-color 0.15s, box-shadow 0.15s',
-    cursor: 'pointer',
+    display: 'flex', alignItems: 'flex-start', gap: '14px',
+    padding: '1.25rem', background: '#fff',
+    border: '1px solid #e2e8f0', borderRadius: '12px',
+    textDecoration: 'none', cursor: 'pointer',
   },
-  cardIcon: { fontSize: '2rem', flexShrink: 0, marginTop: '2px' },
+  cardIcon: { fontSize: '1.75rem', flexShrink: 0, marginTop: '2px' },
   cardContent: { flex: 1 },
   cardTop: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' },
   cardName: {
     fontFamily: "'Unbounded', sans-serif",
-    fontSize: '1rem',
-    fontWeight: 700,
-    color: '#0f172a',
+    fontSize: '0.9rem', fontWeight: 700, color: '#0f172a',
   },
   badge: {
-    fontSize: '10px',
-    fontFamily: 'var(--font-mono)',
-    fontWeight: 600,
-    color: '#16a34a',
-    background: '#dcfce7',
-    padding: '2px 8px',
-    borderRadius: '20px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
+    fontSize: '10px', fontFamily: 'var(--font-mono)', fontWeight: 600,
+    color: '#16a34a', background: '#dcfce7',
+    padding: '2px 8px', borderRadius: '20px',
+    textTransform: 'uppercase', letterSpacing: '0.5px',
   },
-  cardTagline: {
-    fontSize: '0.85rem',
-    color: '#2563eb',
-    fontWeight: 600,
-    marginBottom: '6px',
-  },
-  cardDesc: {
-    fontSize: '0.875rem',
-    color: '#64748b',
-    lineHeight: 1.6,
-    margin: 0,
-  },
-  cardArrow: { fontSize: '1.25rem', color: '#94a3b8', flexShrink: 0, alignSelf: 'center' },
+  cardTagline: { fontSize: '0.8rem', color: '#2563eb', fontWeight: 600, marginBottom: '4px' },
+  cardDesc: { fontSize: '0.825rem', color: '#64748b', lineHeight: 1.6, margin: 0 },
+  cardArrow: { fontSize: '1.1rem', color: '#94a3b8', flexShrink: 0, alignSelf: 'center' },
   soon: {
-    padding: '1.5rem',
-    background: '#f8fafc',
-    borderRadius: '12px',
-    border: '1px dashed #cbd5e1',
+    padding: '1.25rem 1.5rem', background: '#f8fafc',
+    borderRadius: '10px', border: '1px dashed #cbd5e1',
   },
   soonTitle: {
-    fontFamily: 'var(--font-mono)',
-    fontSize: '11px',
-    fontWeight: 600,
-    color: '#94a3b8',
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-    marginBottom: '6px',
+    fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 600,
+    color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px',
   },
   soonText: { fontSize: '0.875rem', color: '#64748b', margin: 0 },
   link: { color: '#2563eb', fontWeight: 500 },

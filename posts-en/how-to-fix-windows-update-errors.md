@@ -163,6 +163,16 @@ Download from [microsoft.com/software-download/windows11](https://www.microsoft.
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 For most errors: run the troubleshooter → reset update components → run SFC + DISM. If you're getting a specific error code, use the lookup in Step 5. Manual KB download (Step 6) solves ~90% of stubborn cases.

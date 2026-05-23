@@ -89,6 +89,16 @@ Get-BitLockerVolume | Select-Object MountPoint, EncryptionMethod, ProtectionStat
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 `Manage BitLocker` → Turn on → save recovery key → start encrypting. Use `XtsAes256` for strongest encryption. Always backup the recovery key — without it, encrypted data is permanently inaccessible.

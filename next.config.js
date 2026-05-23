@@ -134,6 +134,10 @@ const nextConfig = {
       { source: '/en/tags/%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D1%96%D1%81%D1%82%D1%8C', destination: '/tags/%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
       // gpedit (вже латиниця але на EN локалі — без UK статей)
       { source: '/en/tags/gpedit', destination: '/tags/gpedit', permanent: true, locale: false },
+
+      // ── EN /tools/* → UK /tools/* (інструменти тільки UK версія) ────
+      { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
+      { source: '/en/tools/:path*', destination: '/tools/:path*', permanent: false, locale: false },
     ]
   },
 }

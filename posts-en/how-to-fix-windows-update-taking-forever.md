@@ -154,6 +154,16 @@ If BITS shows transfers with progress — updates are downloading, just slowly.
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Check Task Manager for network activity before assuming it's stuck. Quick fixes: restart Update service → clear SoftwareDistribution cache → disable peer delivery. If updates consistently fail: run DISM + SFC and download manually from Microsoft Update Catalog. Always ensure 15+ GB free on drive C before major updates.

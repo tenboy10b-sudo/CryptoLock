@@ -169,6 +169,16 @@ If that doesn't work, boot into Safe Mode and check display drivers.
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Try in order: Startup Repair → rebuild BCD → SFC/DISM → System Restore → uninstall recent updates → Safe Mode to remove bad drivers → Reset as last resort. For BSOD on boot: note the stop code and fix the specific driver or component named.

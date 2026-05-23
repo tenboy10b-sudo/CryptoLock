@@ -163,6 +163,16 @@ Get-NetFirewallRule | Where-Object {$_.Enabled -eq 'True'} |
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 IPv6 is safe to leave enabled if your network supports it. Disable on a specific adapter with `Disable-NetAdapterBinding` if it causes issues for that connection. For slow browsing: set preference to IPv4 first (`DisabledComponents = 0x20`). For VPN users: disable IPv6 to prevent leaks. Check IPv6 connectivity with `Test-NetConnection -ComputerName ipv6.google.com`.

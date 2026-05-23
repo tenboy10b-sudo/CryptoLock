@@ -126,6 +126,16 @@ If nothing works and you can access Recovery:
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Try in order: `Win + Ctrl + Shift + B` to reset graphics → restart Explorer → boot Safe Mode → roll back GPU driver → check display output with `Win + P` → disable Fast Startup → System Restore → SFC/DISM. Most black screen issues are GPU driver related — rolling back or reinstalling the driver with DDU fixes them.

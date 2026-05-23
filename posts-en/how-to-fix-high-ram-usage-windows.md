@@ -168,6 +168,16 @@ Check if you can upgrade: `Win + R` → `msinfo32` → look for **Installed Phys
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Check Task Manager Memory tab first. Disable startup programs. For gradual growth: find the leaking process. For immediate relief: clear standby with RAMMap. If consistently above 85% with normal use: add more RAM — software fixes only help so much.

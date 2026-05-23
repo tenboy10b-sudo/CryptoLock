@@ -171,3 +171,12 @@ Get-Counter '\Process(*)\IO Data Bytes/sec' |
 ## Підсумок
 
 Для швидкої перевірки — Resource Monitor або `netstat -anob`. Для PowerShell-скриптів — `Get-NetTCPConnection`. Для глибокого аналізу пакетів — Wireshark з фільтрами. Підозрілий процес — перевір через `Get-Process` і virustotal.com.
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+

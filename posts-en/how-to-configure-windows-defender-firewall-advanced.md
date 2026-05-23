@@ -115,6 +115,16 @@ Start-MpScan -ScanType FullScan
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 **Windows Security** → **Scan options** → **Microsoft Defender Antivirus (offline scan)** → **Scan now**. Update definitions first. The scan takes 15–20 minutes and requires a restart. Check **Protection history** for results afterward. Use this when regular scans aren't working or you suspect a rootkit.

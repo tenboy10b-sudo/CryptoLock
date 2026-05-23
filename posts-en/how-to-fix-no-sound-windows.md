@@ -112,6 +112,16 @@ Roll back the audio driver: **Device Manager** → audio device → **Properties
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Check output device selection first — Windows often switches to wrong device after updates. Then restart Audio service. If still no sound: reinstall the driver. Download from manufacturer for best results. Disable audio enhancements if driver reinstall doesn't help.

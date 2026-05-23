@@ -136,6 +136,16 @@ If mouse isn't working:
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Try a different USB port first. If still dead: Device Manager → disable → enable. For power-related freezing: disable USB selective suspend. For login screen failures: enable USB Legacy in BIOS. For wireless: move receiver away from USB 3.0 ports and replace batteries.

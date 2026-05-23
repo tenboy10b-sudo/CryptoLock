@@ -189,6 +189,16 @@ Write-Host "Pending updates: $updates"
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 Priority order: keep Windows updated → use a standard account → enable BitLocker → verify Defender is configured correctly → enable account lockout. These five steps block the vast majority of common attacks.

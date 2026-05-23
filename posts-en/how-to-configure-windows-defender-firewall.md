@@ -216,6 +216,16 @@ if ($threats) {
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Summary
 
 `Update-MpSignature` to update, `Start-MpScan -ScanType QuickScan` for quick scan, `Get-MpThreat` to check detections. Use `Add-MpPreference -ExclusionPath` for dev folders. Schedule regular scans with `Set-MpPreference -ScanScheduleDay`. Everything controllable without touching the Windows Security GUI.

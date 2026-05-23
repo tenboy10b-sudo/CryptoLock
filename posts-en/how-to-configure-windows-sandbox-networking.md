@@ -193,6 +193,16 @@ notepad C:\network-report.txt
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Follow the stack: adapter status → gateway ping → internet by IP → DNS test. Most home issues are DNS (fix by changing to 1.1.1.1) or DHCP (fix by ipconfig /renew). Reset Winsock + TCP/IP stack for persistent software issues. For hardware issues: update driver or check power management settings.

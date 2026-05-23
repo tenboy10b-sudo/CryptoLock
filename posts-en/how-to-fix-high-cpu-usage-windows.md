@@ -179,6 +179,16 @@ Wait 60 seconds — Windows generates a full system health report. Open it and c
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Check Task Manager first — identify the exact process. For Windows Update: wait or restart the service. For Defender: reschedule scans. For System Interrupts: update drivers. For unknown processes: run a malware scan. For persistent high CPU with no obvious cause: run `perfmon /report`.

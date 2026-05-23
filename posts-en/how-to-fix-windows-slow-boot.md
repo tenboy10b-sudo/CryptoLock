@@ -183,6 +183,16 @@ A trend of increasing boot times suggests a growing problem — drive health, ac
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Measure with Event ID 100. Find slow components with Event ID 101. Quickest fixes: disable high-impact startup programs, enable Fast Startup, check drive health. For stubborn cases: clean boot to isolate the culprit, then SFC/DISM for file corruption. HDD → SSD replacement is the single biggest improvement possible on older hardware.

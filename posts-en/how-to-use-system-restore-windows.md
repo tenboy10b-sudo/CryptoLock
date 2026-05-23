@@ -119,6 +119,16 @@ Use System Restore first — it's the least destructive option.
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Enable System Protection on drive C with 5–10% space allocation. Create restore points before major changes. When something breaks, run `rstrui.exe` and pick a point from before the problem started. If Windows won't boot, access System Restore from the Recovery Environment.

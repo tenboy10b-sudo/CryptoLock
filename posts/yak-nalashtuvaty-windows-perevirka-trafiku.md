@@ -109,6 +109,16 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimi
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Резюме
 
 Для швидкого перегляду: PowerShell `Get-NetTCPConnection` або TCPView. Для детального аналізу: Wireshark. Для блокування: `New-NetFirewallRule -Direction Outbound -Program ... -Action Block`. Для зменшення телеметрії: вимкни DiagTrack і встанови мінімальний рівень через реєстр.

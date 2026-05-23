@@ -128,6 +128,16 @@ Common culprits: network drivers, USB drivers, antivirus. Update or disable the 
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Start with **audio format** (Fix 1) and **disable enhancements** (Fix 2) — these fix 80% of cases. For USB audio: disable USB selective suspend. For crackling under load: increase buffer size or disable CPU power throttling. For persistent issues: run LatencyMon to find the driver causing high DPC latency.

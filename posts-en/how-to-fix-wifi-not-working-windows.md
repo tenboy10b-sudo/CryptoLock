@@ -131,6 +131,16 @@ This removes all network adapters and reinstalls them. You'll need to reconnect 
 
 ---
 
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+
+
 ## Summary
 
 Most Wi-Fi problems are fixed by: running the troubleshooter, resetting the network stack (`netsh winsock reset` + `netsh int ip reset`), and reinstalling the driver. For "no internet" with valid connection: check IP address and switch to manual DNS (`1.1.1.1`).
