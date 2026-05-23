@@ -4,6 +4,7 @@ date: "2026-12-19"
 publishDate: "2026-12-19"
 description: "Windows 11 running slow? These proven methods genuinely improve performance: disable startup apps, switch power plan, reduce visual effects, clean disk, and update drivers."
 tags: ["windows", "optimization", "performance", "settings"]
+translatesUk: "yak-pryskoryt-windows-11-v-2026"
 readTime: 6
 ---
 
@@ -155,6 +156,12 @@ Configure to run monthly and clean Downloads older than 60 days.
 - Disabling Windows Update — leaves you vulnerable to security issues
 
 ---
+
+---
+
+**Читай також:**
+- [install Windows 11 without TPM](/en/how-to-install-windows-11-without-tpm)
+- [add Defender exclusions](/en/how-to-configure-windows-defender-exclusions)
 
 ## Summary
 

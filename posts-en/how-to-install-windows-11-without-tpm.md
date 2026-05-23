@@ -5,6 +5,7 @@ publishDate: "2024-05-01"
 updated: "2026-05-23"
 description: "Three methods to install Windows 11 without TPM 2.0 and Secure Boot: enable fTPM in BIOS, use Rufus bypass, or registry workaround. Works on any PC in 2025-2026."
 tags: ["windows", "installation", "bios", "settings"]
+translatesUk: "yak-vstanovyty-windows-11-bez-tpm"
 readTime: 6
 ---
 
@@ -133,6 +134,12 @@ Microsoft officially states unsupported PCs **may not receive future updates**. 
 | No USB available | Method 4 (setup.exe) |
 
 ---
+
+---
+
+**Читай також:**
+- [speed up Windows 11](/en/how-to-speed-up-windows-11)
+- [control Windows Update](/en/how-to-configure-windows-update-policies)
 
 ## Summary
 

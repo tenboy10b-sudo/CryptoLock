@@ -4,6 +4,7 @@ date: "2026-05-23"
 publishDate: "2026-05-23"
 description: "Windows 11 24H2 crashing with BSOD after KB5053656 or KB5055523 update? Fix SECURE_KERNEL_ERROR 0x18B and UNSUPPORTED_PROCESSOR blue screens with Known Issue Rollback and update removal."
 tags: ["windows", "errors", "bsod", "troubleshooting", "windows-update"]
+translatesUk: "siniy-ekran-pislya-onovlennya-windows-11"
 readTime: 6
 ---
 

@@ -4,6 +4,7 @@ date: "2026-12-16"
 publishDate: "2026-12-16"
 description: "Як встановлювати, оновлювати і видаляти програми через winget в Windows 10 і 11. Один рядок замість завантаження інсталятора — найшвидший спосіб налаштувати Windows."
 tags: ["windows", "інструменти", "powershell", "налаштування"]
+translatesEn: "how-to-use-winget-package-manager"
 readTime: 5
 ---
 

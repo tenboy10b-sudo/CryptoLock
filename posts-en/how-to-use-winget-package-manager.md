@@ -4,6 +4,7 @@ date: "2026-12-15"
 publishDate: "2026-12-15"
 description: "Winget is Windows' built-in package manager. Install, update, and remove apps from the command line — no browser, no installers. Complete guide with examples."
 tags: ["windows", "tools", "powershell", "administration"]
+translatesUk: "yak-korystuvatys-winget-windows"
 readTime: 6
 ---
 

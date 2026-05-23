@@ -4,6 +4,7 @@ date: "2026-12-12"
 publishDate: "2026-12-12"
 description: "Strong password principles, why length beats complexity, how to use a password manager, enable 2FA for Windows accounts, and configure password policy via Group Policy."
 tags: ["windows", "passwords", "security", "accounts"]
+translatesUk: "yak-stvoryt-nadiynyy-parol-windows"
 readTime: 5
 ---
 

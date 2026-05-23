@@ -4,6 +4,7 @@ date: "2026-12-14"
 publishDate: "2026-12-14"
 description: "Configure a static IP address, subnet mask, gateway and DNS in Windows via Settings, PowerShell, and CMD. Includes subnet calculation and how to revert to DHCP."
 tags: ["windows", "network", "settings", "administration"]
+translatesUk: "yak-rozrakhuvaty-pidsystemu-windows"
 readTime: 5
 ---
 

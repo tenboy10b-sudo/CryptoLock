@@ -4,6 +4,7 @@ date: "2026-12-10"
 publishDate: "2026-12-10"
 description: "Windows error codes look cryptic but follow a clear pattern. How to decode 0x80070005, HRESULT and NTSTATUS codes, find the root cause, and fix common errors."
 tags: ["windows", "errors", "diagnostics", "troubleshooting"]
+translatesUk: "shcho-oznachaie-kod-pomylky-windows"
 readTime: 5
 ---
 

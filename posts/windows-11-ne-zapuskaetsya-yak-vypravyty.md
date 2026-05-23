@@ -4,6 +4,7 @@ date: "2026-05-23"
 publishDate: "2026-05-23"
 description: "Windows 11 не завантажується, зависає на логотипі або показує чорний екран? Покрокове виправлення від безпечного режиму до відновлення системи і скидання ПК."
 tags: ["windows", "відновлення", "bsod", "завантаження", "помилки"]
+translatesEn: "how-to-fix-windows-11-wont-boot"
 readTime: 8
 ---
 
@@ -149,6 +150,12 @@ Recovery → **Усунення несправностей** → **Скинут�
 **[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і дізнайся причину і рішення.
 
 ---
+
+---
+
+**Читай також:**
+- [синій екран після оновлення](/siniy-ekran-pislya-onovlennya-windows-11)
+- [відновлення завантажувача Windows](/vidnovlennya-zavantazhuvach-windows)
 
 ## Резюме
 

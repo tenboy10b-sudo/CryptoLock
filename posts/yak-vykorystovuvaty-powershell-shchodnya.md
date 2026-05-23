@@ -4,6 +4,7 @@ date: "2026-12-07"
 publishDate: "2026-12-07"
 description: "Практичні PowerShell команди для щоденного використання: перевірка мережі, диску, процесів, служб і безпеки. Копіюй і запускай."
 tags: ["windows", "powershell", "інструменти", "адміністрування"]
+translatesEn: "how-to-use-powershell-for-daily-windows-tasks"
 readTime: 5
 ---
 

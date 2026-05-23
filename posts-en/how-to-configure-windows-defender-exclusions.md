@@ -4,6 +4,7 @@ date: "2026-12-17"
 publishDate: "2026-12-17"
 description: "Windows Defender blocking a legitimate app or slowing down your dev environment? Add folder, file, process, or extension exclusions without turning off antivirus protection."
 tags: ["windows", "security", "windows-defender", "settings"]
+translatesUk: "yak-nalashtuvaty-windows-defender-vyklyuchennya"
 readTime: 5
 ---
 

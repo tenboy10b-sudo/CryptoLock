@@ -4,6 +4,7 @@ date: "2026-12-06"
 publishDate: "2026-12-06"
 description: "Use Windows Event Viewer to detect unauthorized access, new accounts, suspicious services, and scheduled tasks. Key Security Event IDs every admin should monitor."
 tags: ["windows", "security", "monitoring", "administration"]
+translatesUk: "yak-korystuvatys-zhurnalom-podiy-windows"
 readTime: 6
 ---
 

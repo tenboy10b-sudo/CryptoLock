@@ -4,6 +4,7 @@ date: "2026-05-23"
 publishDate: "2026-05-23"
 description: "Windows 11 24H2 показує синій екран після оновлення KB5053656 або KB5055523? Покрокове виправлення BSOD 0x18B, 0x7E, UNSUPPORTED_PROCESSOR через Known Issue Rollback і відкат оновлень."
 tags: ["windows", "помилки", "bsod", "відновлення", "оновлення"]
+translatesEn: "how-to-fix-windows-11-blue-screen-after-update"
 readTime: 7
 ---
 
@@ -124,6 +125,12 @@ Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "Pau
 **[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код (`0x18B`, `0x0000007E` тощо) і дізнайся що він означає та як виправити.
 
 ---
+
+---
+
+**Читай також:**
+- [Windows 11 не запускається](/windows-11-ne-zapuskaetsya-yak-vypravyty)
+- [відновлення системних файлів через SFC і DISM](/sfc-dism-povnyy-gaid)
 
 ## Резюме
 

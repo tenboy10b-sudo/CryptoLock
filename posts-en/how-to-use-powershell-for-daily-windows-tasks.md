@@ -4,6 +4,7 @@ date: "2026-12-08"
 publishDate: "2026-12-08"
 description: "Practical PowerShell one-liners for daily Windows administration: network troubleshooting, disk usage, security checks, process management, and service control."
 tags: ["windows", "powershell", "administration", "tools"]
+translatesUk: "yak-vykorystovuvaty-powershell-shchodnya"
 readTime: 5
 ---
 

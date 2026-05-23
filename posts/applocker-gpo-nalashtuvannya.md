@@ -1,8 +1,7 @@
 ---
-title: "AppLocker Windows: налаштування через GPO — покроковий гайд"
+title: "Як налаштувати AppLocker в Windows через GPO"
 date: "2026-04-01"
-updated: "2026-05-23"
-description: "Налаштуй AppLocker через GPO щоб контролювати які програми запускаються. Правила по шляху, хешу і підпису для Windows 10/11 Pro і Enterprise."
+description: "Покрокове налаштування AppLocker для блокування несанкціонованих програм через Group Policy в Windows 10/11 Enterprise і Education."
 tags: ["applocker", "gpo", "групова-політика", "безпека"]
 readTime: 6
 ---
@@ -104,20 +103,8 @@ Get-AppLockerFileInformation -EventLog -LogPath "Microsoft-Windows-AppLocker/EXE
 Або через Event Viewer: **Applications and Services Logs → Microsoft → Windows → AppLocker**.
 
 > Також дивись: [Як заборонити запуск програм через групову політику](/zaborona-zapusku-prohram-gpo)
-## Часті питання
 
-### На яких версіях Windows працює AppLocker?
+---
 
-AppLocker доступний в Windows 10/11 Enterprise і Education. В Pro версії є обмежена підтримка — можна налаштувати правила але не всі функції. В Home AppLocker недоступний.
-
-### Чим AppLocker відрізняється від Software Restriction Policies?
-
-AppLocker новіший і більш гнучкий — підтримує правила по хешу, шляху, підпису видавця і пакету. SRP (Software Restriction Policies) старіший але працює на всіх версіях Windows.
-
-### Чи можна заблокувати конкретний сайт через AppLocker?
-
-Ні. AppLocker контролює запуск програм (exe, msi, скриптів), а не веб-трафік. Для блокування сайтів використовуй DNS filtering або Windows Firewall.
-
-### Що робити якщо AppLocker заблокував потрібну програму?
-
-В gpedit.msc → AppLocker → налаштуй виключення для конкретного шляху або підпису. Або тимчасово переведи правило в режим Audit Only.
+**Читай також:**
+- [обмеження спроб пароля](/obmezhennya-kilkosti-sprob-parolyu)

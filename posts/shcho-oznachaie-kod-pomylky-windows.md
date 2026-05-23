@@ -4,6 +4,7 @@ date: "2026-12-09"
 publishDate: "2026-12-09"
 description: "Як розшифрувати код помилки Windows 0x80070005, 0x80070002, 0xC000021A та інші. Структура hex-кодів і де шукати рішення."
 tags: ["windows", "помилки", "діагностика", "інструменти"]
+translatesEn: "how-to-decode-windows-error-codes"
 readTime: 5
 ---
 

@@ -166,6 +166,12 @@ For maximum control: Windows LTSC (Long Term Servicing Channel) removes most tel
 
 ---
 
+---
+
+**Читай також:**
+- [speed up Windows 11](/en/how-to-speed-up-windows-11)
+- [manage Windows Update](/en/how-to-configure-windows-update-policies)
+
 ## Summary
 
 Quickest method: disable DiagTrack service (`Stop-Service DiagTrack -Force; Set-Service DiagTrack -StartupType Disabled`) + set telemetry policy to 1 via registry. Add hosts file entries to block telemetry domains. On Windows Home, level 0 isn't available — level 1 (Required) is the minimum you can set.

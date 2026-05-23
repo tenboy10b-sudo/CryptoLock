@@ -1,24 +1,6 @@
 import { getAllPosts, getAllTags } from '../lib/posts'
 import siteConfig from '../site.config'
 
-// Топ сторінки з GSC — підвищений пріоритет і частота
-const HIGH_PRIORITY = new Set([
-  'zaborona-zapusku-prohram-gpo',
-  'obmezhennya-kilkosti-sprob-parolyu',
-  'yak-nalashtuvanty-virtualnyi-stol-windows',
-  'yak-pereviryt-yadro-windows-bezpechno',
-  'applocker-gpo-nalashtuvannya',
-  'yak-nalashtuvanty-spilnyy-dostup-do-papky',
-  'cmd-komandy-dlya-perevirky-dysku',
-  'yak-pidklyuchyty-dva-monitory-windows',
-  'yak-nalashtuvanty-avtomatychne-blokuvannya-windows',
-  'yak-zashyfruvaty-dysk-bitlocker',
-  'yak-uvimknuty-secure-boot',
-  'siniy-ekran-pislya-onovlennya-windows-11',
-  'windows-11-ne-zapuskaetsya-yak-vypravyty',
-])
-
-
 function getPublishedPosts() {
   const now = new Date()
   return getAllPosts().filter(post => {
@@ -28,7 +10,7 @@ function getPublishedPosts() {
   })
 }
 
-function generateSitemap(posts, tags) {
+function generateSitemap(posts, enPosts, tags) {
   const SITE = siteConfig.url
   const today = new Date().toISOString()
 
@@ -67,10 +49,20 @@ ${staticPages.map(p => urlEntry(p.url, today, p.priority, p.changefreq)).join('\
 ${tagPages.map(p => urlEntry(p.url, p.lastmod, p.priority, p.changefreq)).join('\n')}
 ${posts.map(post => urlEntry(
   `/${post.slug}`,
-  post.updated || post.date || today,
-  HIGH_PRIORITY.has(post.slug) ? '1.0' : '0.7',
-  HIGH_PRIORITY.has(post.slug) ? 'weekly' : 'monthly'
+  post.date || today,
+  '0.9',
+  'monthly'
 )).join('\n')}
+${enPosts.map(post => {
+  const enUrl = `${SITE}/en/${post.slug}`
+  return `  <url>
+    <loc>${enUrl}</loc>
+    <lastmod>${post.updated || post.date || today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>
+  </url>`
+}).join('\n')}
 </urlset>`
 }
 
@@ -80,8 +72,13 @@ export default function Sitemap() {
 
 export async function getServerSideProps({ res }) {
   const posts = getPublishedPosts()
+  const enPosts = getAllPosts('en').filter(p => {
+    const pd = p.publishDate || p.date
+    if (!pd) return true
+    return new Date(pd) <= new Date()
+  })
   const tags = getAllTags()
-  const sitemap = generateSitemap(posts, tags)
+  const sitemap = generateSitemap(posts, enPosts, tags)
 
   res.setHeader('Content-Type', 'text/xml')
   res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400')

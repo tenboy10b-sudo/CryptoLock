@@ -4,6 +4,7 @@ date: "2026-05-23"
 publishDate: "2026-05-23"
 description: "Windows 11 not starting, stuck on logo, black screen, or blue screen after update? Complete step-by-step fix from safe mode to bootloader repair and clean install."
 tags: ["windows", "troubleshooting", "bsod", "recovery", "boot"]
+translatesUk: "windows-11-ne-zapuskaetsya-yak-vypravyty"
 readTime: 8
 ---
 

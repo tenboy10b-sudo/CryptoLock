@@ -3,6 +3,7 @@ title: "Як увімкнути Secure Boot в BIOS і навіщо він по�
 date: "2026-04-20"
 description: "Що таке Secure Boot, як його увімкнути в UEFI/BIOS і вирішити проблеми із завантаженням після активації."
 tags: ["bios", "uefi", "безпека", "завантаження"]
+translatesEn: "how-to-enable-secure-boot-windows"
 readTime: 5
 ---
 

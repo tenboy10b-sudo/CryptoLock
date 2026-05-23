@@ -4,6 +4,7 @@ date: "2026-12-22"
 publishDate: "2026-12-22"
 description: "Windows Defender блокує легальну програму або уповільнює роботу? Додай точкові виключення для папки, файлу або процесу — захист решти системи залишиться активним."
 tags: ["windows", "безпека", "windows-defender", "налаштування"]
+translatesEn: "how-to-configure-windows-defender-exclusions"
 readTime: 4
 ---
 
