@@ -160,3 +160,10 @@ sc \\ServerName config wuauserv start= auto
 ## Підсумок
 
 `sc qc` — конфігурація. `sc query` — стан. `sc config start= auto/demand/disabled` — тип запуску. `sc failure` — налаштування відновлення. `sc create` / `sc delete` — для власних служб. `sc \\ComputerName` — управління на іншому ПК.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

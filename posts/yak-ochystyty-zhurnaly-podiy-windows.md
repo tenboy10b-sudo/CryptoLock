@@ -160,3 +160,10 @@ Get-ChildItem $archivePath -Filter "*.evtx" |
 ## Підсумок
 
 `wevtutil cl System` — швидке очищення. `wevtutil epl System backup.evtx` — архівувати перед очищенням. `wevtutil sl System /ms:134217728` — встановити розмір 128 МБ. Для Security лога встановлюй більший розмір і довший retention якщо проводиш аудит.
+
+---
+
+## 📋 Не знаєш що означає Event ID?
+
+**[→ Windows Event ID довідник](/tools/windows-event-id)** — пошук по 20+ ключових подіях безпеки з описом, рівнем загрози і рекомендаціями.
+

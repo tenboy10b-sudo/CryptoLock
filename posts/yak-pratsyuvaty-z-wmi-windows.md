@@ -174,3 +174,10 @@ Invoke-CimMethod -InputObject $cs -MethodName JoinDomainOrWorkgroup `
 ## Підсумок
 
 `Get-CimInstance` замість `Get-WmiObject` — для нового коду. `Win32_OperatingSystem` — ОС, `Win32_Processor` — CPU, `Win32_PhysicalMemory` — RAM, `Win32_LogicalDisk` — диски, `Win32_Process` — процеси. `New-CimSession` — ефективне підключення до кількох серверів одночасно.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

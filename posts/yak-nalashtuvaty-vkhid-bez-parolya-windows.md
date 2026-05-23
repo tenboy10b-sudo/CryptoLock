@@ -108,6 +108,14 @@ Set-ItemProperty "HKCU:\Control Panel\Desktop" -Name "ScreenSaverIsSecure" -Valu
 **[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
 
 
+
+---
+
+## 🔑 Потрібен надійний пароль?
+
+**[→ Генератор паролів](/tools/password-generator)** — криптографічно надійні паролі прямо в браузері. Нічого не передається на сервер.
+
+
 ## Резюме
 
 `netplwiz` → зніми галочку → введи пароль для підтвердження. Якщо галочки немає — виправ через реєстр `DevicePasswordLessBuildVersion = 0`. Обов'язково увімкни BitLocker і автоблокування якщо використовуєш автовхід.

@@ -172,3 +172,10 @@ Test-NetConnection -ComputerName 192.168.1.50 -Port 9100
 ## Підсумок
 
 Для організацій з доменом: встанови Print Server, додай принтери через `Add-Printer`, розгортай через GPO Preferences з Item-Level Targeting по групах безпеки. Черга зависла — `net stop spooler`, очисти папку PRINTERS, `net start spooler`. Це закриває 90% проблем з мережевими принтерами.
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

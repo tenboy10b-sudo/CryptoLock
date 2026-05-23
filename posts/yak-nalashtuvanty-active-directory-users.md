@@ -169,3 +169,10 @@ Get-ADUser -Filter { PasswordNeverExpires -eq $true -and Enabled -eq $true } |
 ## Підсумок
 
 `Get-ADUser -Filter` — пошук. `New-ADUser` — створення. `Set-ADUser` — зміна. `Disable-ADAccount` і `Unlock-ADAccount` — блокування і розблокування. `Add-ADGroupMember` — управління групами. `Import-Csv` + `New-ADUser` — масове створення з Excel файлу.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

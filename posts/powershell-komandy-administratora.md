@@ -126,3 +126,10 @@ Install-WindowsUpdate -AcceptAll -AutoReboot
 ```
 
 > Також дивись: [Як заборонити запуск PowerShell через групову політику](/zaborona-zapusku-powershell)
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

@@ -198,6 +198,14 @@ powershell -ExecutionPolicy Bypass -File "C:\Scripts\myscript.ps1"
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 PowerShell replaces most manual Windows tasks. Start with `Get-Process`, `Get-Service`, and `Get-NetAdapter` to orient yourself, then use the patterns above. Every command supports `| Where-Object`, `| Select-Object`, and `| Sort-Object` for filtering.

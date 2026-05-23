@@ -94,3 +94,10 @@ Get-NetAdapter | Where-Object {$_.Name -like "*Wi-Fi*" -or $_.Name -like "*Wirel
 ```powershell
 Enable-NetAdapter -Name "Wi-Fi"
 ```
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

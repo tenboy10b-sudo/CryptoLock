@@ -139,6 +139,14 @@ New-NetFirewallRule -DisplayName "Block IP" `
 **[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
 
 
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+
+
 ## Резюме
 
 Для швидкої перевірки: Resource Monitor → вкладка Мережа. Для списку підключень: `netstat -ano`. Для детального аналізу з іменами процесів: PowerShell `Get-NetTCPConnection`. Підозрілий процес з постійним трафіком → перевір в Google і заблокуй через Firewall.

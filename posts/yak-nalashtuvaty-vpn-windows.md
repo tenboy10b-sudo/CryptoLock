@@ -112,6 +112,16 @@ Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\PolicyAgent" `
 
 ---
 
+
+---
+
+## 🛡️ Перевір безпеку свого ПК
+
+Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм?
+
+**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
+
+
 ## Резюме
 
 Для корпоративного VPN: `Win + I` → Мережа → VPN → Додати VPN → вкажи дані від адміністратора. Для скриптування: `Add-VpnConnection` в PowerShell. IKEv2 — найкращий тип якщо сервер підтримує.

@@ -176,3 +176,10 @@ Get-NetAdapterStatistics | Select-Object Name, ReceivedBytes, SentBytes
 ## Підсумок
 
 При будь-яких проблемах з інтернетом — спочатку `ipconfig /release && ipconfig /renew && ipconfig /flushdns`. Якщо не допомогло — `netsh winsock reset && netsh int ip reset` і перезавантаження. Якщо після видалення VPN все зламалось — Winsock reset вирішує в 90% випадків.
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

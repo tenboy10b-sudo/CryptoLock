@@ -100,6 +100,14 @@ Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\lanmanworkstatio
 
 ---
 
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+
+
 ## Резюме
 
 Провідник → Цей ПК → Підключити мережевий диск → введи `\\IP\Папка` → увімкни **Відновлювати при вході**. Для скриптів: `net use Z: \\IP\Папка /persistent:yes`. Якщо диск зникає — перевір брандмауер на сервері і KeepConn в реєстрі.

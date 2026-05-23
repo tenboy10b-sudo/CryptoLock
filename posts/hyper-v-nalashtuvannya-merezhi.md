@@ -165,3 +165,10 @@ New-NetFirewallRule -DisplayName "Allow ICMP Hyper-V" -Protocol ICMPv4 `
 ## Підсумок
 
 External — для VM з реальним IP і доступом до мережі. Internal + NAT — для VM з доступом до інтернету але без видимості в мережі. Private — повністю ізольовані VM. Для більшості тестових середовищ достатньо Internal + NAT.
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

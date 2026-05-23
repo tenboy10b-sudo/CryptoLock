@@ -170,6 +170,14 @@ For sensitive passwords, use a dedicated password manager (Bitwarden, KeePass) i
 
 ---
 
+
+---
+
+## 🔑 Потрібен надійний пароль?
+
+**[→ Генератор паролів](/tools/password-generator)** — криптографічно надійні паролі прямо в браузері. Нічого не передається на сервер.
+
+
 ## Summary
 
 Use `cmdkey /list` to see stored credentials. Add with `cmdkey /add`. Delete with `cmdkey /delete`. For persistent mapped drives and RDP: store credentials with the `TERMSRV/` prefix for RDP. Back up via the GUI before reinstalling Windows — credentials don't carry over automatically.

@@ -172,6 +172,14 @@ Or in GUI: right-click any log → **Save All Events As** → `.evtx` format can
 
 ---
 
+
+---
+
+## 📋 Не знаєш що означає Event ID?
+
+**[→ Windows Event ID довідник](/tools/windows-event-id)** — пошук по 20+ ключових подіях безпеки з описом, рівнем загрози і рекомендаціями.
+
+
 ## Summary
 
 For crash diagnosis: **System** log → filter **Critical + Error** → check times around the incident. For security: **Security** log → Event IDs 4624/4625. For boot issues: **Diagnostics-Performance** → Event ID 100. Learn to filter — raw event logs are too noisy to read unfiltered.

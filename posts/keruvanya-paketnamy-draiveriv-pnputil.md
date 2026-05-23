@@ -59,3 +59,10 @@ Export-WindowsDriver -Online -Destination "C:\DriversBackup"
 ## Підсумок
 
 `pnputil /add-driver file.inf /install` — встановити драйвер. `pnputil /enum-drivers` — переглянути всі. `Export-WindowsDriver` — зберегти всі драйвери перед переустановкою системи.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

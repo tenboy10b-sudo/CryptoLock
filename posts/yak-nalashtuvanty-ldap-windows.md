@@ -134,3 +134,10 @@ $searcher.Filter = "(objectClass=user)"
 ## Підсумок
 
 `System.DirectoryServices.DirectorySearcher` — LDAP без модуля AD. Основні фільтри: `(objectClass=user)` для користувачів, `(&(...)(...))`  для AND. `userAccountControl` — бітова маска для перевірки стану акаунту. `ldp.exe` — GUI для тестування запитів.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

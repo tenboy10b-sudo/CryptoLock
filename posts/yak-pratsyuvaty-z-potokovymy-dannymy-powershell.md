@@ -73,3 +73,10 @@ Get-ChildItem C:\Users -Recurse -File |
 ## Підсумок
 
 `Where-Object` → `Select-Object` → `Sort-Object` — базовий pipeline. `@{N="..."; E={...}}` — обчислювані колонки. `Group-Object` — агрегація. `Measure-Object -Sum` — підсумки.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

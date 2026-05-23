@@ -77,3 +77,10 @@ reg add "HKCU\SOFTWARE\Policies\Microsoft\Windows\System" /v DisableCMD /t REG_D
 ## Важливо
 
 Ця заборона не поширюється на PowerShell. Якщо потрібно заблокувати і PowerShell — читай статтю [Як заборонити запуск PowerShell через групову політику](/zaborona-zapusku-powershell).
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

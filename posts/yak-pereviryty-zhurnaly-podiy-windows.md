@@ -122,6 +122,14 @@ Get-WinEvent -FilterHashtable @{LogName='Application'; Id=1000} -MaxEvents 10 |
 **[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
 
 
+
+---
+
+## 📋 Не знаєш що означає Event ID?
+
+**[→ Windows Event ID довідник](/tools/windows-event-id)** — пошук по 20+ ключових подіях безпеки з описом, рівнем загрози і рекомендаціями.
+
+
 ## Резюме
 
 Для діагностики збоїв: **Система** → фільтр Critical/Error навколо часу збою → Event ID 41 або 6008. Для безпеки: **Безпека** → Event ID 4625 (невдалі входи). Для кращого пошуку — PowerShell `Get-WinEvent` з `FilterHashtable`.

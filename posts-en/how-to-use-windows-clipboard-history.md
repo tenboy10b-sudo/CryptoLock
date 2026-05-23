@@ -96,6 +96,14 @@ Both work alongside Windows Clipboard History without conflicts.
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 `Win + V` enables and opens clipboard history. Pin items you use frequently. Enable Cloud Clipboard in Settings to sync pinned items across PCs. For more than 25 items or search functionality, add Ditto or CopyQ alongside the built-in feature.

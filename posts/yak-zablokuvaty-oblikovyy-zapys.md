@@ -85,3 +85,10 @@ Disable-LocalUser -Name "student"
 ([ADSI]"WinNT://./ІМ'Я_КОРИСТУВАЧА,user").psbase.InvokeSet("AccountDisabled", $true)
 ([ADSI]"WinNT://./ІМ'Я_КОРИСТУВАЧА,user").SetInfo()
 ```
+
+---
+
+## 🔑 Потрібен надійний пароль?
+
+**[→ Генератор паролів](/tools/password-generator)** — криптографічно надійні паролі прямо в браузері. Нічого не передається на сервер.
+

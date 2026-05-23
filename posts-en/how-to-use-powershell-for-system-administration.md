@@ -210,6 +210,14 @@ Enter-PSSession -ComputerName "PC-NAME"
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 Save frequently used commands as `.ps1` scripts in `C:\Scripts\`. Use `Get-Help cmdlet-name -Examples` for any command you're unfamiliar with. Run PowerShell as Administrator for most system administration tasks. For remote work, enable PSRemoting once and use `Invoke-Command` instead of RDP for simple queries.

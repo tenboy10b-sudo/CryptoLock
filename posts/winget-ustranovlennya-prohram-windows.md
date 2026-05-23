@@ -163,3 +163,10 @@ Invoke-Command -ComputerName (Get-ADComputer -Filter *).Name -ScriptBlock {
 ## Підсумок
 
 `winget search назва` → `winget install ID` — двокрокова установка будь-якої програми. `winget upgrade --all` — оновити все одразу. `winget export` і `winget import` — перенести набір програм на новий ПК за хвилину.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

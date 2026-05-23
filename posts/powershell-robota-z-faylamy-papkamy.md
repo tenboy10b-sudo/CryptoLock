@@ -216,3 +216,10 @@ Get-ChildItem "C:\Users" -Recurse -File -ErrorAction SilentlyContinue |
 PowerShell дозволяє виконувати за секунди те що руками зайняло б години. Найкорисніші команди для щоденної роботи: `Get-ChildItem`, `Copy-Item`, `Remove-Item` з фільтрами і `Where-Object` для умовного відбору.
 
 Більше команд: [PowerShell для адміністратора — топ-20](/powershell-komandy-administratora)
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

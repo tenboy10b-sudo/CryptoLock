@@ -169,6 +169,14 @@ Remove-Item "C:\Temp\test.iso"
 
 ---
 
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+
+
 ## Summary
 
 For most users: disable power management on the adapter (prevents connection drops), enable RSS (better multi-core performance). For gaming: disable Interrupt Moderation (lower latency). For file transfers: increase Receive/Transmit Buffers. Avoid Jumbo Frames unless your entire network supports it — mixed MTU causes connectivity problems.

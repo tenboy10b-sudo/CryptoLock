@@ -112,6 +112,14 @@ If `MachinePolicy` or `UserPolicy` is set — contact your IT administrator.
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 Check with `Get-ExecutionPolicy -List`. For development: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`. For a single script: use `-ExecutionPolicy Bypass` when launching PowerShell. For downloaded scripts: `Unblock-File` removes the block. If GPO overrides your setting — it can only be changed by an administrator.

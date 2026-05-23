@@ -214,6 +214,14 @@ Invoke-Command -ComputerName $computers -FilePath "C:\Scripts\health-check.ps1" 
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 Set `RemoteSigned` execution policy. Always include `try/catch` and a log function. Use `param()` with `[CmdletBinding()]` for reusable scripts. Test with `-WhatIf` before running destructively. Schedule with `Register-ScheduledTask` and run as `SYSTEM` for unattended execution. Share to remote PCs with `Invoke-Command -FilePath`.

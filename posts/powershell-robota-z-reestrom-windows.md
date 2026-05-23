@@ -185,3 +185,10 @@ $null = Start-Process reg -ArgumentList "import C:\backup-myapp.reg" -Wait
 ## Підсумок
 
 `Get-ItemProperty` читає, `Set-ItemProperty` змінює, `New-Item` + `New-ItemProperty` створює, `Remove-Item` / `Remove-ItemProperty` видаляє. Ці чотири команди покривають 95% задач з реєстром. Завжди роби резервну копію розділу перед змінами.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

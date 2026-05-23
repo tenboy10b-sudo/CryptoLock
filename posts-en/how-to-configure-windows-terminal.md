@@ -157,6 +157,14 @@ Press `` Win + ` `` to show/hide the terminal from any app.
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 Install with `winget install Microsoft.WindowsTerminal`. Set as default terminal in Developer settings. Add a custom SSH profile for quick server access. Install PowerShell 7 and set as default profile. Use `Alt + Shift + -/+` for split panes when working with multiple sessions.

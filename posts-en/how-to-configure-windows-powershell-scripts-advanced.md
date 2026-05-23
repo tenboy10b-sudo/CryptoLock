@@ -194,6 +194,14 @@ Get-AuthenticodeSignature "C:\Scripts\myscript.ps1" | Select-Object Status, Stat
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 Create `$PROFILE` for aliases and functions that persist across sessions. Organize reusable functions into modules under `Documents\PowerShell\Modules\`. Use `Export-ModuleMember` to control what's public. Auto-import modules in your profile. Version your modules with manifests so you know what you're running.

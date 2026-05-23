@@ -193,6 +193,14 @@ View in GUI: select a task → **History** tab.
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 Use `AtStartup` for boot tasks, `AtLogOn` with delay for user-context tasks, and XML for event-based triggers. Run system maintenance as `SYSTEM` to avoid credential issues. Add `RestartCount` for tasks that occasionally fail. Export tasks to XML before major changes — importing is much faster than recreating.

@@ -124,3 +124,10 @@ net start spooler
 ## Підсумок
 
 `ping IP` → підключи через TCP/IP порт → встанови драйвер. `Test-NetConnection -Port 9100` перевіряє чи відкритий порт друку. Якщо черга зависла — `net stop spooler`, очисти папку PRINTERS, `net start spooler`.
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

@@ -182,3 +182,10 @@ Write-Output "Thumbprint: $($cert.Thumbprint)"
 ## Підсумок
 
 `Get-ChildItem Cert:\LocalMachine\My` — переглянути сертифікати. `Import-PfxCertificate` — імпортувати PFX. `Export-PfxCertificate` — резервна копія з приватним ключем. Перевіряй прострочені сертифікати регулярно — `Where-Object { $_.NotAfter -lt (Get-Date).AddDays(30) }`. GPO Trusted Root CA — автоматичне розгортання корпоративного CA на всі ПК.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+

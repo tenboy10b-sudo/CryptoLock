@@ -183,3 +183,16 @@ Set-NetAdapterStatistics -Name "Ethernet" -ResetStatistics
 ## Підсумок
 
 `Get-NetIPConfiguration` — поточні налаштування. `New-NetIPAddress` — статичний IP. `Set-DnsClientServerAddress` — DNS. `Test-NetConnection -Port` — перевірити порт. `netsh wlan show profile key=clear` — пароль Wi-Fi. `Invoke-Command` — застосувати на всіх ПК домену одразу.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

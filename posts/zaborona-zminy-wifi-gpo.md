@@ -77,3 +77,10 @@ reg add "HKCU\SOFTWARE\Policies\Microsoft\Windows\Network Connections" /v NC_Del
 - Вимкнути Wi-Fi адаптер
 
 Всі ці дії мають бути недоступні або вимагати прав адміністратора.
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

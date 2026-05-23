@@ -226,6 +226,14 @@ if ($threats) {
 **[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
 
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 `Update-MpSignature` to update, `Start-MpScan -ScanType QuickScan` for quick scan, `Get-MpThreat` to check detections. Use `Add-MpPreference -ExclusionPath` for dev folders. Schedule regular scans with `Set-MpPreference -ScanScheduleDay`. Everything controllable without touching the Windows Security GUI.

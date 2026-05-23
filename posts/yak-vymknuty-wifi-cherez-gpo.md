@@ -71,3 +71,10 @@ Disable-NetAdapter -Name "Wi-Fi" -Confirm:$false
 Після перезавантаження перевір: `Win + I` → **Network & Internet** — перемикач Wi-Fi має бути недоступний або відсутній.
 
 > Також дивись: [Як заборонити користувачу змінювати налаштування Wi-Fi](/zaborona-zminy-wifi-gpo)
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+

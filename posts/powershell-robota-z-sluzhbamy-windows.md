@@ -194,3 +194,10 @@ while ($true) {
 ## Підсумок
 
 `Get-Service | Where-Object { $_.StartType -eq "Automatic" -and $_.Status -ne "Running" }` — швидка діагностика проблемних служб. `Restart-Service -Name "ім'я" -Force` — перезапуск. `Set-Service -StartupType Disabled` — вимкнути назавжди. `Invoke-Command -ComputerName` — управління на всіх ПК домену одразу.
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
