@@ -4,13 +4,14 @@
     "yak-pratsyuvaty-z-reiestratorom-windows",
     "yak-nalashtuvaty-shyfruvalnyk-fayliv-windows",
     "yak-nalashtuvanty-dvokrokov╤Г-autentyfikatsiyu-windows",
-    "skynuti-parol-windows-cmd"
+    "skynuti-parol-windows-cmd",
+    "yak-nalashtuvaty-printer-windows"
   ],
-  "count": 5,
+  "count": 6,
   "promo_index": 6,
   "last_post": {
-    "slug": "skynuti-parol-windows-cmd",
-    "title": "Як скинути пароль Windows через CMD без сторонніх програм",
-    "time": "2026-05-22T08:01:02.983197"
+    "slug": "yak-nalashtuvaty-printer-windows",
+    "title": "Як підключити і налаштувати принтер в Windows 10 і 11",
+    "time": "2026-05-23T08:01:05.261050"
   }
 }
