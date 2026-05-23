@@ -14,8 +14,8 @@ export default function TagPage({ tag, posts }) {
 
   const title = isEn ? `Articles tagged "${tag}"` : `Статті про «${tag}»`
   const desc = isEn
-    ? `${posts.length} article${posts.length !== 1 ? 's' : ''} tagged "${tag}" on ${siteConfig.name}.`
-    : `${posts.length} ${plural(posts.length)} по темі «${tag}» на ${siteConfig.name} — покрокові інструкції українською.`
+    ? `${tag} — ${posts.length} step-by-step Windows guides. Tips for Windows 10 and 11.`
+    : `${tag} — ${posts.length} покрокових гайдів для Windows. Інструкції для Windows 10 і 11 українською.`
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
