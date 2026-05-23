@@ -1,6 +1,6 @@
-import Layout from '../../components/Layout'
+import Layout from '../components/Layout'
 import Link from 'next/link'
-import siteConfig from '../../site.config'
+import siteConfig from '../site.config'
 
 const SITE = siteConfig.url
 
@@ -12,6 +12,14 @@ const tools = [
     description: 'Перевіряє ПК по 22 напрямках і видає детальний HTML-звіт з оцінкою ризику. Для бізнесу, ФОП та IT-спеціалістів.',
     badge: 'Безкоштовне демо',
     icon: '🛡️',
+  },
+  {
+    slug: 'windows-error-decoder',
+    name: 'Декодер помилок',
+    tagline: 'Розшифруй код помилки Windows',
+    description: 'Введи код на кшталт 0x80070005 і дізнайся що він означає, чому виникає і як виправити. База 20+ найпоширеніших помилок.',
+    badge: 'Безкоштовно',
+    icon: '🔍',
   },
 ]
 
