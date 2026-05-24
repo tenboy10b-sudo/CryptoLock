@@ -56,6 +56,14 @@ const nextConfig = {
         permanent: true,
       },
 
+
+      // ── Trailing slash дублікати → без slash ─────────────────────────
+      { source: '/:slug/', destination: '/:slug', permanent: true },
+
+      // ── /en/tags/tools → /tools ──────────────────────────────────────
+      { source: '/en/tags/tools', destination: '/tools', permanent: true, locale: false },
+      { source: '/en/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', destination: '/tools', permanent: true, locale: false },
+
       // ── Опечатка в slug ───────────────────────────────────────────────
       {
         source: '/yak-nalashtuvatv-vpn-windows',
