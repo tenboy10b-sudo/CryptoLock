@@ -2,10 +2,8 @@ name: Weekly SEO Report
 
 on:
   schedule:
-    # Щонеділі о 08:00 UTC (10:00 Київ)
     - cron: '0 8 * * 0'
   workflow_dispatch:
-    # Також можна запустити вручну з GitHub UI
 
 jobs:
   seo-report:
@@ -15,34 +13,26 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: |
-          pip install \
-            google-auth \
-            google-auth-oauthlib \
-            google-api-python-client \
-            pytrends \
-            requests
+        run: pip install google-auth google-auth-oauthlib google-api-python-client requests
 
       - name: Run GSC Analyzer
         env:
-          GSC_CREDENTIALS_JSON: ${{ secrets.GSC_CREDENTIALS_JSON }}
+          GSC_TOKEN_JSON: ${{ secrets.GSC_TOKEN_JSON }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPO: ${{ github.repository }}
         run: python scripts/gsc_analyzer.py
 
-      - name: Commit report to repo
+      - name: Commit report
         run: |
-          git config --global user.name "SEO Bot"
-          git config --global user.email "seo-bot@cryptolockua.com"
+          git config user.name "SEO Bot"
+          git config user.email "bot@cryptolockua.com"
           git add reports/ || true
-          git diff --staged --quiet || git commit -m "📊 Auto SEO report $(date +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "📊 SEO report ${{ env.date }}"
           git push || true
