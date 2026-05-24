@@ -20,6 +20,20 @@ const nextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
       },
+      {
+        // Кешування статичних ресурсів на 1 рік
+        source: '/_next/static/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // Кешування HTML сторінок на 1 годину з stale-while-revalidate
+        source: '/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 's-maxage=3600, stale-while-revalidate=86400' },
+        ],
+      },
     ]
   },
 
@@ -29,6 +43,15 @@ const nextConfig = {
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'crypto-lock-five.vercel.app' }],
+        destination: 'https://cryptolockua.com/:path*',
+        permanent: true,
+      },
+
+
+      // ── www → non-www ────────────────────────────────────────────────
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.cryptolockua.com' }],
         destination: 'https://cryptolockua.com/:path*',
         permanent: true,
       },
@@ -56,7 +79,7 @@ const nextConfig = {
       // ── UK slugs що потрапили на EN локаль → UK версія ────────────────
       { source: '/en/yak-vstanovyty-wsl-linux-v-windows', destination: '/yak-vstanovyty-wsl-windows', permanent: true, locale: false },
       { source: '/en/vidklyuchennya-avtoonovlennya-windows', destination: '/vidklyuchennya-avtoonovlennya-windows', permanent: true, locale: false },
-      { source: '/en/yak-uvimknuty-secure-boot', destination: '/yak-uvimknuty-secure-boot-bios', permanent: true, locale: false },
+      { source: '/en/yak-uvimknuty-secure-boot', destination: '/yak-uvimknuty-secure-boot', permanent: true, locale: false },
       { source: '/en/yak-zablokuvaty-oblikovyy-zapys', destination: '/yak-zablokuvaty-oblikovyy-zapys', permanent: true, locale: false },
 
       // ── EN теги з UK назвами → UK версія тегу ────────────────────────
@@ -134,6 +157,55 @@ const nextConfig = {
       { source: '/en/tags/%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D1%96%D1%81%D1%82%D1%8C', destination: '/tags/%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
       // gpedit (вже латиниця але на EN локалі — без UK статей)
       { source: '/en/tags/gpedit', destination: '/tags/gpedit', permanent: true, locale: false },
+
+
+      // ── EN теги без Ukrainian prefix → UK теги (доповнення) ──────────
+      { source: '/en/tags/applocker', destination: '/tags/applocker', permanent: true, locale: false },
+      { source: '/en/tags/bios', destination: '/tags/bios', permanent: true, locale: false },
+      { source: '/en/tags/bitlocker', destination: '/tags/bitlocker', permanent: true, locale: false },
+      { source: '/en/tags/bluetooth', destination: '/tags/bluetooth', permanent: true, locale: false },
+      { source: '/en/tags/bsod', destination: '/tags/bsod', permanent: true, locale: false },
+      { source: '/en/tags/chkdsk', destination: '/tags/chkdsk', permanent: true, locale: false },
+      { source: '/en/tags/cmd', destination: '/tags/cmd', permanent: true, locale: false },
+      { source: '/en/tags/dism', destination: '/tags/dism', permanent: true, locale: false },
+      { source: '/en/tags/dns', destination: '/tags/dns', permanent: true, locale: false },
+      { source: '/en/tags/firewall', destination: '/tags/firewall', permanent: true, locale: false },
+      { source: '/en/tags/gpo', destination: '/tags/gpo', permanent: true, locale: false },
+      { source: '/en/tags/hyper-v', destination: '/tags/hyper-v', permanent: true, locale: false },
+      { source: '/en/tags/linux', destination: '/tags/linux', permanent: true, locale: false },
+      { source: '/en/tags/ntfs', destination: '/tags/ntfs', permanent: true, locale: false },
+      { source: '/en/tags/powershell', destination: '/tags/powershell', permanent: true, locale: false },
+      { source: '/en/tags/ram', destination: '/tags/ram', permanent: true, locale: false },
+      { source: '/en/tags/rdp', destination: '/tags/rdp', permanent: true, locale: false },
+      { source: '/en/tags/secpol', destination: '/tags/secpol', permanent: true, locale: false },
+      { source: '/en/tags/sfc', destination: '/tags/sfc', permanent: true, locale: false },
+      { source: '/en/tags/troubleshooting', destination: '/tags/troubleshooting', permanent: true, locale: false },
+      { source: '/en/tags/uac', destination: '/tags/uac', permanent: true, locale: false },
+      { source: '/en/tags/uefi', destination: '/tags/uefi', permanent: true, locale: false },
+      { source: '/en/tags/usb', destination: '/tags/usb', permanent: true, locale: false },
+      { source: '/en/tags/vpn', destination: '/tags/vpn', permanent: true, locale: false },
+      { source: '/en/tags/wifi', destination: '/tags/wifi', permanent: true, locale: false },
+      { source: '/en/tags/windows', destination: '/tags/windows', permanent: true, locale: false },
+      { source: '/en/tags/windows-11', destination: '/tags/windows-11', permanent: true, locale: false },
+      { source: '/en/tags/windows-defender', destination: '/tags/windows-defender', permanent: true, locale: false },
+      { source: '/en/tags/windows-update', destination: '/tags/windows-update', permanent: true, locale: false },
+      { source: '/en/tags/wsl', destination: '/tags/wsl', permanent: true, locale: false },
+      { source: '/en/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%8F', destination: '/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D1%96%D1%8F', permanent: true, locale: false },
+      { source: '/en/tags/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F', destination: '/tags/%D0%B2%D1%96%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F', permanent: true, locale: false },
+      { source: '/en/tags/%D0%B7%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%27%D1%8F', destination: '/tags/%D0%B7%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%27%D1%8F', permanent: true, locale: false },
+      { source: '/en/tags/%D0%BA%D0%BB%D0%B0%D0%B2%D1%96%D0%B0%D1%82%D1%83%D1%80%D0%B0', destination: '/tags/%D0%BA%D0%BB%D0%B0%D0%B2%D1%96%D0%B0%D1%82%D1%83%D1%80%D0%B0', permanent: true, locale: false },
+      { source: '/en/tags/%D0%BC%D0%BE%D0%BD%D1%96%D1%82%D0%BE%D1%80', destination: '/tags/%D0%BC%D0%BE%D0%BD%D1%96%D1%82%D0%BE%D1%80', permanent: true, locale: false },
+      { source: '/en/tags/%D0%BC%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BC%D0%B5%D0%B4%D1%96%D0%B0', destination: '/tags/%D0%BC%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BC%D0%B5%D0%B4%D1%96%D0%B0', permanent: true, locale: false },
+      { source: '/en/tags/%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA', destination: '/tags/%D0%BD%D0%BE%D1%83%D1%82%D0%B1%D1%83%D0%BA', permanent: true, locale: false },
+      { source: '/en/tags/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D1%96%D1%81%D1%82%D1%8C', destination: '/tags/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
+      { source: '/en/tags/%D0%BF%D1%80%D0%B8%D0%BD%D1%82%D0%B5%D1%80', destination: '/tags/%D0%BF%D1%80%D0%B8%D0%BD%D1%82%D0%B5%D1%80', permanent: true, locale: false },
+      { source: '/en/tags/%D1%80%D0%BE%D0%B7%D1%80%D0%BE%D0%B1%D0%BA%D0%B0', destination: '/tags/%D1%80%D0%BE%D0%B7%D1%80%D0%BE%D0%B1%D0%BA%D0%B0', permanent: true, locale: false },
+      { source: '/en/tags/%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80', destination: '/tags/%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80', permanent: true, locale: false },
+      { source: '/en/tags/%D1%81%D0%BF%D0%B5%D1%86%D1%96%D0%B0%D0%BB%D1%8C%D0%BD%D1%96-%D0%BC%D0%BE%D0%B6%D0%BB%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D1%96', destination: '/tags/%D1%81%D0%BF%D0%B5%D1%86%D1%96%D0%B0%D0%BB%D1%8C%D0%BD%D1%96-%D0%BC%D0%BE%D0%B6%D0%BB%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D1%96', permanent: true, locale: false },
+      { source: '/en/tags/%D1%84%D0%B0%D0%B9%D0%BB%D0%B8', destination: '/tags/%D1%84%D0%B0%D0%B9%D0%BB%D0%B8', permanent: true, locale: false },
+      { source: '/en/tags/%D1%84%D0%BB%D0%B5%D1%88%D0%BA%D0%B0', destination: '/tags/%D1%84%D0%BB%D0%B5%D1%88%D0%BA%D0%B0', permanent: true, locale: false },
+      { source: '/en/tags/%D1%85%D0%BC%D0%B0%D1%80%D0%B0', destination: '/tags/%D1%85%D0%BC%D0%B0%D1%80%D0%B0', permanent: true, locale: false },
+      { source: '/en/tags/%D1%96%D0%B3%D1%80%D0%B8', destination: '/tags/%D1%96%D0%B3%D1%80%D0%B8', permanent: true, locale: false },
 
       // ── EN /tools/* → UK /tools/* (інструменти тільки UK версія) ────
       { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
