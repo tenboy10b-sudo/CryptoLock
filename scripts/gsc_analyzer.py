@@ -6,7 +6,7 @@ from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 
-SITE_URL       = "https://cryptolockua.com/"
+SITE_URL       = "sc-domain:cryptolockua.com"
 GITHUB_TOKEN   = os.environ.get("GITHUB_TOKEN")
 GITHUB_REPO    = os.environ.get("GITHUB_REPO", "tenboy10b-sudo/CryptoLock")
 GSC_TOKEN_JSON = os.environ.get("GSC_TOKEN_JSON")
@@ -68,7 +68,7 @@ def build_report(service):
     top3, top10, page2, far = [], [], [], []
     for r in pages_28:
         pos  = r.get("position", 99)
-        page = r["keys"][0].replace(SITE_URL.rstrip("/"), "") or "/"
+        page = r["keys"][0].replace("https://cryptolockua.com", "").replace("sc-domain:cryptolockua.com", "") or "/"
         d = {"page": page, "pos": round(pos, 1),
              "impr": r.get("impressions", 0), "clicks": r.get("clicks", 0),
              "ctr": round(r.get("ctr", 0) * 100, 1)}
@@ -83,7 +83,7 @@ def build_report(service):
         pos  = r.get("position", 99)
         ctr  = r.get("ctr", 0)
         impr = r.get("impressions", 0)
-        page = r["keys"][0].replace(SITE_URL.rstrip("/"), "") or "/"
+        page = r["keys"][0].replace("https://cryptolockua.com", "").replace("sc-domain:cryptolockua.com", "") or "/"
         exp  = EXPECTED_CTR.get(int(pos), 0.02)
         if pos <= 10 and ctr < exp * 0.7 and impr >= 5:
             ctr_ops.append({"page": page, "pos": round(pos, 1),
