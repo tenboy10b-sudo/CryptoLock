@@ -1,86 +1,72 @@
 ---
 title: "Як зробити скріншот в Windows 10 і 11: всі способи"
-date: "2026-05-19"
-publishDate: "2026-05-19"
-description: "Скріншот усього екрана, окремого вікна або вибраної області в Windows — через клавіші, Snipping Tool і Xbox Game Bar. Де зберігаються файли."
-tags: ["windows", "налаштування", "інструменти"]
-readTime: 4
+date: "2026-05-24"
+publishDate: "2026-05-24"
+description: "Як зробити скріншот екрана в Windows через Print Screen, Snipping Tool, Win+Shift+S і PowerShell. Де зберігаються файли і як скопіювати в буфер обміну."
+tags: ["windows", "інструменти", "налаштування", "продуктивність"]
+readTime: 3
 ---
 
-Зробити скріншот в Windows можна п'ятьма різними способами залежно від задачі.
-
----
-
-## Спосіб 1: Win + PrintScreen — найшвидший
-
-Натисни `Win + PrintScreen` — екран миготне, скріншот автоматично збережеться у папку:
-
-```
-C:\Users\[Ім'я]\Pictures\Screenshots
-```
-
-Зберігає весь екран як PNG без додаткових дій.
+В Windows є кілька способів зробити скріншот — від простого `Print Screen` до гнучкого Snipping Tool.
 
 ---
 
-## Спосіб 2: PrintScreen — в буфер обміну
+## Швидкі гарячі клавіші
 
-Просто `PrintScreen` — копіює весь екран в буфер. Відкрий Paint, Word або будь-який редактор і натисни `Ctrl + V`.
-
-`Alt + PrintScreen` — копіює тільки активне вікно, а не весь екран.
-
----
-
-## Спосіб 3: Win + Shift + S — вибрати область
-
-Найзручніший спосіб для більшості задач.
-
-1. Натисни `Win + Shift + S`
-2. Екран потемніє, з'явиться панель вгорі
-3. Вибери режим:
-   - **Прямокутник** — виділи область мишею
-   - **Довільна форма** — намалюй будь-яку форму
-   - **Вікно** — клікни на потрібне вікно
-   - **Весь екран** — весь екран одразу
-4. Скріншот потрапляє в буфер — натисни сповіщення щоб зберегти файл або одразу `Ctrl + V` у потрібне місце
+| Клавіші | Що робить |
+|---------|----------|
+| `Print Screen` | Весь екран → буфер обміну |
+| `Win + Print Screen` | Весь екран → файл в Pictures\Screenshots |
+| `Alt + Print Screen` | Активне вікно → буфер обміну |
+| `Win + Shift + S` | Вибрати область → буфер обміну |
+| `Win + G` | Xbox Game Bar (для ігор) |
 
 ---
 
-## Спосіб 4: Snipping Tool — з редактором
+## Snipping Tool — найзручніший спосіб
 
-`Win + S` → **Snipping Tool** → запусти.
+`Win + Shift + S` відкриває панель вибору:
+- **Прямокутна область** — виділи потрібну зону
+- **Вільна форма** — намалюй будь-яку форму
+- **Вікно** — клікни на вікно
+- **Весь екран** — весь монітор
 
-Програма дозволяє:
-- Зробити скріншот із затримкою (1–10 секунд)
-- Намалювати стрілки і виділення прямо у вікні
-- Зберегти у PNG, JPG або GIF
+Після захоплення — натисни сповіщення щоб відредагувати і зберегти.
 
-Зручно коли потрібно щось підписати або показати конкретний елемент.
-
----
-
-## Спосіб 5: Xbox Game Bar — для ігор
-
-`Win + G` → значок камери або `Win + Alt + PrintScreen`.
-
-Зберігає скріншоти у:
-```
-C:\Users\[Ім'я]\Videos\Captures
-```
+Або відкрий повний Snipping Tool: `Win + S` → введи "Snipping Tool"
 
 ---
 
 ## Де зберігаються скріншоти
 
-| Спосіб | Де зберігається |
-|--------|----------------|
-| Win + PrintScreen | Pictures\Screenshots |
-| PrintScreen | Тільки буфер обміну |
-| Win + Shift + S | Буфер або вибрати при збереженні |
-| Xbox Game Bar | Videos\Captures |
+```powershell
+# Папка зі скріншотами
+explorer "$env:USERPROFILE\Pictures\Screenshots"
+
+# Останній скріншот
+Get-ChildItem "$env:USERPROFILE\Pictures\Screenshots" |
+  Sort-Object LastWriteTime -Descending | Select-Object -First 1 FullName
+```
+
+`Win + Print Screen` автоматично зберігає в `C:\Users\Ім'я\Pictures\Screenshots`.
 
 ---
 
-## Підсумок
+## Скріншот через PowerShell
 
-Для швидкого скріншоту всього екрана — `Win + PrintScreen`. Для скріншоту частини екрана — `Win + Shift + S`. Для скріншоту з підписами — Snipping Tool.
+```powershell
+Add-Type -AssemblyName System.Windows.Forms
+[System.Windows.Forms.Screen]::PrimaryScreen | ForEach-Object {
+  $bmp = New-Object System.Drawing.Bitmap($_.Bounds.Width, $_.Bounds.Height)
+  $g = [System.Drawing.Graphics]::FromImage($bmp)
+  $g.CopyFromScreen($_.Bounds.Location, [System.Drawing.Point]::Empty, $_.Bounds.Size)
+  $bmp.Save("$env:USERPROFILE\Desktop\screenshot.png")
+}
+Write-Host "Збережено на робочому столі"
+```
+
+---
+
+## Резюме
+
+`Win + Shift + S` — найшвидший спосіб для будь-якої частини екрана. `Win + Print Screen` — автоматичне збереження файлу. Snipping Tool — для редагування перед збереженням.
