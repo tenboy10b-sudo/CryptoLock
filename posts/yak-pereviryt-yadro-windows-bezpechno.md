@@ -1,9 +1,9 @@
 ---
-title: "Безпечне ядро Windows 11: перевірка і налаштування Secured-core"
+title: "Безпечне ядро і захист пам'яті Windows 11: як перевірити за 2 хвилини"
 date: "2026-04-30"
-updated: "2026-05-23"
+updated: "2026-05-24"
 publishDate: "2026-04-30"
-description: "Що таке Secured-core PC і безпечне ядро Windows 11, як перевірити чи увімкнені функції захисту ядра і що робити якщо вони вимкнені."
+description: "Як перевірити чи увімкнені HVCI, Secure Boot і захист ядра в Windows 11. Команди PowerShell і де подивитись в Безпека Windows."
 tags: ["windows", "безпека", "налаштування", "захист"]
 readTime: 4
 ---

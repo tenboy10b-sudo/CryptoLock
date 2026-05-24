@@ -1,7 +1,8 @@
 ---
-title: "Як заборонити запуск програм через групову політику Windows"
+title: "Заборона запуску програм через GPO: блокуй будь-який exe за 5 хвилин"
 date: "2026-04-06"
-description: "Налаштування AppLocker і Software Restriction Policies для блокування запуску конкретних програм або всього невстановленого ПЗ."
+updated: "2026-05-24"
+description: "Як заблокувати запуск конкретної програми або всіх сторонніх програм через Group Policy в Windows 10 і 11. AppLocker і Software Restriction Policies."
 tags: ["групова-політика", "applocker", "безпека", "gpedit"]
 readTime: 6
 ---

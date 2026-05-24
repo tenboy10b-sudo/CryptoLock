@@ -1,9 +1,9 @@
 ---
-title: "How to Install Windows 11 Without TPM 2.0 and Secure Boot (2026)"
+title: "How to Install Windows 11 Without TPM 2.0 and Secure Boot (2026 Guide)"
 date: "2024-05-01"
 publishDate: "2024-05-01"
-updated: "2026-05-23"
-description: "Three methods to install Windows 11 without TPM 2.0 and Secure Boot: enable fTPM in BIOS, use Rufus bypass, or registry workaround. Works on any PC in 2025-2026."
+updated: "2026-05-24"
+description: "3 methods to bypass TPM 2.0 and Secure Boot on Windows 11: enable fTPM in BIOS, use Rufus bypass, or registry workaround. Works on any PC in 2025-2026."
 tags: ["windows", "installation", "bios", "settings"]
 translatesUk: "yak-vstanovyty-windows-11-bez-tpm"
 readTime: 6
