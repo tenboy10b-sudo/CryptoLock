@@ -7,13 +7,14 @@
     "skynuti-parol-windows-cmd",
     "yak-nalashtuvaty-printer-windows",
     "yak-nalashtuvatysy-windows-hello",
-    "yak-pratsyuvaty-z-reestrom-windows"
+    "yak-pratsyuvaty-z-reestrom-windows",
+    "yak-pereviryty-avtentychnist-saytiv-ssl"
   ],
-  "count": 8,
+  "count": 9,
   "promo_index": 9,
   "last_post": {
-    "slug": "yak-pratsyuvaty-z-reestrom-windows",
-    "title": "Редактор реєстру Windows: як безпечно редагувати реєстр",
-    "time": "2026-05-25T08:01:09.472808"
+    "slug": "yak-pereviryty-avtentychnist-saytiv-ssl",
+    "title": "Як перевірити безпеку сайту: SSL сертифікати і HTTPS",
+    "time": "2026-05-26T08:01:11.334174"
   }
 }
