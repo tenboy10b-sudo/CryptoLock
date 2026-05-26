@@ -1,126 +1,127 @@
 ---
-title: "Як керувати службами Windows через CMD і PowerShell"
-date: "2026-04-06"
-description: "Запуск, зупинка, перезапуск і зміна типу запуску служб Windows через sc, net start і PowerShell. Корисні служби для вимкнення."
-tags: ["cmd", "powershell", "інструменти", "оптимізація"]
+title: "Управління службами Windows: запуск, зупинка і налаштування"
+date: "2026-12-30"
+publishDate: "2026-12-30"
+description: "Як запускати, зупиняти і налаштовувати служби Windows через services.msc і PowerShell. Які служби можна безпечно вимкнути і як виправити помилки служб."
+tags: ["windows", "служби", "адміністрування", "powershell", "оптимізація"]
 readTime: 5
+translatesEn: "how-to-manage-windows-services"
 ---
 
-Служби Windows — фонові процеси які завантажуються разом з системою. Вимкнення непотрібних зменшує завантаження RAM і прискорює старт.
+Windows запускає десятки фонових служб. Управління ними допомагає виправляти помилки, прискорювати систему і підвищувати безпеку.
+
+---
+
+## Відкрити менеджер служб
+
+`Win + R` → `services.msc`
+
+---
+
+## Запустити, зупинити, перезапустити службу
+
+**Через GUI:** ПКМ на службі → Запустити / Зупинити / Перезапустити
+
+**PowerShell:**
+
+```powershell
+# Запустити
+Start-Service -Name "wuauserv"    # Windows Update
+Start-Service -Name "Spooler"     # Диспетчер друку
+
+# Зупинити
+Stop-Service -Name "wuauserv" -Force
+
+# Перезапустити
+Restart-Service -Name "wuauserv" -Force
+
+# Перевірити статус
+Get-Service "wuauserv" | Select-Object Name, Status, StartType
+```
+
+---
+
+## Змінити тип запуску
+
+```powershell
+# Автоматично — запускається разом з Windows
+Set-Service -Name "wuauserv" -StartupType Automatic
+
+# Вручну — тільки коли потрібно
+Set-Service -Name "Fax" -StartupType Manual
+
+# Вимкнено — ніколи не запускається
+Set-Service -Name "RemoteRegistry" -StartupType Disabled
+```
+
+---
+
+## Служби які можна безпечно вимкнути на домашньому ПК
+
+```powershell
+$toDisable = @(
+  "Fax",            # Факс
+  "RemoteRegistry", # Реєстр (ризик безпеки)
+  "XblGameSave",    # Xbox Game Save
+  "XblAuthManager", # Xbox Auth
+  "XboxNetApiSvc",  # Xbox Network
+  "lfsvc",          # Геолокація
+  "MapsBroker"      # Карти
+)
+
+foreach ($svc in $toDisable) {
+  Stop-Service $svc -Force -EA 0
+  Set-Service $svc -StartupType Disabled -EA 0
+  Write-Host "Вимкнено: $svc"
+}
+```
+
+---
 
 ## Переглянути всі служби
 
-```cmd
-sc query type= all state= all
-```
+```powershell
+# Всі служби за статусом
+Get-Service | Sort-Object Status -Descending | Format-Table Name, Status, StartType
 
-Або коротший варіант:
-```cmd
-net start
+# Автозапуск служби що не запущені (потенційна проблема)
+Get-Service | Where-Object {$_.Status -eq "Stopped" -and $_.StartType -eq "Automatic"} |
+  Select-Object Name, DisplayName
 ```
-Показує тільки запущені служби.
 
 ---
 
-## Основні команди sc
-
-```cmd
-sc start "ServiceName"       — запустити
-sc stop "ServiceName"        — зупинити
-sc query "ServiceName"       — статус
-sc config "ServiceName" start= auto      — автоматичний старт
-sc config "ServiceName" start= demand    — вручну
-sc config "ServiceName" start= disabled  — вимкнено
-```
-
-> Увага: між `start=` і значенням обов'язково є пробіл.
-
----
-
-## Через net start / net stop
-
-```cmd
-net start wuauserv        — запустити Windows Update
-net stop wuauserv         — зупинити Windows Update
-```
-
-Простіший синтаксис але менше можливостей ніж sc.
-
----
-
-## Через PowerShell
+## Виправити помилку "Службу не вдалося запустити"
 
 ```powershell
-# Список всіх служб
-Get-Service | Select-Object Name, DisplayName, Status, StartType
-
-# Запущені служби
-Get-Service | Where-Object {$_.Status -eq "Running"}
-
-# Зупинити службу
-Stop-Service -Name "wuauserv" -Force
-
-# Запустити
-Start-Service -Name "wuauserv"
-
-# Перезапустити
-Restart-Service -Name "Spooler"
-
-# Змінити тип запуску
-Set-Service -Name "wuauserv" -StartupType Disabled
+# Перевірити журнал помилок служб
+Get-WinEvent -FilterHashtable @{LogName='System'; Level=1,2} -MaxEvents 20 |
+  Where-Object {$_.Message -like "*служб*" -or $_.Message -like "*service*"} |
+  Select-Object TimeCreated, Message | Format-List
 ```
 
----
-
-## Служби які можна безпечно вимкнути
-
-| Служба | Ім'я | Що вимкнути |
-|---|---|---|
-| Факс | Fax | Якщо не використовуєш факс |
-| Служба дистанційного реєстру | RemoteRegistry | Для більшості домашніх ПК |
-| Маршрутизація і віддалений доступ | RemoteAccess | Якщо не налаштовуєш маршрутизатор |
-| Windows Search | WSearch | Якщо не потрібен пошук |
-| SysMain (Superfetch) | SysMain | На SSD-дисках |
-| Диспетчер друку | Spooler | Якщо немає принтера |
-| Xbox Live | XblAuthManager, XblGameSave | Якщо не граєш у Xbox |
+Типові виправлення:
+- `sfc /scannow` — відновлює пошкоджені файли служб
+- `DISM /Online /Cleanup-Image /RestoreHealth` — відновлює образ Windows
 
 ---
 
-## Знайти службу по опису
+## Часті питання
 
-```powershell
-Get-Service | Where-Object {$_.DisplayName -like "*Update*"} | Select-Object Name, DisplayName, Status
-```
+### Як дізнатись яка служба гальмує завантаження?
 
----
+`Win + R` → `msconfig` → **Служби** → поклич запуск з увімкненими і вимкненими службами по черзі для ізоляції проблемної.
 
-## Перезапустити зависшу службу автоматично
+### Чи безпечно вимикати служби Windows?
 
-Через sc можна налаштувати автоматичний перезапуск при збої:
+Вимикай тільки з таблиці вище або якщо точно знаєш що служба не потрібна. Невірне вимкнення може зламати функції Windows.
 
-```cmd
-sc failure "Spooler" reset= 60 actions= restart/5000/restart/10000/restart/30000
-```
+### Що робити якщо служба постійно падає?
 
-- `reset= 60` — скидати лічильник через 60 секунд
-- `actions= restart/5000` — перезапустити через 5 секунд після збою
+Перевір Event Viewer (eventvwr.msc) → Windows Logs → System → знайди помилки з ім'ям служби. Зазвичай причина — пошкоджений файл або конфлікт залежностей.
 
 ---
 
-## Відновити стандартні налаштування служби
+## Резюме
 
-Якщо після змін щось пішло не так:
-
-```cmd
-sc config "ServiceName" start= demand
-sc start "ServiceName"
-```
-
-Або через `services.msc` встанови стандартний тип запуску вручну.
-
----
-
-## ⚡ Шукаєш потрібну команду?
-
-**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
-
+`services.msc` для GUI. `Get-Service` і `Set-Service` в PowerShell. Безпечно вимикати: Fax, RemoteRegistry, Xbox служби. При помилках — перевір Event Viewer і запусти `sfc /scannow`.
