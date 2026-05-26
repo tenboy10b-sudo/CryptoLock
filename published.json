@@ -6,13 +6,15 @@
     "yak-nalashtuvanty-dvokrokov╤Г-autentyfikatsiyu-windows",
     "skynuti-parol-windows-cmd",
     "yak-nalashtuvaty-printer-windows",
-    "yak-nalashtuvatysy-windows-hello"
+    "yak-nalashtuvatysy-windows-hello",
+    "yak-pratsyuvaty-z-reestrom-windows",
+    "yak-pereviryty-avtentychnist-saytiv-ssl"
   ],
-  "count": 7,
-  "promo_index": 8,
+  "count": 9,
+  "promo_index": 10,
   "last_post": {
-    "slug": "yak-nalashtuvatysy-windows-hello",
-    "title": "Windows Hello: вхід за відбитком пальця, обличчям і PIN",
-    "time": "2026-05-24T08:01:06.017204"
+    "slug": "yak-pereviryty-avtentychnist-saytiv-ssl",
+    "title": "Як перевірити безпеку сайту: SSL сертифікати і HTTPS",
+    "time": "2026-05-26T08:01:11.334174"
   }
 }
