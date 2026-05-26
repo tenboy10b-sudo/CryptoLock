@@ -131,6 +131,14 @@ SSDs fail silently — rely on SMART data, not sounds.
 
 ---
 
+
+---
+
+## ⚡ Шукаєш потрібну команду?
+
+**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+
+
 ## Summary
 
 Quick check: `wmic diskdrive get status` — if not `OK`, act immediately.  
