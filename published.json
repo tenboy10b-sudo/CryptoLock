@@ -8,13 +8,14 @@
     "yak-nalashtuvaty-printer-windows",
     "yak-nalashtuvatysy-windows-hello",
     "yak-pratsyuvaty-z-reestrom-windows",
-    "yak-pereviryty-avtentychnist-saytiv-ssl"
+    "yak-pereviryty-avtentychnist-saytiv-ssl",
+    "yak-pidklyuchyty-bluetooth-prystroyi-windows"
   ],
-  "count": 9,
+  "count": 10,
   "promo_index": 10,
   "last_post": {
-    "slug": "yak-pereviryty-avtentychnist-saytiv-ssl",
-    "title": "Як перевірити безпеку сайту: SSL сертифікати і HTTPS",
-    "time": "2026-05-26T08:01:11.334174"
+    "slug": "yak-pidklyuchyty-bluetooth-prystroyi-windows",
+    "title": "Bluetooth в Windows: підключення навушників, мишки і колонок",
+    "time": "2026-05-27T08:01:07.960184"
   }
 }
