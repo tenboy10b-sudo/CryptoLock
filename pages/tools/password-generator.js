@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
 import siteConfig from '../../site.config'
@@ -38,8 +39,14 @@ function calcEntropy(length, opts) {
   return Math.round(length * Math.log2(size))
 }
 
-function entropyLabel(bits) {
-  if (bits < 40)  return { label: 'Дуже слабкий', color: '#dc2626', bg: '#fef2f2', width: '10%' }
+function entropyLabel(bits, isEn) {
+  if (bits < 40)  return { label: isEn ? 'Very weak'   : 'Дуже слабкий', color: '#dc2626', bg: '#fef2f2', width: '10%'  }
+  if (bits < 60)  return { label: isEn ? 'Weak'        : 'Слабкий',      color: '#ea580c', bg: '#fff7ed', width: '30%'  }
+  if (bits < 80)  return { label: isEn ? 'Fair'        : 'Середній',     color: '#ca8a04', bg: '#fefce8', width: '55%'  }
+  if (bits < 100) return { label: isEn ? 'Strong'      : 'Надійний',     color: '#16a34a', bg: '#f0fdf4', width: '75%'  }
+  if (bits < 128) return { label: isEn ? 'Very strong' : 'Дуже надійний',color: '#059669', bg: '#ecfdf5', width: '90%'  }
+  return           { label: isEn ? 'Excellent'   : 'Відмінний',    color: '#0284c7', bg: '#f0f9ff', width: '100%' }
+}
   if (bits < 60)  return { label: 'Слабкий',      color: '#ea580c', bg: '#fff7ed', width: '30%' }
   if (bits < 80)  return { label: 'Прийнятний',   color: '#ca8a04', bg: '#fefce8', width: '55%' }
   if (bits < 100) return { label: 'Сильний',      color: '#16a34a', bg: '#f0fdf4', width: '78%' }
@@ -57,6 +64,9 @@ function crackTime(bits) {
 }
 
 export default function PasswordGenerator() {
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
+
   const [length, setLength]       = useState(16)
   const [opts, setOpts]           = useState({ upper: true, lower: true, digits: true, symbols: true, noSimilar: false })
   const [count, setCount]         = useState(5)
@@ -84,40 +94,52 @@ export default function PasswordGenerator() {
   const toggle = key => setOpts(o => ({ ...o, [key]: !o[key] }))
 
   const entropy  = calcEntropy(length, opts)
-  const strength = entropyLabel(entropy)
+  const strength = entropyLabel(entropy, isEn)
+
+  const canonicalPath = isEn
+    ? `${SITE}/en/tools/password-generator`
+    : `${SITE}/tools/password-generator`
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'Генератор надійних паролів онлайн',
-    description: 'Безкоштовний генератор випадкових паролів. Налаштуй довжину, символи, складність. Паролі генеруються локально — нічого не надсилається на сервер.',
-    url: `${SITE}/tools/password-generator`,
+    name: isEn
+      ? 'Secure Password Generator — Free Online'
+      : 'Генератор надійних паролів онлайн',
+    description: isEn
+      ? 'Free random password generator. Set length and character types. Passwords are generated locally in your browser — nothing is sent to any server.'
+      : 'Безкоштовний генератор випадкових паролів. Налаштуй довжину, символи, складність. Паролі генеруються локально — нічого не надсилається на сервер.',
+    url: canonicalPath,
     applicationCategory: 'SecurityApplication',
-    inLanguage: 'uk',
+    inLanguage: isEn ? 'en' : 'uk',
     publisher: { '@type': 'Organization', name: siteConfig.name, url: SITE },
   }
 
   return (
     <Layout
-      title="Генератор паролів — безпечні паролі онлайн безкоштовно"
-      description="Генеруй надійні випадкові паролі прямо в браузері. Налаштуй довжину і символи. Паролі не передаються на сервер — генерація повністю локальна."
-      canonical={`${SITE}/tools/password-generator`}
+      title={isEn
+        ? 'Secure Password Generator — Free, Local, No Tracking'
+        : 'Генератор паролів — безпечні паролі онлайн безкоштовно'}
+      description={isEn
+        ? 'Generate strong random passwords in your browser. Set length, character types and quantity. All generation is local — nothing is sent to any server.'
+        : 'Генеруй надійні випадкові паролі прямо в браузері. Налаштуй довжину і символи. Паролі не передаються на сервер — генерація повністю локальна.'}
+      canonical={canonicalPath}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div style={{ padding: '2rem 0 4rem' }}>
         <div className="container">
 
           <nav style={s.bc}>
-            <Link href="/" style={s.bcLink}>Головна</Link>
+            <Link href={isEn ? '/en' : '/'} style={s.bcLink}>{isEn ? 'Home' : 'Головна'}</Link>
             <span style={s.bcSep}>/</span>
-            <Link href="/tools" style={s.bcLink}>Інструменти</Link>
+            <Link href={isEn ? '/en/tools' : '/tools'} style={s.bcLink}>{isEn ? 'Tools' : 'Інструменти'}</Link>
             <span style={s.bcSep}>/</span>
-            <span style={{ ...s.bcLink, color: '#64748b' }}>Генератор паролів</span>
+            <span style={{ ...s.bcLink, color: '#64748b' }}>{isEn ? 'Password Generator' : 'Генератор паролів'}</span>
           </nav>
 
           <div style={s.header}>
-            <h1 style={s.title}>🔑 Генератор паролів</h1>
-            <p style={s.subtitle}>Надійні паролі · Генерація в браузері · Нічого не надсилається</p>
+            <h1 style={s.title}>🔑 {isEn ? 'Password Generator' : 'Генератор паролів'}</h1>
+            <p style={s.subtitle}>{isEn ? 'Strong passwords · Browser-side only · Nothing is transmitted' : 'Надійні паролі · Генерація в браузері · Нічого не надсилається'}</p>
           </div>
 
           <div style={s.layout}>
@@ -126,7 +148,7 @@ export default function PasswordGenerator() {
 
               <div style={s.section}>
                 <div style={s.row}>
-                  <span style={s.label}>Довжина</span>
+                  <span style={s.label}>{isEn ? 'Length' : 'Довжина'}</span>
                   <span style={s.bigVal}>{length}</span>
                 </div>
                 <input type="range" min={8} max={64} value={length}
@@ -141,15 +163,15 @@ export default function PasswordGenerator() {
               <div style={s.section}>
                 <p style={s.label}>Символи</p>
                 {[
-                  { key: 'upper',     label: 'Великі літери', ex: 'A–Z' },
-                  { key: 'lower',     label: 'Малі літери',   ex: 'a–z' },
-                  { key: 'digits',    label: 'Цифри',          ex: '0–9' },
-                  { key: 'symbols',   label: 'Символи',        ex: '!@#$%' },
-                  { key: 'noSimilar', label: 'Без схожих',    ex: 'I l 1 O 0' },
-                ].map(({ key, label, ex }) => (
+                  { key: 'upper',     label_uk: 'Великі літери', label_en: 'Uppercase',       ex: 'A–Z' },
+                  { key: 'lower',     label_uk: 'Малі літери',   label_en: 'Lowercase',       ex: 'a–z' },
+                  { key: 'digits',    label_uk: 'Цифри',         label_en: 'Digits',          ex: '0–9' },
+                  { key: 'symbols',   label_uk: 'Символи',       label_en: 'Symbols',         ex: '!@#$%' },
+                  { key: 'noSimilar', label_uk: 'Без схожих',    label_en: 'No similar chars',ex: 'I l 1 O 0' },
+                ].map(({ key, label_uk, label_en, ex }) => (
                   <label key={key} style={s.checkRow} onClick={() => toggle(key)}>
                     <div style={opts[key] ? s.cbOn : s.cbOff}>{opts[key] && '✓'}</div>
-                    <span style={s.checkLabel}>{label}</span>
+                    <span style={s.checkLabel}>{isEn ? label_en : label_uk}</span>
                     <span style={s.checkEx}>{ex}</span>
                   </label>
                 ))}
@@ -157,7 +179,7 @@ export default function PasswordGenerator() {
 
               <div style={s.section}>
                 <div style={s.row}>
-                  <span style={s.label}>Кількість</span>
+                  <span style={s.label}>{isEn ? 'Count' : 'Кількість'}</span>
                 </div>
                 <div style={s.countRow}>
                   {[1,3,5,10].map(n => (
@@ -168,26 +190,26 @@ export default function PasswordGenerator() {
 
               <div style={{ ...s.strengthBox, background: strength.bg }}>
                 <div style={s.row}>
-                  <span style={s.label}>Надійність</span>
+                  <span style={s.label}>{isEn ? 'Strength' : 'Надійність'}</span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 800, color: strength.color }}>{strength.label}</span>
                 </div>
                 <div style={s.bar}><div style={{ ...s.fill, width: strength.width, background: strength.color }} /></div>
                 <div style={s.row}>
-                  <span style={s.meta}>Entropy: <b>{entropy} біт</b></span>
-                  <span style={s.meta}>Перебір: <b>{crackTime(entropy)}</b></span>
+                  <span style={s.meta}>Entropy: <b>{entropy} {isEn ? 'bits' : 'біт'}</b></span>
+                  <span style={s.meta}>{isEn ? 'Crack time:' : 'Перебір:'} <b>{crackTime(entropy)}</b></span>
                 </div>
               </div>
 
-              <button style={s.genBtn} onClick={generate}>🔄 Згенерувати нові</button>
+              <button style={s.genBtn} onClick={generate}>🔄 {isEn ? 'Generate new' : 'Згенерувати нові'}</button>
             </div>
 
             {/* Results */}
             <div style={s.resultsPanel}>
               <div style={s.row}>
-                <span style={s.label}>Згенеровані паролі</span>
+                <span style={s.label}>{isEn ? 'Generated passwords' : 'Згенеровані паролі'}</span>
                 {passwords.length > 1 && (
                   <button style={copied==='all' ? s.caOn : s.caOff} onClick={copyAll}>
-                    {copied==='all' ? '✓ Всі скопійовано' : 'Копіювати всі'}
+                    {copied==='all' ? '✓ ' + (isEn ? 'Copied' : 'Скопійовано') : (isEn ? 'Copy all' : 'Копіювати всі')}
                   </button>
                 )}
               </div>
@@ -204,21 +226,26 @@ export default function PasswordGenerator() {
               </div>
 
               <p style={s.secNote}>
-                🔒 Використовується <code style={s.code}>window.crypto.getRandomValues()</code> — криптографічно безпечний генератор. Паролі не передаються на сервер.
+                {isEn ? '🔒 Uses ' : '🔒 Використовується '}<code style={s.code}>window.crypto.getRandomValues()</code>{isEn ? ' — cryptographically secure API. Passwords are not transmitted to any server.' : ' — криптографічно безпечний генератор. Паролі не передаються на сервер.'}
               </p>
             </div>
           </div>
 
           {/* Tips */}
           <div style={s.tips}>
-            <h2 style={s.tipsTitle}>Поради щодо паролів</h2>
+            <h2 style={s.tipsTitle}>{isEn ? 'Password security tips' : 'Поради щодо паролів'}</h2>
             <div style={s.tipsGrid}>
-              {[
+              {(isEn ? [
+                { icon: '📏', t: '16+ characters minimum', d: 'Length matters more than complexity. A 16-character password is far stronger than an 8-character one with all symbol types.' },
+                { icon: '🔀', t: 'Unique per service',     d: 'If one site is breached, attackers will try your password on every other site automatically.' },
+                { icon: '🗄️', t: 'Use a password manager', d: 'Bitwarden or KeePass — store all passwords in one place and remember only one master password.' },
+                { icon: '🔐', t: 'Enable 2-factor auth',   d: 'Even a stolen password is useless to an attacker without your second authentication factor.' },
+              ] : [
                 { icon: '📏', t: 'Мінімум 16 символів', d: 'Довжина важливіша за складність. Пароль з 16 символів надійніший за 8-символьний з усіма типами.' },
                 { icon: '🔀', t: 'Унікальний для кожного сервісу', d: 'Якщо один сайт зламали — зловмисники перевіряють цей пароль на всіх інших.' },
-                { icon: '🗄️', t: 'Менеджер паролів', d: 'Bitwarden або KeePass — зберігай всі паролі в одному місці, потрібно запам\'ятати тільки один.' },
+                { icon: '🗄️', t: 'Менеджер паролів', d: 'Bitwarden або KeePass — зберігай всі паролі в одному місці, потрібно запам'ятати тільки один.' },
                 { icon: '🔐', t: 'Двофакторна аутентифікація', d: 'Навіть вкрадений пароль не допоможе зловмиснику без другого фактора.' },
-              ].map(({ icon, t, d }) => (
+              ]).map(({ icon, t, d }) => (
                 <div key={t} style={s.tipCard}>
                   <span style={{ fontSize: '1.5rem', flexShrink: 0 }}>{icon}</span>
                   <div>
@@ -232,14 +259,24 @@ export default function PasswordGenerator() {
 
           {/* SEO */}
           <div style={s.seoBlock}>
-            <h2 style={s.seoH2}>Як генерується пароль</h2>
-            <p style={s.seoP}>Всі паролі генеруються через <code style={s.code}>window.crypto.getRandomValues()</code> — криптографічно безпечний API браузера. Ніякі дані не надсилаються на сервер.</p>
-            <p style={s.seoP}>Entropy показує математичну складність. 80+ біт — достатньо. 128 біт — практично нерозкривний.</p>
-            <p style={s.seoP}>Для захисту Windows ПК також перевір налаштування безпеки через <Link href="/tools/auditshield" style={s.link}>AuditShield</Link>.</p>
+            <h2 style={s.seoH2}>{isEn ? 'How passwords are generated' : 'Як генерується пароль'}</h2>
+            <p style={s.seoP}>{isEn
+              ? 'All passwords are generated using '
+              : 'Всі паролі генеруються через '}
+              <code style={s.code}>window.crypto.getRandomValues()</code>
+              {isEn
+                ? ' — the browser's cryptographically secure random API. No data is ever sent to any server.'
+                : ' — криптографічно безпечний API браузера. Ніякі дані не надсилаються на сервер.'}</p>
+            <p style={s.seoP}>{isEn
+              ? 'Entropy measures mathematical difficulty. 80+ bits is sufficient. 128 bits is practically unbreakable with today's hardware.'
+              : 'Entropy показує математичну складність. 80+ біт — достатньо. 128 біт — практично нерозкривний.'}</p>
+            <p style={s.seoP}>{isEn ? 'For Windows PC security audit — ' : 'Для захисту Windows ПК також перевір налаштування безпеки через '}
+              <Link href={isEn ? '/en/tools/auditshield' : '/tools/auditshield'} style={s.link}>AuditShield</Link>.
+            </p>
           </div>
 
           <div style={s.back}>
-            <Link href="/tools" style={s.backLink}>← Всі інструменти</Link>
+            <Link href={isEn ? '/tools' : '/tools'} style={s.backLink}>{isEn ? '← All tools' : '← Всі інструменти'}</Link>
           </div>
         </div>
       </div>

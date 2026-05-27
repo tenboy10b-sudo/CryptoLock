@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
 import siteConfig from '../../site.config'
@@ -80,27 +81,30 @@ function getType(n) {
   return 'Public'
 }
 
-function formatHostCount(n) {
-  if (n >= 1e9)  return (n / 1e9).toFixed(1) + ' млрд'
-  if (n >= 1e6)  return (n / 1e6).toFixed(1) + ' млн'
-  if (n >= 1000) return n.toLocaleString('uk-UA')
+function formatHostCount(n, isEn) {
+  if (n >= 1e9)  return (n / 1e9).toFixed(1)  + (isEn ? 'B'  : ' млрд')
+  if (n >= 1e6)  return (n / 1e6).toFixed(1)  + (isEn ? 'M'  : ' млн')
+  if (n >= 1000) return n.toLocaleString(isEn ? 'en-US' : 'uk-UA')
   return String(n)
 }
 
 const COMMON_MASKS = [
-  { prefix: 8,  mask: '255.0.0.0',       hosts: '16 777 214',  use: 'Великі мережі ISP' },
-  { prefix: 16, mask: '255.255.0.0',     hosts: '65 534',       use: 'Середні організації' },
-  { prefix: 24, mask: '255.255.255.0',   hosts: '254',          use: 'Типова офісна мережа' },
-  { prefix: 25, mask: '255.255.255.128', hosts: '126',          use: 'Половина /24' },
-  { prefix: 26, mask: '255.255.255.192', hosts: '62',           use: 'Чверть /24' },
-  { prefix: 27, mask: '255.255.255.224', hosts: '30',           use: 'Малий відділ' },
-  { prefix: 28, mask: '255.255.255.240', hosts: '14',           use: 'Мала група' },
-  { prefix: 29, mask: '255.255.255.248', hosts: '6',            use: 'Point-to-point + резерв' },
-  { prefix: 30, mask: '255.255.255.252', hosts: '2',            use: 'WAN point-to-point' },
-  { prefix: 32, mask: '255.255.255.255', hosts: '1',            use: 'Host route' },
+  { prefix: 8,  mask: '255.0.0.0',       hosts: '16,777,214', use_uk: 'Великі мережі ISP',       use_en: 'Large ISP networks' },
+  { prefix: 16, mask: '255.255.0.0',     hosts: '65,534',     use_uk: 'Середні організації',      use_en: 'Medium organizations' },
+  { prefix: 24, mask: '255.255.255.0',   hosts: '254',        use_uk: 'Типова офісна мережа',     use_en: 'Typical office network' },
+  { prefix: 25, mask: '255.255.255.128', hosts: '126',        use_uk: 'Половина /24',             use_en: 'Half of /24' },
+  { prefix: 26, mask: '255.255.255.192', hosts: '62',         use_uk: 'Чверть /24',              use_en: 'Quarter of /24' },
+  { prefix: 27, mask: '255.255.255.224', hosts: '30',         use_uk: 'Малий відділ',            use_en: 'Small department' },
+  { prefix: 28, mask: '255.255.255.240', hosts: '14',         use_uk: 'Мала група',              use_en: 'Small group' },
+  { prefix: 29, mask: '255.255.255.248', hosts: '6',          use_uk: 'Point-to-point + резерв', use_en: 'Point-to-point + spare' },
+  { prefix: 30, mask: '255.255.255.252', hosts: '2',          use_uk: 'WAN point-to-point',      use_en: 'WAN point-to-point' },
+  { prefix: 32, mask: '255.255.255.255', hosts: '1',          use_uk: 'Host route',              use_en: 'Host route' },
 ]
 
 export default function SubnetCalculator() {
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
+
   const [input, setInput]     = useState('192.168.1.0/24')
   const [result, setResult]   = useState(null)
   const [error, setError]     = useState('')
@@ -131,14 +135,14 @@ export default function SubnetCalculator() {
     }
 
     if (!validateIp(ip)) {
-      setError('Невірна IP-адреса. Приклад: 192.168.1.0/24')
+      setError(isEn ? 'Invalid IP address. Example: 192.168.1.0/24' : 'Невірна IP-адреса. Приклад: 192.168.1.0/24')
       setResult(null)
       return
     }
 
     const prefixNum = parseInt(prefix)
     if (isNaN(prefixNum) || prefixNum < 0 || prefixNum > 32) {
-      setError('Префікс має бути від 0 до 32')
+      setError(isEn ? 'Prefix must be between 0 and 32' : 'Префікс має бути від 0 до 32')
       setResult(null)
       return
     }
@@ -155,22 +159,34 @@ export default function SubnetCalculator() {
     })
   }
 
+  const canonicalPath = isEn
+    ? `${SITE}/en/tools/subnet-calculator`
+    : `${SITE}/tools/subnet-calculator`
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'IP/Subnet калькулятор — розрахунок підмережі онлайн',
-    description: 'Безкоштовний онлайн калькулятор підмереж. Введи IP і маску або CIDR — отримай мережу, broadcast, діапазон хостів, бінарне представлення.',
-    url: `${SITE}/tools/subnet-calculator`,
+    name: isEn
+      ? 'IP Subnet Calculator — CIDR, Mask, Host Range Online'
+      : 'IP/Subnet калькулятор — розрахунок підмережі онлайн',
+    description: isEn
+      ? 'Free online subnet calculator. Enter IP and CIDR prefix to get network address, broadcast, host range, wildcard mask and binary representation.'
+      : 'Безкоштовний онлайн калькулятор підмереж. Введи IP і маску або CIDR — отримай мережу, broadcast, діапазон хостів, бінарне представлення.',
+    url: canonicalPath,
     applicationCategory: 'UtilityApplication',
-    inLanguage: 'uk',
+    inLanguage: isEn ? 'en' : 'uk',
     publisher: { '@type': 'Organization', name: siteConfig.name, url: SITE },
   }
 
   return (
     <Layout
-      title="IP/Subnet калькулятор — розрахунок підмережі онлайн"
-      description="Онлайн калькулятор підмереж CIDR. Введи IP і маску — отримай мережу, broadcast, діапазон хостів, wildcard і бінарне представлення. Безкоштовно."
-      canonical={`${SITE}/tools/subnet-calculator`}
+      title={isEn
+        ? 'IP Subnet Calculator — CIDR, Mask, Host Range, Binary'
+        : 'IP/Subnet калькулятор — розрахунок підмережі онлайн'}
+      description={isEn
+        ? 'Free online subnet calculator. Enter IP/CIDR (e.g. 192.168.1.0/24) and get network, broadcast, host range, wildcard mask and binary. Free.'
+        : 'Онлайн калькулятор підмереж CIDR. Введи IP і маску — отримай мережу, broadcast, діапазон хостів, wildcard і бінарне представлення. Безкоштовно.'}
+      canonical={canonicalPath}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
@@ -178,16 +194,16 @@ export default function SubnetCalculator() {
         <div className="container">
 
           <nav style={s.bc}>
-            <Link href="/" style={s.bcLink}>Головна</Link>
+            <Link href={isEn ? '/en' : '/'} style={s.bcLink}>{isEn ? 'Home' : 'Головна'}</Link>
             <span style={s.bcSep}>/</span>
-            <Link href="/tools" style={s.bcLink}>Інструменти</Link>
+            <Link href={isEn ? '/en/tools' : '/tools'} style={s.bcLink}>{isEn ? 'Tools' : 'Інструменти'}</Link>
             <span style={s.bcSep}>/</span>
-            <span style={{ ...s.bcLink, color: '#64748b' }}>Subnet калькулятор</span>
+            <span style={{ ...s.bcLink, color: '#64748b' }}>{isEn ? 'Subnet Calculator' : 'Subnet калькулятор'}</span>
           </nav>
 
           <div style={s.header}>
-            <h1 style={s.title}>🌐 IP / Subnet калькулятор</h1>
-            <p style={s.subtitle}>CIDR, маска підмережі, діапазон хостів — всі розрахунки онлайн</p>
+            <h1 style={s.title}>🌐 {isEn ? 'IP / Subnet Calculator' : 'IP / Subnet калькулятор'}</h1>
+            <p style={s.subtitle}>{isEn ? 'CIDR, subnet mask, host range — all calculations online' : 'CIDR, маска підмережі, діапазон хостів — всі розрахунки онлайн'}</p>
           </div>
 
           {/* Input */}
@@ -202,11 +218,11 @@ export default function SubnetCalculator() {
                 placeholder="192.168.1.0/24 або 10.0.0.1 255.255.255.0"
                 autoFocus
               />
-              <button style={s.btn} onClick={calculate}>Розрахувати</button>
+              <button style={s.btn} onClick={calculate}>{isEn ? 'Calculate' : 'Розрахувати'}</button>
             </div>
             {error && <p style={s.error}>{error}</p>}
             <div style={s.examples}>
-              Приклади:{' '}
+              {isEn ? 'Examples:' : 'Приклади:'}{' '}
               {['192.168.1.0/24', '10.0.0.0/8', '172.16.0.0/16', '192.168.1.100/27', '10.10.10.0/30'].map(ex => (
                 <button key={ex} style={s.exChip} onClick={() => { setInput(ex); setTimeout(calculate, 0) }}>{ex}</button>
               ))}
@@ -220,17 +236,17 @@ export default function SubnetCalculator() {
               {/* Main info */}
               <div style={s.resultGrid}>
                 {[
-                  { label: 'IP-адреса',        val: result.ip,        key: 'ip' },
-                  { label: 'Префікс',           val: `/${result.prefix}`, key: 'prefix' },
-                  { label: 'Маска підмережі',   val: result.mask,      key: 'mask' },
-                  { label: 'Wildcard маска',    val: result.wildcard,  key: 'wildcard' },
-                  { label: 'Адреса мережі',     val: result.network,   key: 'network' },
-                  { label: 'Broadcast',         val: result.broadcast, key: 'bcast' },
-                  { label: 'Перший хост',       val: result.firstHost, key: 'first' },
-                  { label: 'Останній хост',     val: result.lastHost,  key: 'last' },
-                  { label: 'Кількість хостів',  val: formatHostCount(result.hostCount), key: 'count' },
-                  { label: 'Клас IP',           val: result.ipClass,   key: 'class' },
-                  { label: 'Тип адреси',        val: result.ipType,    key: 'type' },
+                  { label: isEn ? 'IP address'    : 'IP-адреса',        val: result.ip,        key: 'ip' },
+                  { label: isEn ? 'Prefix'        : 'Префікс',           val: `/${result.prefix}`, key: 'prefix' },
+                  { label: isEn ? 'Subnet mask'   : 'Маска підмережі',   val: result.mask,      key: 'mask' },
+                  { label: isEn ? 'Wildcard mask' : 'Wildcard маска',    val: result.wildcard,  key: 'wildcard' },
+                  { label: isEn ? 'Network'       : 'Адреса мережі',     val: result.network,   key: 'network' },
+                  { label: isEn ? 'Broadcast'     : 'Broadcast',         val: result.broadcast, key: 'bcast' },
+                  { label: isEn ? 'First host'    : 'Перший хост',       val: result.firstHost, key: 'first' },
+                  { label: isEn ? 'Last host'     : 'Останній хост',     val: result.lastHost,  key: 'last' },
+                  { label: isEn ? 'Host count'  : 'Кількість хостів',  val: formatHostCount(result.hostCount, isEn), key: 'count' },
+                  { label: isEn ? 'IP class'      : 'Клас IP',           val: result.ipClass,   key: 'class' },
+                  { label: isEn ? 'Address type'  : 'Тип адреси',        val: result.ipType,    key: 'type' },
                 ].map(({ label, val, key }) => (
                   <div key={key} style={s.resultRow}>
                     <span style={s.resultLabel}>{label}</span>
@@ -248,13 +264,13 @@ export default function SubnetCalculator() {
 
               {/* Binary */}
               <div style={s.binaryBox}>
-                <p style={s.binaryTitle}>Бінарне представлення</p>
+                <p style={s.binaryTitle}>{isEn ? 'Binary representation' : 'Бінарне представлення'}</p>
                 <div style={s.binaryRow}>
                   <span style={s.binaryLabel}>IP:</span>
                   <code style={s.binaryVal}>{result.ipBinary}</code>
                 </div>
                 <div style={s.binaryRow}>
-                  <span style={s.binaryLabel}>Маска:</span>
+                  <span style={s.binaryLabel}>{isEn ? 'Mask:' : 'Маска:'}</span>
                   <code style={s.binaryVal}>{result.maskBinary}</code>
                 </div>
                 <div style={s.binaryNote}>
@@ -262,7 +278,7 @@ export default function SubnetCalculator() {
                     <>
                       <span style={{ color: '#2563eb', fontWeight: 700 }}>{'█'.repeat(result.prefix)}</span>
                       <span style={{ color: '#94a3b8' }}>{'░'.repeat(32 - result.prefix)}</span>
-                      {' '}— мережева частина ({result.prefix} біт) / хостова частина ({32 - result.prefix} біт)
+                      {isEn ? ` — network part (${result.prefix} bits) / host part (${32 - result.prefix} bits)` : ` — мережева частина (${result.prefix} біт) / хостова частина (${32 - result.prefix} біт)`}
                     </>
                   )}
                 </div>
@@ -270,12 +286,12 @@ export default function SubnetCalculator() {
 
               {/* CIDR notation */}
               <div style={s.cidrBox}>
-                <p style={s.binaryTitle}>CIDR запис</p>
+                <p style={s.binaryTitle}>{isEn ? 'CIDR notation' : 'CIDR запис'}</p>
                 <div style={s.cidrRow}>
                   <code style={s.cidrCode}>{result.network}/{result.prefix}</code>
                   <button style={copied === 'cidr' ? s.cpOn : s.cpOff}
                     onClick={() => copy(`${result.network}/${result.prefix}`, 'cidr')}>
-                    {copied === 'cidr' ? '✓ Скопійовано' : '⎘ Копіювати'}
+                    {copied === 'cidr' ? '✓ ' + (isEn ? 'Copied' : 'Скопійовано') : '⎘ ' + (isEn ? 'Copy' : 'Копіювати')}
                   </button>
                 </div>
               </div>
@@ -285,12 +301,12 @@ export default function SubnetCalculator() {
 
           {/* Common masks table */}
           <div style={s.section}>
-            <h2 style={s.h2}>Таблиця поширених масок</h2>
+            <h2 style={s.h2}>{isEn ? 'Common subnet masks' : 'Таблиця поширених масок'}</h2>
             <div style={s.tableWrap}>
               <table style={s.table}>
                 <thead>
                   <tr>
-                    {['Префікс', 'Маска', 'Хостів', 'Використання'].map(h => (
+                    {(isEn ? ['Prefix', 'Mask', 'Hosts', 'Use case'] : ['Префікс', 'Маска', 'Хостів', 'Використання']).map(h => (
                       <th key={h} style={s.th}>{h}</th>
                     ))}
                   </tr>
@@ -302,37 +318,38 @@ export default function SubnetCalculator() {
                       <td style={s.tdMono}>/{row.prefix}</td>
                       <td style={s.tdMono}>{row.mask}</td>
                       <td style={s.tdMono}>{row.hosts}</td>
-                      <td style={s.td}>{row.use}</td>
+                      <td style={s.td}>{isEn ? row.use_en : row.use_uk}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p style={s.tableNote}>Клікни на рядок щоб розрахувати для 192.168.1.0 з цією маскою</p>
+            <p style={s.tableNote}>{isEn ? 'Click a row to calculate for 192.168.1.0 with that mask' : 'Клікни на рядок щоб розрахувати для 192.168.1.0 з цією маскою'}</p>
           </div>
 
           {/* SEO */}
           <div style={s.seoBlock}>
-            <h2 style={s.seoH2}>Як користуватись калькулятором</h2>
+            <h2 style={s.seoH2}>{isEn ? 'How to use the calculator' : 'Як користуватись калькулятором'}</h2>
+            <p style={s.seoP}>{isEn
+              ? <span>Enter an IP address with CIDR prefix (e.g. <code style={s.code}>192.168.1.0/24</code>) or with subnet mask separated by space (<code style={s.code}>192.168.1.0 255.255.255.0</code>). The calculator auto-detects the format.</span>
+              : <span>Введи IP-адресу з CIDR префіксом (наприклад <code style={s.code}>192.168.1.0/24</code>) або з маскою підмережі через пробіл (<code style={s.code}>192.168.1.0 255.255.255.0</code>). Калькулятор автоматично визначить формат.</span>
+            }</p>
+            <p style={s.seoP}>{isEn
+              ? <span><strong>CIDR /24</strong> means the first 24 bits are the network part. A /24 gives 256 addresses (254 usable hosts, 1 network, 1 broadcast).</span>
+              : <span><strong>CIDR /24</strong> означає що перші 24 біти — мережева частина. Для /24 це дає 256 адрес (254 використовуваних хости, 1 мережева, 1 broadcast).</span>
+            }</p>
             <p style={s.seoP}>
-              Введи IP-адресу з CIDR префіксом (наприклад <code style={s.code}>192.168.1.0/24</code>)
-              або з маскою підмережі через пробіл (<code style={s.code}>192.168.1.0 255.255.255.0</code>).
-              Калькулятор автоматично визначить формат.
-            </p>
-            <p style={s.seoP}>
-              <strong>CIDR /24</strong> означає що перші 24 біти — мережева частина. Для /24 це дає
-              256 адрес (254 використовуваних хости, 1 мережева, 1 broadcast).
-            </p>
-            <p style={s.seoP}>
-              Для налаштування мережевих параметрів Windows використовуй{' '}
-              <Link href="/tools/powershell-commands" style={s.link}>PowerShell довідник</Link>.
-              Для перевірки мережевої безпеки ПК —{' '}
-              <Link href="/tools/auditshield" style={s.link}>AuditShield</Link>.
+              {isEn ? 'For configuring Windows network settings use ' : 'Для налаштування мережевих параметрів Windows використовуй '}
+              <Link href={isEn ? '/en/tools/powershell-commands' : '/tools/powershell-commands'} style={s.link}>
+                {isEn ? 'PowerShell Reference' : 'PowerShell довідник'}
+              </Link>.
+              {isEn ? ' For network security audit — ' : ' Для перевірки мережевої безпеки ПК — '}
+              <Link href={isEn ? '/en/tools/auditshield' : '/tools/auditshield'} style={s.link}>AuditShield</Link>.
             </p>
           </div>
 
           <div style={s.back}>
-            <Link href="/tools" style={s.backLink}>← Всі інструменти</Link>
+            <Link href={isEn ? '/tools' : '/tools'} style={s.backLink}>{isEn ? '← All tools' : '← Всі інструменти'}</Link>
           </div>
 
         </div>
