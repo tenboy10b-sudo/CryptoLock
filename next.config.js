@@ -273,8 +273,9 @@ const nextConfig = {
       { source: '/en/tags/%D1%96%D0%B3%D1%80%D0%B8', destination: '/tags/%D1%96%D0%B3%D1%80%D0%B8', permanent: true, locale: false },
 
       // ── EN /tools/* → UK /tools/* (інструменти тільки UK версія) ────
-      { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
-      { source: '/en/tools/:path*', destination: '/tools/:path*', permanent: false, locale: false },
+      // EN tools тепер окремі сторінки — redirect прибрано
+      // { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
+      // { source: '/en/tools/:path*', destination: '/tools/:path*', permanent: false, locale: false },
     ]
   },
 }
