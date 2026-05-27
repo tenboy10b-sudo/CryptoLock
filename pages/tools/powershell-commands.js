@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
 import siteConfig from '../../site.config'
@@ -7,68 +8,71 @@ const SITE = siteConfig.url
 
 const COMMANDS = [
   // ── Мережа ──────────────────────────────────────────────────────────────
-  { id: 1, shell: 'both', category: 'Мережа', task: 'Перевірити підключення до хоста', cmd: 'ping google.com', ps: 'Test-NetConnection -ComputerName google.com', desc: 'Перевіряє чи доступний хост по мережі. Показує затримку і втрати пакетів.' },
-  { id: 2, shell: 'both', category: 'Мережа', task: 'Показати IP-адресу', cmd: 'ipconfig', ps: 'Get-NetIPAddress | Where-Object {$_.AddressFamily -eq "IPv4"}', desc: 'Відображає IP-адресу, маску підмережі і шлюз для всіх мережевих адаптерів.' },
-  { id: 3, shell: 'both', category: 'Мережа', task: 'Очистити DNS кеш', cmd: 'ipconfig /flushdns', ps: 'Clear-DnsClientCache', desc: 'Очищає кеш DNS. Допомагає якщо сайти не відкриваються після зміни DNS.' },
-  { id: 4, shell: 'ps', category: 'Мережа', task: 'Показати відкриті порти', cmd: '', ps: 'Get-NetTCPConnection -State Listen | Select-Object LocalPort, @{n="Process";e={(Get-Process -Id $_.OwningProcess -EA 0).Name}} | Sort-Object LocalPort', desc: 'Список всіх портів що зараз слухають підключення з іменами процесів.' },
-  { id: 5, shell: 'both', category: 'Мережа', task: 'Показати активні підключення', cmd: 'netstat -ano', ps: 'Get-NetTCPConnection -State Established | Select-Object LocalPort, RemoteAddress, RemotePort', desc: 'Показує всі активні TCP підключення.' },
-  { id: 6, shell: 'both', category: 'Мережа', task: 'Скинути налаштування мережі', cmd: 'netsh winsock reset && netsh int ip reset', ps: 'netsh winsock reset; netsh int ip reset', desc: 'Скидає Winsock і TCP/IP стек. Виправляє більшість проблем з мережею.' },
-  { id: 7, shell: 'ps', category: 'Мережа', task: 'Змінити DNS сервер', cmd: '', ps: 'Set-DnsClientServerAddress -InterfaceAlias "Wi-Fi" -ServerAddresses ("1.1.1.1","8.8.8.8")', desc: 'Встановлює DNS сервери Cloudflare і Google для адаптера Wi-Fi.' },
-  { id: 8, shell: 'both', category: 'Мережа', task: 'Трасування маршруту', cmd: 'tracert google.com', ps: 'Test-NetConnection -ComputerName google.com -TraceRoute', desc: 'Показує маршрут пакета до хоста і затримку на кожному вузлі.' },
+  { id: 1, shell: 'both', category: 'Network', task: 'Test host connectivity', cmd: 'ping google.com', ps: 'Test-NetConnection -ComputerName google.com', desc: 'Checks if a host is reachable over the network. Shows latency and packet loss.' },
+  { id: 2, shell: 'both', category: 'Network', task: 'Show IP address', cmd: 'ipconfig', ps: 'Get-NetIPAddress | Where-Object {$_.AddressFamily -eq "IPv4"}', desc: 'Displays IP address, subnet mask and gateway for all network adapters.' },
+  { id: 3, shell: 'both', category: 'Network', task: 'Flush DNS cache', cmd: 'ipconfig /flushdns', ps: 'Clear-DnsClientCache', desc: 'Clears the DNS cache. Helps when sites fail to load after a DNS change.' },
+  { id: 4, shell: 'ps', category: 'Network', task: 'Show open listening ports', cmd: '', ps: 'Get-NetTCPConnection -State Listen | Select-Object LocalPort, @{n="Process";e={(Get-Process -Id $_.OwningProcess -EA 0).Name}} | Sort-Object LocalPort', desc: 'Lists all ports currently listening for connections with process names.' },
+  { id: 5, shell: 'both', category: 'Network', task: 'Show active connections', cmd: 'netstat -ano', ps: 'Get-NetTCPConnection -State Established | Select-Object LocalPort, RemoteAddress, RemotePort', desc: 'Shows all active TCP connections with remote addresses and ports.' },
+  { id: 6, shell: 'both', category: 'Network', task: 'Reset network settings', cmd: 'netsh winsock reset && netsh int ip reset', ps: 'netsh winsock reset; netsh int ip reset', desc: 'Resets Winsock and TCP/IP stack. Fixes most network connectivity issues.' },
+  { id: 7, shell: 'ps', category: 'Network', task: 'Change DNS server', cmd: '', ps: 'Set-DnsClientServerAddress -InterfaceAlias "Wi-Fi" -ServerAddresses ("1.1.1.1","8.8.8.8")', desc: 'Sets Cloudflare and Google DNS servers for the Wi-Fi adapter.' },
+  { id: 8, shell: 'both', category: 'Network', task: 'Trace network route', cmd: 'tracert google.com', ps: 'Test-NetConnection -ComputerName google.com -TraceRoute', desc: 'Shows the packet route to a host and latency at each hop.' },
 
   // ── Файли і папки ───────────────────────────────────────────────────────
-  { id: 9, shell: 'both', category: 'Файли', task: 'Показати вміст папки', cmd: 'dir', ps: 'Get-ChildItem', desc: 'Виводить список файлів і папок в поточній директорії.' },
-  { id: 10, shell: 'both', category: 'Файли', task: 'Перейти в папку', cmd: 'cd C:\\Users\\Name', ps: 'Set-Location C:\\Users\\Name', desc: 'Змінює поточну директорію. cd .. — перехід на рівень вище.' },
-  { id: 11, shell: 'both', category: 'Файли', task: 'Копіювати файл', cmd: 'copy file.txt C:\\dest\\', ps: 'Copy-Item file.txt -Destination C:\\dest\\', desc: 'Копіює файл або папку. Для папок з вмістом додай /S (cmd) або -Recurse (PS).' },
-  { id: 12, shell: 'both', category: 'Файли', task: 'Видалити файл', cmd: 'del file.txt', ps: 'Remove-Item file.txt -Force', desc: 'Видаляє файл. -Force видаляє файли тільки для читання. Для папок: rd /s (cmd) або Remove-Item -Recurse (PS).' },
-  { id: 13, shell: 'ps', category: 'Файли', task: 'Знайти великі файли', cmd: '', ps: 'Get-ChildItem C:\\ -Recurse -EA 0 | Where-Object {$_.Length -gt 500MB} | Sort-Object Length -Descending | Select-Object FullName, @{n="GB";e={[math]::Round($_.Length/1GB,1)}}', desc: 'Знаходить файли розміром більше 500 МБ на диску C:.' },
-  { id: 14, shell: 'ps', category: 'Файли', task: 'Отримати розмір папки', cmd: '', ps: '"{0:N1} GB" -f ((Get-ChildItem "C:\\Folder" -Recurse -EA 0 | Measure-Object Length -Sum).Sum / 1GB)', desc: 'Підраховує загальний розмір папки і всіх підпапок.' },
-  { id: 15, shell: 'both', category: 'Файли', task: 'Пошук файлів за ім\'ям', cmd: 'dir /s /b *keyword*', ps: 'Get-ChildItem C:\\ -Recurse -Filter "*keyword*" -EA 0', desc: 'Рекурсивний пошук файлів за частиною імені.' },
+  { id: 9, shell: 'both', category: 'Files', task: 'List folder contents', cmd: 'dir', ps: 'Get-ChildItem', desc: 'Lists files and folders in the current directory.' },
+  { id: 10, shell: 'both', category: 'Files', task: 'Change directory', cmd: 'cd C:\\Users\\Name', ps: 'Set-Location C:\\Users\\Name', desc: 'Changes the current directory. cd .. goes up one level.' },
+  { id: 11, shell: 'both', category: 'Files', task: 'Copy file', cmd: 'copy file.txt C:\\dest\\', ps: 'Copy-Item file.txt -Destination C:\\dest\\', desc: 'Copies a file or folder. For folders with contents add /S (cmd) or -Recurse (PS).' },
+  { id: 12, shell: 'both', category: 'Files', task: 'Delete file', cmd: 'del file.txt', ps: 'Remove-Item file.txt -Force', desc: 'Deletes a file. -Force removes read-only files. For folders: rd /s (cmd) or Remove-Item -Recurse (PS).' },
+  { id: 13, shell: 'ps', category: 'Files', task: 'Find large files', cmd: '', ps: 'Get-ChildItem C:\\ -Recurse -EA 0 | Where-Object {$_.Length -gt 500MB} | Sort-Object Length -Descending | Select-Object FullName, @{n="GB";e={[math]::Round($_.Length/1GB,1)}}', desc: 'Finds files larger than 500 MB on the C: drive.' },
+  { id: 14, shell: 'ps', category: 'Files', task: 'Get folder size', cmd: '', ps: '"{0:N1} GB" -f ((Get-ChildItem "C:\\Folder" -Recurse -EA 0 | Measure-Object Length -Sum).Sum / 1GB)', desc: 'Calculates the total size of a folder including all subfolders.' },
+  { id: 15, shell: 'both', category: 'Files', task: 'Пошук файлів за ім\'ям', cmd: 'dir /s /b *keyword*', ps: 'Get-ChildItem C:\\ -Recurse -Filter "*keyword*" -EA 0', desc: 'Recursively searches for files matching a name pattern.' },
 
   // ── Процеси і служби ────────────────────────────────────────────────────
-  { id: 16, shell: 'both', category: 'Процеси', task: 'Список всіх процесів', cmd: 'tasklist', ps: 'Get-Process | Sort-Object CPU -Descending | Select-Object -First 20 Name, CPU, Id', desc: 'Показує запущені процеси. PowerShell сортує по споживанню CPU.' },
-  { id: 17, shell: 'both', category: 'Процеси', task: 'Завершити процес за іменем', cmd: 'taskkill /f /im notepad.exe', ps: 'Stop-Process -Name notepad -Force', desc: 'Примусово завершує процес за іменем виконуваного файлу.' },
-  { id: 18, shell: 'both', category: 'Процеси', task: 'Список служб Windows', cmd: 'sc query', ps: 'Get-Service | Sort-Object Status -Descending | Format-Table Name, Status, StartType', desc: 'Показує всі служби Windows з їх статусом.' },
-  { id: 19, shell: 'both', category: 'Процеси', task: 'Запустити / зупинити службу', cmd: 'net start/stop "ServiceName"', ps: 'Start-Service "ServiceName" / Stop-Service "ServiceName" -Force', desc: 'Запускає або зупиняє службу Windows за іменем.' },
-  { id: 20, shell: 'ps', category: 'Процеси', task: 'Знайти який процес займає порт', cmd: '', ps: 'Get-NetTCPConnection -LocalPort 3389 | Select-Object @{n="Process";e={(Get-Process -Id $_.OwningProcess).Name}}, State', desc: 'Знаходить процес що слухає на вказаному порті (замінити 3389).' },
+  { id: 16, shell: 'both', category: 'Processes', task: 'List all processes', cmd: 'tasklist', ps: 'Get-Process | Sort-Object CPU -Descending | Select-Object -First 20 Name, CPU, Id', desc: 'Shows running processes. PowerShell sorts by CPU usage.' },
+  { id: 17, shell: 'both', category: 'Processes', task: 'Kill process by name', cmd: 'taskkill /f /im notepad.exe', ps: 'Stop-Process -Name notepad -Force', desc: 'Forcefully terminates a process by its executable name.' },
+  { id: 18, shell: 'both', category: 'Processes', task: 'List Windows services', cmd: 'sc query', ps: 'Get-Service | Sort-Object Status -Descending | Format-Table Name, Status, StartType', desc: 'Shows all Windows services with their status and startup type.' },
+  { id: 19, shell: 'both', category: 'Processes', task: 'Start / stop a service', cmd: 'net start/stop "ServiceName"', ps: 'Start-Service "ServiceName" / Stop-Service "ServiceName" -Force', desc: 'Starts or stops a Windows service by name.' },
+  { id: 20, shell: 'ps', category: 'Processes', task: 'Find which process uses a port', cmd: '', ps: 'Get-NetTCPConnection -LocalPort 3389 | Select-Object @{n="Process";e={(Get-Process -Id $_.OwningProcess).Name}}, State', desc: 'Finds the process listening on the specified port (replace 3389).' },
 
   // ── Система і діагностика ───────────────────────────────────────────────
-  { id: 21, shell: 'both', category: 'Система', task: 'Перевірити системні файли', cmd: 'sfc /scannow', ps: 'sfc /scannow', desc: 'Перевіряє і відновлює пошкоджені системні файли Windows. Потребує прав адміністратора.' },
-  { id: 22, shell: 'both', category: 'Система', task: 'Відновити образ Windows (DISM)', cmd: 'DISM /Online /Cleanup-Image /RestoreHealth', ps: 'DISM /Online /Cleanup-Image /RestoreHealth', desc: 'Завантажує і відновлює пошкоджені компоненти Windows через Windows Update.' },
-  { id: 23, shell: 'ps', category: 'Система', task: 'Інформація про систему', cmd: '', ps: 'Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsBuildNumber, CsProcessors, @{n="RAM GB";e={[math]::Round($_.CsTotalPhysicalMemory/1GB,1)}}', desc: 'Показує версію Windows, процесор і обсяг RAM одним рядком.' },
-  { id: 24, shell: 'both', category: 'Система', task: 'Час роботи системи (uptime)', cmd: 'systeminfo | find "Boot Time"', ps: '(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime', desc: 'Показує скільки часу система працює без перезавантаження.' },
-  { id: 25, shell: 'both', category: 'Система', task: 'Перевірити диск на помилки', cmd: 'chkdsk C: /f /r', ps: 'Repair-Volume -DriveLetter C -Scan', desc: 'Перевіряє диск C: на помилки файлової системи і погані сектори.' },
-  { id: 26, shell: 'ps', category: 'Система', task: 'Переглянути Event Log помилки', cmd: '', ps: 'Get-WinEvent -FilterHashtable @{LogName="System"; Level=2} -MaxEvents 10 | Select-Object TimeCreated, ProviderName, Message', desc: 'Останні 10 помилок з системного журналу подій.' },
-  { id: 27, shell: 'both', category: 'Система', task: 'Версія Windows', cmd: 'winver', ps: '(Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").DisplayVersion', desc: 'Winver відкриває графічне вікно. PowerShell повертає версію (наприклад 23H2) для скриптів.' },
+  { id: 21, shell: 'both', category: 'System', task: 'Check system file integrity', cmd: 'sfc /scannow', ps: 'sfc /scannow', desc: 'Scans and repairs corrupted Windows system files. Requires Administrator rights.' },
+  { id: 22, shell: 'both', category: 'System', task: 'Repair Windows image (DISM)', cmd: 'DISM /Online /Cleanup-Image /RestoreHealth', ps: 'DISM /Online /Cleanup-Image /RestoreHealth', desc: 'Downloads and repairs corrupted Windows components via Windows Update.' },
+  { id: 23, shell: 'ps', category: 'System', task: 'System information', cmd: '', ps: 'Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsBuildNumber, CsProcessors, @{n="RAM GB";e={[math]::Round($_.CsTotalPhysicalMemory/1GB,1)}}', desc: 'Shows Windows version, processor and RAM in one line.' },
+  { id: 24, shell: 'both', category: 'System', task: 'System uptime', cmd: 'systeminfo | find "Boot Time"', ps: '(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime', desc: 'Shows how long the system has been running since last reboot.' },
+  { id: 25, shell: 'both', category: 'System', task: 'Check disk for errors', cmd: 'chkdsk C: /f /r', ps: 'Repair-Volume -DriveLetter C -Scan', desc: 'Checks drive C: for file system errors and bad sectors.' },
+  { id: 26, shell: 'ps', category: 'System', task: 'View Event Log errors', cmd: '', ps: 'Get-WinEvent -FilterHashtable @{LogName="System"; Level=2} -MaxEvents 10 | Select-Object TimeCreated, ProviderName, Message', desc: 'Shows the last 10 errors from the System Event Log.' },
+  { id: 27, shell: 'both', category: 'System', task: 'Windows version', cmd: 'winver', ps: '(Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").DisplayVersion', desc: 'winver opens a GUI window. PowerShell returns the version string (e.g. 23H2) for scripts.' },
 
   // ── Безпека ─────────────────────────────────────────────────────────────
-  { id: 28, shell: 'ps', category: 'Безпека', task: 'Статус Windows Defender', cmd: '', ps: 'Get-MpComputerStatus | Select-Object RealTimeProtectionEnabled, AntivirusEnabled, AntivirusSignatureAge', desc: 'Перевіряє чи активний Defender і скільки днів тому оновлювались сигнатури.' },
-  { id: 29, shell: 'ps', category: 'Безпека', task: 'Сканування на віруси', cmd: '', ps: 'Start-MpScan -ScanType QuickScan', desc: 'Запускає швидке сканування Windows Defender. FullScan для повного.' },
-  { id: 30, shell: 'ps', category: 'Безпека', task: 'Список адміністраторів ПК', cmd: '', ps: 'Get-LocalGroupMember -Group "Administrators" | Select-Object Name, ObjectClass', desc: 'Показує всі облікові записи з правами адміністратора.' },
-  { id: 31, shell: 'ps', category: 'Безпека', task: 'Статус BitLocker', cmd: '', ps: 'Get-BitLockerVolume | Select-Object MountPoint, VolumeStatus, ProtectionStatus, EncryptionPercentage', desc: 'Показує статус шифрування BitLocker для всіх дисків.' },
-  { id: 32, shell: 'ps', category: 'Безпека', task: 'Перевірити брандмауер', cmd: '', ps: 'Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction', desc: 'Показує статус брандмауера для профілів Domain, Private і Public.' },
-  { id: 33, shell: 'both', category: 'Безпека', task: 'Показати автозавантаження', cmd: 'reg query HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run', ps: 'Get-ItemProperty "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"', desc: 'Показує програми що запускаються при вході користувача.' },
+  { id: 28, shell: 'ps', category: 'Security', task: 'Windows Defender status', cmd: '', ps: 'Get-MpComputerStatus | Select-Object RealTimeProtectionEnabled, AntivirusEnabled, AntivirusSignatureAge', desc: 'Checks if Defender is active and how many days ago signatures were last updated.' },
+  { id: 29, shell: 'ps', category: 'Security', task: 'Run antivirus scan', cmd: '', ps: 'Start-MpScan -ScanType QuickScan', desc: 'Runs a Windows Defender quick scan. Use FullScan for a complete scan.' },
+  { id: 30, shell: 'ps', category: 'Security', task: 'List PC administrators', cmd: '', ps: 'Get-LocalGroupMember -Group "Administrators" | Select-Object Name, ObjectClass', desc: 'Shows all accounts with Administrator privileges on this PC.' },
+  { id: 31, shell: 'ps', category: 'Security', task: 'BitLocker encryption status', cmd: '', ps: 'Get-BitLockerVolume | Select-Object MountPoint, VolumeStatus, ProtectionStatus, EncryptionPercentage', desc: 'Shows BitLocker encryption status for all drives.' },
+  { id: 32, shell: 'ps', category: 'Security', task: 'Check firewall status', cmd: '', ps: 'Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction', desc: 'Shows firewall status for Domain, Private and Public profiles.' },
+  { id: 33, shell: 'both', category: 'Security', task: 'Show startup programs', cmd: 'reg query HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run', ps: 'Get-ItemProperty "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"', desc: 'Shows programs that launch when a user logs in.' },
 
   // ── Управління дисками ──────────────────────────────────────────────────
-  { id: 34, shell: 'ps', category: 'Диски', task: 'Вільне місце на дисках', cmd: '', ps: 'Get-PSDrive -PSProvider FileSystem | Select-Object Name, @{n="Free GB";e={[math]::Round($_.Free/1GB,1)}}, @{n="Used GB";e={[math]::Round($_.Used/1GB,1)}}', desc: 'Показує вільне і зайняте місце на всіх дисках.' },
-  { id: 35, shell: 'ps', category: 'Диски', task: 'Стан здоров\'я диску', cmd: '', ps: 'Get-PhysicalDisk | Select-Object FriendlyName, MediaType, HealthStatus, OperationalStatus', desc: 'Показує стан дисків (Healthy/Warning/Unhealthy) і тип (SSD/HDD).' },
-  { id: 36, shell: 'both', category: 'Диски', task: 'Перевірка TRIM для SSD', cmd: '', ps: 'fsutil behavior query DisableDeleteNotify', desc: '0 = TRIM увімкнений (норма для SSD). 1 = TRIM вимкнений (потрібно увімкнути).' },
-  { id: 37, shell: 'both', category: 'Диски', task: 'Очистити диск', cmd: 'cleanmgr', ps: 'Start-Process cleanmgr -ArgumentList "/sagerun:1"', desc: 'Запускає утиліту очищення диску. Видаляє тимчасові файли, кеш і системні залишки.' },
+  { id: 34, shell: 'ps', category: 'Disks', task: 'Free space on drives', cmd: '', ps: 'Get-PSDrive -PSProvider FileSystem | Select-Object Name, @{n="Free GB";e={[math]::Round($_.Free/1GB,1)}}, @{n="Used GB";e={[math]::Round($_.Used/1GB,1)}}', desc: 'Shows free and used space on all drives.' },
+  { id: 35, shell: 'ps', category: 'Disks', task: 'Drive health status', cmd: '', ps: 'Get-PhysicalDisk | Select-Object FriendlyName, MediaType, HealthStatus, OperationalStatus', desc: 'Shows drive health (Healthy/Warning/Unhealthy) and type (SSD/HDD).' },
+  { id: 36, shell: 'both', category: 'Disks', task: 'Check TRIM for SSD', cmd: '', ps: 'fsutil behavior query DisableDeleteNotify', desc: '0 = TRIM enabled (normal for SSD). 1 = TRIM disabled (needs to be enabled).' },
+  { id: 37, shell: 'both', category: 'Disks', task: 'Disk cleanup', cmd: 'cleanmgr', ps: 'Start-Process cleanmgr -ArgumentList "/sagerun:1"', desc: 'Launches Disk Cleanup utility. Removes temporary files, cache and system leftovers.' },
 
   // ── Оновлення Windows ───────────────────────────────────────────────────
-  { id: 38, shell: 'ps', category: 'Оновлення', task: 'Перезапустити службу оновлень', cmd: '', ps: 'Restart-Service wuauserv, bits -Force', desc: 'Перезапускає Windows Update і BITS. Виправляє зависання оновлень.' },
-  { id: 39, shell: 'both', category: 'Оновлення', task: 'Очистити кеш оновлень', cmd: 'net stop wuauserv && rd /s /q C:\\Windows\\SoftwareDistribution && net start wuauserv', ps: 'Stop-Service wuauserv -Force; Remove-Item "C:\\Windows\\SoftwareDistribution\\*" -Recurse -Force -EA 0; Start-Service wuauserv', desc: 'Очищає завантажені файли оновлень. Виправляє помилки при встановленні оновлень.' },
-  { id: 40, shell: 'ps', category: 'Оновлення', task: 'Список встановлених оновлень', cmd: '', ps: 'Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 10 HotFixID, Description, InstalledOn', desc: 'Показує 10 останніх встановлених оновлень з датою.' },
+  { id: 38, shell: 'ps', category: 'Updates', task: 'Restart Windows Update service', cmd: '', ps: 'Restart-Service wuauserv, bits -Force', desc: 'Restarts Windows Update and BITS services. Fixes stuck update downloads.' },
+  { id: 39, shell: 'both', category: 'Updates', task: 'Clear Windows Update cache', cmd: 'net stop wuauserv && rd /s /q C:\\Windows\\SoftwareDistribution && net start wuauserv', ps: 'Stop-Service wuauserv -Force; Remove-Item "C:\\Windows\\SoftwareDistribution\\*" -Recurse -Force -EA 0; Start-Service wuauserv', desc: 'Clears downloaded update files. Fixes errors during update installation.' },
+  { id: 40, shell: 'ps', category: 'Updates', task: 'List installed updates', cmd: '', ps: 'Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 10 HotFixID, Description, InstalledOn', desc: 'Shows the 10 most recently installed updates with dates.' },
 ]
 
-const CATEGORIES = ['Всі', ...new Set(COMMANDS.map(c => c.category))]
+const CATEGORIES = ['All', ...new Set(COMMANDS.map(c => c.category))]
 const SHELLS = [
-  { value: 'all', label: 'PowerShell і CMD' },
-  { value: 'ps', label: 'PowerShell' },
-  { value: 'cmd', label: 'CMD' },
+  { value: 'all', label_uk: 'PowerShell і CMD', label_en: 'All shells' },
+  { value: 'ps',  label_uk: 'PowerShell',        label_en: 'PowerShell' },
+  { value: 'cmd', label_uk: 'CMD',               label_en: 'CMD' },
 ]
 
 export default function PowershellCommands() {
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
+
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Всі')
   const [shell, setShell] = useState('all')
@@ -82,7 +86,7 @@ export default function PowershellCommands() {
         c.cmd.toLowerCase().includes(q) ||
         c.ps.toLowerCase().includes(q) ||
         c.desc.toLowerCase().includes(q)
-      const matchCat = category === 'Всі' || c.category === category
+      const matchCat = category === 'All' || c.category === category
       const matchShell = shell === 'all' ||
         (shell === 'ps' && c.ps) ||
         (shell === 'cmd' && c.cmd)
@@ -97,23 +101,35 @@ export default function PowershellCommands() {
     })
   }
 
+  const canonicalPath = isEn
+    ? `${SITE}/en/tools/powershell-commands`
+    : `${SITE}/tools/powershell-commands`
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'PowerShell і CMD команди Windows — довідник',
-    description: 'Пошук по 40+ PowerShell і CMD командах Windows. Знайди команду за задачею — мережа, файли, безпека, система, диски.',
-    url: `${SITE}/tools/powershell-commands`,
+    name: isEn
+      ? 'PowerShell and CMD Commands Reference for Windows'
+      : 'PowerShell і CMD команди Windows — довідник',
+    description: isEn
+      ? 'Search 40+ PowerShell and CMD commands by task. Find the right command for networking, files, security, system, disks and updates. Copy with one click.'
+      : 'Пошук по 40+ PowerShell і CMD командах Windows. Знайди команду за задачею — мережа, файли, безпека, система, диски.',
+    url: canonicalPath,
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'Windows',
-    inLanguage: 'uk',
+    inLanguage: isEn ? 'en' : 'uk',
     publisher: { '@type': 'Organization', name: siteConfig.name, url: SITE },
   }
 
   return (
     <Layout
-      title="PowerShell і CMD команди Windows — довідник із пошуком"
-      description="Пошук по 40+ PowerShell і CMD командах. Знайди команду за задачею: мережа, файли, процеси, безпека, диски, оновлення. Копіюй одним кліком."
-      canonical={`${SITE}/tools/powershell-commands`}
+      title={isEn
+        ? 'PowerShell and CMD Commands Reference — Search by Task'
+        : 'PowerShell і CMD команди Windows — довідник із пошуком'}
+      description={isEn
+        ? 'Search 40+ PowerShell and CMD commands by task. Network, files, processes, security, disks, updates. Copy with one click. Free.'
+        : 'Пошук по 40+ PowerShell і CMD командах. Знайди команду за задачею: мережа, файли, процеси, безпека, диски, оновлення. Копіюй одним кліком.'}
+      canonical={canonicalPath}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
@@ -122,18 +138,18 @@ export default function PowershellCommands() {
 
           {/* Breadcrumb */}
           <nav style={s.bc}>
-            <Link href="/" style={s.bcLink}>Головна</Link>
+            <Link href={isEn ? '/en' : '/'} style={s.bcLink}>{isEn ? 'Home' : 'Головна'}</Link>
             <span style={s.bcSep}>/</span>
-            <Link href="/tools" style={s.bcLink}>Інструменти</Link>
+            <Link href={isEn ? '/en/tools' : '/tools'} style={s.bcLink}>{isEn ? 'Tools' : 'Інструменти'}</Link>
             <span style={s.bcSep}>/</span>
-            <span style={{ ...s.bcLink, color: '#64748b' }}>PowerShell і CMD довідник</span>
+            <span style={{ ...s.bcLink, color: '#64748b' }}>{isEn ? 'PowerShell & CMD Reference' : 'PowerShell і CMD довідник'}</span>
           </nav>
 
           {/* Header */}
           <div style={s.header}>
-            <h1 style={s.title}>⚡ PowerShell і CMD довідник</h1>
+            <h1 style={s.title}>⚡ {isEn ? 'PowerShell & CMD Reference' : 'PowerShell і CMD довідник'}</h1>
             <p style={s.subtitle}>
-              Шукай команду за задачею — не за назвою
+              {isEn ? 'Search by task — not by command name' : 'Шукай команду за задачею — не за назвою'}
             </p>
           </div>
 
@@ -144,7 +160,7 @@ export default function PowershellCommands() {
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder='Наприклад: "очистити dns", "вільне місце", "відкриті порти"...'
+              placeholder={isEn ? 'e.g. "flush dns", "free space", "open ports"...' : 'Наприклад: "очистити dns", "вільне місце", "відкриті порти"...'}
               autoFocus
             />
             <div style={s.filterRow}>
@@ -153,7 +169,7 @@ export default function PowershellCommands() {
                   <button key={cat}
                     style={category === cat ? s.filterActive : s.filterBtn}
                     onClick={() => setCategory(cat)}>
-                    {cat}
+                    {cat === 'All' ? (isEn ? 'All' : 'Всі') : cat}
                   </button>
                 ))}
               </div>
@@ -162,12 +178,12 @@ export default function PowershellCommands() {
                   <button key={sh.value}
                     style={shell === sh.value ? s.filterActive : s.filterBtn}
                     onClick={() => setShell(sh.value)}>
-                    {sh.label}
+                    {isEn ? sh.label_en : sh.label_uk}
                   </button>
                 ))}
               </div>
             </div>
-            <p style={s.count}>{filtered.length} команд</p>
+            <p style={s.count}>{filtered.length} {isEn ? 'commands' : 'команд'}</p>
           </div>
 
           {/* Commands list */}
@@ -242,7 +258,9 @@ export default function PowershellCommands() {
           </div>
 
           <div style={s.back}>
-            <Link href="/tools" style={s.backLink}>← Всі інструменти</Link>
+            <Link href={isEn ? '/tools' : '/tools'} style={s.backLink}>
+              {isEn ? '← All tools' : '← Всі інструменти'}
+            </Link>
           </div>
 
         </div>
