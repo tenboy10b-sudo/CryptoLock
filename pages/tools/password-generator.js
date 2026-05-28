@@ -268,10 +268,10 @@ export default function PasswordGenerator() {
               : 'Всі паролі генеруються через '}
               <code style={s.code}>window.crypto.getRandomValues()</code>
               {isEn
-                ? ' — the browser's cryptographically secure random API. No data is ever sent to any server.'
+                ? ' — cryptographically secure browser API. No data is transmitted to any server.'
                 : ' — криптографічно безпечний API браузера. Ніякі дані не надсилаються на сервер.'}</p>
             <p style={s.seoP}>{isEn
-              ? 'Entropy measures mathematical difficulty. 80+ bits is sufficient. 128 bits is practically unbreakable with today's hardware.'
+              ? 'Entropy measures mathematical difficulty. 80+ bits is sufficient. 128 bits is practically unbreakable.'
               : 'Entropy показує математичну складність. 80+ біт — достатньо. 128 біт — практично нерозкривний.'}</p>
             <p style={s.seoP}>{isEn ? 'For Windows PC security audit — ' : 'Для захисту Windows ПК також перевір налаштування безпеки через '}
               <Link href={isEn ? '/en/tools/auditshield' : '/tools/auditshield'} style={s.link}>AuditShield</Link>.
