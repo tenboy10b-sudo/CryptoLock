@@ -173,7 +173,7 @@ export default function Layout({ children, title, description, canonical, isArti
             {/* Desktop nav */}
             <nav className="nav-desktop" aria-label="Головна навігація">
               {(locale === 'en'
-                ? [{ label: 'Articles', href: '/' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
+                ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
                 : siteConfig.nav
               ).map(item => (
                 <Link key={item.href} href={item.href} style={s.navLink} className="nav-link">
@@ -228,7 +228,10 @@ export default function Layout({ children, title, description, canonical, isArti
         {menuOpen && (
           <div id="mobile-menu" style={s.mobileMenu} role="navigation" aria-label="Мобільна навігація">
 
-            {siteConfig.nav.map(item => (
+            {(locale === 'en'
+                ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
+                : siteConfig.nav
+              ).map(item => (
               <Link key={item.href} href={item.href} style={s.mobileLink} onClick={() => setMenuOpen(false)}>
                 {item.label}
               </Link>
