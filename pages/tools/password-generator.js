@@ -47,14 +47,17 @@ function entropyLabel(bits, isEn) {
   if (bits < 128) return { label: isEn ? 'Very strong' : 'Дуже надійний',color: '#059669', bg: '#ecfdf5', width: '90%'  }
   return           { label: isEn ? 'Excellent'   : 'Відмінний',    color: '#0284c7', bg: '#f0f9ff', width: '100%' }
 }
-  if (bits < 60)  return { label: 'Слабкий',      color: '#ea580c', bg: '#fff7ed', width: '30%' }
-  if (bits < 80)  return { label: 'Прийнятний',   color: '#ca8a04', bg: '#fefce8', width: '55%' }
-  if (bits < 100) return { label: 'Сильний',      color: '#16a34a', bg: '#f0fdf4', width: '78%' }
-  return               { label: 'Дуже сильний',   color: '#059669', bg: '#ecfdf5', width: '100%' }
-}
 
-function crackTime(bits) {
+function crackTime(bits, isEn) {
   const seconds = Math.pow(2, bits) / 1e10
+  if (isEn) {
+    if (seconds < 60)          return 'less than a minute'
+    if (seconds < 3600)        return `${Math.round(seconds/60)} min`
+    if (seconds < 86400)       return `${Math.round(seconds/3600)} hrs`
+    if (seconds < 31536000)    return `${Math.round(seconds/86400)} days`
+    if (seconds < 3153600000)  return `${Math.round(seconds/31536000)} years`
+    return 'millions of years'
+  }
   if (seconds < 60)          return 'менше хвилини'
   if (seconds < 3600)        return `${Math.round(seconds/60)} хв`
   if (seconds < 86400)       return `${Math.round(seconds/3600)} год`
@@ -196,7 +199,7 @@ export default function PasswordGenerator() {
                 <div style={s.bar}><div style={{ ...s.fill, width: strength.width, background: strength.color }} /></div>
                 <div style={s.row}>
                   <span style={s.meta}>Entropy: <b>{entropy} {isEn ? 'bits' : 'біт'}</b></span>
-                  <span style={s.meta}>{isEn ? 'Crack time:' : 'Перебір:'} <b>{crackTime(entropy)}</b></span>
+                  <span style={s.meta}>{isEn ? 'Crack time:' : 'Перебір:'} <b>{crackTime(entropy, isEn)}</b></span>
                 </div>
               </div>
 
