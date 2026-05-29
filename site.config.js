@@ -12,8 +12,7 @@ const siteConfig = {
   postsPerPage: 10,
   social: {
     telegram: 'https://t.me/cryptolock888',
-    tiktok: 'https://www.tiktok.com/@cryptolock_01',
-    youtube: 'https://youtube.com/@cryptolock_01',
+    tiktok: 'https://www.tiktok.com/@cryptolockua',
   },
   nav: [
     { label: 'Статті', href: '/' },
