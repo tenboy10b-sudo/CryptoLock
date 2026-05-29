@@ -10,13 +10,14 @@
     "yak-pratsyuvaty-z-reestrom-windows",
     "yak-pereviryty-avtentychnist-saytiv-ssl",
     "yak-pidklyuchyty-bluetooth-prystroyi-windows",
-    "windows-11-vymknuty-shpyhunstvo"
+    "windows-11-vymknuty-shpyhunstvo",
+    "windows-sandbox-ta-hyper-v-porivnyannya"
   ],
-  "count": 11,
+  "count": 12,
   "promo_index": 12,
   "last_post": {
-    "slug": "windows-11-vymknuty-shpyhunstvo",
-    "title": "Як вимкнути шпигунство Windows 11: конфіденційність і телеметрія",
-    "time": "2026-05-28T08:01:13.240953"
+    "slug": "windows-sandbox-ta-hyper-v-porivnyannya",
+    "title": "Windows Sandbox проти Hyper-V: коли що використовувати",
+    "time": "2026-05-29T08:01:07.270638"
   }
 }
