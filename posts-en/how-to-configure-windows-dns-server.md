@@ -1,7 +1,7 @@
 ---
 title: "How to Set Up a Local DNS with Pi-hole or Windows DNS Server"
-date: "2026-11-19"
-publishDate: "2026-11-19"
+date: "2026-04-24"
+publishDate: "2026-04-24"
 description: "Block ads and malware network-wide with a local DNS server. Set up Pi-hole on Windows via WSL or use Windows Server DNS role for corporate environments."
 tags: ["windows", "network", "dns", "administration"]
 readTime: 6

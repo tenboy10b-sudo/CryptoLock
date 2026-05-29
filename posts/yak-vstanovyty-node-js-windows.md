@@ -1,7 +1,7 @@
 ---
 title: "Як встановити Node.js на Windows і налаштувати npm"
-date: "2026-08-03"
-publishDate: "2026-08-03"
+date: "2026-01-20"
+publishDate: "2026-01-20"
 description: "Встановлення Node.js на Windows через офіційний сайт і nvm-windows: управління версіями, npm налаштування, вирішення помилок EACCES і PATH."
 tags: ["windows", "інструменти", "налаштування", "cmd", "powershell"]
 readTime: 5

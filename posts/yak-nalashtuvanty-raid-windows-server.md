@@ -1,7 +1,7 @@
 ---
 title: "RAID на Windows Server: апаратний і програмний RAID через diskpart"
-date: "2026-09-21"
-publishDate: "2026-09-21"
+date: "2026-04-01"
+publishDate: "2026-04-01"
 description: "Налаштування RAID масивів на Windows Server: програмний RAID 1 і RAID 5 через Disk Management і diskpart, моніторинг стану і відновлення при відмові диска."
 tags: ["адміністрування", "windows", "диск", "відновлення", "powershell"]
 readTime: 7

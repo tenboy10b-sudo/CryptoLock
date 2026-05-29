@@ -1,7 +1,7 @@
 ---
 title: "Як встановити Python на Windows і налаштувати середовище розробки"
-date: "2026-07-10"
-publishDate: "2026-07-10"
+date: "2025-12-27"
+publishDate: "2025-12-27"
 description: "Встановлення Python на Windows 10 і 11: через офіційний сайт і winget, налаштування PATH, pip, virtualenv і VS Code для роботи з Python."
 tags: ["windows", "інструменти", "налаштування", "cmd", "powershell"]
 readTime: 6

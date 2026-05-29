@@ -1,7 +1,7 @@
 ---
 title: "Windows Defender: повне налаштування захисту від вірусів"
-date: "2026-06-30"
-publishDate: "2026-06-30"
+date: "2025-12-14"
+publishDate: "2025-12-14"
 description: "Повне налаштування Windows Defender в Windows 10 і 11: захист у реальному часі, виключення, планове сканування, захист від програм-вимагачів і налаштування через PowerShell."
 tags: ["безпека", "windows", "захист", "налаштування", "powershell"]
 readTime: 7

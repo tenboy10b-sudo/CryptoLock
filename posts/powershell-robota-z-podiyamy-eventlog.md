@@ -1,7 +1,7 @@
 ---
 title: "PowerShell і EventLog: автоматизація аналізу журналів Windows"
-date: "2026-07-08"
-publishDate: "2026-07-08"
+date: "2025-12-25"
+publishDate: "2025-12-25"
 description: "Автоматизація читання і аналізу журналів подій Windows через PowerShell: Get-WinEvent, фільтри, звіти, моніторинг критичних подій і відправка сповіщень."
 tags: ["powershell", "моніторинг", "адміністрування", "windows", "безпека"]
 readTime: 7

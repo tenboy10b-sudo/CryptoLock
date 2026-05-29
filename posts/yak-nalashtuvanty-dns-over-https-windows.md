@@ -1,7 +1,7 @@
 ---
 title: "DNS over HTTPS в Windows 11: налаштування приватного і захищеного DNS"
-date: "2026-08-20"
-publishDate: "2026-08-20"
+date: "2026-02-14"
+publishDate: "2026-02-14"
 description: "Як увімкнути DNS over HTTPS (DoH) в Windows 11 для захисту DNS-запитів від перехоплення: налаштування в системі, Edge, Chrome і Firefox."
 tags: ["мережа", "безпека", "windows", "приватність", "налаштування", "dns"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "How to Use Robocopy in Windows: Backup and File Sync Guide"
-date: "2027-01-09"
-publishDate: "2027-01-09"
+date: "2026-05-21"
+publishDate: "2026-05-21"
 description: "Robocopy is the most reliable file copy tool built into Windows. Learn how to use it for backups, folder sync, network transfers and scheduled jobs with practical examples."
 tags: ["windows", "robocopy", "backup", "powershell", "administration"]
 readTime: 5

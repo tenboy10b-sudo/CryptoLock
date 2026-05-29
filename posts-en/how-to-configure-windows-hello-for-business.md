@@ -1,7 +1,7 @@
 ---
 title: "How to Use Windows Security Key Features: SmartScreen, Core Isolation, and Secure Boot"
-date: "2026-08-31"
-publishDate: "2026-08-31"
+date: "2026-03-27"
+publishDate: "2026-03-27"
 description: "Enable Windows 11 advanced security features: Core Isolation with Memory Integrity, SmartScreen, Secure Boot verification, and Reputation-based protection."
 tags: ["windows", "security", "bios", "tools"]
 readTime: 6

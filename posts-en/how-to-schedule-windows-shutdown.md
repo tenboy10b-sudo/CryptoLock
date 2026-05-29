@@ -1,7 +1,7 @@
 ---
 title: "How to Schedule Windows Shutdown, Restart, or Sleep"
-date: "2026-08-21"
-publishDate: "2026-08-21"
+date: "2026-03-22"
+publishDate: "2026-03-22"
 description: "Schedule Windows to automatically shut down, restart, or sleep at a specific time using shutdown command, Task Scheduler, and PowerShell. Cancel a scheduled shutdown before it runs."
 tags: ["windows", "automation", "tools", "powershell"]
 readTime: 4

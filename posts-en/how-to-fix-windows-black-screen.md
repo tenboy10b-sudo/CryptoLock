@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Black Screen in Windows 10 and 11"
-date: "2026-08-09"
-publishDate: "2026-08-09"
+date: "2026-03-16"
+publishDate: "2026-03-16"
 description: "Black screen after login, during startup, or after update? Step-by-step fixes for Windows black screen: restart Explorer, update GPU driver, fix display output, and boot issues."
 tags: ["windows", "troubleshooting", "drivers", "diagnostics"]
 readTime: 6

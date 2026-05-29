@@ -1,7 +1,7 @@
 ---
 title: "How to Enable and Configure IIS Web Server on Windows"
-date: "2026-11-15"
-publishDate: "2026-11-15"
+date: "2026-04-22"
+publishDate: "2026-04-22"
 description: "Enable IIS (Internet Information Services) on Windows 10 and 11 to host websites and web applications locally or on a home server. Setup, virtual hosts, and SSL configuration."
 tags: ["windows", "administration", "network", "tools"]
 readTime: 6

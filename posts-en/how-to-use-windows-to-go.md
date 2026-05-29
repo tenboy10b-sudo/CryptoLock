@@ -1,7 +1,7 @@
 ---
 title: "How to Create a Portable Windows Installation on a USB Drive"
-date: "2026-10-22"
-publishDate: "2026-10-22"
+date: "2026-04-10"
+publishDate: "2026-04-10"
 description: "Run Windows from a USB drive on any PC without affecting the host system. How to create a portable Windows environment using Rufus, WinToUSB, or the built-in DISM method."
 tags: ["windows", "tools", "installation", "administration"]
 readTime: 5

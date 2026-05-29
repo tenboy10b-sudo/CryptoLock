@@ -1,7 +1,7 @@
 ---
 title: "How to Enable BitLocker Without TPM in Windows 10 and 11"
-date: "2026-06-20"
-publishDate: "2026-06-20"
+date: "2026-03-06"
+publishDate: "2026-03-06"
 description: "Enable BitLocker drive encryption on PCs without a TPM chip using Group Policy. Step-by-step guide for Windows 10 and 11 Home and Pro editions."
 tags: ["windows", "security", "bitlocker", "encryption"]
 readTime: 5

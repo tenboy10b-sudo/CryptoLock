@@ -1,7 +1,7 @@
 ---
 title: "Скидання мережевих налаштувань Windows: netsh, ipconfig і Winsock"
-date: "2026-06-23"
-publishDate: "2026-06-23"
+date: "2025-12-03"
+publishDate: "2025-12-03"
 description: "Як скинути мережеві налаштування Windows коли не підключається інтернет: ipconfig /release /renew, netsh winsock reset, скидання TCP/IP і DNS кешу."
 tags: ["мережа", "windows", "діагностика", "cmd", "wifi"]
 readTime: 5

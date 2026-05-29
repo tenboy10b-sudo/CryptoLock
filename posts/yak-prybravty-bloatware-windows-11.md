@@ -1,7 +1,7 @@
 ---
 title: "Як видалити непотрібні програми і bloatware з Windows 11"
-date: "2026-06-15"
-publishDate: "2026-06-15"
+date: "2025-11-22"
+publishDate: "2025-11-22"
 description: "Видалення bloatware і попередньо встановлених програм з Windows 11: через Параметри, PowerShell, Winget і спеціальні утиліти. Що безпечно видалити а що залишити."
 tags: ["windows", "оптимізація", "очищення", "продуктивність", "powershell"]
 readTime: 6

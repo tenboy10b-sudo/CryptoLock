@@ -1,7 +1,7 @@
 ---
 title: "Windows Registry: How to Edit, Backup and Restore Registry Keys"
-date: "2027-01-11"
-publishDate: "2027-01-11"
+date: "2026-05-23"
+publishDate: "2026-05-23"
 description: "Edit Windows Registry safely using regedit and PowerShell. Create, modify and delete keys, export backups before changes, and restore if something breaks."
 tags: ["windows", "registry", "administration", "powershell", "security"]
 readTime: 5

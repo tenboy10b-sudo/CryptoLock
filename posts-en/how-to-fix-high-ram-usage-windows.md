@@ -1,7 +1,7 @@
 ---
 title: "How to Fix High RAM Usage in Windows 10 and 11"
-date: "2026-07-02"
-publishDate: "2026-07-02"
+date: "2026-03-12"
+publishDate: "2026-03-12"
 description: "RAM constantly at 80-90% even when idle? Find what's consuming memory in Windows and free it up: disable memory-hungry services, clear standby memory, and fix memory leaks."
 tags: ["windows", "optimization", "performance", "ram"]
 readTime: 6

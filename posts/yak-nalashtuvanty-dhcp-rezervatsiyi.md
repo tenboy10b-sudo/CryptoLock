@@ -1,7 +1,7 @@
 ---
 title: "DHCP резервування IP за MAC-адресою: налаштування і управління"
-date: "2026-09-16"
-publishDate: "2026-09-16"
+date: "2026-03-25"
+publishDate: "2026-03-25"
 description: "Як зарезервувати постійний IP для пристрою в DHCP сервері Windows Server: через консоль і PowerShell, масовий імпорт резервацій і моніторинг оренд."
 tags: ["адміністрування", "мережа", "windows", "powershell"]
 readTime: 5

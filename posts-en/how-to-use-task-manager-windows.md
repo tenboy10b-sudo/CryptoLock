@@ -1,7 +1,7 @@
 ---
 title: "How to Use Task Manager in Windows 10 and 11"
-date: "2026-06-08"
-publishDate: "2026-06-08"
+date: "2026-02-28"
+publishDate: "2026-02-28"
 description: "Master Windows Task Manager: monitor CPU, RAM, and disk usage, kill unresponsive apps, manage startup programs, and find what's slowing your PC."
 tags: ["windows", "tools", "optimization", "diagnostics"]
 readTime: 6

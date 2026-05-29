@@ -1,7 +1,7 @@
 ---
 title: "No Sound in Windows 10 and 11: How to Fix It"
-date: "2026-06-12"
-publishDate: "2026-06-12"
+date: "2026-03-02"
+publishDate: "2026-03-02"
 description: "Windows audio not working? Step-by-step fixes for no sound, audio device missing, or sound cutting out — from checking mute buttons to reinstalling audio drivers."
 tags: ["windows", "troubleshooting", "audio", "drivers"]
 readTime: 5

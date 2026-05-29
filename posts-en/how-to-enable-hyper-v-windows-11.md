@@ -1,7 +1,7 @@
 ---
 title: "How to Enable Hyper-V in Windows 11 and Create a Virtual Machine"
-date: "2027-01-02"
-publishDate: "2027-01-02"
+date: "2026-05-15"
+publishDate: "2026-05-15"
 description: "Enable Hyper-V in Windows 11 Pro and Enterprise, create your first virtual machine, configure networking and snapshots. Includes PowerShell commands."
 tags: ["windows", "hyper-v", "virtualization", "administration"]
 readTime: 6

@@ -1,7 +1,7 @@
 ---
 title: "Windows Update Stuck at 0% or 100%: How to Fix It"
-date: "2026-06-10"
-publishDate: "2026-06-10"
+date: "2026-03-01"
+publishDate: "2026-03-01"
 description: "Windows Update stuck downloading, installing, or at a specific percentage? Step-by-step fixes for updates that won't progress, including resetting update components and using DISM."
 tags: ["windows", "windows-update", "troubleshooting", "tools"]
 readTime: 5

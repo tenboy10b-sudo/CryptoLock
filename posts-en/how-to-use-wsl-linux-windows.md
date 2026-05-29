@@ -1,7 +1,7 @@
 ---
 title: "How to Install and Use WSL 2 (Linux on Windows) in 2025"
-date: "2027-01-14"
-publishDate: "2027-01-14"
+date: "2026-05-26"
+publishDate: "2026-05-26"
 description: "Install WSL 2 and run Linux on Windows 11 and 10. Set up Ubuntu, use Linux tools alongside Windows, access files between systems and configure WSL settings."
 tags: ["windows", "wsl", "linux", "development", "administration"]
 readTime: 6

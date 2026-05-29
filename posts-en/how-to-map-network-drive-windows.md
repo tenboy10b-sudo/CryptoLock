@@ -1,7 +1,7 @@
 ---
 title: "How to Map a Network Drive in Windows 10 and 11"
-date: "2026-06-02"
-publishDate: "2026-06-02"
+date: "2026-02-25"
+publishDate: "2026-02-25"
 description: "Map a network folder as a drive letter in Windows so it appears in File Explorer like a local drive. Covers GUI, Command Prompt, and PowerShell methods with persistent mapping."
 tags: ["windows", "network", "administration", "tools"]
 readTime: 5

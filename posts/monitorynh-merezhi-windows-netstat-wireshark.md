@@ -1,7 +1,7 @@
 ---
 title: "Моніторинг мережі в Windows: netstat, Resource Monitor і Wireshark"
-date: "2026-06-09"
-publishDate: "2026-06-09"
+date: "2025-11-11"
+publishDate: "2025-11-11"
 description: "Як переглянути мережеві підключення Windows, знайти підозрілі процеси що передають дані, використовувати netstat, Resource Monitor і Wireshark для аналізу трафіку."
 tags: ["мережа", "безпека", "windows", "cmd", "powershell", "моніторинг"]
 readTime: 7

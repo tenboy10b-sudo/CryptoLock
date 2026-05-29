@@ -1,7 +1,7 @@
 ---
 title: "How to Change Network Profile in Windows (Public vs Private)"
-date: "2026-09-14"
-publishDate: "2026-09-14"
+date: "2026-04-03"
+publishDate: "2026-04-03"
 description: "Windows assigns Public or Private profile to each network connection — this controls firewall rules and network discovery. How to change profiles and when to use each."
 tags: ["windows", "network", "security", "settings"]
 readTime: 4

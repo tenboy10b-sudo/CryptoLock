@@ -1,7 +1,7 @@
 ---
 title: "DHCP сервер на Windows Server: встановлення і налаштування"
-date: "2026-07-12"
-publishDate: "2026-07-12"
+date: "2025-12-29"
+publishDate: "2025-12-29"
 description: "Встановлення і налаштування DHCP сервера на Windows Server: створення scope, резервування IP за MAC-адресою, опції DHCP і моніторинг через PowerShell."
 tags: ["адміністрування", "мережа", "windows", "powershell"]
 readTime: 7

@@ -1,7 +1,7 @@
 ---
 title: "Windows Update завис на 0%: як виправити швидко"
-date: "2026-12-31"
-publishDate: "2026-12-31"
+date: "2026-05-17"
+publishDate: "2026-05-17"
 description: "Windows Update завис на 0%, не завантажується або гальмує при встановленні? Покрокове виправлення: очистити кеш, перезапустити служби, DISM і SFC."
 tags: ["windows", "windows-update", "помилки", "відновлення"]
 readTime: 5

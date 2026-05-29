@@ -1,7 +1,7 @@
 ---
 title: "PowerShell One-Liners for Common Windows Admin Tasks"
-date: "2026-12-08"
-publishDate: "2026-12-08"
+date: "2026-05-03"
+publishDate: "2026-05-03"
 description: "Practical PowerShell one-liners for daily Windows administration: network troubleshooting, disk usage, security checks, process management, and service control."
 tags: ["windows", "powershell", "administration", "tools"]
 translatesUk: "yak-vykorystovuvaty-powershell-shchodnya"

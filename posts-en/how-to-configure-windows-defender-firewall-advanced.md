@@ -1,7 +1,7 @@
 ---
 title: "How to Use Windows Defender Offline Scan to Remove Hidden Malware"
-date: "2026-06-24"
-publishDate: "2026-06-24"
+date: "2026-03-08"
+publishDate: "2026-03-08"
 description: "Windows Defender Offline Scan runs before Windows loads, catching rootkits and malware that hide from normal scans. How to start it, what it does, and how to read the results."
 tags: ["windows", "security", "windows-defender", "tools"]
 readTime: 4

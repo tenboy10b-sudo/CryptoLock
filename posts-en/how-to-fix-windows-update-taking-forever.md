@@ -1,7 +1,7 @@
 ---
 title: "Windows Update Taking Forever to Download or Install: How to Fix"
-date: "2026-08-29"
-publishDate: "2026-08-29"
+date: "2026-03-26"
+publishDate: "2026-03-26"
 description: "Windows Update downloading at 0 KB/s or stuck at the same percentage for hours? Speed up slow updates by resetting components, switching delivery sources, and clearing the update cache."
 tags: ["windows", "windows-update", "troubleshooting", "optimization"]
 readTime: 5

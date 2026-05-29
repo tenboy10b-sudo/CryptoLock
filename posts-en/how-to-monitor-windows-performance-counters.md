@@ -1,7 +1,7 @@
 ---
 title: "How to Monitor Windows Performance with Performance Monitor and Counters"
-date: "2026-10-30"
-publishDate: "2026-10-30"
+date: "2026-04-14"
+publishDate: "2026-04-14"
 description: "Use Windows Performance Monitor (perfmon) to track CPU, memory, disk, and network in real time and over time. Create data collector sets and analyze bottlenecks with built-in tools."
 tags: ["windows", "diagnostics", "monitoring", "administration"]
 readTime: 6

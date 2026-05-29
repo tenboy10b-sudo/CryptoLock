@@ -1,7 +1,7 @@
 ---
 title: "How to Configure Network Adapter Settings for Performance and Stability"
-date: "2026-11-07"
-publishDate: "2026-11-07"
+date: "2026-04-18"
+publishDate: "2026-04-18"
 description: "Tune Windows network adapter settings for better throughput and lower latency: speed/duplex, interrupt moderation, RSS, buffers, and power management settings."
 tags: ["windows", "network", "optimization", "hardware"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "Сертифікати в Windows: управління через certmgr і PowerShell"
-date: "2026-09-09"
-publishDate: "2026-09-09"
+date: "2026-03-14"
+publishDate: "2026-03-14"
 description: "Управління SSL/TLS сертифікатами в Windows: certmgr.msc, імпорт і експорт сертифікатів, перевірка терміну дії, розгортання через GPO і PowerShell."
 tags: ["windows", "безпека", "адміністрування", "powershell", "мережа"]
 readTime: 7

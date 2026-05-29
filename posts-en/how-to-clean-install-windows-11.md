@@ -1,7 +1,7 @@
 ---
 title: "How to Clean Install Windows 11: Step-by-Step Guide"
-date: "2026-06-26"
-publishDate: "2026-06-26"
+date: "2026-03-09"
+publishDate: "2026-03-09"
 description: "Complete guide to clean installing Windows 11 from USB: create bootable media, configure BIOS, partition the drive, and set up Windows fresh without any bloatware."
 tags: ["windows", "installation", "bios", "tools"]
 readTime: 8

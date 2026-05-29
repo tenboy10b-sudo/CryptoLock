@@ -1,7 +1,7 @@
 ---
 title: "WSL 2 Advanced: GPU Support, systemd, and Development Setup"
-date: "2026-11-01"
-publishDate: "2026-11-01"
+date: "2026-04-15"
+publishDate: "2026-04-15"
 description: "Take WSL 2 further: enable systemd, use GPU acceleration for ML workloads, set up a complete development environment, and configure WSL networking for advanced use cases."
 tags: ["windows", "linux", "tools", "administration"]
 readTime: 6

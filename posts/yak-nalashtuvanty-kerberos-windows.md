@@ -1,7 +1,7 @@
 ---
 title: "Kerberos автентифікація в Active Directory: як працює і діагностика"
-date: "2026-09-24"
-publishDate: "2026-09-24"
+date: "2026-04-06"
+publishDate: "2026-04-06"
 description: "Як працює Kerberos автентифікація в Active Directory, типові помилки (clock skew, SPN, делегування) і інструменти діагностики через klist і PowerShell."
 tags: ["адміністрування", "безпека", "windows", "мережа", "облікові-записи"]
 readTime: 6

@@ -1,7 +1,7 @@
 ---
 title: "How to Use Windows Defender Antivirus from Command Line"
-date: "2026-10-28"
-publishDate: "2026-10-28"
+date: "2026-04-13"
+publishDate: "2026-04-13"
 description: "Run Windows Defender scans, update signatures, manage exclusions, and configure real-time protection entirely from PowerShell and command line — useful for scripts and remote management."
 tags: ["windows", "security", "windows-defender", "powershell"]
 readTime: 5

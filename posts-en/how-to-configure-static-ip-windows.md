@@ -1,7 +1,7 @@
 ---
 title: "How to Set a Static IP Address in Windows 10 and 11"
-date: "2026-12-14"
-publishDate: "2026-12-14"
+date: "2026-05-06"
+publishDate: "2026-05-06"
 description: "Configure a static IP address, subnet mask, gateway and DNS in Windows via Settings, PowerShell, and CMD. Includes subnet calculation and how to revert to DHCP."
 tags: ["windows", "network", "settings", "administration"]
 translatesUk: "yak-rozrakhuvaty-pidsystemu-windows"

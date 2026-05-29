@@ -1,7 +1,7 @@
 ---
 title: "How to Run Windows Defender Offline Scan to Remove Stubborn Malware"
-date: "2027-01-13"
-publishDate: "2027-01-13"
+date: "2026-05-25"
+publishDate: "2026-05-25"
 description: "Run Windows Defender Offline Scan to detect and remove malware that hides from normal scans. Boots outside Windows to catch rootkits and boot-sector viruses."
 tags: ["windows", "security", "malware", "windows-defender", "antivirus"]
 readTime: 4

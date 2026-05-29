@@ -1,7 +1,7 @@
 ---
 title: "Як встановити Windows 11 без TPM 2.0 і Secure Boot у 2026"
-date: "2026-12-20"
-publishDate: "2026-12-20"
+date: "2026-05-12"
+publishDate: "2026-05-12"
 description: "Windows 11 вимагає TPM 2.0 і Secure Boot, але встановити можна і без них. Три офіційних і неофіційних способи обійти перевірку вимог для старих ПК."
 tags: ["windows", "встановлення", "bios", "налаштування"]
 translatesEn: "how-to-install-windows-11-without-tpm"

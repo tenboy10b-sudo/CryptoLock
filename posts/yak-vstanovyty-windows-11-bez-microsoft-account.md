@@ -1,7 +1,7 @@
 ---
 title: "Як встановити Windows 11 без облікового запису Microsoft"
-date: "2026-06-26"
-publishDate: "2026-06-26"
+date: "2025-12-08"
+publishDate: "2025-12-08"
 description: "Обхід обов'язкової прив'язки до Microsoft акаунту при встановленні Windows 11 Home і Pro: команди OOBE, bypass через термінал і оффлайн-акаунт."
 tags: ["windows", "налаштування", "облікові-записи", "приватність"]
 readTime: 4

@@ -1,7 +1,7 @@
 ---
 title: "How to Install WSL 2 and Run Linux on Windows"
-date: "2026-08-17"
-publishDate: "2026-08-17"
+date: "2026-03-20"
+publishDate: "2026-03-20"
 description: "Windows Subsystem for Linux (WSL 2) runs a real Linux kernel inside Windows. How to install it, choose a distribution, access Windows files from Linux, and set up a development environment."
 tags: ["windows", "linux", "tools", "administration"]
 readTime: 6

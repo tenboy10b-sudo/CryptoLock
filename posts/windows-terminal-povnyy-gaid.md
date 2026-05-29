@@ -1,7 +1,7 @@
 ---
 title: "Windows Terminal: налаштування, профілі і корисні функції"
-date: "2026-06-06"
-publishDate: "2026-06-06"
+date: "2025-11-07"
+publishDate: "2025-11-07"
 description: "Повний гайд по Windows Terminal: встановлення, налаштування вигляду, кілька профілів CMD і PowerShell, вкладки, роздільний екран і гарячі клавіші."
 tags: ["windows", "powershell", "cmd", "інструменти", "налаштування"]
 readTime: 6

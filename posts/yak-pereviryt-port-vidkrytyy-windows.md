@@ -1,7 +1,7 @@
 ---
 title: "Як перевірити чи відкритий порт в Windows: netstat, Test-NetConnection і telnet"
-date: "2026-07-24"
-publishDate: "2026-07-24"
+date: "2026-01-10"
+publishDate: "2026-01-10"
 description: "Перевірка відкритих портів на локальному ПК і віддалених серверах в Windows: netstat, Test-NetConnection, telnet і онлайн сканери. Як відкрити порт у брандмауері."
 tags: ["мережа", "cmd", "powershell", "windows", "адміністрування", "діагностика"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "How to Troubleshoot Network Issues in Windows: Complete Guide"
-date: "2026-10-26"
-publishDate: "2026-10-26"
+date: "2026-04-12"
+publishDate: "2026-04-12"
 description: "Systematic approach to diagnosing Windows network problems: no internet, limited connectivity, slow speeds, and DNS failures. Commands to pinpoint and fix the issue."
 tags: ["windows", "network", "troubleshooting", "tools"]
 readTime: 6

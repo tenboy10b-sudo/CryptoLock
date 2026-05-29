@@ -1,7 +1,7 @@
 ---
 title: "How to Decode Windows Error Codes: 0x80070005, 0xC000021A and More"
-date: "2026-12-10"
-publishDate: "2026-12-10"
+date: "2026-05-04"
+publishDate: "2026-05-04"
 description: "Windows error codes look cryptic but follow a clear pattern. How to decode 0x80070005, HRESULT and NTSTATUS codes, find the root cause, and fix common errors."
 tags: ["windows", "errors", "diagnostics", "troubleshooting"]
 translatesUk: "shcho-oznachaie-kod-pomylky-windows"

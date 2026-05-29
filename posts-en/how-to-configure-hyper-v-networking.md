@@ -1,7 +1,7 @@
 ---
 title: "How to Configure Hyper-V Network Settings for Virtual Machines"
-date: "2026-09-22"
-publishDate: "2026-09-22"
+date: "2026-04-07"
+publishDate: "2026-04-07"
 description: "Set up networking for Hyper-V virtual machines: External, Internal, and Private switches explained. Configure NAT, static IPs, and fix common network issues in VMs."
 tags: ["windows", "hyper-v", "network", "virtualization"]
 readTime: 6

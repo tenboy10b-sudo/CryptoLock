@@ -1,7 +1,7 @@
 ---
 title: "Керування Windows Update: пауза, розклад і відкладення через GPO"
-date: "2027-01-20"
-publishDate: "2027-01-20"
+date: "2026-05-26"
+publishDate: "2026-05-26"
 description: "Як контролювати Windows Update: поставити на паузу, налаштувати активні години, відкласти функціональні оновлення через GPO і PowerShell."
 tags: ["windows", "windows-update", "групова-політика", "адміністрування", "powershell"]
 readTime: 4

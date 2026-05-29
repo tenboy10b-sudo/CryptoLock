@@ -1,7 +1,7 @@
 ---
 title: "How to Set Up a VPN in Windows 10 and 11: Built-in and Manual"
-date: "2027-01-10"
-publishDate: "2027-01-10"
+date: "2026-05-22"
+publishDate: "2026-05-22"
 description: "Set up a VPN connection in Windows 10 and 11 using built-in settings or PowerShell. Configure IKEv2, L2TP and PPTP protocols, split tunneling and auto-connect."
 tags: ["windows", "vpn", "network", "security", "powershell"]
 readTime: 5

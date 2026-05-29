@@ -1,7 +1,7 @@
 ---
 title: "Як увімкнути і налаштувати Remote Desktop (RDP) в Windows 10 і 11"
-date: "2026-12-28"
-publishDate: "2026-12-28"
+date: "2026-05-15"
+publishDate: "2026-05-15"
 description: "Як увімкнути Remote Desktop в Windows, підключитись з іншого ПК, змінити порт RDP і обмежити доступ через брандмауер. Команди PowerShell і налаштування безпеки."
 tags: ["windows", "rdp", "мережа", "безпека", "адміністрування"]
 readTime: 5

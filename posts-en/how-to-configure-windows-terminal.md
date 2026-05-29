@@ -1,7 +1,7 @@
 ---
 title: "How to Set Up and Customize Windows Terminal"
-date: "2026-09-20"
-publishDate: "2026-09-20"
+date: "2026-04-06"
+publishDate: "2026-04-06"
 description: "Windows Terminal is the modern replacement for CMD and PowerShell windows. How to install it, configure profiles, set up keyboard shortcuts, and customize appearance."
 tags: ["windows", "tools", "powershell", "administration"]
 readTime: 5

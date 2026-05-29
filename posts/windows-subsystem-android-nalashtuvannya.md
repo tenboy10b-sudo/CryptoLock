@@ -1,7 +1,7 @@
 ---
 title: "Windows Subsystem for Android: запуск Android-додатків на Windows 11"
-date: "2026-08-18"
-publishDate: "2026-08-18"
+date: "2026-02-11"
+publishDate: "2026-02-11"
 description: "Як встановити Windows Subsystem for Android на Windows 11 і запускати мобільні додатки. Встановлення APK без Google Play і налаштування продуктивності."
 tags: ["windows", "налаштування", "інструменти", "оптимізація"]
 readTime: 5

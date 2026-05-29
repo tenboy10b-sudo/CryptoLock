@@ -1,7 +1,7 @@
 ---
 title: "How to Set Up Windows Hello: Fingerprint, Face, and PIN Login"
-date: "2026-07-04"
-publishDate: "2026-07-04"
+date: "2026-03-13"
+publishDate: "2026-03-13"
 description: "Set up Windows Hello for fast, secure login without typing a password. Configure fingerprint reader, facial recognition, or PIN — and fix common Windows Hello problems."
 tags: ["windows", "security", "accounts", "tools"]
 readTime: 5

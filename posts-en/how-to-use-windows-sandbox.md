@@ -1,7 +1,7 @@
 ---
 title: "How to Enable and Use Windows Sandbox in Windows 11"
-date: "2027-01-04"
-publishDate: "2027-01-04"
+date: "2026-05-17"
+publishDate: "2026-05-17"
 description: "Enable Windows Sandbox in Windows 11 Pro to run untrusted apps safely. Each session starts fresh and leaves no traces. Setup, usage and configuration tips."
 tags: ["windows", "security", "sandbox", "virtualization"]
 readTime: 4

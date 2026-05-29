@@ -1,7 +1,7 @@
 ---
 title: "How to Control Windows Update with Group Policy and Registry"
-date: "2026-11-03"
-publishDate: "2026-11-03"
+date: "2026-04-16"
+publishDate: "2026-04-16"
 description: "Precisely control Windows Update behavior: defer feature and quality updates, block specific updates, force update schedules, and configure update sources using Group Policy and PowerShell."
 tags: ["windows", "windows-update", "gpo", "administration"]
 readTime: 6

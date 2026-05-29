@@ -1,7 +1,7 @@
 ---
 title: "How to Use Windows Clipboard History and Cloud Clipboard"
-date: "2026-08-07"
-publishDate: "2026-08-07"
+date: "2026-03-15"
+publishDate: "2026-03-15"
 description: "Windows Clipboard History lets you access the last 25 items you copied. Enable it, use keyboard shortcuts, pin frequently used snippets, and sync across devices with Cloud Clipboard."
 tags: ["windows", "productivity", "tools", "settings"]
 readTime: 4

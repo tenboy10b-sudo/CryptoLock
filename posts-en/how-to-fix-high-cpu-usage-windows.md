@@ -1,7 +1,7 @@
 ---
 title: "How to Fix High CPU Usage in Windows 10 and 11"
-date: "2026-06-28"
-publishDate: "2026-06-28"
+date: "2026-03-10"
+publishDate: "2026-03-10"
 description: "CPU running at 100% for no reason? Find what's causing high CPU usage in Windows and fix common culprits: Windows Update, antivirus scans, WMI, and background services."
 tags: ["windows", "optimization", "performance", "diagnostics"]
 readTime: 6

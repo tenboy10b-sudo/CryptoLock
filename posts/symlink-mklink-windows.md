@@ -1,7 +1,7 @@
 ---
 title: "Символічні посилання в Windows: mklink і як їх використовувати"
-date: "2026-09-25"
-publishDate: "2026-09-25"
+date: "2026-04-07"
+publishDate: "2026-04-07"
 description: "Як створювати символічні посилання і junction points в Windows через mklink і PowerShell: перенаправлення папок, економія місця і вирішення проблем з шляхами."
 tags: ["windows", "cmd", "адміністрування", "інструменти", "диск"]
 readTime: 5

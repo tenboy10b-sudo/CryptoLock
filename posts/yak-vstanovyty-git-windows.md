@@ -1,7 +1,7 @@
 ---
 title: "Як встановити і налаштувати Git на Windows"
-date: "2026-07-29"
-publishDate: "2026-07-29"
+date: "2026-01-15"
+publishDate: "2026-01-15"
 description: "Встановлення Git на Windows, базова конфігурація, робота з GitHub через SSH і HTTPS, основні команди і налаштування VS Code для роботи з Git."
 tags: ["windows", "інструменти", "налаштування", "cmd", "powershell"]
 readTime: 6

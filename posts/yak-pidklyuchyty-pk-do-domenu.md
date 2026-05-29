@@ -1,7 +1,7 @@
 ---
 title: "Як підключити комп'ютер до домену Active Directory"
-date: "2026-07-19"
-publishDate: "2026-07-19"
+date: "2026-01-05"
+publishDate: "2026-01-05"
 description: "Покроково підключити Windows 10 і 11 до домену Active Directory: вимоги, налаштування DNS, приєднання до домену через GUI і PowerShell, типові помилки."
 tags: ["адміністрування", "windows", "мережа", "налаштування", "облікові-записи"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "How to Check Your PC Specs in Windows 10 and 11"
-date: "2026-08-03"
-publishDate: "2026-08-03"
+date: "2026-03-14"
+publishDate: "2026-03-14"
 description: "Find your CPU, RAM, GPU, storage, and motherboard specs in Windows without opening the case. Using System Information, Task Manager, PowerShell, and free tools."
 tags: ["windows", "hardware", "diagnostics", "tools"]
 readTime: 5

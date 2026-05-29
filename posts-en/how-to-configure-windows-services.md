@@ -1,7 +1,7 @@
 ---
 title: "How to Manage Windows Services: Start, Stop, and Optimize"
-date: "2026-10-24"
-publishDate: "2026-10-24"
+date: "2026-04-11"
+publishDate: "2026-04-11"
 description: "Windows runs dozens of background services. Learn which ones you can safely disable to free up RAM and CPU, and how to manage services via Services console and PowerShell."
 tags: ["windows", "optimization", "administration", "performance"]
 readTime: 6

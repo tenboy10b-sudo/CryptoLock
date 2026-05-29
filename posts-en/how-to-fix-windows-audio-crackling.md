@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Audio Crackling, Popping, or Stuttering in Windows"
-date: "2026-08-23"
-publishDate: "2026-08-23"
+date: "2026-03-23"
+publishDate: "2026-03-23"
 description: "Audio crackling, popping, or cutting out in Windows? Fix it by adjusting audio format, disabling enhancements, updating drivers, and checking USB/power settings."
 tags: ["windows", "audio", "troubleshooting", "drivers"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "How to Fix DNS Not Resolving in Windows 10 and 11"
-date: "2027-01-15"
-publishDate: "2027-01-15"
+date: "2026-05-27"
+publishDate: "2026-05-27"
 description: "Fix DNS resolution failures in Windows: sites not loading, DNS_PROBE_FINISHED_NXDOMAIN errors. Flush DNS cache, change DNS servers, reset network stack."
 tags: ["windows", "dns", "network", "troubleshooting", "errors"]
 readTime: 5

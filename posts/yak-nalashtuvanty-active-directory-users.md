@@ -1,7 +1,7 @@
 ---
 title: "Active Directory: управління користувачами і групами через PowerShell"
-date: "2026-09-14"
-publishDate: "2026-09-14"
+date: "2026-03-22"
+publishDate: "2026-03-22"
 description: "Управління обліковими записами в Active Directory через PowerShell: створення, зміна, блокування і пошук користувачів. Масові операції і звіти."
 tags: ["адміністрування", "windows", "powershell", "облікові-записи", "мережа"]
 readTime: 7

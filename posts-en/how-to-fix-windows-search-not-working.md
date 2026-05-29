@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Windows Search Not Working in Windows 10 and 11"
-date: "2027-01-06"
-publishDate: "2027-01-06"
+date: "2026-05-18"
+publishDate: "2026-05-18"
 description: "Windows search bar not working, showing blank results or freezing? Fix Windows Search with these methods: restart the service, rebuild the index, run the troubleshooter."
 tags: ["windows", "troubleshooting", "errors", "optimization"]
 readTime: 5

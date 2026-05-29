@@ -1,7 +1,7 @@
 ---
 title: "Як встановити Docker на Windows і запустити перший контейнер"
-date: "2026-08-26"
-publishDate: "2026-08-26"
+date: "2026-02-24"
+publishDate: "2026-02-24"
 description: "Встановлення Docker Desktop на Windows 10 і 11 через WSL 2, основні команди Docker і запуск першого контейнера. Типові помилки і їх вирішення."
 tags: ["windows", "інструменти", "налаштування", "cmd", "powershell"]
 readTime: 6

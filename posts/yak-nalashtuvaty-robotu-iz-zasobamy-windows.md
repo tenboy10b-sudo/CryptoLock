@@ -1,7 +1,7 @@
 ---
 title: "Sysinternals: найкорисніші утиліти для діагностики Windows"
-date: "2026-08-28"
-publishDate: "2026-08-28"
+date: "2026-02-26"
+publishDate: "2026-02-26"
 description: "Огляд найкорисніших утиліт Sysinternals від Microsoft: Process Explorer, Autoruns, TCPView, Process Monitor і PsTools для глибокої діагностики Windows."
 tags: ["windows", "інструменти", "діагностика", "адміністрування"]
 readTime: 5

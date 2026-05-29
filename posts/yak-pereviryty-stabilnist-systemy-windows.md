@@ -1,7 +1,7 @@
 ---
 title: "Як перевірити стабільність системи і знайти причину зависань в Windows"
-date: "2026-06-25"
-publishDate: "2026-06-25"
+date: "2025-12-07"
+publishDate: "2025-12-07"
 description: "Як використовувати Reliability Monitor, Event Viewer і стрес-тести для діагностики нестабільної роботи Windows. Знайти причину зависань, BSOD і випадкових перезавантажень."
 tags: ["windows", "діагностика", "інструменти", "troubleshooting"]
 readTime: 5

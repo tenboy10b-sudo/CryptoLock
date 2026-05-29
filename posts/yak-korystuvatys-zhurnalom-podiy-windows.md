@@ -1,7 +1,7 @@
 ---
 title: "Event Viewer: як читати журнал подій Windows"
-date: "2026-12-05"
-publishDate: "2026-12-05"
+date: "2026-05-05"
+publishDate: "2026-05-05"
 description: "Як відкрити і читати Event Viewer в Windows. Що означають рівні Critical, Error, Warning. Найважливіші Event ID для безпеки і пошуку проблем."
 tags: ["windows", "діагностика", "безпека", "моніторинг"]
 translatesEn: "how-to-monitor-windows-security-events"

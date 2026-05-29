@@ -1,7 +1,7 @@
 ---
 title: "Як виправити проблеми з DNS в Windows 10 і 11"
-date: "2027-01-17"
-publishDate: "2027-01-17"
+date: "2026-05-24"
+publishDate: "2026-05-24"
 description: "Виправлення помилок DNS в Windows: сайти не відкриваються, DNS_PROBE_FINISHED_NXDOMAIN. Очистити кеш DNS, змінити сервери, скинути мережевий стек."
 tags: ["windows", "dns", "мережа", "помилки", "налаштування"]
 readTime: 4

@@ -1,7 +1,7 @@
 ---
 title: "NTFS: права доступу, атрибути і інструменти управління в Windows"
-date: "2026-08-30"
-publishDate: "2026-08-30"
+date: "2026-03-01"
+publishDate: "2026-03-01"
 description: "Файлова система NTFS в Windows: права доступу, атрибути файлів, шифрування EFS, квоти диска, тіньові копії і управління через icacls і PowerShell."
 tags: ["windows", "адміністрування", "безпека", "диск", "powershell", "cmd"]
 readTime: 7

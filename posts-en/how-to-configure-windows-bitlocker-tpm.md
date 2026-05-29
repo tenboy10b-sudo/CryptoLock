@@ -1,7 +1,7 @@
 ---
 title: "How to Enable BitLocker with TPM on Windows 10 and 11 Pro"
-date: "2026-11-25"
-publishDate: "2026-11-25"
+date: "2026-04-27"
+publishDate: "2026-04-27"
 description: "Enable BitLocker drive encryption on Windows 10 and 11 Pro with TPM. Step-by-step: check TPM, enable BitLocker, save recovery key, and verify encryption status."
 tags: ["windows", "security", "bitlocker", "encryption"]
 readTime: 5

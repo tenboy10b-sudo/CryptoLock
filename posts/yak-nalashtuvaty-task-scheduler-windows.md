@@ -1,7 +1,7 @@
 ---
 title: "Task Scheduler в Windows: автоматизація завдань покроково"
-date: "2026-06-11"
-publishDate: "2026-06-11"
+date: "2025-11-16"
+publishDate: "2025-11-16"
 description: "Як створити автоматичне завдання в Task Scheduler Windows: запуск скриптів по розкладу, при вході або при події. Приклади через GUI і PowerShell."
 tags: ["windows", "автоматизація", "інструменти", "планувальник"]
 readTime: 6

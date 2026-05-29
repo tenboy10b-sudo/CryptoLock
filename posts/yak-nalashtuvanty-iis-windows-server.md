@@ -1,7 +1,7 @@
 ---
 title: "IIS на Windows Server: встановлення і налаштування веб-сервера"
-date: "2026-08-01"
-publishDate: "2026-08-01"
+date: "2026-01-18"
+publishDate: "2026-01-18"
 description: "Встановлення і базове налаштування IIS (Internet Information Services) на Windows Server: сайти, пули додатків, HTTPS, логування і управління через PowerShell."
 tags: ["адміністрування", "windows", "мережа", "безпека", "powershell"]
 readTime: 7

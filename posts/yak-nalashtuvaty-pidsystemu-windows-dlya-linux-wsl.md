@@ -1,7 +1,7 @@
 ---
 title: "WSL в Windows: запуск Linux команд без виходу з системи"
-date: "2026-09-19"
-publishDate: "2026-09-19"
+date: "2026-03-30"
+publishDate: "2026-03-30"
 description: "Практичне використання WSL в Windows: корисні команди, доступ до файлів Windows з Linux і навпаки, інтеграція з VS Code і типові проблеми."
 tags: ["windows", "linux", "інструменти", "адміністрування"]
 readTime: 4

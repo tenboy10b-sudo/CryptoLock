@@ -1,7 +1,7 @@
 ---
 title: "How to Write and Run PowerShell Scripts to Automate Windows Tasks"
-date: "2026-11-23"
-publishDate: "2026-11-23"
+date: "2026-04-26"
+publishDate: "2026-04-26"
 description: "Get started writing PowerShell scripts for Windows automation: execution policy, script structure, error handling, logging, and practical examples you can use immediately."
 tags: ["windows", "powershell", "automation", "administration"]
 readTime: 7

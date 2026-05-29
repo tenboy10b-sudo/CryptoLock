@@ -1,7 +1,7 @@
 ---
 title: "Синхронізація часу в Windows і домені Active Directory: NTP налаштування"
-date: "2026-06-10"
-publishDate: "2026-06-10"
+date: "2025-11-13"
+publishDate: "2025-11-13"
 description: "Налаштування NTP синхронізації часу в Windows, виправлення помилок часу в домені Active Directory, w32tm команди і налаштування ієрархії часу для корпоративної мережі."
 tags: ["адміністрування", "windows", "мережа", "cmd", "powershell"]
 readTime: 6

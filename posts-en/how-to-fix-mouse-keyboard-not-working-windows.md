@@ -1,7 +1,7 @@
 ---
 title: "Mouse or Keyboard Not Working in Windows: How to Fix"
-date: "2026-09-02"
-publishDate: "2026-09-02"
+date: "2026-03-28"
+publishDate: "2026-03-28"
 description: "Mouse or keyboard stopped working in Windows? Step-by-step fixes for USB and wireless devices: driver reset, USB power management, PS/2 fallback, and recovery without a working keyboard."
 tags: ["windows", "troubleshooting", "hardware", "drivers"]
 readTime: 5

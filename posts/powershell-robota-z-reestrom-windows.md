@@ -1,7 +1,7 @@
 ---
 title: "PowerShell: робота з реєстром Windows — читання, запис, видалення"
-date: "2026-06-03"
-publishDate: "2026-06-03"
+date: "2025-11-02"
+publishDate: "2025-11-02"
 description: "Як читати, змінювати і видаляти ключі реєстру Windows через PowerShell: Get-ItemProperty, Set-ItemProperty, New-Item. Практичні приклади для адміністраторів."
 tags: ["powershell", "реєстр", "адміністрування", "windows", "інструменти"]
 readTime: 7

@@ -1,7 +1,7 @@
 ---
 title: "How to Use Snap Layouts in Windows 11 for Better Multitasking"
-date: "2026-08-19"
-publishDate: "2026-08-19"
+date: "2026-03-21"
+publishDate: "2026-03-21"
 description: "Snap Layouts in Windows 11 let you arrange windows into predefined grids with one click. How to use snap groups, customize layouts, and use keyboard shortcuts for faster window management."
 tags: ["windows", "productivity", "settings", "windows-11"]
 readTime: 4

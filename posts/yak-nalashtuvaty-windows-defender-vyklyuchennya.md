@@ -1,7 +1,7 @@
 ---
 title: "Виключення Windows Defender: як додати без вимкнення захисту"
-date: "2026-12-22"
-publishDate: "2026-12-22"
+date: "2026-05-13"
+publishDate: "2026-05-13"
 description: "Windows Defender блокує легальну програму або уповільнює роботу? Додай точкові виключення для папки, файлу або процесу — захист решти системи залишиться активним."
 tags: ["windows", "безпека", "windows-defender", "налаштування"]
 translatesEn: "how-to-configure-windows-defender-exclusions"

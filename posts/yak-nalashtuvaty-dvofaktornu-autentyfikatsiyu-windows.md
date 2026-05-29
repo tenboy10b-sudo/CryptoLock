@@ -1,7 +1,7 @@
 ---
 title: "Двофакторна аутентифікація для Windows: як захистити вхід"
-date: "2026-06-09"
-publishDate: "2026-06-09"
+date: "2025-11-12"
+publishDate: "2025-11-12"
 description: "Як налаштувати двофакторну аутентифікацію для входу в Windows через Microsoft Authenticator, Windows Hello і апаратні ключі безпеки FIDO2."
 tags: ["windows", "безпека", "облікові-записи", "налаштування"]
 readTime: 5

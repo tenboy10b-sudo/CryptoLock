@@ -1,7 +1,7 @@
 ---
 title: "Windows для розробника: WSL2, Terminal, Git і VS Code з нуля"
-date: "2026-09-13"
-publishDate: "2026-09-13"
+date: "2026-03-20"
+publishDate: "2026-03-20"
 description: "Налаштування Windows як середовища для розробки: встановлення WSL2 з Ubuntu, Windows Terminal, Git, VS Code і базова конфігурація для комфортної роботи."
 tags: ["windows", "інструменти", "налаштування", "cmd", "powershell"]
 readTime: 7

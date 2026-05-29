@@ -1,7 +1,7 @@
 ---
 title: "DNS over HTTPS в Windows 11: як увімкнути шифрування DNS запитів"
-date: "2026-08-20"
-publishDate: "2026-08-20"
+date: "2026-02-15"
+publishDate: "2026-02-15"
 description: "DNS over HTTPS шифрує запити до DNS сервера — провайдер не бачить які сайти ти відвідуєш. Як увімкнути DoH в Windows 11 через Параметри і PowerShell."
 tags: ["windows", "мережа", "приватність", "dns"]
 readTime: 4

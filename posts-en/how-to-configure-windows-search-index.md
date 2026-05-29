@@ -1,7 +1,7 @@
 ---
 title: "How to Configure Windows Search Index for Faster File Searches"
-date: "2026-11-21"
-publishDate: "2026-11-21"
+date: "2026-04-25"
+publishDate: "2026-04-25"
 description: "Customize what Windows indexes and how — add locations, exclude folders, rebuild corrupt index, and configure enhanced vs classic indexing mode for better search results."
 tags: ["windows", "optimization", "tools", "settings"]
 readTime: 5

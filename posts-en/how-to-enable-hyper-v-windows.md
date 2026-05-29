@@ -1,7 +1,7 @@
 ---
 title: "How to Enable and Use Hyper-V in Windows 10 and 11"
-date: "2026-06-06"
-publishDate: "2026-06-06"
+date: "2026-02-27"
+publishDate: "2026-02-27"
 description: "Enable Hyper-V on Windows 10/11 Pro to run virtual machines. Step-by-step setup, creating your first VM, network configuration, and common troubleshooting."
 tags: ["windows", "hyper-v", "virtualization", "administration"]
 readTime: 7

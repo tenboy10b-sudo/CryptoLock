@@ -1,7 +1,7 @@
 ---
 title: "LDAP запити до Active Directory: пошук і фільтрація через PowerShell"
-date: "2026-09-27"
-publishDate: "2026-09-27"
+date: "2026-04-10"
+publishDate: "2026-04-10"
 description: "Як робити LDAP запити до Active Directory через PowerShell і ldapsearch: фільтри, атрибути, пошук користувачів і комп'ютерів без модуля AD."
 tags: ["адміністрування", "windows", "powershell", "мережа", "безпека"]
 readTime: 6

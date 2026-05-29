@@ -1,7 +1,7 @@
 ---
 title: "Автоматизація задач через PowerShell і Task Scheduler"
-date: "2026-06-14"
-publishDate: "2026-06-14"
+date: "2025-11-20"
+publishDate: "2025-11-20"
 description: "Як створити і запланувати автоматичні задачі в Windows через Task Scheduler і PowerShell: резервне копіювання, очищення, запуск скриптів за розкладом."
 tags: ["powershell", "адміністрування", "windows", "автоматизація", "інструменти"]
 readTime: 7

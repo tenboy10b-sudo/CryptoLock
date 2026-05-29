@@ -1,7 +1,7 @@
 ---
 title: "Sysinternals: Autoruns, Process Explorer і інші незамінні утиліти"
-date: "2026-09-23"
-publishDate: "2026-09-23"
+date: "2026-04-04"
+publishDate: "2026-04-04"
 description: "Sysinternals від Microsoft: Autoruns для автозапуску, Process Explorer замість Диспетчера завдань, TCPView для мережі, Handle і Sigcheck для аналізу файлів."
 tags: ["windows", "безпека", "інструменти", "діагностика", "адміністрування"]
 readTime: 6

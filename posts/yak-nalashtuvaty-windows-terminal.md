@@ -1,7 +1,7 @@
 ---
 title: "Windows Terminal: налаштування і корисні функції"
-date: "2026-09-23"
-publishDate: "2026-09-23"
+date: "2026-04-05"
+publishDate: "2026-04-05"
 description: "Як налаштувати Windows Terminal: вкладки, розділені панелі, кастомні профілі, шрифти і гарячі клавіші. Заміна старого CMD і PowerShell вікна."
 tags: ["windows", "інструменти", "powershell", "налаштування"]
 readTime: 4

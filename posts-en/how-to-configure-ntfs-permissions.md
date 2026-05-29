@@ -1,7 +1,7 @@
 ---
 title: "How to Set NTFS File and Folder Permissions in Windows"
-date: "2027-01-08"
-publishDate: "2027-01-08"
+date: "2026-05-20"
+publishDate: "2026-05-20"
 description: "Set NTFS permissions on files and folders in Windows using GUI and PowerShell. Grant or deny access, configure inheritance, take ownership and fix access denied errors."
 tags: ["windows", "ntfs", "security", "administration", "powershell"]
 readTime: 6

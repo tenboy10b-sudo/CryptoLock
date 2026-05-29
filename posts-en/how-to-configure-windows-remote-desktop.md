@@ -1,7 +1,7 @@
 ---
 title: "How to Enable and Secure Remote Desktop (RDP) in Windows 10 and 11"
-date: "2026-12-27"
-publishDate: "2026-12-27"
+date: "2026-05-11"
+publishDate: "2026-05-11"
 description: "Enable Remote Desktop in Windows 10 and 11, connect from another PC, change the RDP port, restrict access with firewall rules and limit who can connect."
 tags: ["windows", "rdp", "network", "security", "administration"]
 readTime: 6

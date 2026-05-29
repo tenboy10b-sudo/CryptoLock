@@ -1,7 +1,7 @@
 ---
 title: "Windows Task Scheduler Advanced: Triggers, Conditions, and Scripting"
-date: "2026-11-05"
-publishDate: "2026-11-05"
+date: "2026-04-17"
+publishDate: "2026-04-17"
 description: "Go beyond basic Task Scheduler: use event-based triggers, condition settings, run tasks as SYSTEM, create complex automation workflows, and troubleshoot failed tasks."
 tags: ["windows", "automation", "powershell", "administration"]
 readTime: 6

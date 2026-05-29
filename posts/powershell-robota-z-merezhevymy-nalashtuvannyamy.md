@@ -1,7 +1,7 @@
 ---
 title: "PowerShell: управління мережевими налаштуваннями Windows"
-date: "2026-07-21"
-publishDate: "2026-07-21"
+date: "2026-01-07"
+publishDate: "2026-01-07"
 description: "Управління мережею через PowerShell: налаштування IP адреси, DNS, шлюзу, перевірка підключення, управління Wi-Fi профілями і мережевими адаптерами."
 tags: ["powershell", "мережа", "адміністрування", "windows", "wifi"]
 readTime: 6

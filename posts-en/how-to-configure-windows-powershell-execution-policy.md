@@ -1,7 +1,7 @@
 ---
 title: "How to Set PowerShell Execution Policy in Windows"
-date: "2026-12-01"
-publishDate: "2026-12-01"
+date: "2026-04-30"
+publishDate: "2026-04-30"
 description: "PowerShell execution policy controls which scripts can run. How to check, change, and bypass execution policy for different scopes — user, machine, and process."
 tags: ["windows", "powershell", "security", "administration"]
 readTime: 4

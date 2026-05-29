@@ -1,7 +1,7 @@
 ---
 title: "PowerShell: управління службами Windows — запуск, зупинка, моніторинг"
-date: "2026-06-24"
-publishDate: "2026-06-24"
+date: "2025-12-05"
+publishDate: "2025-12-05"
 description: "Управління службами Windows через PowerShell: Get-Service, Start-Service, Set-Service, пошук завислих служб, автозапуск і масове управління службами в домені."
 tags: ["powershell", "адміністрування", "windows", "інструменти", "cmd"]
 readTime: 6

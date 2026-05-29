@@ -1,7 +1,7 @@
 ---
 title: "Підмережі Windows: як налаштувати IP і маску підмережі"
-date: "2026-12-13"
-publishDate: "2026-12-13"
+date: "2026-05-09"
+publishDate: "2026-05-09"
 description: "Як налаштувати статичну IP-адресу і маску підмережі в Windows. Що таке CIDR, як розрахувати підмережу і перевірити мережеве з'єднання."
 tags: ["windows", "мережа", "налаштування", "адміністрування"]
 translatesEn: "how-to-configure-static-ip-windows"

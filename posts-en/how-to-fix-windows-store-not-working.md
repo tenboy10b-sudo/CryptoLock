@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Microsoft Store Not Working in Windows 10 and 11"
-date: "2026-09-16"
-publishDate: "2026-09-16"
+date: "2026-04-04"
+publishDate: "2026-04-04"
 description: "Microsoft Store won't open, apps fail to download, or the store is blank? Step-by-step fixes: reset Store cache, re-register the app, and fix common error codes."
 tags: ["windows", "troubleshooting", "tools", "windows-11"]
 readTime: 5

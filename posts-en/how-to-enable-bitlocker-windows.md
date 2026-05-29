@@ -1,7 +1,7 @@
 ---
 title: "How to Enable BitLocker Drive Encryption in Windows 10 and 11"
-date: "2027-01-16"
-publishDate: "2027-01-16"
+date: "2026-05-28"
+publishDate: "2026-05-28"
 description: "Enable BitLocker encryption on Windows 10 and 11 Pro. Encrypt C: drive and external drives, save recovery keys, manage via PowerShell and Group Policy."
 tags: ["windows", "bitlocker", "encryption", "security", "powershell"]
 readTime: 6

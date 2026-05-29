@@ -1,7 +1,7 @@
 ---
 title: "How to Disable or Pause Windows Update in Windows 10 and 11"
-date: "2026-06-04"
-publishDate: "2026-06-04"
+date: "2026-02-26"
+publishDate: "2026-02-26"
 description: "Stop Windows from automatically installing updates using Settings, Group Policy, and services. Includes how to pause updates temporarily and block specific problematic updates."
 tags: ["windows", "windows-update", "optimization", "administration"]
 readTime: 6

@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Windows 11 Slow Boot: 10 Proven Methods"
-date: "2027-01-01"
-publishDate: "2027-01-01"
+date: "2026-05-14"
+publishDate: "2026-05-14"
 description: "Windows 11 taking too long to boot? Fix slow startup with these 10 proven methods: disable startup programs, enable Fast Startup, update drivers, check disk health."
 tags: ["windows", "optimization", "performance", "boot"]
 readTime: 6

@@ -1,7 +1,7 @@
 ---
 title: "WMI в Windows: запити, управління і автоматизація через PowerShell"
-date: "2026-09-22"
-publishDate: "2026-09-22"
+date: "2026-04-03"
+publishDate: "2026-04-03"
 description: "Робота з WMI (Windows Management Instrumentation) через PowerShell: Get-WmiObject, CIM, запити до системної інформації, BIOS, диски, процеси і мережа."
 tags: ["powershell", "адміністрування", "windows", "інструменти", "автоматизація"]
 readTime: 7

@@ -1,7 +1,7 @@
 ---
 title: "Performance Monitor в Windows: моніторинг і аналіз продуктивності"
-date: "2026-09-10"
-publishDate: "2026-09-10"
+date: "2026-03-16"
+publishDate: "2026-03-16"
 description: "Як використовувати Performance Monitor (perfmon) в Windows для аналізу CPU, RAM, диску і мережі: лічильники, Data Collector Sets, звіти і автоматичні сповіщення."
 tags: ["windows", "моніторинг", "діагностика", "адміністрування", "продуктивність"]
 readTime: 6

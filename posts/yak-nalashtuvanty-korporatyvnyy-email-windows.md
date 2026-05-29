@@ -1,7 +1,7 @@
 ---
 title: "Налаштування корпоративної пошти в Windows: Outlook і Mail"
-date: "2026-08-10"
-publishDate: "2026-08-10"
+date: "2026-01-30"
+publishDate: "2026-01-30"
 description: "Підключення корпоративної пошти Exchange і Microsoft 365 в Outlook і стандартному додатку Mail Windows. Налаштування підпису, правил і синхронізації."
 tags: ["windows", "налаштування", "мережа", "інструменти", "адміністрування"]
 readTime: 5

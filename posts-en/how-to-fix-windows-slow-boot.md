@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Slow Windows Boot Time"
-date: "2026-10-20"
-publishDate: "2026-10-20"
+date: "2026-04-09"
+publishDate: "2026-04-09"
 description: "Windows taking too long to boot? Find what's causing the delay, disable startup programs, enable Fast Startup, and use Event Viewer to pinpoint slow components."
 tags: ["windows", "optimization", "performance", "diagnostics"]
 readTime: 6

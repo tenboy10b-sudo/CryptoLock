@@ -1,7 +1,7 @@
 ---
 title: "PowerShell для повсякденних задач: 10 команд що заощаджують час"
-date: "2026-12-07"
-publishDate: "2026-12-07"
+date: "2026-05-06"
+publishDate: "2026-05-06"
 description: "Практичні PowerShell команди для щоденного використання: перевірка мережі, диску, процесів, служб і безпеки. Копіюй і запускай."
 tags: ["windows", "powershell", "інструменти", "адміністрування"]
 translatesEn: "how-to-use-powershell-for-daily-windows-tasks"

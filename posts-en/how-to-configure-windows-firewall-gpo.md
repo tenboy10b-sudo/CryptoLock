@@ -1,7 +1,7 @@
 ---
 title: "How to Configure Windows Firewall via Group Policy"
-date: "2026-12-03"
-publishDate: "2026-12-03"
+date: "2026-05-01"
+publishDate: "2026-05-01"
 description: "Deploy and manage Windows Firewall settings across multiple PCs using Group Policy. Create inbound/outbound rules, configure profiles, and enforce settings domain-wide."
 tags: ["windows", "firewall", "gpo", "administration"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "Налаштування брандмауера Windows: правила, порти і PowerShell"
-date: "2027-01-03"
-publishDate: "2027-01-03"
+date: "2026-05-19"
+publishDate: "2026-05-19"
 description: "Як створювати і керувати правилами брандмауера Windows через GUI і PowerShell. Блокувати або дозволяти програми, порти і IP-адреси."
 tags: ["windows", "firewall", "безпека", "мережа", "powershell"]
 readTime: 5

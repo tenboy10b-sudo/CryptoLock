@@ -1,7 +1,7 @@
 ---
 title: "How to Use Windows Reliability Monitor to Diagnose Crashes"
-date: "2026-09-12"
-publishDate: "2026-09-12"
+date: "2026-04-02"
+publishDate: "2026-04-02"
 description: "Reliability Monitor shows a timeline of system stability, app crashes, Windows failures, and hardware errors. How to use it to find the cause of crashes and BSODs."
 tags: ["windows", "diagnostics", "tools", "troubleshooting"]
 readTime: 4

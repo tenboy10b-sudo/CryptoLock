@@ -1,7 +1,7 @@
 ---
 title: "CMD команди для діагностики мережі: ping, tracert, nslookup і netstat"
-date: "2026-06-28"
-publishDate: "2026-06-28"
+date: "2025-12-11"
+publishDate: "2025-12-11"
 description: "Основні команди CMD для перевірки мережі в Windows: ping, tracert, nslookup, netstat, pathping. Як знайти причину проблем з інтернетом і DNS."
 tags: ["cmd", "мережа", "діагностика", "windows", "інструменти"]
 readTime: 6

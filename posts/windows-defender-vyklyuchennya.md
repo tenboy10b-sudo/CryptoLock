@@ -1,7 +1,7 @@
 ---
 title: "Як додати виключення у Windows Defender: файли, папки і процеси"
-date: "2027-01-18"
-publishDate: "2027-01-18"
+date: "2026-05-25"
+publishDate: "2026-05-25"
 description: "Додати виключення у Windows Defender для файлів, папок, процесів і розширень. Виправити хибні спрацьовування без вимкнення захисту."
 tags: ["windows", "windows-defender", "безпека", "антивірус", "powershell"]
 readTime: 4

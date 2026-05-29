@@ -1,7 +1,7 @@
 ---
 title: "Хмарне сховище в Windows: OneDrive, Google Drive і Dropbox"
-date: "2026-09-17"
-publishDate: "2026-09-17"
+date: "2026-03-26"
+publishDate: "2026-03-26"
 description: "Порівняння хмарних сховищ для Windows: OneDrive, Google Drive і Dropbox. Безкоштовний обсяг, інтеграція з системою і як отримати максимум з безкоштовного тарифу."
 tags: ["windows", "хмара", "резервне-копіювання", "інструменти"]
 readTime: 4

@@ -1,7 +1,7 @@
 ---
 title: "Windows Won't Boot: How to Fix Startup Problems"
-date: "2026-06-14"
-publishDate: "2026-06-14"
+date: "2026-03-03"
+publishDate: "2026-03-03"
 description: "Windows won't start, gets stuck on logo, or loops back to error screen? Step-by-step fixes for startup failures — from Startup Repair to rebuilding the bootloader."
 tags: ["windows", "recovery", "troubleshooting", "bios"]
 readTime: 7

@@ -1,7 +1,7 @@
 ---
 title: "How to Optimize Windows for SSD: Settings You Should Check"
-date: "2026-09-10"
-publishDate: "2026-09-10"
+date: "2026-04-01"
+publishDate: "2026-04-01"
 description: "Maximize SSD lifespan and performance in Windows: verify TRIM is active, disable defragmentation, check AHCI mode, and adjust power settings for solid-state drives."
 tags: ["windows", "disk", "optimization", "performance"]
 readTime: 5

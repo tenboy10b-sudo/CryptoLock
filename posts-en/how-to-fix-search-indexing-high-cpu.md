@@ -1,7 +1,7 @@
 ---
 title: "How to Fix High CPU from Windows Search Indexing"
-date: "2026-09-18"
-publishDate: "2026-09-18"
+date: "2026-04-05"
+publishDate: "2026-04-05"
 description: "Windows Search indexer consuming too much CPU or disk? Pause indexing, exclude folders, rebuild the index, and configure it to run only when idle."
 tags: ["windows", "optimization", "performance", "tools"]
 readTime: 5

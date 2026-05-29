@@ -1,7 +1,7 @@
 ---
 title: "PowerShell pipeline: обробка потоків даних і фільтрація"
-date: "2026-08-09"
-publishDate: "2026-08-09"
+date: "2026-01-29"
+publishDate: "2026-01-29"
 description: "Ефективна робота з pipeline в PowerShell: оператори Where-Object, Select-Object, ForEach-Object, Group-Object і Sort-Object для обробки великих обсягів даних."
 tags: ["powershell", "адміністрування", "windows", "інструменти", "автоматизація"]
 readTime: 4

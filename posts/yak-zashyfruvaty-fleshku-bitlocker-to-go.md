@@ -1,7 +1,7 @@
 ---
 title: "Як зашифрувати флешку через BitLocker To Go в Windows"
-date: "2026-06-20"
-publishDate: "2026-06-20"
+date: "2025-11-29"
+publishDate: "2025-11-29"
 description: "Шифрування USB флешки і зовнішнього диска через BitLocker To Go в Windows 10 і 11: покрокове налаштування, пароль і ключ відновлення, доступ на інших ПК."
 tags: ["безпека", "bitlocker", "шифрування", "windows", "захист"]
 readTime: 5

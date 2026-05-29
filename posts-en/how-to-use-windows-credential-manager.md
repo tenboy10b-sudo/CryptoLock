@@ -1,7 +1,7 @@
 ---
 title: "How to Use Windows Credential Manager to Store and Manage Passwords"
-date: "2026-11-17"
-publishDate: "2026-11-17"
+date: "2026-04-23"
+publishDate: "2026-04-23"
 description: "Windows Credential Manager stores passwords for websites, network shares, and apps. How to view, add, edit, and back up credentials, and fix credential-related errors."
 tags: ["windows", "security", "accounts", "tools"]
 readTime: 5

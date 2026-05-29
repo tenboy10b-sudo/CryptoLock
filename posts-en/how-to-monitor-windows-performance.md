@@ -1,7 +1,7 @@
 ---
 title: "How to Monitor Windows Performance: CPU, RAM, Disk and Network"
-date: "2027-01-07"
-publishDate: "2027-01-07"
+date: "2026-05-19"
+publishDate: "2026-05-19"
 description: "Monitor Windows CPU, RAM, disk and network performance using Task Manager, Resource Monitor, Performance Monitor and PowerShell. Find what's slowing down your PC."
 tags: ["windows", "performance", "diagnostics", "powershell", "administration"]
 readTime: 5

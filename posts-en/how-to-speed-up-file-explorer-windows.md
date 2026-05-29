@@ -1,7 +1,7 @@
 ---
 title: "How to Speed Up File Explorer in Windows 10 and 11"
-date: "2026-06-16"
-publishDate: "2026-06-16"
+date: "2026-03-04"
+publishDate: "2026-03-04"
 description: "File Explorer slow to open or laggy? Fix sluggish Explorer with these tweaks: disable Quick Access, clear history, fix thumbnail cache, and adjust folder view settings."
 tags: ["windows", "optimization", "performance", "tools"]
 readTime: 5

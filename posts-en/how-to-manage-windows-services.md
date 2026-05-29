@@ -1,7 +1,7 @@
 ---
 title: "How to Manage Windows Services: Start, Stop, Disable and Troubleshoot"
-date: "2026-12-29"
-publishDate: "2026-12-29"
+date: "2026-05-12"
+publishDate: "2026-05-12"
 description: "Start, stop, disable and configure Windows services via Services.msc, PowerShell and SC command. Find which services are safe to disable and fix service errors."
 tags: ["windows", "services", "administration", "powershell", "optimization"]
 readTime: 5

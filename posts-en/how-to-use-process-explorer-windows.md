@@ -1,7 +1,7 @@
 ---
 title: "How to Use Process Explorer: The Better Task Manager"
-date: "2026-09-04"
-publishDate: "2026-09-04"
+date: "2026-03-29"
+publishDate: "2026-03-29"
 description: "Process Explorer from Microsoft Sysinternals shows far more than Task Manager: process trees, DLL details, VirusTotal scanning, and handle information. Complete guide for Windows."
 tags: ["windows", "tools", "diagnostics", "security"]
 readTime: 6

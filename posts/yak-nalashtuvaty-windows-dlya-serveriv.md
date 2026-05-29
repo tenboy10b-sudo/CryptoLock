@@ -1,7 +1,7 @@
 ---
 title: "Базове налаштування Windows Server для початківців"
-date: "2026-11-22"
-publishDate: "2026-11-22"
+date: "2026-04-28"
+publishDate: "2026-04-28"
 description: "Перші кроки після встановлення Windows Server: оновлення, мережа, Active Directory, Hyper-V або ролі файлового сервера. Короткий огляд що і коли вмикати."
 tags: ["windows", "адміністрування", "сервер", "мережа"]
 readTime: 5

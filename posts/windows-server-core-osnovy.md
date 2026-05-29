@@ -1,7 +1,7 @@
 ---
 title: "Windows Server Core: управління сервером без графічного інтерфейсу"
-date: "2026-07-28"
-publishDate: "2026-07-28"
+date: "2026-01-14"
+publishDate: "2026-01-14"
 description: "Основи роботи з Windows Server Core: базові команди, встановлення ролей, Remote Management і підключення через PowerShell Remoting і Windows Admin Center."
 tags: ["адміністрування", "windows", "powershell", "cmd", "мережа"]
 readTime: 7

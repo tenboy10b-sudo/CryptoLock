@@ -1,7 +1,7 @@
 ---
 title: "How to Reset a Forgotten Windows 10 or 11 Password"
-date: "2027-01-03"
-publishDate: "2027-01-03"
+date: "2026-05-16"
+publishDate: "2026-05-16"
 description: "Forgot your Windows 10 or 11 password? Reset it via Microsoft account online, Recovery Mode, or CMD from boot. Works for local and Microsoft accounts."
 tags: ["windows", "accounts", "security", "recovery"]
 readTime: 5

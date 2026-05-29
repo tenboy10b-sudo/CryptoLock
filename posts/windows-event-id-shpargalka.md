@@ -1,7 +1,7 @@
 ---
 title: "Важливі Event ID Windows: шпаргалка для адміністратора"
-date: "2026-09-19"
-publishDate: "2026-09-19"
+date: "2026-03-29"
+publishDate: "2026-03-29"
 description: "Найважливіші коди подій Windows Event Log для безпеки і адміністрування: входи, блокування, зміна груп, аудит і PowerShell команди для їх пошуку."
 tags: ["адміністрування", "безпека", "windows", "powershell", "моніторинг"]
 readTime: 6

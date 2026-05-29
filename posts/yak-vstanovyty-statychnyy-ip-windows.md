@@ -1,7 +1,7 @@
 ---
 title: "Як встановити статичний IP в Windows 10 і 11"
-date: "2027-01-13"
-publishDate: "2027-01-13"
+date: "2026-05-23"
+publishDate: "2026-05-23"
 description: "Налаштування статичного IP в Windows через Параметри, Панель керування і PowerShell. IP-адреса, маска підмережі, шлюз і DNS без DHCP."
 tags: ["windows", "мережа", "ip", "dns", "адміністрування"]
 readTime: 3

@@ -1,7 +1,7 @@
 ---
 title: "How to Use Windows Focus Sessions to Stay Productive"
-date: "2026-08-25"
-publishDate: "2026-08-25"
+date: "2026-03-24"
+publishDate: "2026-03-24"
 description: "Windows 11 Focus Sessions block distracting notifications and integrate with the Clock app timer. How to set up focus time, link with Spotify, and track daily progress."
 tags: ["windows", "productivity", "settings", "windows-11"]
 readTime: 4

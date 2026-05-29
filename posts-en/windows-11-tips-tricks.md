@@ -1,7 +1,7 @@
 ---
 title: "25 Windows 11 Tips and Tricks You Should Know"
-date: "2026-06-30"
-publishDate: "2026-06-30"
+date: "2026-03-11"
+publishDate: "2026-03-11"
 description: "Practical Windows 11 tips that save time: keyboard shortcuts, hidden settings, productivity features, and customizations most users don't know about."
 tags: ["windows", "optimization", "tools", "productivity"]
 readTime: 7

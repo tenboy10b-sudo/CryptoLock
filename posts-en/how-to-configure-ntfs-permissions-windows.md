@@ -1,7 +1,7 @@
 ---
 title: "How to Configure NTFS Permissions in Windows"
-date: "2026-08-13"
-publishDate: "2026-08-13"
+date: "2026-03-18"
+publishDate: "2026-03-18"
 description: "Set and manage NTFS file and folder permissions in Windows using the GUI, icacls command, and PowerShell. Control who can read, write, or execute files on your system."
 tags: ["windows", "security", "administration", "tools"]
 readTime: 6

@@ -1,7 +1,7 @@
 ---
 title: "Політика паролів в Windows і домені: налаштування через GPO і secpol"
-date: "2026-07-26"
-publishDate: "2026-07-26"
+date: "2026-01-12"
+publishDate: "2026-01-12"
 description: "Налаштування політики паролів Windows: мінімальна довжина, складність, термін дії і Fine-Grained Password Policy в Active Directory через PowerShell."
 tags: ["безпека", "паролі", "групова-політика", "gpo", "адміністрування", "windows"]
 readTime: 6

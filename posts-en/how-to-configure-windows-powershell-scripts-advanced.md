@@ -1,7 +1,7 @@
 ---
 title: "How to Use PowerShell Script Modules and Profiles"
-date: "2026-11-29"
-publishDate: "2026-11-29"
+date: "2026-04-29"
+publishDate: "2026-04-29"
 description: "Organize PowerShell beyond single scripts: create modules for reusable functions, set up profiles for persistent aliases and configuration, and manage script dependencies."
 tags: ["windows", "powershell", "automation", "administration"]
 readTime: 6

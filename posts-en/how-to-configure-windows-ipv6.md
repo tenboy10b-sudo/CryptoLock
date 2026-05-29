@@ -1,7 +1,7 @@
 ---
 title: "How to Enable, Disable, and Troubleshoot IPv6 in Windows"
-date: "2026-11-13"
-publishDate: "2026-11-13"
+date: "2026-04-21"
+publishDate: "2026-04-21"
 description: "IPv6 is enabled by default in Windows but can cause network issues on some setups. How to check your IPv6 status, disable it selectively, and fix IPv6-related connectivity problems."
 tags: ["windows", "network", "troubleshooting", "settings"]
 readTime: 5

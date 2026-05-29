@@ -1,7 +1,7 @@
 ---
 title: "How to Install and Update Drivers in Windows 10 and 11"
-date: "2026-06-18"
-publishDate: "2026-06-18"
+date: "2026-03-05"
+publishDate: "2026-03-05"
 description: "Install, update, and roll back drivers in Windows the right way. Where to find the correct drivers, how to use Device Manager, and when to avoid Windows Update drivers."
 tags: ["windows", "drivers", "hardware", "tools"]
 readTime: 6

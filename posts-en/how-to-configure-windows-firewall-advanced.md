@@ -1,7 +1,7 @@
 ---
 title: "Windows Firewall Advanced Security: Inbound and Outbound Rules"
-date: "2026-09-08"
-publishDate: "2026-09-08"
+date: "2026-03-31"
+publishDate: "2026-03-31"
 description: "Master Windows Firewall with Advanced Security (wf.msc): create inbound and outbound rules by port, program, IP, and protocol. Export rules and use PowerShell for automation."
 tags: ["windows", "security", "firewall", "network"]
 readTime: 6

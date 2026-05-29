@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Windows Update Stuck at 0%, Downloading or Installing"
-date: "2026-12-31"
-publishDate: "2026-12-31"
+date: "2026-05-13"
+publishDate: "2026-05-13"
 description: "Windows Update stuck at 0%, stuck downloading, or freezing during install? Step-by-step fixes: clear update cache, reset services, run troubleshooter, DISM repair."
 tags: ["windows", "windows-update", "troubleshooting", "errors"]
 readTime: 5

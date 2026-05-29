@@ -1,7 +1,7 @@
 ---
 title: "How to Monitor Windows Security Events with Event Viewer"
-date: "2026-12-06"
-publishDate: "2026-12-06"
+date: "2026-05-02"
+publishDate: "2026-05-02"
 description: "Use Windows Event Viewer to detect unauthorized access, new accounts, suspicious services, and scheduled tasks. Key Security Event IDs every admin should monitor."
 tags: ["windows", "security", "monitoring", "administration"]
 translatesUk: "yak-korystuvatys-zhurnalom-podiy-windows"

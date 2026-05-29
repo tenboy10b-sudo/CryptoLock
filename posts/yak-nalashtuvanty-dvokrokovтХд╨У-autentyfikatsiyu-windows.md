@@ -1,7 +1,7 @@
 ---
 title: "Двофакторна автентифікація в Windows: Microsoft Authenticator і апаратні ключі"
-date: "2025-11-14"
-publishDate: "2025-11-14"
+date: "2025-11-15"
+publishDate: "2025-11-15"
 description: "Налаштування 2FA для входу в Windows і корпоративні сервіси: Microsoft Authenticator, TOTP-коди, апаратні ключі YubiKey і Windows Hello як другий фактор."
 tags: ["безпека", "windows", "облікові-записи", "захист", "паролі"]
 readTime: 6

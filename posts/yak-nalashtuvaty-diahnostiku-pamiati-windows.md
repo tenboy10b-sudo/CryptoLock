@@ -1,7 +1,7 @@
 ---
 title: "Діагностика пам'яті Windows: перевірка RAM на помилки"
-date: "2026-08-18"
-publishDate: "2026-08-18"
+date: "2026-02-12"
+publishDate: "2026-02-12"
 description: "Як запустити Windows Memory Diagnostic і MemTest86 для перевірки оперативної пам'яті. Симптоми несправної RAM і що робити якщо знайдено помилки."
 tags: ["windows", "ram", "діагностика", "обладнання"]
 readTime: 4

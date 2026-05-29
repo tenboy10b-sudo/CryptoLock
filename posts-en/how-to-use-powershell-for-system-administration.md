@@ -1,7 +1,7 @@
 ---
 title: "Essential PowerShell Commands for Windows System Administration"
-date: "2026-09-24"
-publishDate: "2026-09-24"
+date: "2026-04-08"
+publishDate: "2026-04-08"
 description: "PowerShell commands every Windows admin should know: user management, services, processes, network, file operations, and system information — with practical examples."
 tags: ["windows", "powershell", "administration", "tools"]
 readTime: 7

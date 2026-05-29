@@ -1,7 +1,7 @@
 ---
 title: "How to Use Group Policy Editor in Windows 10 and 11"
-date: "2026-06-22"
-publishDate: "2026-06-22"
+date: "2026-03-07"
+publishDate: "2026-03-07"
 description: "Group Policy Editor lets you control Windows behavior beyond what Settings allows. How to open gpedit.msc, navigate policies, and apply the most useful security and productivity settings."
 tags: ["windows", "gpo", "security", "administration"]
 readTime: 7

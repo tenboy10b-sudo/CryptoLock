@@ -1,7 +1,7 @@
 ---
 title: "Windows Sandbox проти Hyper-V: коли що використовувати"
-date: "2026-08-11"
-publishDate: "2026-08-11"
+date: "2026-02-01"
+publishDate: "2026-02-01"
 description: "Порівняння Windows Sandbox і Hyper-V: різниця в призначенні, ресурсах, налаштуванні і безпеці. Коли вибрати Sandbox а коли повноцінну VM на Hyper-V."
 tags: ["windows", "безпека", "адміністрування", "налаштування", "інструменти"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "How to Fix Windows Update Error 0x80070005 (Access Denied)"
-date: "2026-08-15"
-publishDate: "2026-08-15"
+date: "2026-03-19"
+publishDate: "2026-03-19"
 description: "Windows Update error 0x80070005 means access denied — a permissions problem preventing updates from installing. Here are all the fixes: reset permissions, restart services, and run as SYSTEM."
 tags: ["windows", "windows-update", "troubleshooting", "security"]
 readTime: 5

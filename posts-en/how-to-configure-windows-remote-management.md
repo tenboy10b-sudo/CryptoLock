@@ -1,7 +1,7 @@
 ---
 title: "How to Enable and Secure Windows Remote Management (WinRM)"
-date: "2026-11-27"
-publishDate: "2026-11-27"
+date: "2026-04-28"
+publishDate: "2026-04-28"
 description: "WinRM is the foundation for PowerShell Remoting and remote management. How to enable it, configure authentication, restrict access, and troubleshoot connection issues."
 tags: ["windows", "administration", "network", "powershell"]
 readTime: 5

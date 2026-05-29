@@ -1,7 +1,7 @@
 ---
 title: "How to Set Up Wake-on-LAN in Windows 10 and 11"
-date: "2026-09-06"
-publishDate: "2026-09-06"
+date: "2026-03-30"
+publishDate: "2026-03-30"
 description: "Wake-on-LAN lets you power on a Windows PC remotely over the network. How to enable it in BIOS and Windows, send a magic packet, and troubleshoot WoL not working."
 tags: ["windows", "network", "administration", "tools"]
 readTime: 5

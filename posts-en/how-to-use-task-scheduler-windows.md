@@ -1,7 +1,7 @@
 ---
 title: "How to Use Task Scheduler in Windows 10 and 11: Full Guide"
-date: "2026-12-25"
-publishDate: "2026-12-25"
+date: "2026-05-10"
+publishDate: "2026-05-10"
 description: "Create, edit and manage scheduled tasks in Windows Task Scheduler. Run scripts, programs and backups automatically on schedule, login, or system event."
 tags: ["windows", "automation", "administration", "powershell"]
 readTime: 6
