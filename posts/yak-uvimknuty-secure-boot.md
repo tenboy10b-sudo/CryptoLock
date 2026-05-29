@@ -1,84 +1,91 @@
 ---
-title: "Як увімкнути Secure Boot в BIOS і навіщо він потрібен"
-date: "2026-04-20"
-description: "Що таке Secure Boot, як його увімкнути в UEFI/BIOS і вирішити проблеми із завантаженням після активації."
-tags: ["bios", "uefi", "безпека", "завантаження"]
+title: "Як увімкнути Secure Boot в BIOS для Windows 10 і 11"
+date: "2027-02-06"
+publishDate: "2027-02-06"
+description: "Увімкнення Secure Boot в BIOS/UEFI для Windows 10 і 11. Перевірка статусу, перехід з Legacy на UEFI, конвертація MBR в GPT без втрати даних."
+tags: ["windows", "bios", "secure-boot", "uefi", "встановлення"]
+readTime: 4
 translatesEn: "how-to-enable-secure-boot-windows"
-readTime: 5
 ---
 
-Secure Boot — захист який перевіряє цифровий підпис завантажуваного ПЗ. Windows 11 вимагає його обов'язково. Розберемо як увімкнути правильно.
-
-## Навіщо потрібен Secure Boot
-
-Secure Boot захищає від:
-- Завантаження заражених завантажувачів (bootkit)
-- Підміни системних файлів до запуску Windows
-- UEFI-руткітів які неможливо видалити через Windows
-
-Мінус: деякі Linux дистрибутиви і старі завантажувачі не мають підпису Microsoft і не запустяться.
+Secure Boot запобігає запуску несанкціонованих завантажувачів. Windows 11 вимагає його. Ось як увімкнути без втрати даних.
 
 ---
 
-## Перевір поточний стан
+## Перевірити поточний статус
 
-**Спосіб 1 — через msinfo32:**
-`Win + R` → `msinfo32` → рядок **Secure Boot State**:
-- `On` — увімкнено
-- `Off` — вимкнено
-- `Unsupported` — BIOS не підтримує
-
-**Спосіб 2 — через PowerShell:**
 ```powershell
+# Чи увімкнений Secure Boot
 Confirm-SecureBootUEFI
-```
-`True` — увімкнено, `False` — вимкнено.
 
----
-
-## Як увімкнути Secure Boot в BIOS
-
-**Крок 1.** Зайди в BIOS:
-- При включенні натискай Del або F2 (або дивись [як зайти в BIOS](/yak-zayty-v-bios))
-
-**Крок 2.** Знайди Secure Boot. Зазвичай у розділі:
-- **Security** → Secure Boot
-- **Boot** → Secure Boot
-- **Advanced** → Secure Boot Configuration
-
-**Крок 3.** Встанови **Secure Boot: Enabled**.
-
-**Крок 4.** Збережи: F10 → Enter.
-
----
-
-## Якщо після увімкнення Windows не завантажується
-
-Причина: диск відформатований як MBR, а Secure Boot вимагає GPT.
-
-**Перевір:**
-```cmd
-mbr2gpt /validate /disk:0
+# Режим BIOS (UEFI або Legacy)
+(Get-WmiObject Win32_ComputerSystem).FirmwareType
 ```
 
-Якщо `Disk 0 is eligible for conversion` — можна конвертувати без втрати даних:
-```cmd
-mbr2gpt /convert /disk:0
+---
+
+## Зайти в BIOS
+
+```powershell
+# Перезавантажитись напряму в UEFI
+shutdown /r /fw /t 0
 ```
 
-Після конвертації поверни в BIOS і поміняй Boot Mode на UEFI.
+Або при завантаженні: `Del`, `F2`, `F12` (залежить від виробника)
 
 ---
 
-## Режим Secure Boot: Setup Mode vs User Mode
+## Увімкнути Secure Boot
 
-- **User Mode** — стандартний захищений режим
-- **Setup Mode** — дозволяє встановити власні ключі (для enterprise або Linux)
+BIOS → **Security** або **Boot** → **Secure Boot** → **Enabled**
 
-Якщо BIOS показує **Setup Mode** — увімкни **Restore Factory Keys** або **Install default keys** щоб перейти в User Mode.
+Якщо опція недоступна (сіра) — спочатку вимкни **CSM** (Legacy Mode).
 
 ---
 
-## Secure Boot і Linux
+## Перевірити тип розділу диску
 
-Більшість популярних дистрибутивів (Ubuntu, Fedora, openSUSE) підтримують Secure Boot через shim-підписувач. Проблеми можуть виникнути зі старими або нішевими дистрибутивами.
+```powershell
+Get-Disk | Select-Object Number, PartitionStyle
+```
+
+Якщо **MBR** — конвертуй в GPT. Якщо вже **GPT** — просто вмикай UEFI в BIOS.
+
+---
+
+## Конвертація MBR → GPT без втрати даних
+
+```powershell
+# Перевірити чи можлива конвертація
+mbr2gpt /validate /disk:0 /allowFullOS
+
+# Конвертувати
+mbr2gpt /convert /disk:0 /allowFullOS
+```
+
+---
+
+## Після увімкнення
+
+```powershell
+# Перевірити що Secure Boot активний
+Confirm-SecureBootUEFI  # має повернути True
+```
+
+---
+
+## Часті питання
+
+### Увімкнення Secure Boot видалить дані?
+
+Ні. Secure Boot впливає тільки на те що може завантажитись. Дані і Windows не зачіпаються. Конвертація MBR→GPT через mbr2gpt теж безпечна.
+
+### Увімкнув Secure Boot але Windows 11 все одно каже що вимкнений?
+
+Перевір в PowerShell: `Confirm-SecureBootUEFI`. Також перевір `msinfo32` → Стан безпечного завантаження. Іноді потрібне оновлення BIOS.
+
+---
+
+## Резюме
+
+Перевірити: `Confirm-SecureBootUEFI`. Зайти в BIOS: `shutdown /r /fw /t 0`. Вимкнути CSM перед увімкненням Secure Boot. Конвертувати MBR→GPT через `mbr2gpt` якщо потрібно.

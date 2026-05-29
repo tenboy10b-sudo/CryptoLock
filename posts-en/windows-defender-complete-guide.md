@@ -1,8 +1,9 @@
 ---
-title: "Windows Defender: Complete Setup and Configuration Guide"
+title: "Windows Defender Complete Guide: Setup, Exclusions, Scans and GPO (2026)"
 date: "2026-04-28"
+updated: "2026-05-29"
 publishDate: "2026-04-28"
-description: "How to configure Windows Defender properly: enable real-time protection, run scans, add exclusions, use offline scan, and check if Defender is actually working."
+description: "Complete Windows Defender guide for Windows 10 and 11. Configure real-time protection, exclusions, scheduled scans and manage Defender via PowerShell and Group Policy."
 tags: ["windows", "security", "windows-defender", "tools"]
 readTime: 7
 ---

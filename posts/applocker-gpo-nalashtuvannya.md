@@ -1,8 +1,8 @@
 ---
-title: "AppLocker через GPO: блокуй програми по підпису, шляху і хешу"
+title: "AppLocker через GPO: блокуй програми по підпису, шляху і хешу — гайд 2026"
 date: "2026-04-01"
-updated: "2026-05-24"
-description: "Налаштування AppLocker через Group Policy в Windows 10/11 Pro і Enterprise. Правила по шляху, хешу і підпису видавця — покрокова інструкція з прикладами."
+updated: "2026-05-29"
+description: "Налаштування AppLocker через Group Policy в Windows 10/11 Pro і Enterprise. Правила по шляху, хешу і підпису — покрокова інструкція з прикладами."
 tags: ["applocker", "gpo", "групова-політика", "безпека"]
 readTime: 6
 ---

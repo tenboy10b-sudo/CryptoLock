@@ -1,8 +1,8 @@
 ---
-title: "CMD команди для перевірки диску Windows: chkdsk і PowerShell"
+title: "CMD команди для перевірки диску Windows: chkdsk, diskpart, SMART"
 date: "2026-04-04"
-updated: "2026-05-23"
-description: "Всі CMD і PowerShell команди для перевірки диску: chkdsk, SMART статус, diskpart, repair-volume. Копіюй і запускай з поясненням параметрів."
+updated: "2026-05-29"
+description: "Перевірка диску через командний рядок: chkdsk, diskpart, fsutil. Сканування на помилки, погані сектори і перевірка здоров'я HDD і SSD."
 tags: ["cmd", "диск", "chkdsk", "інструменти"]
 readTime: 7
 ---
