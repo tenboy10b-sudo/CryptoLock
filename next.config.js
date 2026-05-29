@@ -63,6 +63,16 @@ const nextConfig = {
       // ── /en/tags/tools → /tools ──────────────────────────────────────
       { source: '/en/tags/tools', destination: '/tools', permanent: true, locale: false },
       { source: '/en/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', destination: '/tools', permanent: true, locale: false },
+      // ── EN теги з UK назвами → UK тег (301) ──────────────────────────
+      { source: '/en/tags/:tag', destination: '/tags/:tag', permanent: true, locale: false },
+
+      // ── UK slug на EN локалі → UK URL ─────────────────────────────────
+      { source: '/en/yak-:slug*', destination: '/yak-:slug*', permanent: true, locale: false },
+
+      // ── README-AUTOPOST ────────────────────────────────────────────────
+      { source: '/README-AUTOPOST', destination: '/', permanent: true, locale: false },
+      { source: '/en/README-AUTOPOST', destination: '/', permanent: true, locale: false },
+
 
 
       // ── Масові виправлення 404 (23.05.2026) ──────────────────────────
