@@ -11,13 +11,14 @@
     "yak-pereviryty-avtentychnist-saytiv-ssl",
     "yak-pidklyuchyty-bluetooth-prystroyi-windows",
     "windows-11-vymknuty-shpyhunstvo",
-    "windows-sandbox-ta-hyper-v-porivnyannya"
+    "windows-sandbox-ta-hyper-v-porivnyannya",
+    "yak-nalashtuvaty-avtozapusk-programy-windows"
   ],
-  "count": 12,
+  "count": 13,
   "promo_index": 13,
   "last_post": {
-    "slug": "windows-sandbox-ta-hyper-v-porivnyannya",
-    "title": "Windows Sandbox проти Hyper-V: коли що використовувати",
-    "time": "2026-05-29T08:01:07.270638"
+    "slug": "yak-nalashtuvaty-avtozapusk-programy-windows",
+    "title": "Як додати програму в автозапуск Windows різними способами",
+    "time": "2026-05-30T08:01:13.432321"
   }
 }
