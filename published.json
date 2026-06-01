@@ -13,13 +13,14 @@
     "windows-11-vymknuty-shpyhunstvo",
     "windows-sandbox-ta-hyper-v-porivnyannya",
     "yak-nalashtuvaty-avtozapusk-programy-windows",
-    "yak-vstanovyty-windows-11-bez-microsoft-account"
+    "yak-vstanovyty-windows-11-bez-microsoft-account",
+    "perevirka-produktyvnosti-dysku"
   ],
-  "count": 14,
+  "count": 15,
   "promo_index": 15,
   "last_post": {
-    "slug": "yak-vstanovyty-windows-11-bez-microsoft-account",
-    "title": "Як встановити Windows 11 без облікового запису Microsoft",
-    "time": "2026-05-31T08:01:05.900679"
+    "slug": "perevirka-produktyvnosti-dysku",
+    "title": "Як перевірити продуктивність диска через CMD і PowerShell",
+    "time": "2026-06-01T08:01:12.485984"
   }
 }
