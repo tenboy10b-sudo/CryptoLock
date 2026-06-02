@@ -1,9 +1,8 @@
 ---
-title: "Windows Defender Complete Guide: Setup, Exclusions, Scans and GPO (2026)"
+title: "Windows Defender: Complete Setup and Configuration Guide"
 date: "2026-04-28"
-updated: "2026-05-29"
 publishDate: "2026-04-28"
-description: "Complete Windows Defender guide for Windows 10 and 11. Configure real-time protection, exclusions, scheduled scans and manage Defender via PowerShell and Group Policy."
+description: "How to configure Windows Defender properly: enable real-time protection, run scans, add exclusions, use offline scan, and check if Defender is actually working."
 tags: ["windows", "security", "windows-defender", "tools"]
 readTime: 7
 ---
@@ -161,12 +160,6 @@ Or in the UI: **Protection history** → find the item → **Actions** → **Res
 
 
 ---
-
-## 🛡️ Перевір безпеку свого ПК
-
-Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
-
-**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
 
 
 ## Summary

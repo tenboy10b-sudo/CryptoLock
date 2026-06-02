@@ -150,12 +150,6 @@ This removes all custom rules and restores factory defaults. All custom Allow/Bl
 
 ---
 
-## 🛡️ Перевір безпеку свого ПК
-
-Хочеш знати чи немає витоків даних, зайвих служб або підозрілих програм на твоєму ПК?
-
-**[→ AuditShield](/tools/auditshield)** — аудит Windows по 22 напрямках за 10 хвилин. HTML-звіт з оцінкою ризику. Є безкоштовне демо.
-
 
 ## Summary
 
