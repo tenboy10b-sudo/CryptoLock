@@ -5,6 +5,7 @@ import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
+import { useState, useEffect, useRef } from 'react'
 import Script from 'next/script'
 
 const SITE = siteConfig.url
@@ -40,6 +41,302 @@ function extractFaqSchema(contentHtml) {
     '@type': 'FAQPage',
     mainEntity: items
   }
+}
+
+
+// ═══════════════════════════════════════════════════════
+// Кастомний компонент коментарів через Cusdis API
+// ═══════════════════════════════════════════════════════
+function CommentsSection({ appId, pageId, pageUrl, pageTitle, isEn }) {
+  const [comments, setComments] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [content, setContent] = useState('')
+  const [replyTo, setReplyTo] = useState(null) // { id, username }
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const formRef = useRef(null)
+
+  const t = (uk, en) => isEn ? en : uk
+
+  // Завантажуємо коментарі
+  useEffect(() => {
+    fetch(`https://cusdis.com/api/open/comments?appId=${appId}&pageId=${encodeURIComponent(pageId)}`)
+      .then(r => r.json())
+      .then(data => {
+        setComments(data.data?.data || [])
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }, [appId, pageId])
+
+  // Відправляємо коментар
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (!content.trim() || !name.trim()) return
+    setSubmitting(true)
+    try {
+      await fetch('https://cusdis.com/api/open/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          appId,
+          pageId,
+          pageUrl,
+          pageTitle,
+          username: name,
+          email,
+          content: replyTo ? `@${replyTo.username} ${content}` : content,
+          parentId: replyTo?.id || undefined,
+        })
+      })
+      setSubmitted(true)
+      setContent('')
+      setName('')
+      setEmail('')
+      setReplyTo(null)
+    } catch(err) {}
+    setSubmitting(false)
+  }
+
+  const cs = {
+    wrap: {
+      marginTop: '3rem',
+      paddingTop: '2rem',
+      borderTop: '1px solid #e2e8f0',
+    },
+    title: {
+      fontSize: '1.25rem',
+      fontWeight: 700,
+      marginBottom: '1.5rem',
+      color: '#1a202c',
+    },
+    // Список коментарів
+    commentList: { display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' },
+    comment: {
+      background: '#f7fafc',
+      border: '1px solid #e2e8f0',
+      borderRadius: '12px',
+      padding: '1rem 1.25rem',
+    },
+    commentReply: {
+      background: '#f0f4ff',
+      border: '1px solid #c3d0f0',
+      borderRadius: '12px',
+      padding: '0.875rem 1.25rem',
+      marginTop: '0.5rem',
+      marginLeft: '2rem',
+    },
+    commentHeader: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '0.5rem',
+    },
+    avatar: {
+      width: '32px', height: '32px',
+      borderRadius: '50%',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      color: '#fff', fontWeight: 700, fontSize: '0.875rem',
+      marginRight: '0.75rem', flexShrink: 0,
+    },
+    authorRow: { display: 'flex', alignItems: 'center' },
+    author: { fontWeight: 600, fontSize: '0.9rem', color: '#2d3748' },
+    date: { fontSize: '0.75rem', color: '#a0aec0' },
+    commentText: { fontSize: '0.95rem', color: '#4a5568', lineHeight: '1.6' },
+    replyBtn: {
+      background: 'none', border: 'none', cursor: 'pointer',
+      color: '#667eea', fontSize: '0.8rem', fontWeight: 600,
+      padding: '2px 8px', borderRadius: '6px',
+      transition: 'background 0.15s',
+    },
+    // Форма
+    form: {
+      background: '#fff',
+      border: '1px solid #e2e8f0',
+      borderRadius: '16px',
+      padding: '1.5rem',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+    },
+    formTitle: {
+      fontSize: '1rem', fontWeight: 600, color: '#2d3748',
+      marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem'
+    },
+    replyBanner: {
+      background: '#ebf0ff', borderRadius: '8px',
+      padding: '0.5rem 0.75rem', marginBottom: '1rem',
+      fontSize: '0.85rem', color: '#4a5568',
+      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    },
+    row: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' },
+    inputWrap: { display: 'flex', flexDirection: 'column', gap: '4px' },
+    label: { fontSize: '0.8rem', fontWeight: 600, color: '#718096' },
+    input: {
+      border: '1.5px solid #e2e8f0',
+      borderRadius: '10px',
+      padding: '0.625rem 0.875rem',
+      fontSize: '0.9rem',
+      outline: 'none',
+      transition: 'border-color 0.15s',
+      background: '#fafafa',
+      width: '100%',
+      boxSizing: 'border-box',
+    },
+    textarea: {
+      border: '1.5px solid #e2e8f0',
+      borderRadius: '10px',
+      padding: '0.75rem 0.875rem',
+      fontSize: '0.9rem',
+      outline: 'none',
+      resize: 'vertical',
+      minHeight: '100px',
+      background: '#fafafa',
+      width: '100%',
+      boxSizing: 'border-box',
+      fontFamily: 'inherit',
+      lineHeight: '1.6',
+    },
+    submitBtn: {
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '10px',
+      padding: '0.7rem 1.75rem',
+      fontSize: '0.9rem',
+      fontWeight: 600,
+      cursor: 'pointer',
+      marginTop: '0.75rem',
+      transition: 'opacity 0.15s',
+    },
+    notice: {
+      marginTop: '1rem',
+      padding: '0.75rem 1rem',
+      background: '#f0fff4',
+      border: '1px solid #9ae6b4',
+      borderRadius: '10px',
+      color: '#276749',
+      fontSize: '0.875rem',
+    },
+    empty: { color: '#a0aec0', fontSize: '0.9rem', textAlign: 'center', padding: '1.5rem 0' },
+  }
+
+  function formatDate(d) {
+    if (!d) return ''
+    return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short', year: 'numeric' })
+  }
+
+  function CommentItem({ c, isReply }) {
+    const style = isReply ? cs.commentReply : cs.comment
+    const initial = (c.by_nickname || c.username || '?')[0].toUpperCase()
+    return (
+      <div style={style}>
+        <div style={cs.commentHeader}>
+          <div style={cs.authorRow}>
+            <div style={cs.avatar}>{initial}</div>
+            <div>
+              <div style={cs.author}>{c.by_nickname || c.username}</div>
+              <div style={cs.date}>{formatDate(c.createdAt)}</div>
+            </div>
+          </div>
+          {!isReply && (
+            <button style={cs.replyBtn} onClick={() => {
+              setReplyTo({ id: c.id, username: c.by_nickname || c.username })
+              formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }}>
+              ↩ {t('Відповісти', 'Reply')}
+            </button>
+          )}
+        </div>
+        <p style={cs.commentText}>{c.content}</p>
+        {c.replies?.data?.map(r => <CommentItem key={r.id} c={r} isReply={true} />)}
+      </div>
+    )
+  }
+
+  return (
+    <div style={cs.wrap}>
+      <p style={cs.title}>💬 {t('Коментарі', 'Comments')}</p>
+
+      {/* Список коментарів */}
+      {loading ? (
+        <p style={cs.empty}>{t('Завантаження…', 'Loading…')}</p>
+      ) : comments.length === 0 ? (
+        <p style={cs.empty}>{t('Коментарів ще немає. Будьте першим!', 'No comments yet. Be the first!')}</p>
+      ) : (
+        <div style={cs.commentList}>
+          {comments.map(c => <CommentItem key={c.id} c={c} isReply={false} />)}
+        </div>
+      )}
+
+      {/* Форма */}
+      <div style={cs.form} ref={formRef}>
+        <p style={cs.formTitle}>
+          ✏️ {replyTo
+            ? t(`Відповідь для ${replyTo.username}`, `Reply to ${replyTo.username}`)
+            : t('Написати коментар', 'Leave a comment')}
+        </p>
+
+        {replyTo && (
+          <div style={cs.replyBanner}>
+            <span>↩ {t('Відповідь на коментар', 'Replying to')} <strong>{replyTo.username}</strong></span>
+            <button style={{...cs.replyBtn, color:'#e53e3e'}} onClick={() => setReplyTo(null)}>✕</button>
+          </div>
+        )}
+
+        {submitted ? (
+          <div style={cs.notice}>
+            ✅ {t('Дякуємо! Коментар відправлено на модерацію.', 'Thanks! Your comment is pending moderation.')}
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div style={cs.row}>
+              <div style={cs.inputWrap}>
+                <label style={cs.label}>{t("Ім'я *", 'Name *')}</label>
+                <input
+                  style={cs.input}
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  placeholder={t("Ваше ім'я", 'Your name')}
+                  required
+                />
+              </div>
+              <div style={cs.inputWrap}>
+                <label style={cs.label}>{t('Email (не показується)', 'Email (not shown)')}</label>
+                <input
+                  style={cs.input}
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="email@example.com"
+                />
+              </div>
+            </div>
+            <div style={cs.inputWrap}>
+              <label style={cs.label}>{t('Коментар *', 'Comment *')}</label>
+              <textarea
+                style={cs.textarea}
+                value={content}
+                onChange={e => setContent(e.target.value)}
+                placeholder={t('Ваш коментар…', 'Your comment…')}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              style={{...cs.submitBtn, opacity: submitting ? 0.7 : 1}}
+              disabled={submitting}
+            >
+              {submitting
+                ? t('Надсилання…', 'Sending…')
+                : t('Надіслати', 'Submit')}
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  )
 }
 
 
@@ -176,50 +473,14 @@ export default function Post({ post, related, locale }) {
             </section>
           )}
 
-          {/* ── Cusdis коментарі ── */}
-          <div style={{
-            marginTop: '3rem',
-            paddingTop: '2rem',
-            borderTop: '1px solid #e2e8f0'
-          }}>
-            <p style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-              {isEn ? 'Comments' : 'Коментарі'}
-            </p>
-            <div
-              id="cusdis_thread"
-              data-host="https://cusdis.com"
-              data-app-id="5c61191d-573f-4970-beb5-63efb84a8730"
-              data-page-id={post.slug}
-              data-page-url={postUrl}
-              data-page-title={post.title}
-              data-lang={isEn ? 'en' : 'uk'}
-            />
-            <Script
-              src="https://cusdis.com/js/cusdis.es.js"
-              strategy="lazyOnload"
-              onLoad={() => {
-                // Прибираємо скролінг у iframe Cusdis
-                const fixIframe = () => {
-                  const iframe = document.querySelector('#cusdis_thread iframe')
-                  if (iframe) {
-                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px'
-                    iframe.style.overflow = 'hidden'
-                    iframe.scrolling = 'no'
-                    // Спостерігаємо за змінами висоти (коли коментарі завантажились)
-                    const ro = new ResizeObserver(() => {
-                      try {
-                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px'
-                      } catch(e) {}
-                    })
-                    try { ro.observe(iframe.contentWindow.document.body) } catch(e) {}
-                  } else {
-                    setTimeout(fixIframe, 300)
-                  }
-                }
-                setTimeout(fixIframe, 500)
-              }}
-            />
-          </div>
+          {/* ── Коментарі (кастомний UI через Cusdis API) ── */}
+          <CommentsSection
+            appId="5c61191d-573f-4970-beb5-63efb84a8730"
+            pageId={post.slug}
+            pageUrl={postUrl}
+            pageTitle={post.title}
+            isEn={isEn}
+          />
 
           <div style={s.back}>
             <Link href="/" style={s.backLink}>{isEn ? "← All articles" : "← Всі статті"}</Link>
