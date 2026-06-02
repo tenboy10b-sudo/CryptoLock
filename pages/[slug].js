@@ -197,6 +197,27 @@ export default function Post({ post, related, locale }) {
             <Script
               src="https://cusdis.com/js/cusdis.es.js"
               strategy="lazyOnload"
+              onLoad={() => {
+                // Прибираємо скролінг у iframe Cusdis
+                const fixIframe = () => {
+                  const iframe = document.querySelector('#cusdis_thread iframe')
+                  if (iframe) {
+                    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px'
+                    iframe.style.overflow = 'hidden'
+                    iframe.scrolling = 'no'
+                    // Спостерігаємо за змінами висоти (коли коментарі завантажились)
+                    const ro = new ResizeObserver(() => {
+                      try {
+                        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px'
+                      } catch(e) {}
+                    })
+                    try { ro.observe(iframe.contentWindow.document.body) } catch(e) {}
+                  } else {
+                    setTimeout(fixIframe, 300)
+                  }
+                }
+                setTimeout(fixIframe, 500)
+              }}
             />
           </div>
 
