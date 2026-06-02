@@ -61,10 +61,6 @@ const nextConfig = {
       { source: '/:slug/', destination: '/:slug', permanent: true },
 
       // ── /en/tags/tools → /tools ──────────────────────────────────────
-      // ── UNIVERSAL: будь-який UK slug на EN локалі → UK URL ─────────────
-      { source: '/en/:slug(yak-[\S]+)', destination: '/:slug', permanent: true, locale: false },
-      { source: '/en/:slug(nalashtuvannya-[\S]+)', destination: '/:slug', permanent: true, locale: false },
-
       { source: '/en/tags/tools', destination: '/tools', permanent: true, locale: false },
       { source: '/en/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', destination: '/tools', permanent: true, locale: false },
 
@@ -122,7 +118,9 @@ const nextConfig = {
       { source: '/en/windows-defender-cherez-gpo', destination: '/windows-defender-cherez-gpo', permanent: true, locale: false },
       { source: '/en/yak-zrobyty-screenshot-windows', destination: '/yak-zrobyty-screenshot-windows', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvatv-vpn-windows', destination: '/yak-nalashtuvaty-vpn-windows', permanent: true, locale: false },
-      { source: '/yak-nalashtuvanty-dvokrokov', destination: '/', permanent: true, locale: false },
+      { source: '/en/vymknute-cortana-veb-poshuk', destination: '/vymknute-cortana-veb-poshuk', permanent: true, locale: false },
+      { source: '/en/ochyschennya-dns-keshu-windows', destination: '/ochyschennya-dns-keshu-windows', permanent: true, locale: false },
+      { source: '/en/bios-ne-bachyt-fleshku', destination: '/bios-ne-bachyt-fleshku', permanent: true, locale: false },
       { source: '/README-AUTOPOST', destination: '/', permanent: true, locale: false },
       { source: '/en/README-AUTOPOST', destination: '/', permanent: true, locale: false },
       { source: '/yak-zrobyty-screenshot-windows', destination: '/yak-zrobyty-screenshot-windows', permanent: true, locale: false },
