@@ -1,9 +1,9 @@
 ---
-title: "How to Check Disk Health in Windows 10 and 11: SMART, CrystalDisk, PowerShell"
+title: "How to Check Disk Health in Windows 10 and 11: SMART, PowerShell and CrystalDisk"
 date: "2026-04-21"
-updated: "2026-05-24"
+updated: "2026-06-02"
 publishDate: "2026-04-21"
-description: "Check HDD and SSD health in Windows using SMART status, PowerShell Get-PhysicalDisk, chkdsk and CrystalDiskInfo. Find failing drives before data loss."
+description: "Check HDD and SSD health in Windows using SMART status, PowerShell Get-PhysicalDisk, chkdsk and CrystalDiskInfo. Detect failing drives before data loss occurs."
 tags: ["windows", "disk", "diagnostics", "tools"]
 readTime: 6
 ---
