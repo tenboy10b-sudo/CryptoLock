@@ -14,13 +14,14 @@
     "windows-sandbox-ta-hyper-v-porivnyannya",
     "yak-nalashtuvaty-avtozapusk-programy-windows",
     "yak-vstanovyty-windows-11-bez-microsoft-account",
-    "perevirka-produktyvnosti-dysku"
+    "perevirka-produktyvnosti-dysku",
+    "sfc-dism-povnyy-gaid"
   ],
-  "count": 15,
+  "count": 16,
   "promo_index": 16,
   "last_post": {
-    "slug": "perevirka-produktyvnosti-dysku",
-    "title": "Як перевірити продуктивність диска через CMD і PowerShell",
-    "time": "2026-06-01T08:01:12.485984"
+    "slug": "sfc-dism-povnyy-gaid",
+    "title": "Як перевірити цілісність системних файлів SFC і DISM: детальний гайд",
+    "time": "2026-06-02T08:01:20.550813"
   }
 }
