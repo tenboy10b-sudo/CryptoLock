@@ -5,6 +5,7 @@ import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 
 const SITE = siteConfig.url
 
@@ -44,6 +45,12 @@ function extractFaqSchema(contentHtml) {
 
 export default function Post({ post, related, locale }) {
   const isEn = locale === 'en'
+  const router = useRouter()
+
+  // Cusdis — перезавантаження при зміні сторінки
+  if (typeof window !== 'undefined' && window.CUSDIS) {
+    window.CUSDIS.initial()
+  }
   const postUrl = locale === 'en' ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
 
   const articleSchema = {
@@ -168,6 +175,30 @@ export default function Post({ post, related, locale }) {
               </div>
             </section>
           )}
+
+          {/* ── Cusdis коментарі ── */}
+          <div style={{
+            marginTop: '3rem',
+            paddingTop: '2rem',
+            borderTop: '1px solid #e2e8f0'
+          }}>
+            <p style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem' }}>
+              {isEn ? 'Comments' : 'Коментарі'}
+            </p>
+            <div
+              id="cusdis_thread"
+              data-host="https://cusdis.com"
+              data-app-id="5c61191d-573f-4970-beb5-63efb84a8730"
+              data-page-id={post.slug}
+              data-page-url={postUrl}
+              data-page-title={post.title}
+              data-lang={isEn ? 'en' : 'uk'}
+            />
+            <Script
+              src="https://cusdis.com/js/cusdis.es.js"
+              strategy="lazyOnload"
+            />
+          </div>
 
           <div style={s.back}>
             <Link href="/" style={s.backLink}>{isEn ? "← All articles" : "← Всі статті"}</Link>
