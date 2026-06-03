@@ -15,13 +15,14 @@
     "yak-nalashtuvaty-avtozapusk-programy-windows",
     "yak-vstanovyty-windows-11-bez-microsoft-account",
     "perevirka-produktyvnosti-dysku",
-    "sfc-dism-povnyy-gaid"
+    "sfc-dism-povnyy-gaid",
+    "yak-zashyfruvaty-fleshku-bitlocker-to-go"
   ],
-  "count": 16,
+  "count": 17,
   "promo_index": 17,
   "last_post": {
-    "slug": "sfc-dism-povnyy-gaid",
-    "title": "Як перевірити цілісність системних файлів SFC і DISM: детальний гайд",
-    "time": "2026-06-02T08:01:20.550813"
+    "slug": "yak-zashyfruvaty-fleshku-bitlocker-to-go",
+    "title": "Як зашифрувати флешку через BitLocker To Go в Windows",
+    "time": "2026-06-03T08:01:15.579076"
   }
 }
