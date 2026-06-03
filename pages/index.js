@@ -133,7 +133,13 @@ export default function Home({ posts, tags }) {
             </div>
             <div className="hero-logo" style={s.heroLogoWrap} aria-hidden="true">
               <div style={s.heroLogoBlock}>
-                <img src="/logo.png" alt="" width="130" height="138" style={s.heroLogoImg} />
+                <picture>
+                  <source srcSet="/logo.webp" type="image/webp" />
+                  <img src="/logo.png" alt="" width="130" height="138"
+                    style={s.heroLogoImg}
+                    fetchPriority="high"
+                  />
+                </picture>
                 <span style={s.heroLogoCaption}>CryptoLock</span>
               </div>
             </div>
