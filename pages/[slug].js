@@ -53,13 +53,7 @@ export default function Post({ post, related, locale }) {
       btn.className = 'copy-btn'
       btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
       btn.title = 'Копіювати'
-      btn.style.cssText = \`
-        position:absolute; top:10px; right:10px;
-        background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
-        color:#e2e8f0; border-radius:6px; padding:5px 8px;
-        cursor:pointer; font-size:12px; display:flex; align-items:center; gap:4px;
-        transition:all 0.15s; z-index:10; line-height:1;
-      \`
+      btn.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#e2e8f0;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:4px;transition:all 0.15s;z-index:10;line-height:1'
       btn.addEventListener('mouseenter', () => btn.style.background = 'rgba(255,255,255,0.2)')
       btn.addEventListener('mouseleave', () => {
         if (!btn.dataset.copied) btn.style.background = 'rgba(255,255,255,0.1)'
