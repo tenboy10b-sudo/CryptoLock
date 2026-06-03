@@ -5,8 +5,7 @@ import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
-import Script from 'next/script'
+import { useEffect } from 'react'
 
 const SITE = siteConfig.url
 
@@ -44,310 +43,48 @@ function extractFaqSchema(contentHtml) {
 }
 
 
-// ═══════════════════════════════════════════════════════
-// Кастомний компонент коментарів через Cusdis API
-// ═══════════════════════════════════════════════════════
-function CommentsSection({ appId, pageId, pageUrl, pageTitle, isEn }) {
-  const [comments, setComments] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [content, setContent] = useState('')
-  const [replyTo, setReplyTo] = useState(null) // { id, username }
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const formRef = useRef(null)
-
-  const t = (uk, en) => isEn ? en : uk
-
-  // Завантажуємо коментарі
+export default function Post({ post, related, locale }) {
+  // ── Copy button для блоків коду ────────────────────────────────
   useEffect(() => {
-    fetch(`https://cusdis.com/api/open/comments?appId=${appId}&pageId=${encodeURIComponent(pageId)}`)
-      .then(r => r.json())
-      .then(data => {
-        setComments(data.data?.data || [])
-        setLoading(false)
+    const blocks = document.querySelectorAll('.prose pre')
+    blocks.forEach(pre => {
+      if (pre.querySelector('.copy-btn')) return
+      const btn = document.createElement('button')
+      btn.className = 'copy-btn'
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
+      btn.title = 'Копіювати'
+      btn.style.cssText = \`
+        position:absolute; top:10px; right:10px;
+        background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+        color:#e2e8f0; border-radius:6px; padding:5px 8px;
+        cursor:pointer; font-size:12px; display:flex; align-items:center; gap:4px;
+        transition:all 0.15s; z-index:10; line-height:1;
+      \`
+      btn.addEventListener('mouseenter', () => btn.style.background = 'rgba(255,255,255,0.2)')
+      btn.addEventListener('mouseleave', () => {
+        if (!btn.dataset.copied) btn.style.background = 'rgba(255,255,255,0.1)'
       })
-      .catch(() => setLoading(false))
-  }, [appId, pageId])
-
-  // Відправляємо коментар
-  async function handleSubmit(e) {
-    e.preventDefault()
-    if (!content.trim() || !name.trim()) return
-    setSubmitting(true)
-    try {
-      await fetch('https://cusdis.com/api/open/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          appId,
-          pageId,
-          pageUrl,
-          pageTitle,
-          username: name,
-          email,
-          content: replyTo ? `@${replyTo.username} ${content}` : content,
-          parentId: replyTo?.id || undefined,
+      btn.addEventListener('click', () => {
+        const code = pre.querySelector('code')?.innerText || pre.innerText
+        navigator.clipboard.writeText(code).then(() => {
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+          btn.style.background = 'rgba(74,222,128,0.15)'
+          btn.style.borderColor = 'rgba(74,222,128,0.4)'
+          btn.dataset.copied = '1'
+          setTimeout(() => {
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
+            btn.style.background = 'rgba(255,255,255,0.1)'
+            btn.style.borderColor = 'rgba(255,255,255,0.2)'
+            delete btn.dataset.copied
+          }, 2000)
         })
       })
-      setSubmitted(true)
-      setContent('')
-      setName('')
-      setEmail('')
-      setReplyTo(null)
-    } catch(err) {}
-    setSubmitting(false)
-  }
+      pre.style.position = 'relative'
+      pre.appendChild(btn)
+    })
+  }, [post.slug])
 
-  const cs = {
-    wrap: {
-      marginTop: '3rem',
-      paddingTop: '2rem',
-      borderTop: '1px solid #e2e8f0',
-    },
-    title: {
-      fontSize: '1.25rem',
-      fontWeight: 700,
-      marginBottom: '1.5rem',
-      color: '#1a202c',
-    },
-    // Список коментарів
-    commentList: { display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' },
-    comment: {
-      background: '#f7fafc',
-      border: '1px solid #e2e8f0',
-      borderRadius: '12px',
-      padding: '1rem 1.25rem',
-    },
-    commentReply: {
-      background: '#f0f4ff',
-      border: '1px solid #c3d0f0',
-      borderRadius: '12px',
-      padding: '0.875rem 1.25rem',
-      marginTop: '0.5rem',
-      marginLeft: '2rem',
-    },
-    commentHeader: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: '0.5rem',
-    },
-    avatar: {
-      width: '32px', height: '32px',
-      borderRadius: '50%',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      color: '#fff', fontWeight: 700, fontSize: '0.875rem',
-      marginRight: '0.75rem', flexShrink: 0,
-    },
-    authorRow: { display: 'flex', alignItems: 'center' },
-    author: { fontWeight: 600, fontSize: '0.9rem', color: '#2d3748' },
-    date: { fontSize: '0.75rem', color: '#a0aec0' },
-    commentText: { fontSize: '0.95rem', color: '#4a5568', lineHeight: '1.6' },
-    replyBtn: {
-      background: 'none', border: 'none', cursor: 'pointer',
-      color: '#667eea', fontSize: '0.8rem', fontWeight: 600,
-      padding: '2px 8px', borderRadius: '6px',
-      transition: 'background 0.15s',
-    },
-    // Форма
-    form: {
-      background: '#fff',
-      border: '1px solid #e2e8f0',
-      borderRadius: '16px',
-      padding: '1.5rem',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-    },
-    formTitle: {
-      fontSize: '1rem', fontWeight: 600, color: '#2d3748',
-      marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem'
-    },
-    replyBanner: {
-      background: '#ebf0ff', borderRadius: '8px',
-      padding: '0.5rem 0.75rem', marginBottom: '1rem',
-      fontSize: '0.85rem', color: '#4a5568',
-      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    },
-    row: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' },
-    inputWrap: { display: 'flex', flexDirection: 'column', gap: '4px' },
-    label: { fontSize: '0.8rem', fontWeight: 600, color: '#718096' },
-    input: {
-      border: '1.5px solid #e2e8f0',
-      borderRadius: '10px',
-      padding: '0.625rem 0.875rem',
-      fontSize: '0.9rem',
-      outline: 'none',
-      transition: 'border-color 0.15s',
-      background: '#fafafa',
-      width: '100%',
-      boxSizing: 'border-box',
-    },
-    textarea: {
-      border: '1.5px solid #e2e8f0',
-      borderRadius: '10px',
-      padding: '0.75rem 0.875rem',
-      fontSize: '0.9rem',
-      outline: 'none',
-      resize: 'vertical',
-      minHeight: '100px',
-      background: '#fafafa',
-      width: '100%',
-      boxSizing: 'border-box',
-      fontFamily: 'inherit',
-      lineHeight: '1.6',
-    },
-    submitBtn: {
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '10px',
-      padding: '0.7rem 1.75rem',
-      fontSize: '0.9rem',
-      fontWeight: 600,
-      cursor: 'pointer',
-      marginTop: '0.75rem',
-      transition: 'opacity 0.15s',
-    },
-    notice: {
-      marginTop: '1rem',
-      padding: '0.75rem 1rem',
-      background: '#f0fff4',
-      border: '1px solid #9ae6b4',
-      borderRadius: '10px',
-      color: '#276749',
-      fontSize: '0.875rem',
-    },
-    empty: { color: '#a0aec0', fontSize: '0.9rem', textAlign: 'center', padding: '1.5rem 0' },
-  }
-
-  function formatDate(d) {
-    if (!d) return ''
-    return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short', year: 'numeric' })
-  }
-
-  function CommentItem({ c, isReply }) {
-    const style = isReply ? cs.commentReply : cs.comment
-    const initial = (c.by_nickname || c.username || '?')[0].toUpperCase()
-    return (
-      <div style={style}>
-        <div style={cs.commentHeader}>
-          <div style={cs.authorRow}>
-            <div style={cs.avatar}>{initial}</div>
-            <div>
-              <div style={cs.author}>{c.by_nickname || c.username}</div>
-              <div style={cs.date}>{formatDate(c.createdAt)}</div>
-            </div>
-          </div>
-          {!isReply && (
-            <button style={cs.replyBtn} onClick={() => {
-              setReplyTo({ id: c.id, username: c.by_nickname || c.username })
-              formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            }}>
-              ↩ {t('Відповісти', 'Reply')}
-            </button>
-          )}
-        </div>
-        <p style={cs.commentText}>{c.content}</p>
-        {c.replies?.data?.map(r => <CommentItem key={r.id} c={r} isReply={true} />)}
-      </div>
-    )
-  }
-
-  return (
-    <div style={cs.wrap}>
-      <p style={cs.title}>💬 {t('Коментарі', 'Comments')}</p>
-
-      {/* Список коментарів */}
-      {loading ? (
-        <p style={cs.empty}>{t('Завантаження…', 'Loading…')}</p>
-      ) : comments.length === 0 ? (
-        <p style={cs.empty}>{t('Коментарів ще немає. Будьте першим!', 'No comments yet. Be the first!')}</p>
-      ) : (
-        <div style={cs.commentList}>
-          {comments.map(c => <CommentItem key={c.id} c={c} isReply={false} />)}
-        </div>
-      )}
-
-      {/* Форма */}
-      <div style={cs.form} ref={formRef}>
-        <p style={cs.formTitle}>
-          ✏️ {replyTo
-            ? t(`Відповідь для ${replyTo.username}`, `Reply to ${replyTo.username}`)
-            : t('Написати коментар', 'Leave a comment')}
-        </p>
-
-        {replyTo && (
-          <div style={cs.replyBanner}>
-            <span>↩ {t('Відповідь на коментар', 'Replying to')} <strong>{replyTo.username}</strong></span>
-            <button style={{...cs.replyBtn, color:'#e53e3e'}} onClick={() => setReplyTo(null)}>✕</button>
-          </div>
-        )}
-
-        {submitted ? (
-          <div style={cs.notice}>
-            ✅ {t('Дякуємо! Коментар відправлено на модерацію.', 'Thanks! Your comment is pending moderation.')}
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div style={cs.row}>
-              <div style={cs.inputWrap}>
-                <label style={cs.label}>{t("Ім'я *", 'Name *')}</label>
-                <input
-                  style={cs.input}
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  placeholder={t("Ваше ім'я", 'Your name')}
-                  required
-                />
-              </div>
-              <div style={cs.inputWrap}>
-                <label style={cs.label}>{t('Email (не показується)', 'Email (not shown)')}</label>
-                <input
-                  style={cs.input}
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="email@example.com"
-                />
-              </div>
-            </div>
-            <div style={cs.inputWrap}>
-              <label style={cs.label}>{t('Коментар *', 'Comment *')}</label>
-              <textarea
-                style={cs.textarea}
-                value={content}
-                onChange={e => setContent(e.target.value)}
-                placeholder={t('Ваш коментар…', 'Your comment…')}
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              style={{...cs.submitBtn, opacity: submitting ? 0.7 : 1}}
-              disabled={submitting}
-            >
-              {submitting
-                ? t('Надсилання…', 'Sending…')
-                : t('Надіслати', 'Submit')}
-            </button>
-          </form>
-        )}
-      </div>
-    </div>
-  )
-}
-
-
-export default function Post({ post, related, locale }) {
   const isEn = locale === 'en'
-  const router = useRouter()
-
-  // Cusdis — перезавантаження при зміні сторінки
-  if (typeof window !== 'undefined' && window.CUSDIS) {
-    window.CUSDIS.initial()
-  }
   const postUrl = locale === 'en' ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
 
   const articleSchema = {
@@ -472,15 +209,6 @@ export default function Post({ post, related, locale }) {
               </div>
             </section>
           )}
-
-          {/* ── Коментарі (кастомний UI через Cusdis API) ── */}
-          <CommentsSection
-            appId="5c61191d-573f-4970-beb5-63efb84a8730"
-            pageId={post.slug}
-            pageUrl={postUrl}
-            pageTitle={post.title}
-            isEn={isEn}
-          />
 
           <div style={s.back}>
             <Link href="/" style={s.backLink}>{isEn ? "← All articles" : "← Всі статті"}</Link>
