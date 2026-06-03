@@ -281,7 +281,7 @@ export default function Layout({ children, title, description, canonical, isArti
         <div style={s.footerCopy}>
           <div className="container">
             <p style={s.footerCopyText}>
-              {locale === "en" ? `© ${new Date().getFullYear()} CryptoLock. Windows & Security guides.` : `© ${new Date().getFullYear()} CryptoLock. Всі матеріали українською мовою.`}
+              {locale === "en" ? "© 2026 CryptoLock. Windows & Security guides." : "© 2026 CryptoLock. Всі матеріали українською мовою."}
             </p>
           </div>
         </div>
