@@ -16,13 +16,14 @@
     "yak-vstanovyty-windows-11-bez-microsoft-account",
     "perevirka-produktyvnosti-dysku",
     "sfc-dism-povnyy-gaid",
-    "yak-zashyfruvaty-fleshku-bitlocker-to-go"
+    "yak-zashyfruvaty-fleshku-bitlocker-to-go",
+    "sertyfikaty-windows-keruvannya"
   ],
-  "count": 17,
+  "count": 18,
   "promo_index": 18,
   "last_post": {
-    "slug": "yak-zashyfruvaty-fleshku-bitlocker-to-go",
-    "title": "Як зашифрувати флешку через BitLocker To Go в Windows",
-    "time": "2026-06-03T08:01:15.579076"
+    "slug": "sertyfikaty-windows-keruvannya",
+    "title": "Сертифікати в Windows: управління через certmgr і PowerShell",
+    "time": "2026-06-04T08:01:10.557145"
   }
 }
