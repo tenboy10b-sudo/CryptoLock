@@ -17,13 +17,14 @@
     "perevirka-produktyvnosti-dysku",
     "sfc-dism-povnyy-gaid",
     "yak-zashyfruvaty-fleshku-bitlocker-to-go",
-    "sertyfikaty-windows-keruvannya"
+    "sertyfikaty-windows-keruvannya",
+    "yak-nalashtuvatysy-robochyy-stit-windows"
   ],
-  "count": 18,
+  "count": 19,
   "promo_index": 19,
   "last_post": {
-    "slug": "sertyfikaty-windows-keruvannya",
-    "title": "Сертифікати в Windows: управління через certmgr і PowerShell",
-    "time": "2026-06-04T08:01:10.557145"
+    "slug": "yak-nalashtuvatysy-robochyy-stit-windows",
+    "title": "Як налаштувати робочий стіл Windows: організація, ярлики і продуктивність",
+    "time": "2026-06-05T08:01:12.663827"
   }
 }
