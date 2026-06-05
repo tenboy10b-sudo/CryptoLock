@@ -43,89 +43,73 @@ function extractFaqSchema(contentHtml) {
 }
 
 
-// ── Share Buttons ───────────────────────────────────────────────
-function ShareButtons({ title, url, isEn }) {
-  const [copied, setCopied] = React.useState(false)
+// ── Bookmark Button ─────────────────────────────────────────────
+function BookmarkButton({ slug, title, tag, isEn }) {
+  const [saved, setSaved] = React.useState(false)
 
-  const encoded = encodeURIComponent(url)
-  const encodedTitle = encodeURIComponent(title)
+  React.useEffect(() => {
+    try {
+      const bookmarks = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
+      setSaved(bookmarks.some(b => b.slug === slug))
+    } catch {}
+  }, [slug])
 
-  const links = {
-    telegram: `https://t.me/share/url?url=${encoded}&text=${encodedTitle}`,
-    twitter:  `https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
-  }
-
-  const copyLink = () => {
-    navigator.clipboard.writeText(url).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }
-
-  const btnBase = {
-    display: 'inline-flex', alignItems: 'center', gap: '6px',
-    padding: '7px 14px', borderRadius: '8px', fontSize: '13px',
-    fontWeight: 600, cursor: 'pointer', border: 'none',
-    textDecoration: 'none', transition: 'opacity 0.15s',
+  const toggle = () => {
+    try {
+      const bookmarks = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
+      if (saved) {
+        const updated = bookmarks.filter(b => b.slug !== slug)
+        localStorage.setItem('cl-bookmarks', JSON.stringify(updated))
+        setSaved(false)
+      } else {
+        const updated = [...bookmarks, { slug, title, tag, savedAt: Date.now() }]
+        localStorage.setItem('cl-bookmarks', JSON.stringify(updated))
+        setSaved(true)
+      }
+    } catch {}
   }
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', margin: '1.5rem 0' }}>
-      <span style={{ fontSize: '13px', color: '#94a3b8', marginRight: '4px' }}>
-        {isEn ? 'Share:' : 'Поділитись:'}
-      </span>
-
-      {/* Telegram */}
-      <a href={links.telegram} target="_blank" rel="noopener noreferrer"
-        style={{ ...btnBase, background: '#229ED9', color: '#fff' }}
-        onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-        aria-label="Share on Telegram"
+    <button
+      onClick={toggle}
+      aria-label={saved
+        ? (isEn ? 'Remove from bookmarks' : 'Видалити із закладок')
+        : (isEn ? 'Save to bookmarks' : 'Додати в закладки')}
+      title={saved
+        ? (isEn ? 'Saved! Click to remove' : 'Збережено! Натисни щоб видалити')
+        : (isEn ? 'Save article' : 'Зберегти статтю')}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: '5px',
+        padding: '6px 12px', borderRadius: '8px', fontSize: '13px',
+        fontWeight: 600, cursor: 'pointer', border: '1.5px solid',
+        transition: 'all 0.2s',
+        borderColor: saved ? '#2563eb' : '#e2e8f0',
+        background:  saved ? '#eff6ff' : '#fff',
+        color:       saved ? '#2563eb' : '#64748b',
+      }}
+      onMouseEnter={e => {
+        if (!saved) {
+          e.currentTarget.style.borderColor = '#2563eb'
+          e.currentTarget.style.color = '#2563eb'
+        }
+      }}
+      onMouseLeave={e => {
+        if (!saved) {
+          e.currentTarget.style.borderColor = '#e2e8f0'
+          e.currentTarget.style.color = '#64748b'
+        }
+      }}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24"
+        fill={saved ? 'currentColor' : 'none'}
+        stroke="currentColor" strokeWidth="2"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.01 9.47c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 14.676l-2.95-.924c-.642-.2-.654-.642.136-.953l11.52-4.44c.537-.194 1.006.131.686.889z"/>
-        </svg>
-        Telegram
-      </a>
-
-      {/* Twitter/X */}
-      <a href={links.twitter} target="_blank" rel="noopener noreferrer"
-        style={{ ...btnBase, background: '#000', color: '#fff' }}
-        onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-        aria-label="Share on X (Twitter)"
-      >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-        X
-      </a>
-
-      {/* Copy Link */}
-      <button onClick={copyLink}
-        style={{ ...btnBase, background: copied ? '#10b981' : '#f1f5f9', color: copied ? '#fff' : '#475569', border: '1px solid #e2e8f0' }}
-        onMouseEnter={e => { if (!copied) e.currentTarget.style.borderColor = '#94a3b8' }}
-        onMouseLeave={e => { if (!copied) e.currentTarget.style.borderColor = '#e2e8f0' }}
-        aria-label={isEn ? 'Copy link' : 'Скопіювати посилання'}
-      >
-        {copied ? (
-          <>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-            {isEn ? 'Copied!' : 'Скопійовано!'}
-          </>
-        ) : (
-          <>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-            </svg>
-            {isEn ? 'Copy link' : 'Посилання'}
-          </>
-        )}
-      </button>
-    </div>
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+      {saved
+        ? (isEn ? 'Saved' : 'Збережено')
+        : (isEn ? 'Save' : 'Зберегти')}
+    </button>
   )
 }
 
@@ -225,6 +209,15 @@ export default function Post({ post, related, locale }) {
                 {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min read' : 'хв читання'}</span></>}
                 {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <time dateTime={post.updated}>{fmt(post.updated, locale)}</time></span></>}
               </div>
+              {/* Bookmark + Share рядок */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '1rem', flexWrap: 'wrap' }}>
+                <BookmarkButton
+                  slug={post.slug}
+                  title={post.title}
+                  tag={post.tags?.[0] || ''}
+                  isEn={isEn}
+                />
+              </div>
               {post.description && <p style={s.lead}>{post.description}</p>}
             </header>
 
@@ -235,13 +228,6 @@ export default function Post({ post, related, locale }) {
                   data-ad-format="auto" data-full-width-responsive="true" />
               </div>
             )}
-
-            {/* Share кнопки */}
-            <ShareButtons
-              title={post.title}
-              url={postUrl}
-              isEn={isEn}
-            />
 
             <TableOfContents contentHtml={post.contentHtml} />
             <div className="prose" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
