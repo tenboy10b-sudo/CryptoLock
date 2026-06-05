@@ -13,6 +13,7 @@ const tools = {
     { slug: 'windows-event-id',      name: 'Event ID довідник',    tagline: 'Що означає подія з Event Viewer', description: '20+ ключових подій безпеки Windows з описом, рівнем загрози і рекомендаціями.', badge: 'Безкоштовно', icon: '📋' },
     { slug: 'password-generator',    name: 'Генератор паролів',    tagline: 'Надійні паролі за секунду',      description: 'Криптографічно надійні паролі в браузері. Нічого не передається на сервер.',    badge: 'Безкоштовно', icon: '🔑' },
     { slug: 'subnet-calculator',     name: 'Subnet калькулятор',   tagline: 'IP і підмережі онлайн',          description: 'Введи IP/CIDR — маска, мережа, broadcast, діапазон хостів і бінарне представлення.', badge: 'Безкоштовно', icon: '🌐' },
+    { slug: 'port-checker',          name: 'Перевірка портів',     tagline: 'Чи відкритий TCP порт онлайн',   description: 'Введи хост і порт — миттєва перевірка TCP з'єднання. Або скануй 20 популярних портів.', badge: 'Безкоштовно', icon: '🔌' },
   ],
   en: [
     { slug: 'auditshield',           name: 'AuditShield',          tagline: 'Windows PC Security Audit',      description: 'Scans your PC across 22 security areas and generates a detailed HTML report with a risk score.', badge: 'Free demo', icon: '🛡️' },
@@ -21,6 +22,7 @@ const tools = {
     { slug: 'windows-event-id',      name: 'Event ID Reference',   tagline: 'Look up Event Viewer IDs',       description: '20+ key Windows security events with description, threat level and recommended actions.',       badge: 'Free', icon: '📋' },
     { slug: 'password-generator',    name: 'Password Generator',   tagline: 'Strong passwords instantly',     description: 'Cryptographically secure passwords generated in your browser. Nothing is transmitted.',         badge: 'Free', icon: '🔑' },
     { slug: 'subnet-calculator',     name: 'Subnet Calculator',    tagline: 'IP and subnets online',          description: 'Enter IP/CIDR and get mask, network, broadcast, host range and binary representation.',        badge: 'Free', icon: '🌐' },
+    { slug: 'port-checker',          name: 'Port Checker',         tagline: 'Check if TCP port is open',      description: 'Enter host and port for instant TCP connection test. Or scan 20 common ports at once.',          badge: 'Free', icon: '🔌' },
   ],
 }
 

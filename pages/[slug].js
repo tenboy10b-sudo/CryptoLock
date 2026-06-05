@@ -43,71 +43,87 @@ function extractFaqSchema(contentHtml) {
 }
 
 
-// ── PWA Article Button (мобільний, кінець статті) ───────────────
-function PwaArticleButton({ isEn }) {
-  const [canInstall, setCanInstall] = React.useState(false)
-  const [deferredPrompt, setDeferredPrompt] = React.useState(null)
-  const [installed, setInstalled] = React.useState(false)
+// ── Share Buttons ───────────────────────────────────────────────
+function ShareButtons({ title, url, isEn }) {
+  const [copied, setCopied] = React.useState(false)
 
-  React.useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches) return
-    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent)
-    const android = /android/i.test(navigator.userAgent)
-    if (!ios && !android) return  // тільки мобільні
+  const encoded = encodeURIComponent(url)
+  const encodedTitle = encodeURIComponent(title)
 
-    if (ios) { setCanInstall(true); return }
+  const links = {
+    telegram: `https://t.me/share/url?url=${encoded}&text=${encodedTitle}`,
+    twitter:  `https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
+  }
 
-    const handler = e => {
-      e.preventDefault()
-      setDeferredPrompt(e)
-      setCanInstall(true)
-    }
-    window.addEventListener('beforeinstallprompt', handler)
-    return () => window.removeEventListener('beforeinstallprompt', handler)
-  }, [])
+  const copyLink = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
 
-  if (!canInstall || installed) return null
-
-  const handleInstall = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt()
-      const { outcome } = await deferredPrompt.userChoice
-      if (outcome === 'accepted') setInstalled(true)
-      setDeferredPrompt(null)
-    } else {
-      alert(isEn
-        ? 'Tap Share (⬆️) → "Add to Home Screen"'
-        : 'Натисни Поділитись (⬆️) → "На екран «Початок»"')
-    }
-    setCanInstall(false)
+  const btnBase = {
+    display: 'inline-flex', alignItems: 'center', gap: '6px',
+    padding: '7px 14px', borderRadius: '8px', fontSize: '13px',
+    fontWeight: 600, cursor: 'pointer', border: 'none',
+    textDecoration: 'none', transition: 'opacity 0.15s',
   }
 
   return (
-    <div style={{
-      margin: '2rem 0 1rem',
-      padding: '16px 20px',
-      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-      borderRadius: '14px',
-      display: 'flex', alignItems: 'center', gap: '14px',
-      border: '1px solid rgba(37,99,235,0.25)',
-    }}>
-      <span style={{ fontSize: '32px', flexShrink: 0 }}>🔒</span>
-      <div style={{ flex: 1 }}>
-        <p style={{ margin: '0 0 3px', fontWeight: 600, fontSize: '0.875rem', color: '#f1f5f9' }}>
-          {isEn ? 'CryptoLock App' : 'Додаток CryptoLock'}
-        </p>
-        <p style={{ margin: 0, fontSize: '0.75rem', color: '#94a3b8', lineHeight: 1.4 }}>
-          {isEn ? 'Offline access to all articles' : 'Офлайн доступ до всіх статей'}
-        </p>
-      </div>
-      <button onClick={handleInstall} style={{
-        background: '#2563eb', color: '#fff',
-        border: 'none', borderRadius: '10px',
-        padding: '8px 16px', fontSize: '0.8rem',
-        fontWeight: 600, cursor: 'pointer', flexShrink: 0,
-        whiteSpace: 'nowrap',
-      }}>
-        {isEn ? '+ Install' : '+ Додати'}
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', margin: '1.5rem 0' }}>
+      <span style={{ fontSize: '13px', color: '#94a3b8', marginRight: '4px' }}>
+        {isEn ? 'Share:' : 'Поділитись:'}
+      </span>
+
+      {/* Telegram */}
+      <a href={links.telegram} target="_blank" rel="noopener noreferrer"
+        style={{ ...btnBase, background: '#229ED9', color: '#fff' }}
+        onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+        aria-label="Share on Telegram"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.01 9.47c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 14.676l-2.95-.924c-.642-.2-.654-.642.136-.953l11.52-4.44c.537-.194 1.006.131.686.889z"/>
+        </svg>
+        Telegram
+      </a>
+
+      {/* Twitter/X */}
+      <a href={links.twitter} target="_blank" rel="noopener noreferrer"
+        style={{ ...btnBase, background: '#000', color: '#fff' }}
+        onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
+        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+        aria-label="Share on X (Twitter)"
+      >
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        X
+      </a>
+
+      {/* Copy Link */}
+      <button onClick={copyLink}
+        style={{ ...btnBase, background: copied ? '#10b981' : '#f1f5f9', color: copied ? '#fff' : '#475569', border: '1px solid #e2e8f0' }}
+        onMouseEnter={e => { if (!copied) e.currentTarget.style.borderColor = '#94a3b8' }}
+        onMouseLeave={e => { if (!copied) e.currentTarget.style.borderColor = '#e2e8f0' }}
+        aria-label={isEn ? 'Copy link' : 'Скопіювати посилання'}
+      >
+        {copied ? (
+          <>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            {isEn ? 'Copied!' : 'Скопійовано!'}
+          </>
+        ) : (
+          <>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            {isEn ? 'Copy link' : 'Посилання'}
+          </>
+        )}
       </button>
     </div>
   )
@@ -220,6 +236,13 @@ export default function Post({ post, related, locale }) {
               </div>
             )}
 
+            {/* Share кнопки */}
+            <ShareButtons
+              title={post.title}
+              url={postUrl}
+              isEn={isEn}
+            />
+
             <TableOfContents contentHtml={post.contentHtml} />
             <div className="prose" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
 
@@ -240,9 +263,6 @@ export default function Post({ post, related, locale }) {
               </div>
             </section>
           )}
-
-          {/* PWA кнопка в кінці статті — тільки мобільні */}
-          <PwaArticleButton isEn={isEn} />
 
           <div style={s.back}>
             <Link href="/" style={s.backLink}>{isEn ? "← All articles" : "← Всі статті"}</Link>
