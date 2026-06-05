@@ -73,7 +73,7 @@ const s = {
   excerpt: { fontSize: '.88rem', color: '#475569', lineHeight: 1.6, marginBottom: '14px' },
   footer: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
   meta: { display: 'flex', alignItems: 'center', gap: '6px' },
-  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
+  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#64748b' },
   dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0, display: 'inline-block' },
   readBtn: {
     fontSize: '12px',

@@ -278,15 +278,15 @@ const s = {
   catLeft: { display: 'flex', alignItems: 'center', gap: '8px' },
   catIcon: { fontSize: '16px', flexShrink: 0 },
   catLabel: { fontFamily: "'Unbounded',sans-serif", fontSize: '12px', fontWeight: 700, color: '#0f172a' },
-  catTotal: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#94a3b8', background: '#e2e8f0', padding: '1px 6px', borderRadius: '10px' },
+  catTotal: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#64748b', background: '#e2e8f0', padding: '1px 6px', borderRadius: '10px' },
   catArrow: { fontSize: '12px', color: '#94a3b8', transition: 'transform .2s', display: 'inline-block' },
   catTags: { padding: '0 10px 10px', display: 'flex', flexDirection: 'column', gap: '2px' },
   catTagItem: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', borderRadius: '7px', background: '#fff', border: '1px solid #e2e8f0', transition: 'border-color .15s,background .15s' },
   catTagName: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#334155', fontWeight: 500 },
-  catTagCount: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#94a3b8' },
+  catTagCount: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#64748b' },
 
   postsSection: { padding: '2rem 0 3rem' },
   featuredWrap: { marginBottom: '2rem' },
-  sectionLabel: { fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 500, color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' },
+  sectionLabel: { fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 600, color: '#64748b', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(330px,1fr))', gap: '12px' },
 }

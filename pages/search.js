@@ -2,16 +2,21 @@ import Layout from '../components/Layout'
 import PostCard from '../components/PostCard'
 import { useState, useEffect } from 'react'
 import { getAllPosts } from '../lib/posts'
+import { useRouter } from 'next/router'
 import siteConfig from '../site.config'
 
-export default function SearchPage({ posts }) {
+export default function SearchPage({ posts, enPosts }) {
+  const router = useRouter()
+  const locale = router.locale || 'uk'
+  const isEn = locale === 'en'
+  const allPosts = isEn ? enPosts : posts
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
 
   useEffect(() => {
     const q = query.trim().toLowerCase()
     if (q.length < 2) { setResults([]); return }
-    const found = posts.filter(p => {
+    const found = allPosts.filter(p => {
       const title = (p.title || '').toLowerCase()
       const desc  = (p.description || '').toLowerCase()
       const tags  = (p.tags || []).join(' ').toLowerCase()
@@ -22,13 +27,13 @@ export default function SearchPage({ posts }) {
 
   return (
     <Layout
-      title="Пошук"
-      description={`Пошук по статтях ${siteConfig.name}`}
+      title={isEn ? "Search" : "Пошук"}
+      description={isEn ? `Search articles on ${siteConfig.name}` : `Пошук по статтях ${siteConfig.name}`}
       canonical={`${siteConfig.url}/search`}
     >
       <div style={{ padding: '2rem 0 3rem' }}>
         <div className="container">
-          <h1 style={s.title}>Пошук</h1>
+          <h1 style={s.title}>{isEn ? "Search" : "Пошук"}</h1>
 
           <div style={s.inputWrap}>
             <svg style={s.icon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -37,7 +42,7 @@ export default function SearchPage({ posts }) {
             <input
               autoFocus
               type="search"
-              placeholder="Введи запит..."
+              placeholder={isEn ? "Search articles..." : "Введи запит..."}
               value={query}
               onChange={e => setQuery(e.target.value)}
               style={s.input}
@@ -51,7 +56,7 @@ export default function SearchPage({ posts }) {
           {query.length >= 2 && (
             <p style={s.count}>
               {results.length > 0
-                ? `Знайдено: ${results.length} ${plural(results.length)}`
+                ? (isEn ? `Found: ${results.length} articles` : `Знайдено: ${results.length} ${plural(results.length)}`)
                 : 'Нічого не знайдено'}
             </p>
           )}
@@ -78,8 +83,9 @@ function plural(n) {
 }
 
 export async function getStaticProps() {
-  const posts = getAllPosts()
-  return { props: { posts } }
+  const posts = getAllPosts('uk')
+  const enPosts = getAllPosts('en')
+  return { props: { posts, enPosts } }
 }
 
 const s = {
