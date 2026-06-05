@@ -1,10 +1,10 @@
-import Layout from '../components/Layout'
-import PostCard from '../components/PostCard'
+import Layout from '../../components/Layout'
+import PostCard from '../../components/PostCard'
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { getAllPosts, getAllTags } from '../lib/posts'
-import siteConfig from '../site.config'
+import { getAllPosts, getAllTags } from '../../lib/posts'
+import siteConfig from '../../site.config'
 
 const SITE = siteConfig.url
 
