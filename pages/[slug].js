@@ -5,7 +5,6 @@ import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 const SITE = siteConfig.url
 
@@ -44,40 +43,6 @@ function extractFaqSchema(contentHtml) {
 
 
 export default function Post({ post, related, locale }) {
-  // ── Copy button для блоків коду ────────────────────────────────
-  useEffect(() => {
-    const blocks = document.querySelectorAll('.prose pre')
-    blocks.forEach(pre => {
-      if (pre.querySelector('.copy-btn')) return
-      const btn = document.createElement('button')
-      btn.className = 'copy-btn'
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
-      btn.title = 'Копіювати'
-      btn.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#e2e8f0;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:4px;transition:all 0.15s;z-index:10;line-height:1'
-      btn.addEventListener('mouseenter', () => btn.style.background = 'rgba(255,255,255,0.2)')
-      btn.addEventListener('mouseleave', () => {
-        if (!btn.dataset.copied) btn.style.background = 'rgba(255,255,255,0.1)'
-      })
-      btn.addEventListener('click', () => {
-        const code = pre.querySelector('code')?.innerText || pre.innerText
-        navigator.clipboard.writeText(code).then(() => {
-          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
-          btn.style.background = 'rgba(74,222,128,0.15)'
-          btn.style.borderColor = 'rgba(74,222,128,0.4)'
-          btn.dataset.copied = '1'
-          setTimeout(() => {
-            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
-            btn.style.background = 'rgba(255,255,255,0.1)'
-            btn.style.borderColor = 'rgba(255,255,255,0.2)'
-            delete btn.dataset.copied
-          }, 2000)
-        })
-      })
-      pre.style.position = 'relative'
-      pre.appendChild(btn)
-    })
-  }, [post.slug])
-
   const isEn = locale === 'en'
   const postUrl = locale === 'en' ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
 
@@ -132,7 +97,7 @@ export default function Post({ post, related, locale }) {
       description={post.description}
       canonical={postUrl}
       isArticle
-      ogImage={`${SITE}/logo.png`}
+      ogImage={`${SITE}/api/og?title=${encodeURIComponent(post.title)}&tags=${encodeURIComponent((post.tags || []).slice(0,3).join(','))}&lang=${locale || 'uk'}`}
       translatesUk={post.translatesUk}
       translatesEn={post.translatesEn}
     >
