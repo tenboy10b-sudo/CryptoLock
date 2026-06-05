@@ -97,7 +97,7 @@ export default function Post({ post, related, locale }) {
       description={post.description}
       canonical={postUrl}
       isArticle
-      ogImage={`${SITE}/api/og?title=${encodeURIComponent(post.title)}&tags=${encodeURIComponent((post.tags || []).slice(0,3).join(','))}&lang=${locale || 'uk'}`}
+      ogImage={`${SITE}/logo.png`}
       translatesUk={post.translatesUk}
       translatesEn={post.translatesEn}
     >
@@ -200,9 +200,42 @@ export async function getStaticProps({ params, locale }) {
     }
 
     const all = getAllPosts(locale)
-    const related = all
-      .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
-      .slice(0, 3)
+
+    // Покращений алгоритм related — score по кількості спільних тегів
+    // Загальні теги (windows, налаштування) мають меншу вагу
+    const COMMON_TAGS = new Set(['windows', 'налаштування', 'інструменти', 'administration', 'windows-11'])
+    const scored = all
+      .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.length > 0)
+      .map(p => {
+        const common = p.tags.filter(t => post.tags.includes(t))
+        const s = common.reduce((acc, t) => acc + (COMMON_TAGS.has(t) ? 1 : 3), 0)
+        return { ...p, _score: s }
+      })
+      .filter(p => p._score > 0)
+      .sort((a, b) => b._score - a._score)
+
+    const related = scored.slice(0, 3)
+
+    // Додаємо "Читай також" блок всередину статті після ~40% контенту
+    let enrichedHtml = post.contentHtml || ''
+    if (scored.length >= 2 && enrichedHtml.length > 500) {
+      const SITE_URL = 'https://cryptolockua.com'
+      const isEn = (locale || 'uk') === 'en'
+      const label = isEn ? 'Read also' : 'Читай також'
+      const picks = scored.slice(0, 2)
+      const linksHtml = picks.map(p => {
+        const href = isEn ? `${SITE_URL}/en/${p.slug}` : `${SITE_URL}/${p.slug}`
+        return `<a href="${href}" style="display:block;color:#2563eb;text-decoration:none;padding:6px 0;font-size:0.9rem;border-bottom:1px solid #e2e8f0">→ ${p.title}</a>`
+      }).join('')
+      const inlineBlock = `<div class="inline-related" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin:2rem 0"><p style="font-size:0.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px">${label}</p>${linksHtml}</div>`
+      // Вставляємо після першого </h2> або після ~40% тексту
+      const h2idx = enrichedHtml.indexOf('</h2>')
+      if (h2idx > 100) {
+        const insertAt = enrichedHtml.indexOf('</p>', h2idx) + 4
+        enrichedHtml = enrichedHtml.slice(0, insertAt) + inlineBlock + enrichedHtml.slice(insertAt)
+      }
+    }
+    post.contentHtml = enrichedHtml
 
     return { props: { post, related, locale: locale || 'uk' }, revalidate: 3600 }
   } catch (e) {
