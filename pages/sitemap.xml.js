@@ -40,10 +40,15 @@ function generateSitemap(posts, enPosts, tags) {
     { url: '/tools/windows-event-id',     priority: '0.8', changefreq: 'monthly' },
     { url: '/tools/password-generator',   priority: '0.7', changefreq: 'monthly' },
     { url: '/tools/subnet-calculator',    priority: '0.7', changefreq: 'monthly' },
-    { url: '/tags',                       priority: '0.6', changefreq: 'weekly'  },
-    { url: '/about',
-    '/bookmarks',                      priority: '0.4', changefreq: 'monthly' },
-    { url: '/privacy',                    priority: '0.3', changefreq: 'monthly' },
+    { url: '/tools/port-checker',          priority: '0.7', changefreq: 'monthly' },
+    { url: '/tools/ip-info',               priority: '0.7', changefreq: 'monthly' },
+    { url: '/tools/base64',                priority: '0.7', changefreq: 'monthly' },
+    { url: '/tools/hash',                  priority: '0.7', changefreq: 'monthly' },
+    { url: '/tools/regex',                 priority: '0.7', changefreq: 'monthly' },
+    { url: '/tags',                        priority: '0.6', changefreq: 'weekly'  },
+    { url: '/about',                       priority: '0.4', changefreq: 'monthly' },
+    { url: '/bookmarks',                   priority: '0.3', changefreq: 'monthly' },
+    { url: '/privacy',                     priority: '0.3', changefreq: 'monthly' },
   ]
 
   const tagPages = tags.map(({ tag }) => ({
