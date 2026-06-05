@@ -43,12 +43,12 @@ const LogoIcon = () => (
 
 // ── Bookmarks Nav Link ──────────────────────────────────────────
 function BookmarksNavLink() {
-  const [count, setCount] = React.useState(0)
+  const [count, setCount] = useState(0)
   const router = useRouter ? useRouter() : {}
   const locale = router.locale || 'uk'
   const isEn = locale === 'en'
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       const b = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
       setCount(b.length)
