@@ -1,141 +1,106 @@
 ---
 title: "How to Enable and Secure Remote Desktop (RDP) in Windows 10 and 11"
-date: "2026-05-11"
-publishDate: "2026-05-11"
-description: "Enable Remote Desktop in Windows 10 and 11, connect from another PC, change the RDP port, restrict access with firewall rules and limit who can connect."
-tags: ["windows", "rdp", "network", "security", "administration"]
-readTime: 6
+date: "2026-06-29"
+publishDate: "2026-06-29"
+description: "Enable Remote Desktop in Windows 10 and 11, configure NLA authentication, change RDP port, restrict access and troubleshoot common connection issues."
+tags: ["windows", "rdp", "remote", "security", "administration", "powershell"]
+readTime: 5
 ---
 
-Remote Desktop (RDP) lets you control a Windows PC remotely. Here's how to enable it, connect securely, and lock it down so only authorized users can access it.
+Remote Desktop lets you control a Windows PC from anywhere. Here's how to enable it securely and avoid common misconfigurations.
 
 ---
 
 ## Enable Remote Desktop
 
-**Via Settings:**
-
-`Win + I` → **System** → **Remote Desktop** → toggle **Enable Remote Desktop** → **Confirm**
-
-**Via PowerShell:**
-
 ```powershell
 # Enable RDP
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
-  -Name "fDenyTSConnections" -Value 0
+Set-ItemProperty "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
+  -Name "fDenyTSConnections" -Value 0 -Type DWord
 
-# Enable through firewall
+# Enable firewall rule
 Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
 # Verify
 (Get-ItemProperty "HKLM:\System\CurrentControlSet\Control\Terminal Server").fDenyTSConnections
-# 0 = enabled, 1 = disabled
+# 0 = enabled
+```
+
+Or: `Win + I` → **System** → **Remote Desktop** → On
+
+---
+
+## Require Network Level Authentication (NLA)
+
+NLA forces authentication before the session loads — prevents unauthenticated access to the login screen:
+
+```powershell
+Set-ItemProperty "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
+  -Name "UserAuthentication" -Value 1 -Type DWord
+```
+
+---
+
+## Change Default RDP Port (3389)
+
+Changing from 3389 reduces automated scan attacks significantly:
+
+```powershell
+# Change to custom port (e.g. 33891)
+$newPort = 33891
+Set-ItemProperty "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
+  -Name "PortNumber" -Value $newPort -Type DWord
+
+# Update firewall rule
+Remove-NetFirewallRule -DisplayName "Remote Desktop*" -EA 0
+New-NetFirewallRule -DisplayName "RDP Custom Port" `
+  -Direction Inbound -Protocol TCP -LocalPort $newPort -Action Allow
+
+Restart-Service TermService -Force
+```
+
+---
+
+## Restrict RDP Access to Specific Users
+
+```powershell
+# Add user to Remote Desktop Users group
+Add-LocalGroupMember -Group "Remote Desktop Users" -Member "Username"
+
+# View who has RDP access
+Get-LocalGroupMember -Group "Remote Desktop Users"
+
+# Remove user
+Remove-LocalGroupMember -Group "Remote Desktop Users" -Member "Username"
 ```
 
 ---
 
 ## Connect to Remote Desktop
 
-**From Windows:**
-`Win + R` → `mstsc` → enter IP or hostname → Connect → enter credentials
+```powershell
+# Open RDP client
+mstsc /v:192.168.1.50
 
-**Command line:**
-```cmd
-mstsc /v:192.168.1.100
-mstsc /v:192.168.1.100 /fullscreen
-mstsc /v:192.168.1.100:3390  # custom port
+# With custom port
+mstsc /v:192.168.1.50:33891
+
+# Save connection to file
+cmdkey /add:192.168.1.50 /user:Username /pass:Password
+mstsc /v:192.168.1.50 /f  # /f = fullscreen
 ```
 
 ---
 
-## Find the IP Address to Connect To
+## Enable RDP Remotely via PowerShell
 
 ```powershell
-# On the remote PC — find its IP
-Get-NetIPAddress -AddressFamily IPv4 |
-  Where-Object {$_.PrefixOrigin -ne "WellKnown"} |
-  Select-Object IPAddress, InterfaceAlias
-```
-
----
-
-## Who Can Use Remote Desktop
-
-By default, only Administrators can connect. Add other users:
-
-`Win + I` → **System** → **Remote Desktop** → **Remote Desktop users** → **Add**
-
-```powershell
-# Add user via PowerShell
-Add-LocalGroupMember -Group "Remote Desktop Users" -Member "username"
-
-# View who has access
-Get-LocalGroupMember -Group "Remote Desktop Users"
-```
-
----
-
-## Change RDP Port (Security)
-
-The default port 3389 is constantly scanned by attackers. Changing it reduces noise:
-
-```powershell
-# Change to custom port (example: 3390)
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
-  -Name "PortNumber" -Value 3390
-
-# Update firewall rule
-Remove-NetFirewallRule -DisplayName "Remote Desktop - User Mode (TCP-In)" -EA 0
-New-NetFirewallRule -DisplayName "RDP Custom Port" -Direction Inbound `
-  -Protocol TCP -LocalPort 3390 -Action Allow
-
-# Restart RDP service
-Restart-Service TermService -Force
-```
-
----
-
-## Restrict RDP Access by IP
-
-```powershell
-# Allow RDP only from specific IP range
-New-NetFirewallRule -DisplayName "RDP from Office" `
-  -Direction Inbound -Protocol TCP -LocalPort 3389 `
-  -RemoteAddress "192.168.1.0/24" -Action Allow
-
-# Block RDP from everywhere else
-New-NetFirewallRule -DisplayName "Block RDP External" `
-  -Direction Inbound -Protocol TCP -LocalPort 3389 `
-  -RemoteAddress "0.0.0.0/0" -Action Block
-```
-
----
-
-## Enable Network Level Authentication (NLA)
-
-NLA requires authentication before the RDP session opens — more secure:
-
-```powershell
-# Enable NLA
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" `
-  -Name "UserAuthentication" -Value 1
-```
-
-Or: `Win + R` → `sysdm.cpl` → **Remote** tab → check **Allow connections only from computers running Remote Desktop with Network Level Authentication**
-
----
-
-## Monitor Active RDP Sessions
-
-```powershell
-# View active sessions
-query session
-
-# View who is logged in remotely
-qwinsta
-
-# Disconnect a session (get ID from qwinsta)
-logoff 2  # replace 2 with session ID
+# Enable RDP on a remote PC
+Invoke-Command -ComputerName "RemotePC" -ScriptBlock {
+  Set-ItemProperty "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
+    -Name "fDenyTSConnections" -Value 0
+  Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+}
 ```
 
 ---
@@ -143,11 +108,8 @@ logoff 2  # replace 2 with session ID
 ## Disable RDP When Not Needed
 
 ```powershell
-# Disable RDP
-Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
+Set-ItemProperty "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
   -Name "fDenyTSConnections" -Value 1
-
-# Disable firewall rule
 Disable-NetFirewallRule -DisplayGroup "Remote Desktop"
 ```
 
@@ -155,4 +117,18 @@ Disable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
 ## Summary
 
-Enable via Settings or `Set-ItemProperty fDenyTSConnections = 0`. Connect with `mstsc /v:IP`. Add non-admin users to the **Remote Desktop Users** group. For security: change port from 3389, restrict by IP, enable NLA. Disable RDP when not actively needed.
+Enable with registry key + firewall rule. Always enable NLA. Change port from 3389. Restrict to specific users via Remote Desktop Users group. Disable when not actively needed.
+
+## Frequently Asked Questions
+
+### RDP connection shows "Your credentials did not work" — how to fix?
+
+Check: 1) Username format — try `COMPUTERNAME\Username` or just `Username`, 2) Account is not locked: `Get-LocalUser Username | Select-Object IsAccountLocked`, 3) Password hasn't expired, 4) User is in Remote Desktop Users group.
+
+### Can I use RDP to connect from Mac or mobile?
+
+Yes — Microsoft Remote Desktop app is free on iOS, Android and macOS. Same server settings apply — just enter the IP and credentials.
+
+### Is RDP safe to expose to the internet?
+
+Not directly on port 3389 — RDP brute force attacks are constant. Options: use a VPN first then RDP over the VPN, or change port + enable NLA + strong passwords + account lockout policy.
