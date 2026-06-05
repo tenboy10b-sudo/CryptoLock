@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function TableOfContents({ contentHtml }) {
+export default function TableOfContents({ contentHtml, sticky = false, className = '' }) {
   const [headings, setHeadings] = useState([])
   const [active, setActive] = useState('')
 
@@ -40,8 +40,19 @@ export default function TableOfContents({ contentHtml }) {
 
   if (headings.length < 3) return null
 
+  const wrapStyle = sticky ? {
+    ...s.wrap,
+    position: 'sticky',
+    top: '80px',
+    maxHeight: 'calc(100vh - 120px)',
+    overflowY: 'auto',
+    scrollbarWidth: 'thin',
+    scrollbarColor: '#e2e8f0 transparent',
+    marginBottom: 0,
+  } : s.wrap
+
   return (
-    <nav aria-label="Зміст статті" style={s.wrap}>
+    <nav aria-label={sticky ? 'Table of contents' : 'Зміст статті'} style={wrapStyle} className={className}>
       <p style={s.label}>Зміст</p>
       <ol style={s.list}>
         {headings.map(h => (

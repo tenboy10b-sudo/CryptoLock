@@ -1,4 +1,3 @@
-import React from 'react'
 import Layout from '../components/Layout'
 import PostCard from '../components/PostCard'
 import Link from 'next/link'
@@ -40,77 +39,6 @@ function extractFaqSchema(contentHtml) {
     '@type': 'FAQPage',
     mainEntity: items
   }
-}
-
-
-// ── Bookmark Button ─────────────────────────────────────────────
-function BookmarkButton({ slug, title, tag, isEn }) {
-  const [saved, setSaved] = React.useState(false)
-
-  React.useEffect(() => {
-    try {
-      const bookmarks = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
-      setSaved(bookmarks.some(b => b.slug === slug))
-    } catch {}
-  }, [slug])
-
-  const toggle = () => {
-    try {
-      const bookmarks = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
-      if (saved) {
-        const updated = bookmarks.filter(b => b.slug !== slug)
-        localStorage.setItem('cl-bookmarks', JSON.stringify(updated))
-        setSaved(false)
-      } else {
-        const updated = [...bookmarks, { slug, title, tag, savedAt: Date.now() }]
-        localStorage.setItem('cl-bookmarks', JSON.stringify(updated))
-        setSaved(true)
-      }
-    } catch {}
-  }
-
-  return (
-    <button
-      onClick={toggle}
-      aria-label={saved
-        ? (isEn ? 'Remove from bookmarks' : 'Видалити із закладок')
-        : (isEn ? 'Save to bookmarks' : 'Додати в закладки')}
-      title={saved
-        ? (isEn ? 'Saved! Click to remove' : 'Збережено! Натисни щоб видалити')
-        : (isEn ? 'Save article' : 'Зберегти статтю')}
-      style={{
-        display: 'inline-flex', alignItems: 'center', gap: '5px',
-        padding: '6px 12px', borderRadius: '8px', fontSize: '13px',
-        fontWeight: 600, cursor: 'pointer', border: '1.5px solid',
-        transition: 'all 0.2s',
-        borderColor: saved ? '#2563eb' : '#e2e8f0',
-        background:  saved ? '#eff6ff' : '#fff',
-        color:       saved ? '#2563eb' : '#64748b',
-      }}
-      onMouseEnter={e => {
-        if (!saved) {
-          e.currentTarget.style.borderColor = '#2563eb'
-          e.currentTarget.style.color = '#2563eb'
-        }
-      }}
-      onMouseLeave={e => {
-        if (!saved) {
-          e.currentTarget.style.borderColor = '#e2e8f0'
-          e.currentTarget.style.color = '#64748b'
-        }
-      }}
-    >
-      <svg width="14" height="14" viewBox="0 0 24 24"
-        fill={saved ? 'currentColor' : 'none'}
-        stroke="currentColor" strokeWidth="2"
-      >
-        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-      </svg>
-      {saved
-        ? (isEn ? 'Saved' : 'Збережено')
-        : (isEn ? 'Save' : 'Зберегти')}
-    </button>
-  )
 }
 
 
@@ -179,6 +107,22 @@ export default function Post({ post, related, locale }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       )}
 
+      <style>{`
+        @media (min-width: 1200px) {
+          .article-two-col {
+            display: grid !important;
+            grid-template-columns: 1fr 260px !important;
+            grid-template-areas: "article sidebar" !important;
+            gap: 0 2rem !important;
+            align-items: start !important;
+          }
+          .article-two-col .toc-sidebar {
+            display: block !important;
+            grid-area: sidebar !important;
+          }
+          .toc-inline { display: none !important; }
+        }
+      `}</style>
       <div style={s.wrap}>
         <div className="container">
 
@@ -209,15 +153,6 @@ export default function Post({ post, related, locale }) {
                 {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min read' : 'хв читання'}</span></>}
                 {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <time dateTime={post.updated}>{fmt(post.updated, locale)}</time></span></>}
               </div>
-              {/* Bookmark + Share рядок */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '1rem', flexWrap: 'wrap' }}>
-                <BookmarkButton
-                  slug={post.slug}
-                  title={post.title}
-                  tag={post.tags?.[0] || ''}
-                  isEn={isEn}
-                />
-              </div>
               {post.description && <p style={s.lead}>{post.description}</p>}
             </header>
 
@@ -229,7 +164,8 @@ export default function Post({ post, related, locale }) {
               </div>
             )}
 
-            <TableOfContents contentHtml={post.contentHtml} />
+            {/* TOC для мобільних (sticky={false}) */}
+            <TableOfContents contentHtml={post.contentHtml} sticky={false} className="toc-inline" />
             <div className="prose" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
 
             {siteConfig.adsenseId && (
@@ -240,6 +176,7 @@ export default function Post({ post, related, locale }) {
               </div>
             )}
           </article>
+            </div>{/* /twoCol */}
 
           {related && related.length > 0 && (
             <section style={s.related} aria-label={isEn ? "Related articles" : "Схожі статті"}>
@@ -293,6 +230,19 @@ export async function getStaticProps({ params, locale }) {
 
 const s = {
   wrap: { padding: '1.75rem 0 3rem' },
+  twoCol: {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gridTemplateAreas: '"article"',
+    gap: '0',
+    position: 'relative',
+  },
+  sidebar: {
+    display: 'none',  // приховано на мобільних
+  },
+  articleCol: {
+    minWidth: 0,
+  },
   bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem', flexWrap: 'wrap' },
   bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8' },
   bcSep: { fontSize: '12px', color: '#cbd5e1' },

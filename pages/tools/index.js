@@ -13,6 +13,9 @@ const tools = {
     { slug: 'windows-event-id',      name: 'Event ID довідник',    tagline: 'Що означає подія з Event Viewer', description: '20+ ключових подій безпеки Windows з описом, рівнем загрози і рекомендаціями.', badge: 'Безкоштовно', icon: '📋' },
     { slug: 'password-generator',    name: 'Генератор паролів',    tagline: 'Надійні паролі за секунду',      description: 'Криптографічно надійні паролі в браузері. Нічого не передається на сервер.',    badge: 'Безкоштовно', icon: '🔑' },
     { slug: 'subnet-calculator',     name: 'Subnet калькулятор',   tagline: 'IP і підмережі онлайн',          description: 'Введи IP/CIDR — маска, мережа, broadcast, діапазон хостів і бінарне представлення.', badge: 'Безкоштовно', icon: '🌐' },
+    { slug: 'hash',             name: 'Hash Generator',       tagline: 'MD5, SHA1, SHA256, SHA512 онлайн', description: 'Розрахуй хеш тексту в браузері. MD5, SHA-1, SHA-256, SHA-512. Порівняй з відомим хешем. Нічого не передається.', badge: 'Безкоштовно', icon: '#️⃣' },
+    { slug: 'base64',           name: 'Base64 / HEX',         tagline: 'Кодуй і декодуй Base64 та HEX',  description: 'Base64 encode/decode, HEX конвертер і кодування PowerShell команд. Все в браузері, нічого не передається.', badge: 'Безкоштовно', icon: '🔢' },
+    { slug: 'ip-info',              name: 'IP Info',              tagline: 'Інформація про IP адресу',       description: 'Країна, місто, провайдер, організація і геолокація будь-якої IPv4 або IPv6 адреси.',     badge: 'Безкоштовно', icon: '🌐' },
     { slug: 'port-checker',          name: 'Перевірка портів',     tagline: 'Чи відкритий TCP порт онлайн',   description: 'Введи хост і порт — миттєва перевірка TCP з'єднання. Або скануй 20 популярних портів.', badge: 'Безкоштовно', icon: '🔌' },
   ],
   en: [
@@ -22,6 +25,9 @@ const tools = {
     { slug: 'windows-event-id',      name: 'Event ID Reference',   tagline: 'Look up Event Viewer IDs',       description: '20+ key Windows security events with description, threat level and recommended actions.',       badge: 'Free', icon: '📋' },
     { slug: 'password-generator',    name: 'Password Generator',   tagline: 'Strong passwords instantly',     description: 'Cryptographically secure passwords generated in your browser. Nothing is transmitted.',         badge: 'Free', icon: '🔑' },
     { slug: 'subnet-calculator',     name: 'Subnet Calculator',    tagline: 'IP and subnets online',          description: 'Enter IP/CIDR and get mask, network, broadcast, host range and binary representation.',        badge: 'Free', icon: '🌐' },
+    { slug: 'hash',             name: 'Hash Generator',       tagline: 'MD5, SHA1, SHA256, SHA512 online', description: 'Calculate text hashes in your browser. MD5, SHA-1, SHA-256, SHA-512. Compare with known hash. Nothing is sent anywhere.', badge: 'Free', icon: '#️⃣' },
+    { slug: 'base64',           name: 'Base64 / HEX',         tagline: 'Encode and decode Base64 & HEX',  description: 'Base64 encode/decode, HEX converter and PowerShell EncodedCommand. Everything runs in your browser.', badge: 'Free', icon: '🔢' },
+    { slug: 'ip-info',              name: 'IP Info',              tagline: 'IP address lookup',              description: 'Country, city, ISP, organization and geolocation for any IPv4 or IPv6 address.',            badge: 'Free', icon: '🌐' },
     { slug: 'port-checker',          name: 'Port Checker',         tagline: 'Check if TCP port is open',      description: 'Enter host and port for instant TCP connection test. Or scan 20 common ports at once.',          badge: 'Free', icon: '🔌' },
   ],
 }
