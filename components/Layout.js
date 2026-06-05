@@ -1,3 +1,4 @@
+import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -39,6 +40,102 @@ const LogoIcon = () => (
     <circle cx="9.5" cy="15" r="1.5" fill="#93c5fd"/>
   </svg>
 )
+
+// ── PWA Install Banner ─────────────────────────────────────────
+function PwaInstallBanner() {
+  const [show, setShow] = React.useState(false)
+  const [deferredPrompt, setDeferredPrompt] = React.useState(null)
+  const [isIos, setIsIos] = React.useState(false)
+
+  React.useEffect(() => {
+    // Реєструємо Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {})
+    }
+
+    // Вже встановлений — не показуємо
+    if (window.matchMedia('(display-mode: standalone)').matches) return
+    // Вже закривали — не показуємо 7 днів
+    const dismissed = localStorage.getItem('pwa-dismissed')
+    if (dismissed && Date.now() - Number(dismissed) < 7 * 24 * 60 * 60 * 1000) return
+
+    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent)
+    setIsIos(ios)
+
+    if (ios) {
+      // На iOS показуємо банер з інструкцією через 30 сек
+      const t = setTimeout(() => setShow(true), 30000)
+      return () => clearTimeout(t)
+    }
+
+    // Android/Desktop — чекаємо подію beforeinstallprompt
+    const handler = e => {
+      e.preventDefault()
+      setDeferredPrompt(e)
+      const t = setTimeout(() => setShow(true), 30000)
+      return () => clearTimeout(t)
+    }
+    window.addEventListener('beforeinstallprompt', handler)
+    return () => window.removeEventListener('beforeinstallprompt', handler)
+  }, [])
+
+  const handleInstall = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt()
+      await deferredPrompt.userChoice
+      setDeferredPrompt(null)
+    }
+    setShow(false)
+  }
+
+  const handleDismiss = () => {
+    localStorage.setItem('pwa-dismissed', String(Date.now()))
+    setShow(false)
+  }
+
+  if (!show) return null
+
+  return (
+    <div style={{
+      position: 'fixed', bottom: '16px', left: '16px', right: '16px',
+      background: '#0f172a', color: '#f1f5f9',
+      borderRadius: '14px', padding: '14px 16px',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+      display: 'flex', alignItems: 'center', gap: '12px',
+      zIndex: 9999, maxWidth: '480px', margin: '0 auto',
+      border: '1px solid rgba(37,99,235,0.3)',
+      animation: 'slideUp 0.3s ease',
+    }}>
+      <style>{`@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}`}</style>
+      <span style={{ fontSize: '28px', flexShrink: 0 }}>🔒</span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{ margin: '0 0 2px', fontWeight: 600, fontSize: '0.875rem' }}>
+          Додати CryptoLock на екран
+        </p>
+        <p style={{ margin: 0, fontSize: '0.75rem', color: '#94a3b8', lineHeight: 1.4 }}>
+          {isIos
+            ? 'Натисни 􀈂 → "На екран "Домів""'
+            : 'Швидкий доступ та офлайн читання'}
+        </p>
+      </div>
+      {!isIos && (
+        <button onClick={handleInstall} style={{
+          background: '#2563eb', color: '#fff', border: 'none',
+          borderRadius: '8px', padding: '7px 14px',
+          fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer',
+          whiteSpace: 'nowrap', flexShrink: 0,
+        }}>
+          Додати
+        </button>
+      )}
+      <button onClick={handleDismiss} style={{
+        background: 'none', border: 'none', color: '#64748b',
+        fontSize: '18px', cursor: 'pointer', padding: '4px',
+        lineHeight: 1, flexShrink: 0,
+      }}>✕</button>
+    </div>
+  )
+}
 
 export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn }) {
   const pageTitle = title
@@ -116,6 +213,13 @@ export default function Layout({ children, title, description, canonical, isArti
   return (
     <>
       <Head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="CryptoLock" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <meta name="theme-color" content="#0f172a" />
         {/* Google Fonts — preconnect для швидкого завантаження */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -281,13 +385,14 @@ export default function Layout({ children, title, description, canonical, isArti
         <div style={s.footerCopy}>
           <div className="container">
             <p style={s.footerCopyText}>
-              {locale === "en" ? "© 2026 CryptoLock. Windows & Security guides." : "© 2026 CryptoLock. Всі матеріали українською мовою."}
+              {locale === "en" ? `© ${new Date().getFullYear()} CryptoLock. Windows & Security guides.` : `© ${new Date().getFullYear()} CryptoLock. Всі матеріали українською мовою.`}
             </p>
           </div>
         </div>
       </footer>
 
       <button id="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Прокрутити нагору">↑</button>
+      <PwaInstallBanner />
     </>
   )
 }
