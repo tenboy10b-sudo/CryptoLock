@@ -28,13 +28,6 @@ const nextConfig = {
         ],
       },
       {
-        // Кешування зображень на 1 рік
-        source: '/:file(.*\.(?:png|webp|jpg|jpeg|svg|ico|gif))',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      {
         // Кешування HTML сторінок на 1 годину з stale-while-revalidate
         source: '/:path*',
         headers: [
@@ -125,6 +118,9 @@ const nextConfig = {
       { source: '/en/windows-defender-cherez-gpo', destination: '/windows-defender-cherez-gpo', permanent: true, locale: false },
       { source: '/en/yak-zrobyty-screenshot-windows', destination: '/yak-zrobyty-screenshot-windows', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvatv-vpn-windows', destination: '/yak-nalashtuvaty-vpn-windows', permanent: true, locale: false },
+      { source: '/en/vymknute-cortana-veb-poshuk', destination: '/vymknute-cortana-veb-poshuk', permanent: true, locale: false },
+      { source: '/en/ochyschennya-dns-keshu-windows', destination: '/ochyschennya-dns-keshu-windows', permanent: true, locale: false },
+      { source: '/en/bios-ne-bachyt-fleshku', destination: '/bios-ne-bachyt-fleshku', permanent: true, locale: false },
       { source: '/README-AUTOPOST', destination: '/', permanent: true, locale: false },
       { source: '/en/README-AUTOPOST', destination: '/', permanent: true, locale: false },
       { source: '/yak-zrobyty-screenshot-windows', destination: '/yak-zrobyty-screenshot-windows', permanent: true, locale: false },
