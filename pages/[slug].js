@@ -347,14 +347,16 @@ export async function getStaticProps({ params, locale }) {
     // Inline "Читай також" блок
     let enrichedHtml = post.contentHtml || ''
     if (scored.length >= 2 && enrichedHtml.length > 500) {
-      const isEn = (locale||'uk') === 'en'
-      const label = isEn ? 'Read also' : 'Читай також'
+      const isEnBlock = (locale||'uk') === 'en'
+      const label = isEnBlock ? 'Read also' : 'Читай також'
       const picks = scored.slice(0,2)
       const linksHtml = picks.map(p=>{
-        const href = isEn ? \`https://cryptolockua.com/en/\${p.slug}\` : \`https://cryptolockua.com/\${p.slug}\`
-        return \`<a href="\${href}" style="display:block;color:#2563eb;text-decoration:none;padding:6px 0;font-size:0.9rem;border-bottom:1px solid #e2e8f0">→ \${p.title}</a>\`
+        const href = isEnBlock
+          ? 'https://cryptolockua.com/en/' + p.slug
+          : 'https://cryptolockua.com/' + p.slug
+        return '<a href="' + href + '" style="display:block;color:#2563eb;text-decoration:none;padding:6px 0;font-size:0.9rem;border-bottom:1px solid #e2e8f0">→ ' + p.title + '</a>'
       }).join('')
-      const block = \`<div class="inline-related" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin:2rem 0"><p style="font-size:0.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px">\${label}</p>\${linksHtml}</div>\`
+      const block = '<div class="inline-related" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin:2rem 0"><p style="font-size:0.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px">' + label + '</p>' + linksHtml + '</div>'
       const h2idx = enrichedHtml.indexOf('</h2>')
       if (h2idx > 100) {
         const ins = enrichedHtml.indexOf('</p>', h2idx) + 4
