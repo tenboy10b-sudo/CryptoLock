@@ -202,3 +202,100 @@ input[type="search"]::-webkit-search-cancel-button{display:none}
 
 /* Prevent flash on load */
 html { color-scheme: light dark; }
+
+/* ── Dark mode — головна сторінка ──────────────────────────── */
+[data-theme="dark"] .cat-card-item,
+[data-theme="dark"] [class*="catCard"] {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Категорії теги */
+[data-theme="dark"] .cat-tag-item {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+[data-theme="dark"] .cat-tag-item:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent-light) !important;
+}
+
+/* Post cards */
+[data-theme="dark"] .post-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] .post-card * {
+  color: var(--text);
+}
+[data-theme="dark"] .post-card h2,
+[data-theme="dark"] .post-card h3,
+[data-theme="dark"] .post-card a {
+  color: var(--text) !important;
+}
+
+/* Секції з білим фоном */
+[data-theme="dark"] section,
+[data-theme="dark"] .section-white {
+  background: var(--bg) !important;
+  border-color: var(--border) !important;
+}
+
+/* Загальний текст */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] li,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: var(--text);
+}
+
+/* Nav і footer */
+[data-theme="dark"] nav,
+[data-theme="dark"] footer {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* Інпути і кнопки */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Tag chips */
+[data-theme="dark"] .tag-chip {
+  background: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+  border-color: var(--accent-dim) !important;
+}
+
+/* Search */
+[data-theme="dark"] .search-wrap,
+[data-theme="dark"] .search-input {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Featured card on homepage */
+[data-theme="dark"] .featured-card {
+  background: var(--bg-dark) !important;
+}
+
+/* Tools page */
+[data-theme="dark"] .tool-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* Кнопки без кольору */
+[data-theme="dark"] button:not([style*="background:#"]):not([style*="background: #2"]):not([style*="background: rgb"]) {
+  color: var(--text);
+}
