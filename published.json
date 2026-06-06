@@ -17,13 +17,15 @@
     "perevirka-produktyvnosti-dysku",
     "sfc-dism-povnyy-gaid",
     "yak-zashyfruvaty-fleshku-bitlocker-to-go",
-    "sertyfikaty-windows-keruvannya"
+    "sertyfikaty-windows-keruvannya",
+    "yak-nalashtuvatysy-robochyy-stit-windows",
+    "yak-nalashtuvanty-druhyy-monitor-windows"
   ],
-  "count": 18,
-  "promo_index": 19,
+  "count": 20,
+  "promo_index": 21,
   "last_post": {
-    "slug": "sertyfikaty-windows-keruvannya",
-    "title": "Сертифікати в Windows: управління через certmgr і PowerShell",
-    "time": "2026-06-04T08:01:10.557145"
+    "slug": "yak-nalashtuvanty-druhyy-monitor-windows",
+    "title": "Як підключити і налаштувати другий монітор в Windows 10 і 11",
+    "time": "2026-06-06T08:01:11.059129"
   }
 }
