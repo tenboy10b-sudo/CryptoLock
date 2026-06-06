@@ -1,292 +1,126 @@
-import Layout from '../../components/Layout'
-import PostCard from '../../components/PostCard'
-import Link from 'next/link'
-import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { getAllPosts, getAllTags } from '../../lib/posts'
+import Layout from '../../components/Layout'
+import Link from 'next/link'
 import siteConfig from '../../site.config'
 
 const SITE = siteConfig.url
 
-const CATEGORIES_UK = [
-  { id: 'security',     label: 'Безпека',          icon: '🔒', tags: ['безпека','паролі','bitlocker','шифрування','облікові-записи','захист'] },
-  { id: 'windows',      label: 'Windows',           icon: '🪟', tags: ['windows','оновлення','windows-update','персоналізація','темна-тема','налаштування'] },
-  { id: 'system',       label: 'Система',           icon: '⚙️', tags: ['драйвери','bios','uefi','диск','chkdsk','sfc','dism','обладнання'] },
-  { id: 'network',      label: 'Мережа',            icon: '📶', tags: ['wifi','dns','bluetooth','мережа'] },
-  { id: 'optimization', label: 'Оптимізація',       icon: '⚡', tags: ['оптимізація','продуктивність','автозавантаження','очищення','прискорення'] },
-  { id: 'tools',        label: 'Інструменти',       icon: '🧰', tags: ['cmd','powershell','реєстр','моніторинг'] },
-  { id: 'gpo',          label: 'Групова політика',  icon: '🛡️', tags: ['групова-політика','gpedit','secpol','applocker','gpo'] },
-  { id: 'recovery',     label: 'Відновлення',       icon: '🔄', tags: ['відновлення','скидання','переустановка'] },
-]
-const CATEGORIES_EN = [
-  { id: 'security',     label: 'Security',       icon: '🔒', tags: ['безпека','паролі','bitlocker','шифрування','облікові-записи','захист','security','viruses','encryption'] },
-  { id: 'windows',      label: 'Windows',        icon: '🪟', tags: ['windows','оновлення','windows-update','персоналізація','темна-тема','налаштування','optimization','performance'] },
-  { id: 'system',       label: 'System',         icon: '⚙️', tags: ['драйвери','bios','uefi','диск','chkdsk','sfc','dism','обладнання'] },
-  { id: 'network',      label: 'Network',        icon: '📶', tags: ['wifi','dns','bluetooth','мережа','network','rdp'] },
-  { id: 'optimization', label: 'Optimization',   icon: '⚡', tags: ['оптимізація','продуктивність','автозавантаження','очищення','прискорення'] },
-  { id: 'tools',        label: 'Tools',          icon: '🧰', tags: ['cmd','powershell','реєстр','моніторинг','tools','administration'] },
-  { id: 'gpo',          label: 'Group Policy',   icon: '🛡️', tags: ['групова-політика','gpedit','secpol','applocker','gpo'] },
-  { id: 'recovery',     label: 'Recovery',       icon: '🔄', tags: ['відновлення','скидання','переустановка'] },
-]
+const tools = {
+  uk: [
+    { slug: 'auditshield',           name: 'AuditShield',         tagline: 'Аудит безпеки Windows ПК',       description: 'Перевіряє ПК по 22 напрямках і видає детальний HTML-звіт з оцінкою ризику.', badge: 'Безкоштовне демо', icon: '🛡️' },
+    { slug: 'windows-error-decoder', name: 'Декодер помилок',      tagline: 'Розшифруй код помилки Windows',  description: 'Введи код 0x80070005 і дізнайся що він означає і як виправити. 40+ помилок.',    badge: 'Безкоштовно', icon: '🔍' },
+    { slug: 'powershell-commands',   name: 'PowerShell довідник',  tagline: 'Шукай команду за задачею',       description: '40+ PowerShell і CMD команд. Мережа, файли, безпека, диски. Копіюй одним кліком.', badge: 'Безкоштовно', icon: '⚡' },
+    { slug: 'windows-event-id',      name: 'Event ID довідник',    tagline: 'Що означає подія з Event Viewer', description: '20+ ключових подій безпеки Windows з описом, рівнем загрози і рекомендаціями.', badge: 'Безкоштовно', icon: '📋' },
+    { slug: 'password-generator',    name: 'Генератор паролів',    tagline: 'Надійні паролі за секунду',      description: 'Криптографічно надійні паролі в браузері. Нічого не передається на сервер.',    badge: 'Безкоштовно', icon: '🔑' },
+    { slug: 'subnet-calculator',     name: 'Subnet калькулятор',   tagline: 'IP і підмережі онлайн',          description: 'Введи IP/CIDR — маска, мережа, broadcast, діапазон хостів і бінарне представлення.', badge: 'Безкоштовно', icon: '🌐' },
+    { slug: 'regex',            name: 'Regex Tester',         tagline: 'Тестуй регулярні вирази онлайн',  description: 'Живе підсвічування збігів, деталі груп, флаги і 10 готових шаблонів для IP, email, шляхів Windows і PowerShell.', badge: 'Безкоштовно', icon: '🔎' },
+    { slug: 'hash',             name: 'Hash Generator',       tagline: 'MD5, SHA1, SHA256, SHA512 онлайн', description: 'Розрахуй хеш тексту в браузері. MD5, SHA-1, SHA-256, SHA-512. Порівняй з відомим хешем. Нічого не передається.', badge: 'Безкоштовно', icon: '#️⃣' },
+    { slug: 'base64',           name: 'Base64 / HEX',         tagline: 'Кодуй і декодуй Base64 та HEX',  description: 'Base64 encode/decode, HEX конвертер і кодування PowerShell команд. Все в браузері, нічого не передається.', badge: 'Безкоштовно', icon: '🔢' },
+    { slug: 'ip-info',              name: 'IP Info',              tagline: 'Інформація про IP адресу',       description: 'Країна, місто, провайдер, організація і геолокація будь-якої IPv4 або IPv6 адреси.',     badge: 'Безкоштовно', icon: '🌐' },
+    { slug: 'port-checker',          name: 'Перевірка портів',     tagline: 'Чи відкритий TCP порт онлайн',   description: 'Введи хост і порт — миттєва перевірка TCP зʼєднання. Або скануй 20 популярних портів.', badge: 'Безкоштовно', icon: '🔌' },
+  ],
+  en: [
+    { slug: 'auditshield',           name: 'AuditShield',          tagline: 'Windows PC Security Audit',      description: 'Scans your PC across 22 security areas and generates a detailed HTML report with a risk score.', badge: 'Free demo', icon: '🛡️' },
+    { slug: 'windows-error-decoder', name: 'Error Code Decoder',   tagline: 'Look up any Windows error code', description: 'Enter code 0x80070005 and instantly get the cause and step-by-step fix. 40+ codes.',           badge: 'Free', icon: '🔍' },
+    { slug: 'powershell-commands',   name: 'PowerShell Reference',  tagline: 'Search commands by task',        description: '40+ PowerShell and CMD commands. Network, files, security, disks. Copy with one click.',       badge: 'Free', icon: '⚡' },
+    { slug: 'windows-event-id',      name: 'Event ID Reference',   tagline: 'Look up Event Viewer IDs',       description: '20+ key Windows security events with description, threat level and recommended actions.',       badge: 'Free', icon: '📋' },
+    { slug: 'password-generator',    name: 'Password Generator',   tagline: 'Strong passwords instantly',     description: 'Cryptographically secure passwords generated in your browser. Nothing is transmitted.',         badge: 'Free', icon: '🔑' },
+    { slug: 'subnet-calculator',     name: 'Subnet Calculator',    tagline: 'IP and subnets online',          description: 'Enter IP/CIDR and get mask, network, broadcast, host range and binary representation.',        badge: 'Free', icon: '🌐' },
+    { slug: 'regex',            name: 'Regex Tester',         tagline: 'Test regular expressions online',  description: 'Live match highlighting, group details, flags and 10 ready-made patterns for IP, email, Windows paths and PowerShell.', badge: 'Free', icon: '🔎' },
+    { slug: 'hash',             name: 'Hash Generator',       tagline: 'MD5, SHA1, SHA256, SHA512 online', description: 'Calculate text hashes in your browser. MD5, SHA-1, SHA-256, SHA-512. Compare with known hash. Nothing is sent anywhere.', badge: 'Free', icon: '#️⃣' },
+    { slug: 'base64',           name: 'Base64 / HEX',         tagline: 'Encode and decode Base64 & HEX',  description: 'Base64 encode/decode, HEX converter and PowerShell EncodedCommand. Everything runs in your browser.', badge: 'Free', icon: '🔢' },
+    { slug: 'ip-info',              name: 'IP Info',              tagline: 'IP address lookup',              description: 'Country, city, ISP, organization and geolocation for any IPv4 or IPv6 address.',            badge: 'Free', icon: '🌐' },
+    { slug: 'port-checker',          name: 'Port Checker',         tagline: 'Check if TCP port is open',      description: 'Enter host and port for instant TCP connection test. Or scan 20 common ports at once.',          badge: 'Free', icon: '🔌' },
+  ],
+}
 
-export default function Home({ posts, tags }) {
+export default function Tools() {
   const { locale } = useRouter()
   const isEn = locale === 'en'
-  const CATEGORIES = isEn ? CATEGORIES_EN : CATEGORIES_UK
-  const [openCats, setOpenCats] = useState({ security: true, windows: true })
-  const [visibleCount, setVisibleCount] = useState(12)
-  const loadMoreRef = useRef(null)
+  const list = isEn ? tools.en : tools.uk
 
-  useEffect(() => {
-    if (!loadMoreRef.current) return
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setVisibleCount(c => c + 12)
-    }, { rootMargin: '200px' })
-    obs.observe(loadMoreRef.current)
-    return () => obs.disconnect()
-  }, [])
-  const tagMap = Object.fromEntries(tags.map(t => [t.tag, t.count]))
+  const canonicalPath = isEn ? `${SITE}/en/tools` : `${SITE}/tools`
 
-  const toggle = (id) => setOpenCats(prev => ({ ...prev, [id]: !prev[id] }))
-
-  const featured = posts[0]
-  const rest = posts.slice(1)
-
-  // WebSite + WebPage schema з SearchAction
-  const webSiteSchema = {
+  const schema = {
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    '@id': `${SITE}/#website`,
-    url: SITE,
-    name: siteConfig.name,
-    description: isEn
-      ? 'Step-by-step Windows guides, security tools and PC administration in Ukrainian.'
-      : 'Покрокові гайди з налаштування Windows, безпеки та адміністрування ПК українською мовою.',
-    inLanguage: locale || 'uk',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: { '@type': 'EntryPoint', urlTemplate: `${SITE}/search?q={search_term_string}` },
-      'query-input': 'required name=search_term_string',
-    },
-  }
-
-  const webPageSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    '@id': `${SITE}/#webpage`,
-    url: SITE,
+    '@type': 'CollectionPage',
     name: isEn
-      ? `${siteConfig.name} — Windows guides and security tools`
-      : `${siteConfig.name} — налаштування Windows та захист ПК українською`,
+      ? `Windows Tools — ${siteConfig.name}`
+      : `Інструменти для Windows — ${siteConfig.name}`,
     description: isEn
-      ? 'Step-by-step Windows 10 and 11 guides, security audit tools, PowerShell commands and more.'
-      : 'Покрокові гайди з налаштування Windows 10 і 11, безпеки, PowerShell та адміністрування ПК.',
-    inLanguage: locale || 'uk',
-    isPartOf: { '@id': `${SITE}/#website` },
+      ? 'Free Windows tools for diagnostics, security and administration. Error decoder, PowerShell reference, Event ID lookup, password generator, subnet calculator.'
+      : 'Безкоштовні інструменти для Windows: декодер помилок, PowerShell довідник, Event ID, генератор паролів, аудит безпеки ПК.',
+    url: canonicalPath,
+    publisher: { '@type': 'Organization', name: siteConfig.name, url: SITE },
+    inLanguage: isEn ? 'en' : 'uk',
   }
 
   return (
     <Layout
       title={isEn
-        ? `${siteConfig.name} — Windows Security Guides & Tools`
-        : `${siteConfig.name} — Гайди Windows, безпека та інструменти`}
+        ? 'Windows Tools — Error Decoder, PowerShell, Event ID, Password Generator'
+        : 'Інструменти для Windows — діагностика, безпека, адміністрування'}
       description={isEn
-        ? `Step-by-step Windows 10 and 11 guides, security audit tools, PowerShell reference and more. ${posts.length}+ articles in Ukrainian.`
-        : `Покрокові гайди з налаштування Windows 10 і 11, безпеки та адміністрування ПК. ${posts.length}+ статей українською.`}
-      canonical={SITE}
+        ? 'Free online Windows tools: error code lookup, PowerShell command reference, Event ID decoder, password generator, subnet calculator. No sign-up required.'
+        : 'Безкоштовні онлайн інструменти для Windows: декодер помилок, PowerShell довідник, Event ID, генератор паролів, аудит безпеки ПК.'}
+      canonical={canonicalPath}
     >
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
 
-      {/* Hero */}
-      <section style={s.hero} aria-label="Про сайт">
+      <div style={{ padding: '2.5rem 0 3rem' }}>
         <div className="container">
-          <div style={s.heroGrid}>
-            <div style={s.heroText}>
-              <div style={s.heroBadge} aria-hidden="true">
-                <span style={s.heroBadgeDot} />
-                {isEn ? `English guides · ${posts.length} articles` : `Гайди українською · ${posts.length} статей`}
-              </div>
-              <h1 style={s.heroTitle}>
-                {isEn ? <>Security &amp;<br /><span style={s.heroAccent}>Windows Tips</span></> : <>Безпека та<br /><span style={s.heroAccent}>налаштування ПК</span></>}
-              </h1>
-              <p style={s.heroSub}>
-                {isEn
-                  ? 'Step-by-step guides on Windows settings, security, group policies and system administration.'
-                  : 'Покрокові інструкції з Windows, захисту даних, групових політик і системного адміністрування.'}
-              </p>
-              <nav style={s.heroActions} aria-label={isEn ? 'Popular topics' : 'Популярні теми'}>
-                {isEn ? (
-                  <>
-                    <Link href="/tags/windows" style={s.heroBtnPrimary}>Windows</Link>
-                    <Link href="/tags/security" style={s.heroBtnSecondary}>Security</Link>
-                    <Link href="/tags/powershell" style={s.heroBtnSecondary}>PowerShell</Link>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/tags/безпека" style={s.heroBtnPrimary}>Безпека</Link>
-                    <Link href="/tags/windows" style={s.heroBtnSecondary}>Windows</Link>
-                    <Link href="/tags/групова-політика" style={s.heroBtnSecondary}>Групова політика</Link>
-                  </>
-                )}
-              </nav>
-            </div>
-            <div className="hero-logo" style={s.heroLogoWrap} aria-hidden="true">
-              <div style={s.heroLogoBlock}>
-                <picture>
-                  <source srcSet="/logo.webp" type="image/webp" />
-                  <img src="/logo.png" alt="" width="130" height="138"
-                    style={s.heroLogoImg}
-                    fetchPriority="high"
-                  />
-                </picture>
-                <span style={s.heroLogoCaption}>CryptoLock</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Categories */}
-      <section style={s.catsSection} aria-label="Теми статей">
-        <div className="container">
-          <div style={s.catsSectionHead}>
-            <h2 style={s.catsSectionTitle}>{isEn ? "Topics" : "Теми"}</h2>
-            <button
-              style={s.expandAllBtn}
-              onClick={() => {
-                const allOpen = CATEGORIES.every(c => openCats[c.id])
-                const next = {}
-                CATEGORIES.forEach(c => { next[c.id] = !allOpen })
-                setOpenCats(next)
-              }}
-              aria-label={CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі категорії' : 'Розгорнути всі категорії'}
-            >
-              {isEn ? (CATEGORIES.every(c => openCats[c.id]) ? 'Collapse all ↑' : 'Expand all ↓') : (CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі ↑' : 'Розгорнути всі ↓')}
-            </button>
-          </div>
+          <nav style={s.bc}>
+            <Link href={isEn ? '/en' : '/'} style={s.bcLink}>{isEn ? 'Home' : 'Головна'}</Link>
+            <span style={s.bcSep}>/</span>
+            <span style={{ ...s.bcLink, color: '#64748b' }}>{isEn ? 'Tools' : 'Інструменти'}</span>
+          </nav>
 
-          <div style={s.catsGrid}>
-            {CATEGORIES.map(cat => {
-              const isOpen = !!openCats[cat.id]
-              const catTags = cat.tags.filter(t => tagMap[t])
-              const totalCount = catTags.reduce((sum, t) => sum + (tagMap[t] || 0), 0)
-              if (catTags.length === 0) return null
-              return (
-                <div key={cat.id} style={s.catCard}>
-                  <button
-                    style={s.catHeader}
-                    onClick={() => toggle(cat.id)}
-                    aria-expanded={isOpen}
-                    aria-controls={`cat-${cat.id}`}
-                  >
-                    <div style={s.catLeft}>
-                      <span style={s.catIcon} aria-hidden="true">{cat.icon}</span>
-                      <span style={s.catLabel}>{cat.label}</span>
-                      <span style={s.catTotal} aria-label={`${totalCount} статей`}>{totalCount}</span>
-                    </div>
-                    <span style={{ ...s.catArrow, transform: isOpen ? 'rotate(180deg)' : 'none' }} aria-hidden="true">▾</span>
-                  </button>
-                  {isOpen && (
-                    <div id={`cat-${cat.id}`} style={s.catTags}>
-                      {catTags.map(tag => (
-                        <Link key={tag} href={`/tags/${tag}`} style={s.catTagItem} className="cat-tag-item">
-                          <span style={s.catTagName}>{tag}</span>
-                          <span style={s.catTagCount}>{tagMap[tag]}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+          <h1 style={s.title}>{isEn ? 'Windows Tools' : 'Інструменти для Windows'}</h1>
+          <p style={s.lead}>{isEn
+            ? 'Free utilities for Windows diagnostics, security and administration. No sign-up — everything runs in your browser.'
+            : 'Практичні безкоштовні утиліти для діагностики, безпеки та адміністрування Windows. Без реєстрації — все працює прямо в браузері.'
+          }</p>
+
+          <div style={s.grid}>
+            {list.map(tool => (
+              <Link key={tool.slug}
+                href={isEn ? `/en/tools/${tool.slug}` : `/tools/${tool.slug}`}
+                style={s.card}>
+                <div style={s.cardIcon}>{tool.icon}</div>
+                <div style={s.cardContent}>
+                  <div style={s.cardTop}>
+                    <span style={s.cardName}>{tool.name}</span>
+                    {tool.badge && <span style={s.badge}>{tool.badge}</span>}
+                  </div>
+                  <p style={s.cardTagline}>{tool.tagline}</p>
+                  <p style={s.cardDesc}>{tool.description}</p>
                 </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Posts */}
-      <section style={s.postsSection} aria-label="Статті">
-        <div className="container">
-          {featured && (
-            <div style={s.featuredWrap}>
-              <p style={s.sectionLabel} aria-hidden="true">{isEn ? "Latest article" : "Остання стаття"}</p>
-              <PostCard post={featured} featured />
-            </div>
-          )}
-          <p style={s.sectionLabel} aria-hidden="true">{isEn ? "All articles" : "Всі статті"}</p>
-          <div style={s.grid} role="list" aria-label="Список статей">
-            {rest.slice(0, visibleCount).map(post => (
-              <div key={post.slug} role="listitem">
-                <PostCard post={post} />
-              </div>
+                <span style={s.cardArrow}>→</span>
+              </Link>
             ))}
           </div>
-          {visibleCount < rest.length && (
-            <div ref={loadMoreRef} style={{ height: '40px', marginTop: '1rem' }} aria-hidden="true" />
-          )}
+
         </div>
-      </section>
+      </div>
     </Layout>
   )
 }
 
-export async function getStaticProps({ locale }) {
-  const posts = getAllPosts(locale)
-  const tags = getAllTags(locale)
-  return { props: { posts, tags } }
-}
-
 const s = {
-  hero: { background: 'linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#0f172a 100%)', padding: '3rem 0' },
-  heroGrid: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' },
-  heroText: { flex: 1, minWidth: '280px' },
-  heroBadge: { display: 'inline-flex', alignItems: 'center', gap: '7px', fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', marginBottom: '16px', letterSpacing: '.3px' },
-  heroBadgeDot: { width: '7px', height: '7px', borderRadius: '50%', background: '#3b82f6', display: 'inline-block', flexShrink: 0, boxShadow: '0 0 6px #3b82f6' },
-  heroTitle: { fontFamily: "'Unbounded',sans-serif", fontSize: 'clamp(1.6rem,5vw,2.4rem)', fontWeight: 700, lineHeight: 1.2, letterSpacing: '-1px', color: '#f1f5f9', marginBottom: '1rem' },
-  heroAccent: { color: '#3b82f6' },
-  heroSub: { fontSize: '.9rem', color: '#94a3b8', lineHeight: 1.7, marginBottom: '1.75rem' },
-  heroActions: { display: 'flex', gap: '8px', flexWrap: 'wrap' },
-  heroBtnPrimary: { padding: '8px 18px', background: '#2563eb', color: '#fff', borderRadius: '20px', fontSize: '13px', fontWeight: 600 },
-  heroBtnSecondary: { padding: '8px 18px', background: 'rgba(255,255,255,0.07)', color: '#cbd5e1', borderRadius: '20px', fontSize: '13px', fontWeight: 500, border: '1px solid rgba(255,255,255,0.1)' },
-  heroLogoWrap: { flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' },
-  heroLogoBlock: {
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px',
-    background: 'rgba(37,99,235,0.18)',
-    border: '1px solid rgba(96,165,250,0.35)',
-    borderRadius: '24px',
-    padding: '32px 36px',
-  },
-  heroLogoImg: {
-    objectFit: 'contain',
-    filter: 'drop-shadow(0 4px 16px rgba(59,130,246,0.3))',
-  },
-  heroLogoCaption: {
-    fontFamily: "'Unbounded',sans-serif",
-    fontSize: '1rem',
-    fontWeight: 700,
-    letterSpacing: '-0.3px',
-    color: '#ffffff',
-  },
-
-  catsSection: { padding: '2rem 0', background: '#fff', borderBottom: '1px solid #e2e8f0' },
-  catsSectionHead: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' },
-  catsSectionTitle: { fontFamily: "'Unbounded',sans-serif", fontSize: '1rem', fontWeight: 700, color: '#0f172a' },
-  expandAllBtn: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500, padding: '4px 8px' },
-  catsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '8px' },
-  catCard: { border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', background: '#f8fafc' },
-  catHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' },
-  catLeft: { display: 'flex', alignItems: 'center', gap: '8px' },
-  catIcon: { fontSize: '16px', flexShrink: 0 },
-  catLabel: { fontFamily: "'Unbounded',sans-serif", fontSize: '12px', fontWeight: 700, color: '#0f172a' },
-  catTotal: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#64748b', background: '#e2e8f0', padding: '1px 6px', borderRadius: '10px' },
-  catArrow: { fontSize: '12px', color: '#94a3b8', transition: 'transform .2s', display: 'inline-block' },
-  catTags: { padding: '0 10px 10px', display: 'flex', flexDirection: 'column', gap: '2px' },
-  catTagItem: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', borderRadius: '7px', background: '#fff', border: '1px solid #e2e8f0', transition: 'border-color .15s,background .15s' },
-  catTagName: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#334155', fontWeight: 500 },
-  catTagCount: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#64748b' },
-
-  postsSection: { padding: '2rem 0 3rem' },
-  featuredWrap: { marginBottom: '2rem' },
-  sectionLabel: { fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 600, color: '#64748b', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' },
-  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(330px,1fr))', gap: '12px' },
+  bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem' },
+  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', textDecoration: 'none' },
+  bcSep: { fontSize: '12px', color: '#cbd5e1' },
+  title: { fontFamily: "'Unbounded', sans-serif", fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 700, color: '#0f172a', marginBottom: '1rem' },
+  lead: { fontSize: '1rem', color: '#475569', lineHeight: 1.7, padding: '1.25rem 1.5rem', background: '#eff6ff', borderRadius: '0 10px 10px 0', borderLeft: '3px solid #2563eb', marginBottom: '2.5rem' },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '14px', marginBottom: '2.5rem' },
+  card: { display: 'flex', alignItems: 'flex-start', gap: '14px', padding: '1.25rem', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '12px', textDecoration: 'none', cursor: 'pointer' },
+  cardIcon: { fontSize: '1.75rem', flexShrink: 0, marginTop: '2px' },
+  cardContent: { flex: 1 },
+  cardTop: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' },
+  cardName: { fontFamily: "'Unbounded', sans-serif", fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' },
+  badge: { fontSize: '10px', fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#16a34a', background: '#dcfce7', padding: '2px 8px', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' },
+  cardTagline: { fontSize: '0.8rem', color: '#2563eb', fontWeight: 600, marginBottom: '4px' },
+  cardDesc: { fontSize: '0.825rem', color: '#64748b', lineHeight: 1.6, margin: 0 },
+  cardArrow: { fontSize: '1.1rem', color: '#94a3b8', flexShrink: 0, alignSelf: 'center' },
 }

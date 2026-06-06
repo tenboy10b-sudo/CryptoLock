@@ -5,7 +5,7 @@ import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Script from 'next/script'
 
 const SITE = siteConfig.url
@@ -44,133 +44,108 @@ function extractFaqSchema(contentHtml) {
 }
 
 
-// ── Share Buttons ───────────────────────────────────────────────
+// ── Copy Button (code blocks) ────────────────────────────────────
+function useCopyButtons(slug) {
+  useEffect(() => {
+    const blocks = document.querySelectorAll('.prose pre')
+    blocks.forEach(pre => {
+      if (pre.querySelector('.copy-btn')) return
+      const btn = document.createElement('button')
+      btn.className = 'copy-btn'
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
+      btn.title = 'Копіювати'
+      btn.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#e2e8f0;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:4px;transition:all 0.15s;z-index:10;line-height:1'
+      btn.addEventListener('click', () => {
+        const code = pre.querySelector('code')?.innerText || pre.innerText
+        navigator.clipboard.writeText(code).then(() => {
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+          btn.style.background = 'rgba(74,222,128,0.15)'
+          setTimeout(() => {
+            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
+            btn.style.background = 'rgba(255,255,255,0.1)'
+          }, 2000)
+        })
+      })
+      pre.style.position = 'relative'
+      pre.appendChild(btn)
+    })
+  }, [slug])
+}
+
+// ── Share Buttons ────────────────────────────────────────────────
 function ShareButtons({ title, url, isEn }) {
   const [copied, setCopied] = useState(false)
-  const encoded = encodeURIComponent(url)
-  const encodedTitle = encodeURIComponent(title)
-  const links = {
-    telegram: `https://t.me/share/url?url=${encoded}&text=${encodedTitle}`,
-    twitter:  `https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
-  }
+  const enc = encodeURIComponent(url)
+  const encT = encodeURIComponent(title)
   const copyLink = () => {
-    navigator.clipboard.writeText(url).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
+    navigator.clipboard.writeText(url).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) })
   }
-  const btn = {
-    display: 'inline-flex', alignItems: 'center', gap: '6px',
-    padding: '7px 14px', borderRadius: '8px', fontSize: '13px',
-    fontWeight: 600, cursor: 'pointer', border: 'none',
-    textDecoration: 'none', transition: 'opacity 0.15s',
-  }
+  const btn = { display:'inline-flex', alignItems:'center', gap:'6px', padding:'7px 14px',
+    borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', border:'none',
+    textDecoration:'none', transition:'opacity 0.15s' }
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', margin: '1rem 0 1.5rem' }}>
-      <span style={{ fontSize: '13px', color: '#94a3b8', marginRight: '4px' }}>
-        {isEn ? 'Share:' : 'Поділитись:'}
-      </span>
-      <a href={links.telegram} target="_blank" rel="noopener noreferrer"
-        style={{ ...btn, background: '#229ED9', color: '#fff' }}>
+    <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap', margin:'1rem 0 1.5rem' }}>
+      <span style={{ fontSize:'13px', color:'#94a3b8' }}>{isEn ? 'Share:' : 'Поділитись:'}</span>
+      <a href={`https://t.me/share/url?url=${enc}&text=${encT}`} target="_blank" rel="noopener noreferrer"
+        style={{ ...btn, background:'#229ED9', color:'#fff' }}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.01 9.47c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 14.676l-2.95-.924c-.642-.2-.654-.642.136-.953l11.52-4.44c.537-.194 1.006.131.686.889z"/>
         </svg>
         Telegram
       </a>
-      <a href={links.twitter} target="_blank" rel="noopener noreferrer"
-        style={{ ...btn, background: '#000', color: '#fff' }}>
+      <a href={`https://twitter.com/intent/tweet?url=${enc}&text=${encT}`} target="_blank" rel="noopener noreferrer"
+        style={{ ...btn, background:'#000', color:'#fff' }}>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
         </svg>
         X
       </a>
-      <button onClick={copyLink} style={{
-        ...btn,
-        background: copied ? '#10b981' : '#f1f5f9',
-        color: copied ? '#fff' : '#475569',
-        border: '1px solid #e2e8f0',
-      }}>
-        {copied ? '✓ ' + (isEn ? 'Copied!' : 'Скопійовано!') : (isEn ? '🔗 Copy link' : '🔗 Посилання')}
+      <button onClick={copyLink} style={{ ...btn, background:copied?'#10b981':'#f1f5f9',
+        color:copied?'#fff':'#475569', border:'1px solid #e2e8f0' }}>
+        {copied ? ('✓ ' + (isEn ? 'Copied!' : 'Скопійовано!')) : (isEn ? '🔗 Copy link' : '🔗 Посилання')}
       </button>
     </div>
   )
 }
 
-// ── Bookmark Button ─────────────────────────────────────────────
+// ── Bookmark Button ──────────────────────────────────────────────
 function BookmarkButton({ slug, title, tag, isEn }) {
   const [saved, setSaved] = useState(false)
   useEffect(() => {
-    try {
-      const b = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
-      setSaved(b.some(x => x.slug === slug))
-    } catch {}
+    try { setSaved(JSON.parse(localStorage.getItem('cl-bookmarks')||'[]').some(x=>x.slug===slug)) } catch {}
   }, [slug])
   const toggle = () => {
     try {
-      const b = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
-      if (saved) {
-        localStorage.setItem('cl-bookmarks', JSON.stringify(b.filter(x => x.slug !== slug)))
-        setSaved(false)
-      } else {
-        localStorage.setItem('cl-bookmarks', JSON.stringify([...b, { slug, title, tag, savedAt: Date.now() }]))
-        setSaved(true)
-      }
+      const b = JSON.parse(localStorage.getItem('cl-bookmarks')||'[]')
+      if (saved) { localStorage.setItem('cl-bookmarks', JSON.stringify(b.filter(x=>x.slug!==slug))); setSaved(false) }
+      else { localStorage.setItem('cl-bookmarks', JSON.stringify([...b,{slug,title,tag,savedAt:Date.now()}])); setSaved(true) }
     } catch {}
   }
   return (
-    <button onClick={toggle} style={{
-      display: 'inline-flex', alignItems: 'center', gap: '5px',
-      padding: '6px 12px', borderRadius: '8px', fontSize: '13px',
-      fontWeight: 600, cursor: 'pointer', border: '1.5px solid',
-      transition: 'all 0.2s',
-      borderColor: saved ? '#2563eb' : '#e2e8f0',
-      background:  saved ? '#eff6ff' : '#fff',
-      color:       saved ? '#2563eb' : '#64748b',
-    }}>
-      <svg width="14" height="14" viewBox="0 0 24 24"
-        fill={saved ? 'currentColor' : 'none'}
-        stroke="currentColor" strokeWidth="2">
+    <button onClick={toggle} style={{ display:'inline-flex', alignItems:'center', gap:'5px',
+      padding:'6px 12px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer',
+      border:'1.5px solid', transition:'all 0.2s',
+      borderColor:saved?'#2563eb':'#e2e8f0', background:saved?'#eff6ff':'#fff', color:saved?'#2563eb':'#64748b' }}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill={saved?'currentColor':'none'} stroke="currentColor" strokeWidth="2">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
       </svg>
-      {saved ? (isEn ? 'Saved' : 'Збережено') : (isEn ? 'Save' : 'Зберегти')}
+      {saved ? (isEn?'Saved':'Збережено') : (isEn?'Save':'Зберегти')}
     </button>
   )
 }
 
-// ── Cusdis Comments ─────────────────────────────────────────────
+// ── Cusdis Comments ──────────────────────────────────────────────
 function CommentsSection({ appId, pageId, pageUrl, pageTitle, isEn }) {
   return (
-    <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #e2e8f0' }}>
-      <p style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '1.5rem', color: '#0f172a' }}>
+    <div style={{ marginTop:'3rem', paddingTop:'2rem', borderTop:'1px solid #e2e8f0' }}>
+      <p style={{ fontSize:'1.1rem', fontWeight:700, marginBottom:'1.5rem', color:'#0f172a' }}>
         💬 {isEn ? 'Comments' : 'Коментарі'}
       </p>
-      <div
-        id="cusdis_thread"
-        data-host="https://cusdis.com"
-        data-app-id={appId}
-        data-page-id={pageId}
-        data-page-url={pageUrl}
-        data-page-title={pageTitle}
-        data-lang={isEn ? 'en' : 'uk'}
-      />
-      <Script
-        src="https://cusdis.com/js/cusdis.es.js"
-        strategy="lazyOnload"
-        onLoad={() => {
-          const fix = () => {
-            const iframe = document.querySelector('#cusdis_thread iframe')
-            if (iframe) {
-              iframe.style.width = '100%'
-              iframe.scrolling = 'no'
-              try {
-                const h = iframe.contentWindow.document.body.scrollHeight
-                if (h > 50) iframe.style.height = h + 'px'
-              } catch(e) {}
-            } else setTimeout(fix, 400)
-          }
-          setTimeout(fix, 600)
-        }}
-      />
+      <div id="cusdis_thread" data-host="https://cusdis.com"
+        data-app-id={appId} data-page-id={pageId}
+        data-page-url={pageUrl} data-page-title={pageTitle}
+        data-lang={isEn ? 'en' : 'uk'} />
+      <Script src="https://cusdis.com/js/cusdis.es.js" strategy="lazyOnload" />
     </div>
   )
 }
@@ -178,6 +153,7 @@ function CommentsSection({ appId, pageId, pageUrl, pageTitle, isEn }) {
 
 export default function Post({ post, related, locale }) {
   const isEn = locale === 'en'
+  useCopyButtons(post.slug)
   const postUrl = locale === 'en' ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
 
   const articleSchema = {
@@ -231,7 +207,7 @@ export default function Post({ post, related, locale }) {
       description={post.description}
       canonical={postUrl}
       isArticle
-      ogImage={`${SITE}/logo.png`}
+      ogImage={`${SITE}/api/og?title=${encodeURIComponent(post.title)}&tags=${encodeURIComponent((post.tags||[]).slice(0,3).join(","))}&lang=${locale||"uk"}`}
       translatesUk={post.translatesUk}
       translatesEn={post.translatesEn}
     >
@@ -288,9 +264,8 @@ export default function Post({ post, related, locale }) {
                 {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <time dateTime={post.updated}>{fmt(post.updated, locale)}</time></span></>}
               </div>
               {post.description && <p style={s.lead}>{post.description}</p>}
-              {/* Bookmark + Share */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '1rem', flexWrap: 'wrap' }}>
-                <BookmarkButton slug={post.slug} title={post.title} tag={post.tags?.[0] || ''} isEn={isEn} />
+              <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'1rem', flexWrap:'wrap' }}>
+                <BookmarkButton slug={post.slug} title={post.title} tag={post.tags?.[0]||''} isEn={isEn} />
               </div>
               <ShareButtons title={post.title} url={postUrl} isEn={isEn} />
             </header>
@@ -315,6 +290,7 @@ export default function Post({ post, related, locale }) {
               </div>
             )}
           </article>
+            </div>{/* /twoCol */}
 
           {related && related.length > 0 && (
             <section style={s.related} aria-label={isEn ? "Related articles" : "Схожі статті"}>
@@ -327,12 +303,9 @@ export default function Post({ post, related, locale }) {
 
           <CommentsSection
             appId="5c61191d-573f-4970-beb5-63efb84a8730"
-            pageId={post.slug}
-            pageUrl={postUrl}
-            pageTitle={post.title}
-            isEn={isEn}
+            pageId={post.slug} pageUrl={postUrl}
+            pageTitle={post.title} isEn={isEn}
           />
-
           <div style={s.back}>
             <Link href="/" style={s.backLink}>{isEn ? "← All articles" : "← Всі статті"}</Link>
           </div>
@@ -364,9 +337,32 @@ export async function getStaticProps({ params, locale }) {
     }
 
     const all = getAllPosts(locale)
-    const related = all
-      .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
-      .slice(0, 3)
+    const COMMON = new Set(['windows','налаштування','інструменти','administration'])
+    const scored = all
+      .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.length > 0)
+      .map(p => ({ ...p, _score: p.tags.filter(t => post.tags.includes(t)).reduce((a,t)=>a+(COMMON.has(t)?1:3),0) }))
+      .filter(p => p._score > 0)
+      .sort((a,b) => b._score - a._score)
+    const related = scored.slice(0, 3)
+
+    // Inline "Читай також" блок
+    let enrichedHtml = post.contentHtml || ''
+    if (scored.length >= 2 && enrichedHtml.length > 500) {
+      const isEn = (locale||'uk') === 'en'
+      const label = isEn ? 'Read also' : 'Читай також'
+      const picks = scored.slice(0,2)
+      const linksHtml = picks.map(p=>{
+        const href = isEn ? \`https://cryptolockua.com/en/\${p.slug}\` : \`https://cryptolockua.com/\${p.slug}\`
+        return \`<a href="\${href}" style="display:block;color:#2563eb;text-decoration:none;padding:6px 0;font-size:0.9rem;border-bottom:1px solid #e2e8f0">→ \${p.title}</a>\`
+      }).join('')
+      const block = \`<div class="inline-related" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin:2rem 0"><p style="font-size:0.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px">\${label}</p>\${linksHtml}</div>\`
+      const h2idx = enrichedHtml.indexOf('</h2>')
+      if (h2idx > 100) {
+        const ins = enrichedHtml.indexOf('</p>', h2idx) + 4
+        enrichedHtml = enrichedHtml.slice(0,ins) + block + enrichedHtml.slice(ins)
+      }
+    }
+    post.contentHtml = enrichedHtml
 
     return { props: { post, related, locale: locale || 'uk' }, revalidate: 3600 }
   } catch (e) {

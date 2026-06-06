@@ -1,5 +1,5 @@
 // pages/bookmarks.js
-import { useState, useEffect } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import Link from 'next/link'
@@ -16,10 +16,10 @@ function fmt(ts, locale) {
 export default function BookmarksPage() {
   const { locale } = useRouter()
   const isEn = locale === 'en'
-  const [bookmarks, setBookmarks] = useState(null) // null = loading
-  const [removing, setRemoving] = useState(null)
+  const [bookmarks, setBookmarks] = React.useState(null) // null = loading
+  const [removing, setRemoving] = React.useState(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
       // Сортуємо від найновіших
