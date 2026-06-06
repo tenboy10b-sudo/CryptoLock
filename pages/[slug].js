@@ -290,7 +290,6 @@ export default function Post({ post, related, locale }) {
               </div>
             )}
           </article>
-            </div>{/* /twoCol */}
 
           {related && related.length > 0 && (
             <section style={s.related} aria-label={isEn ? "Related articles" : "Схожі статті"}>
