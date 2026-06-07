@@ -270,7 +270,7 @@ const m = {
 // ── Стилі десктопу ────────────────────────────────────────────────────────
 const d = {
   wrap:    { position:'relative', width:'100%' },
-  box:     { display:'flex', alignItems:'center', gap:'7px', background:'var(--bg,#f1f5f9)', border:'1.5px solid transparent', borderRadius:'10px', padding:'0 10px', height:'36px', transition:'border-color .15s, background .15s, box-shadow .15s', cursor:'text' },
+  box:     { display:'flex', alignItems:'center', gap:'7px', background:'var(--bg-card,#f1f5f9)', border:'1.5px solid var(--border,transparent)', borderRadius:'10px', padding:'0 10px', height:'36px', transition:'border-color .15s, background .15s, box-shadow .15s', cursor:'text' },
   boxOpen: { background:'var(--bg-card,#fff)', borderColor:'#2563eb', boxShadow:'0 0 0 3px rgba(37,99,235,0.1)' },
   icon:    { color:'var(--faint,#94a3b8)', display:'flex', flexShrink:0, pointerEvents:'none' },
   input:   { flex:1, border:'none', outline:'none', background:'transparent', fontSize:'13px', fontFamily:'var(--font-body)', color:'var(--text,#0f172a)', minWidth:0 },
