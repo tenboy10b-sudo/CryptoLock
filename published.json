@@ -19,13 +19,14 @@
     "yak-zashyfruvaty-fleshku-bitlocker-to-go",
     "sertyfikaty-windows-keruvannya",
     "yak-nalashtuvatysy-robochyy-stit-windows",
-    "yak-nalashtuvanty-druhyy-monitor-windows"
+    "yak-nalashtuvanty-druhyy-monitor-windows",
+    "cmd-komandy-merezha-diahnostyka"
   ],
-  "count": 20,
+  "count": 21,
   "promo_index": 21,
   "last_post": {
-    "slug": "yak-nalashtuvanty-druhyy-monitor-windows",
-    "title": "Як підключити і налаштувати другий монітор в Windows 10 і 11",
-    "time": "2026-06-06T08:01:11.059129"
+    "slug": "cmd-komandy-merezha-diahnostyka",
+    "title": "CMD команди для діагностики мережі: ping, tracert, nslookup і netstat",
+    "time": "2026-06-07T08:01:09.666386"
   }
 }
