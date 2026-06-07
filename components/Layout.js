@@ -40,193 +40,6 @@ const LogoIcon = () => (
   </svg>
 )
 
-
-// ── Bookmarks Nav Link ──────────────────────────────────────────
-function BookmarksNavLink() {
-  const [count, setCount] = useState(0)
-  const router = useRouter ? useRouter() : {}
-  const locale = router.locale || 'uk'
-  const isEn = locale === 'en'
-
-  // SW реєстрація
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {})
-    }
-  }, [])
-
-  useEffect(() => {
-    try {
-      const b = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
-      setCount(b.length)
-    } catch {}
-    // Слухаємо зміни localStorage (коли додають/видаляють)
-    const handler = () => {
-      try {
-        const b = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
-        setCount(b.length)
-      } catch {}
-    }
-    window.addEventListener('storage', handler)
-    // Також перевіряємо при фокусі вкладки
-    window.addEventListener('focus', handler)
-    return () => {
-      window.removeEventListener('storage', handler)
-      window.removeEventListener('focus', handler)
-    }
-  }, [])
-
-  const href = isEn ? '/en/bookmarks' : '/bookmarks'
-
-  return (
-    <Link href={href} style={{
-      display: 'inline-flex', alignItems: 'center', gap: '4px',
-      padding: '5px 10px', borderRadius: '8px',
-      border: '1px solid var(--border)',
-      color: 'var(--muted)', textDecoration: 'none',
-      fontSize: '13px', transition: 'all 0.15s',
-      position: 'relative',
-    }}
-    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
-    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}
-    title={isEn ? 'My Bookmarks' : 'Мої закладки'}
-    aria-label={isEn ? `Bookmarks${count > 0 ? ` (${count})` : ''}` : `Закладки${count > 0 ? ` (${count})` : ''}`}
-    >
-      <svg width="14" height="14" viewBox="0 0 24 24"
-        fill={count > 0 ? 'currentColor' : 'none'}
-        stroke="currentColor" strokeWidth="2"
-      >
-        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-      </svg>
-      {count > 0 && (
-        <span style={{
-          fontSize: '11px', fontWeight: 700,
-          background: 'var(--accent)', color: '#fff',
-          borderRadius: '10px', padding: '0 5px',
-          lineHeight: '16px', minWidth: '16px', textAlign: 'center',
-        }}>
-          {count}
-        </span>
-      )}
-    </Link>
-  )
-}
-
-// ── Theme Toggle ────────────────────────────────────────────────
-function ThemeToggle() {
-  const [dark, setDark] = useState(false)
-  useEffect(() => {
-    setDark(document.documentElement.getAttribute('data-theme') === 'dark')
-  }, [])
-  const toggle = () => {
-    const next = dark ? 'light' : 'dark'
-    document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('theme', next)
-    setDark(!dark)
-  }
-  return (
-    <button onClick={toggle} aria-label={dark ? 'Світла тема' : 'Темна тема'}
-      style={{ display:'flex', alignItems:'center', justifyContent:'center',
-        width:'32px', height:'32px', borderRadius:'8px', background:'none',
-        border:'1px solid var(--border,#e2e8f0)', cursor:'pointer',
-        color:'var(--muted,#64748b)', transition:'all 0.15s', flexShrink:0 }}
-      onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--accent,#2563eb)';e.currentTarget.style.color='var(--accent,#2563eb)'}}
-      onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border,#e2e8f0)';e.currentTarget.style.color='var(--muted,#64748b)'}}
-    >
-      {dark ? (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      ) : (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      )}
-    </button>
-  )
-}
-
-
-// ── PWA Install Banner ──────────────────────────────────────────
-function PwaInstallBanner({ isEn }) {
-  const [show, setShow] = useState(false)
-  const [deferredPrompt, setDeferredPrompt] = useState(null)
-  const [isIos, setIsIos] = useState(false)
-  useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches) return
-    const dismissed = localStorage.getItem('pwa-dismissed')
-    if (dismissed && Date.now() - Number(dismissed) < 7 * 24 * 60 * 60 * 1000) return
-    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent)
-    setIsIos(ios)
-    if (ios) { const t = setTimeout(() => setShow(true), 30000); return () => clearTimeout(t) }
-    const handler = e => { e.preventDefault(); setDeferredPrompt(e); setTimeout(() => setShow(true), 30000) }
-    window.addEventListener('beforeinstallprompt', handler)
-    return () => window.removeEventListener('beforeinstallprompt', handler)
-  }, [])
-  const install = async () => {
-    if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice }
-    setShow(false)
-  }
-  const dismiss = () => { localStorage.setItem('pwa-dismissed', String(Date.now())); setShow(false) }
-  if (!show) return null
-  return (
-    <div style={{ position:'fixed', bottom:'16px', left:'16px', right:'16px', background:'#0f172a',
-      color:'#f1f5f9', borderRadius:'14px', padding:'14px 16px', boxShadow:'0 8px 32px rgba(0,0,0,0.3)',
-      display:'flex', alignItems:'center', gap:'12px', zIndex:9999, maxWidth:'480px', margin:'0 auto',
-      border:'1px solid rgba(37,99,235,0.3)', animation:'slideUp 0.3s ease' }}>
-      <style>{`@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}`}</style>
-      <span style={{ fontSize:'28px', flexShrink:0 }}>🔒</span>
-      <div style={{ flex:1 }}>
-        <p style={{ margin:'0 0 2px', fontWeight:600, fontSize:'0.875rem' }}>
-          {isEn ? 'Install CryptoLock' : 'Додати CryptoLock на екран'}
-        </p>
-        <p style={{ margin:0, fontSize:'0.75rem', color:'#94a3b8' }}>
-          {isIos ? 'Натисни ⬆️ → "На екран «Початок»"' : (isEn ? 'Offline access to all articles' : 'Офлайн доступ до всіх статей')}
-        </p>
-      </div>
-      {!isIos && <button onClick={install} style={{ background:'#2563eb', color:'#fff', border:'none',
-        borderRadius:'8px', padding:'7px 14px', fontSize:'0.8rem', fontWeight:600, cursor:'pointer', flexShrink:0 }}>
-        {isEn ? 'Install' : 'Додати'}
-      </button>}
-      <button onClick={dismiss} style={{ background:'none', border:'none', color:'#64748b', fontSize:'18px', cursor:'pointer', padding:'4px', flexShrink:0 }}>✕</button>
-    </div>
-  )
-}
-
-// ── PWA Footer Button ───────────────────────────────────────────
-function PwaFooterButton({ isEn }) {
-  const [canInstall, setCanInstall] = useState(false)
-  const [deferredPrompt, setDeferredPrompt] = useState(null)
-  useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches) return
-    const ios = /iphone|ipad|ipod/i.test(navigator.userAgent)
-    if (ios) { setCanInstall(true); return }
-    const handler = e => { e.preventDefault(); setDeferredPrompt(e); setCanInstall(true) }
-    window.addEventListener('beforeinstallprompt', handler)
-    return () => window.removeEventListener('beforeinstallprompt', handler)
-  }, [])
-  if (!canInstall) return null
-  const handleClick = async () => {
-    if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; setCanInstall(false) }
-    else alert(isEn ? 'Tap Share (⬆️) → "Add to Home Screen"' : 'Натисни ⬆️ → "На екран «Початок»"')
-  }
-  return (
-    <button onClick={handleClick} style={{ display:'flex', alignItems:'center', gap:'6px', background:'none',
-      border:'1px solid #e2e8f0', borderRadius:'8px', padding:'5px 12px', fontSize:'12px',
-      color:'#64748b', cursor:'pointer', fontFamily:'var(--font-mono)', transition:'all 0.15s' }}
-      title={isEn ? 'Install app' : 'Встановити як додаток'}>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 2v13M7 9l5 6 5-6"/><rect x="3" y="17" width="18" height="4" rx="1"/>
-      </svg>
-      {isEn ? 'Install app' : 'Встановити'}
-    </button>
-  )
-}
-
-
 export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn }) {
   const pageTitle = title
     ? `${title} — ${siteConfig.name}`
@@ -303,7 +116,13 @@ export default function Layout({ children, title, description, canonical, isArti
   return (
     <>
       <Head>
-
+        {/* Google Fonts — preconnect для швидкого завантаження */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@600;700&display=swap"
+        />
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -372,11 +191,7 @@ export default function Layout({ children, title, description, canonical, isArti
 
             <div className="nav-divider" aria-hidden="true" />
 
-            {/* Закладки */}
-            <BookmarksNavLink />
-
             {/* Пошук — SearchBar сам рендерить десктоп/мобайл */}
-            <ThemeToggle />
             <SearchBar />
 
             {/* Перемикач мови — тільки якщо є переклад */}
@@ -466,56 +281,55 @@ export default function Layout({ children, title, description, canonical, isArti
         <div style={s.footerCopy}>
           <div className="container">
             <p style={s.footerCopyText}>
-              {locale === "en" ? `© ${new Date().getFullYear()} CryptoLock. Windows & Security guides.` : `© ${new Date().getFullYear()} CryptoLock. Всі матеріали українською мовою.`}
+              {locale === "en" ? "© 2026 CryptoLock. Windows & Security guides." : "© 2026 CryptoLock. Всі матеріали українською мовою."}
             </p>
           </div>
         </div>
       </footer>
 
       <button id="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Прокрутити нагору">↑</button>
-      <PwaInstallBanner isEn={locale === 'en'} />
     </>
   )
 }
 
 const s = {
-  header: { background: 'var(--bg-card, #fff)', borderBottom: '1px solid var(--border, #e2e8f0)', position: 'sticky', top: 0, zIndex: 50 },
+  header: { background: '#fff', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 50 },
   navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', height: '62px', width: '100%', padding: '0 20px' },
   logoWrap: { display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none', flexShrink: 0 },
-  logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: 'var(--text, #0f172a)' },
-  logoAccent: { color: 'var(--text, #0f172a)' },
+  logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: '#0f172a' },
+  logoAccent: { color: '#0f172a' },
   rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end' },
-  navLink: { fontSize: '14px', fontWeight: 500, color: 'var(--muted, #475569)', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
+  navLink: { fontSize: '14px', fontWeight: 500, color: '#475569', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
   searchBtn: {
     display: 'flex', alignItems: 'center', gap: '6px',
     padding: '5px 10px', borderRadius: '8px',
-    color: 'var(--muted, #64748b)', border: '1px solid var(--border, #e2e8f0)',
+    color: '#64748b', border: '1px solid #e2e8f0',
     background: '#f8fafc', cursor: 'pointer',
     fontSize: '12px', fontFamily: 'var(--font-mono)',
     transition: 'color .15s, border-color .15s',
     textDecoration: 'none', flexShrink: 0,
   },
-  socialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', borderRadius: '8px', color: 'var(--muted, #64748b)', border: '1px solid var(--border, #e2e8f0)', background: '#f8fafc', transition: 'color .15s, border-color .15s, background .15s', flexShrink: 0, cursor: 'pointer' },
+  socialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', borderRadius: '8px', color: '#64748b', border: '1px solid #e2e8f0', background: '#f8fafc', transition: 'color .15s, border-color .15s, background .15s', flexShrink: 0, cursor: 'pointer' },
   bl: { display: 'block', width: '20px', height: '2px', background: '#334155', borderRadius: '2px', transition: 'transform .2s, opacity .2s' },
   bl1o: { transform: 'rotate(45deg) translate(5px,5px)' },
   bl2o: { opacity: 0 },
   bl3o: { transform: 'rotate(-45deg) translate(5px,-5px)' },
-  mobileMenu: { borderTop: '1px solid var(--border, #e2e8f0)', background: 'var(--bg-card, #fff)', padding: '4px 0 8px' },
+  mobileMenu: { borderTop: '1px solid #e2e8f0', background: '#fff', padding: '4px 0 8px' },
   mobileSearchLink: { display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#2563eb', borderBottom: '1px solid #f1f5f9' },
-  mobileLink: { display: 'block', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: 'var(--text, #0f172a)', borderBottom: '1px solid #f1f5f9' },
+  mobileLink: { display: 'block', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#0f172a', borderBottom: '1px solid #f1f5f9' },
   mobileSocial: { display: 'flex', gap: '8px', padding: '12px 20px 4px', flexWrap: 'wrap' },
-  mobileSocialBtn: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: 'var(--muted, #475569)', padding: '7px 14px', border: '1px solid var(--border, #e2e8f0)', borderRadius: '20px', background: '#f8fafc' },
-  footer: { borderTop: '1px solid var(--border, #e2e8f0)', background: 'var(--bg-card, #fff)', marginTop: '4rem' },
+  mobileSocialBtn: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: '#475569', padding: '7px 14px', border: '1px solid #e2e8f0', borderRadius: '20px', background: '#f8fafc' },
+  footer: { borderTop: '1px solid #e2e8f0', background: '#fff', marginTop: '4rem' },
   footerInner: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', padding: '1.25rem 20px' },
   footerLogo: { display: 'flex', alignItems: 'center', gap: '8px' },
-  footerName: { fontFamily: "'Unbounded',sans-serif", fontSize: '13px', fontWeight: 600, color: 'var(--text, #0f172a)' },
+  footerName: { fontFamily: "'Unbounded',sans-serif", fontSize: '13px', fontWeight: 600, color: '#0f172a' },
   footerLinks: { display: 'flex', gap: '16px', flexWrap: 'wrap' },
-  footerLink: { fontSize: '13px', color: 'var(--faint, #94a3b8)', transition: 'color .15s' },
+  footerLink: { fontSize: '13px', color: '#94a3b8', transition: 'color .15s' },
   footerSocial: { display: 'flex', gap: '8px' },
-  footerSocialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', color: 'var(--faint, #94a3b8)', border: '1px solid var(--border, #e2e8f0)', background: '#f8fafc' },
+  footerSocialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', color: '#94a3b8', border: '1px solid #e2e8f0', background: '#f8fafc' },
   footerCopy: { borderTop: '1px solid #f1f5f9', padding: '.75rem 0' },
   footerCopyText: { fontFamily: "'JetBrains Mono', monospace", fontSize: '11px', color: '#cbd5e1', textAlign: 'center' },
-  langSwitch: { display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0, border: '1px solid var(--border, #e2e8f0)', borderRadius: '8px', overflow: 'hidden', background: '#f8fafc' },
-  langBtn: { fontSize: '11px', fontWeight: 600, fontFamily: 'var(--font-mono)', padding: '5px 9px', color: 'var(--muted, #64748b)', textDecoration: 'none', transition: 'background .15s, color .15s', letterSpacing: '.03em' },
+  langSwitch: { display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0, border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', background: '#f8fafc' },
+  langBtn: { fontSize: '11px', fontWeight: 600, fontFamily: 'var(--font-mono)', padding: '5px 9px', color: '#64748b', textDecoration: 'none', transition: 'background .15s, color .15s', letterSpacing: '.03em' },
   langBtnActive: { background: '#0f172a', color: '#fff' },
 }
