@@ -6,7 +6,6 @@ import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import Script from 'next/script'
 
 const SITE = siteConfig.url
 
@@ -134,18 +133,69 @@ function BookmarkButton({ slug, title, tag, isEn }) {
   )
 }
 
-// ── Cusdis Comments ──────────────────────────────────────────────
+// ── Comments Section (без iframe) ───────────────────────────────
 function CommentsSection({ appId, pageId, pageUrl, pageTitle, isEn }) {
+  const [name, setName] = useState('')
+  const [text, setText] = useState('')
+  const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+
+  const submit = async (e) => {
+    e.preventDefault()
+    if (!name.trim() || !text.trim()) return
+    setSending(true)
+    try {
+      await fetch('https://cusdis.com/api/open/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ appId, pageId, pageUrl, pageTitle,
+          username: name, content: text }),
+      })
+      setSent(true)
+    } catch(e) { setSent(true) }
+    setSending(false)
+  }
+
+  const inp = {
+    width: '100%', padding: '10px 14px', borderRadius: '10px',
+    border: '1.5px solid var(--border, #e2e8f0)',
+    background: 'var(--bg-card, #fff)', color: 'var(--text, #0f172a)',
+    fontSize: '14px', fontFamily: 'inherit', outline: 'none',
+    boxSizing: 'border-box',
+  }
+
   return (
-    <div style={{ marginTop:'3rem', paddingTop:'2rem', borderTop:'1px solid #e2e8f0' }}>
-      <p style={{ fontSize:'1.1rem', fontWeight:700, marginBottom:'1.5rem', color:'#0f172a' }}>
-        💬 {isEn ? 'Comments' : 'Коментарі'}
+    <div style={{ marginTop:'3rem', paddingTop:'2rem', borderTop:'1px solid var(--border,#e2e8f0)' }}>
+      <p style={{ fontSize:'1.1rem', fontWeight:700, marginBottom:'1.5rem', color:'var(--text,#0f172a)' }}>
+        💬 {isEn ? 'Leave a comment' : 'Написати коментар'}
       </p>
-      <div id="cusdis_thread" data-host="https://cusdis.com"
-        data-app-id={appId} data-page-id={pageId}
-        data-page-url={pageUrl} data-page-title={pageTitle}
-        data-lang={isEn ? 'en' : 'uk'} />
-      <Script src="https://cusdis.com/js/cusdis.es.js" strategy="lazyOnload" />
+      {sent ? (
+        <div style={{ padding:'14px 18px', background:'var(--accent-light,#eff6ff)',
+          border:'1px solid var(--accent-dim,#bfdbfe)', borderRadius:'10px',
+          color:'var(--accent-text,#1d4ed8)', fontSize:'14px' }}>
+          ✅ {isEn ? 'Thanks! Comment sent for moderation.' : 'Дякуємо! Коментар відправлено на модерацію.'}
+        </div>
+      ) : (
+        <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
+          <input style={inp} value={name} onChange={e=>setName(e.target.value)}
+            placeholder={isEn ? 'Your name *' : "Ваше ім'я *"} required />
+          <textarea style={{ ...inp, minHeight:'100px', resize:'vertical', lineHeight:'1.6' }}
+            value={text} onChange={e=>setText(e.target.value)}
+            placeholder={isEn ? 'Your comment *' : 'Ваш коментар *'} required />
+          <div>
+            <button type="submit" disabled={sending} style={{
+              padding:'9px 24px', borderRadius:'10px', border:'none',
+              background: sending ? '#94a3b8' : '#2563eb',
+              color:'#fff', fontWeight:600, fontSize:'14px', cursor: sending ? 'default' : 'pointer',
+            }}>
+              {sending ? '...' : (isEn ? 'Send' : 'Надіслати')}
+            </button>
+          </div>
+          <p style={{ fontSize:'12px', color:'var(--faint,#94a3b8)' }}>
+            {isEn ? 'Comments are moderated before publishing.' : 'Коментарі проходять модерацію перед публікацією.'}
+          </p>
+        </form>
+      )}
     </div>
   )
 }
@@ -399,7 +449,7 @@ const s = {
     lineHeight: 1.2,
     letterSpacing: '-.5px',
     marginBottom: '12px',
-    color: '#0f172a',
+    color: 'var(--text, #0f172a)',
   },
   meta: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem', flexWrap: 'wrap' },
   metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
