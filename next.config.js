@@ -21,6 +21,13 @@ const nextConfig = {
         ],
       },
       {
+        // Кешування зображень на 1 рік
+        source: '/:file(.*\\.(?:png|webp|jpg|jpeg|svg|ico|gif))',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
         // Кешування статичних ресурсів на 1 рік
         source: '/_next/static/(.*)',
         headers: [
