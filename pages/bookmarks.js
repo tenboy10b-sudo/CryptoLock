@@ -130,14 +130,15 @@ export default function BookmarksPage() {
           {bookmarks !== null && bookmarks.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {bookmarks.map(b => {
-                const href = isEn ? `/en/${b.slug}` : `/${b.slug}`
+                const bLocale = b.locale || (isEn ? 'en' : 'uk')
+              const href = bLocale === 'en' ? `/en/${b.slug}` : `/${b.slug}`
                 const isRemoving = removing === b.slug
                 return (
                   <div key={b.slug} style={{
                     display: 'flex', alignItems: 'center', gap: '12px',
                     padding: '14px 16px',
-                    background: '#fff', borderRadius: '12px',
-                    border: '1px solid #e2e8f0',
+                    background: 'var(--bg-card,#fff)', borderRadius: '12px',
+                    border: '1px solid var(--border,#e2e8f0)',
                     opacity: isRemoving ? 0.4 : 1,
                     transition: 'opacity 0.3s, border-color 0.15s',
                     boxShadow: '0 1px 3px rgba(0,0,0,0.04)',

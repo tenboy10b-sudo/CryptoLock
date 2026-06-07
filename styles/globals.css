@@ -203,119 +203,133 @@ input[type="search"]::-webkit-search-cancel-button{display:none}
 /* Prevent flash on load */
 html { color-scheme: light dark; }
 
-/* ══════════════════════════════════════════════════════
-   DARK MODE — повні стилі
-══════════════════════════════════════════════════════ */
-
-/* Плавний перехід */
-*, *::before, *::after {
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+/* ── Dark mode — головна сторінка ──────────────────────────── */
+[data-theme="dark"] .cat-card-item,
+[data-theme="dark"] [class*="catCard"] {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
 }
 
-/* Prose */
-[data-theme="dark"] .prose { color: #cbd5e1; }
-[data-theme="dark"] .prose h1,
-[data-theme="dark"] .prose h2,
-[data-theme="dark"] .prose h3,
-[data-theme="dark"] .prose h4 { color: #f1f5f9 !important; }
-[data-theme="dark"] .prose a { color: #93c5fd; }
-[data-theme="dark"] .prose code { background: #1e293b !important; color: #e2e8f0 !important; border-color: #334155 !important; }
-[data-theme="dark"] .prose pre { background: #0d1117 !important; border-color: #334155 !important; }
-[data-theme="dark"] .prose blockquote { background: #1e3a5f !important; border-color: #3b82f6 !important; color: #94a3b8 !important; }
-[data-theme="dark"] .prose table { border-color: #334155 !important; }
-[data-theme="dark"] .prose th { background: #1e293b !important; color: #94a3b8 !important; border-color: #334155 !important; }
-[data-theme="dark"] .prose td { border-color: #334155 !important; color: #cbd5e1 !important; }
-[data-theme="dark"] .prose tr:nth-child(even) td { background: #1a2332 !important; }
-[data-theme="dark"] .prose hr { border-color: #334155 !important; }
-
-/* Nav / Header — ВАЖЛИВО: не перекривати кольором nav */
-[data-theme="dark"] nav { border-color: var(--border) !important; }
+/* Категорії теги */
+[data-theme="dark"] .cat-tag-item {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+[data-theme="dark"] .cat-tag-item:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent-light) !important;
+}
 
 /* Post cards */
 [data-theme="dark"] .post-card {
-  background: #1e293b !important;
-  border-color: #334155 !important;
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
 }
-[data-theme="dark"] .post-card:hover { border-color: #3b82f6 !important; }
-[data-theme="dark"] .post-card * { color: var(--text) !important; }
-[data-theme="dark"] .post-card a { color: var(--text) !important; }
-[data-theme="dark"] .post-card .tag-chip { color: #93c5fd !important; }
-
-/* Tag chips */
-[data-theme="dark"] .tag-chip {
-  background: #1e3a5f !important;
-  color: #93c5fd !important;
-  border-color: #2563eb !important;
+[data-theme="dark"] .post-card * {
+  color: var(--text);
+}
+[data-theme="dark"] .post-card h2,
+[data-theme="dark"] .post-card h3,
+[data-theme="dark"] .post-card a {
+  color: var(--text) !important;
 }
 
-/* Category cards on homepage */
-[data-theme="dark"] .cat-tag-item {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-  color: #e2e8f0 !important;
-}
-[data-theme="dark"] .cat-tag-item:hover {
-  border-color: #3b82f6 !important;
-  background: #1e3a5f !important;
-}
-[data-theme="dark"] a.cat-tag-item { color: #e2e8f0 !important; }
-
-/* Inputs */
-[data-theme="dark"] input[type="text"],
-[data-theme="dark"] input[type="search"],
-[data-theme="dark"] input[type="email"],
-[data-theme="dark"] textarea {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-  color: #e2e8f0 !important;
-}
-
-/* Footer */
-[data-theme="dark"] footer {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-}
-[data-theme="dark"] footer a,
-[data-theme="dark"] footer p,
-[data-theme="dark"] footer span { color: #94a3b8 !important; }
-
-/* Sections with white bg */
-[data-theme="dark"] .section-bg-white {
+/* Секції з білим фоном */
+[data-theme="dark"] section,
+[data-theme="dark"] .section-white {
   background: var(--bg) !important;
+  border-color: var(--border) !important;
 }
 
-/* Buttons — тільки ті без явного кольору */
-[data-theme="dark"] button:not([class*="btn-"]):not([style]) {
+/* Загальний текст */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] li,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
   color: var(--text);
 }
 
-/* Article page — заголовок і meta */
-[data-theme="dark"] h1 { color: #f1f5f9 !important; }
-[data-theme="dark"] time { color: #94a3b8 !important; }
+/* Nav і footer */
+[data-theme="dark"] nav,
+[data-theme="dark"] footer {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
 
-/* Breadcrumb */
-[data-theme="dark"] nav[aria-label] a { color: #94a3b8 !important; }
-[data-theme="dark"] nav[aria-label] span { color: #64748b !important; }
+/* Інпути і кнопки */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
 
-/* Related articles section */
-[data-theme="dark"] section { background: transparent !important; }
+/* Tag chips */
+[data-theme="dark"] .tag-chip {
+  background: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+  border-color: var(--accent-dim) !important;
+}
 
-/* Tools page cards */
+/* Search */
+[data-theme="dark"] .search-wrap,
+[data-theme="dark"] .search-input {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Featured card on homepage */
+[data-theme="dark"] .featured-card {
+  background: var(--bg-dark) !important;
+}
+
+/* Tools page */
 [data-theme="dark"] .tool-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* Кнопки без кольору */
+[data-theme="dark"] button:not([style*="background:#"]):not([style*="background: #2"]):not([style*="background: rgb"]) {
+  color: var(--text);
+}
+
+/* ── Scrollbar в коді ────────────────────────────────────────── */
+.prose pre::-webkit-scrollbar { height: 6px; }
+.prose pre::-webkit-scrollbar-track { background: transparent; }
+.prose pre::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+.prose pre::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+/* ── Lead (description) блок ─────────────────────────────────── */
+[data-theme="dark"] .lead-block {
+  background: #1e3a5f !important;
+  border-color: #3b82f6 !important;
+  color: #e2e8f0 !important;
+}
+
+/* ── PostCard кнопка Read ────────────────────────────────────── */
+[data-theme="dark"] .read-btn {
+  background: #1e293b !important;
+  color: #93c5fd !important;
+  border-color: #334155 !important;
+}
+[data-theme="dark"] .read-btn:hover {
+  background: #2563eb !important;
+  color: #fff !important;
+  border-color: #2563eb !important;
+}
+
+/* ── Bookmarks картки ─────────────────────────────────────────── */
+[data-theme="dark"] .bookmark-card {
   background: #1e293b !important;
   border-color: #334155 !important;
 }
-
-/* Lead блок (description) і inline-related */
-[data-theme="dark"] .prose .inline-related,
-[data-theme="dark"] .inline-related {
-  background: #1e3a5f !important;
-  border-color: #2563eb !important;
-}
-[data-theme="dark"] .inline-related a {
-  color: #93c5fd !important;
-  border-color: #334155 !important;
-}
-[data-theme="dark"] .inline-related p {
-  color: #93c5fd !important;
-}
+[data-theme="dark"] .bookmark-card:hover { border-color: #3b82f6 !important; }
+[data-theme="dark"] .bookmark-card a { color: #e2e8f0 !important; }
+[data-theme="dark"] .bookmark-card span { color: #94a3b8 !important; }

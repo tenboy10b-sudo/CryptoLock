@@ -34,7 +34,7 @@ export default function PostCard({ post, featured }) {
               <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min' : 'хв'}</span></>
             )}
           </div>
-          <span style={s.readBtn} aria-hidden="true">{isEn ? 'Read' : 'Читати'}</span>
+          <span style={s.readBtn} className="read-btn" aria-hidden="true">{isEn ? 'Read' : 'Читати'}</span>
         </div>
       </Link>
     </article>

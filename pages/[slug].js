@@ -117,7 +117,7 @@ function BookmarkButton({ slug, title, tag, isEn }) {
     try {
       const b = JSON.parse(localStorage.getItem('cl-bookmarks')||'[]')
       if (saved) { localStorage.setItem('cl-bookmarks', JSON.stringify(b.filter(x=>x.slug!==slug))); setSaved(false) }
-      else { localStorage.setItem('cl-bookmarks', JSON.stringify([...b,{slug,title,tag,savedAt:Date.now()}])); setSaved(true) }
+      else { localStorage.setItem('cl-bookmarks', JSON.stringify([...b,{slug,title,tag,locale:isEn?'en':'uk',savedAt:Date.now()}])); setSaved(true) }
     } catch {}
   }
   return (
@@ -313,7 +313,7 @@ export default function Post({ post, related, locale }) {
                 {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min read' : 'хв читання'}</span></>}
                 {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <time dateTime={post.updated}>{fmt(post.updated, locale)}</time></span></>}
               </div>
-              {post.description && <p style={s.lead}>{post.description}</p>}
+              {post.description && <p style={s.lead} className="lead-block">{post.description}</p>}
               <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'1rem', flexWrap:'wrap' }}>
                 <BookmarkButton slug={post.slug} title={post.title} tag={post.tags?.[0]||''} isEn={isEn} />
               </div>
@@ -455,7 +455,7 @@ const s = {
   metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
   dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0, display: 'inline-block' },
   lead: {
-    fontSize: '1rem', color: '#475569', lineHeight: 1.65,
+    fontSize: '1rem', color: 'var(--text, #0f172a)', lineHeight: 1.65,
     padding: '1rem 1.25rem', background: 'var(--accent-light, #eff6ff)',
     borderRadius: '0 10px 10px 0', borderLeft: '3px solid var(--accent, #2563eb)',
   },
