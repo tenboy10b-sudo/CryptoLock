@@ -404,9 +404,9 @@ export async function getStaticProps({ params, locale }) {
         const href = isEnBlock
           ? 'https://cryptolockua.com/en/' + p.slug
           : 'https://cryptolockua.com/' + p.slug
-        return '<a href="' + href + '" style="display:block;color:#2563eb;text-decoration:none;padding:6px 0;font-size:0.9rem;border-bottom:1px solid #e2e8f0">→ ' + p.title + '</a>'
+        return '<a href="' + href + '" style="display:block;color:var(--accent,#2563eb);text-decoration:none;padding:6px 0;font-size:0.9rem;border-bottom:1px solid var(--border,#e2e8f0)">→ ' + p.title + '</a>'
       }).join('')
-      const block = '<div class="inline-related" style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:14px 18px;margin:2rem 0"><p style="font-size:0.75rem;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px">' + label + '</p>' + linksHtml + '</div>'
+      const block = '<div class="inline-related" style="background:var(--accent-light,#eff6ff);border:1px solid var(--accent-dim,#bfdbfe);border-radius:8px;padding:14px 18px;margin:2rem 0"><p style="font-size:0.75rem;font-weight:700;color:var(--accent-text,#1d4ed8);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px">' + label + '</p>' + linksHtml + '</div>'
       const h2idx = enrichedHtml.indexOf('</h2>')
       if (h2idx > 100) {
         const ins = enrichedHtml.indexOf('</p>', h2idx) + 4
@@ -456,8 +456,8 @@ const s = {
   dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0, display: 'inline-block' },
   lead: {
     fontSize: '1rem', color: '#475569', lineHeight: 1.65,
-    padding: '1rem 1.25rem', background: '#eff6ff',
-    borderRadius: '0 10px 10px 0', borderLeft: '3px solid #2563eb',
+    padding: '1rem 1.25rem', background: 'var(--accent-light, #eff6ff)',
+    borderRadius: '0 10px 10px 0', borderLeft: '3px solid var(--accent, #2563eb)',
   },
   related: { marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #e2e8f0' },
   relatedTitle: {
