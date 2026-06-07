@@ -172,11 +172,7 @@ export default function BookmarksPage() {
                       </Link>
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '3px' }}>
                         {b.tag && (
-                          <span style={{
-                            fontSize: '11px', color: '#2563eb',
-                            background: '#eff6ff', padding: '1px 8px',
-                            borderRadius: '4px', fontFamily: 'var(--font-mono)',
-                          }}>
+                          <span className="tag-chip" style={{ fontSize: '11px', padding: '1px 8px' }}>
                             {b.tag}
                           </span>
                         )}

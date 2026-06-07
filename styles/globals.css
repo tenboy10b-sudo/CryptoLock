@@ -350,4 +350,9 @@ html { color-scheme: light dark; }
 [data-theme="dark"] .bm-card .tag-chip {
   background: #1e3a5f !important;
   color: #93c5fd !important;
+  border-color: #3b82f6 !important;
+}
+
+[data-theme="dark"] .bm-card .bm-icon {
+  background: #1e3a5f !important;
 }
