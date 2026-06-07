@@ -71,7 +71,7 @@ export default function BookmarksPage() {
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '12px' }}>
             <div>
-              <h1 style={{ fontSize: 'clamp(1.5rem,4vw,2rem)', fontWeight: 700, color: '#0f172a', margin: '0 0 4px' }}>
+              <h1 style={{ fontSize: 'clamp(1.5rem,4vw,2rem)', fontWeight: 700, color: 'var(--text,#0f172a)', margin: '0 0 4px' }}>
                 🔖 {isEn ? 'My Bookmarks' : 'Мої закладки'}
               </h1>
               {bookmarks !== null && (
@@ -104,11 +104,11 @@ export default function BookmarksPage() {
           {bookmarks !== null && bookmarks.length === 0 && (
             <div style={{
               textAlign: 'center', padding: '4rem 2rem',
-              background: '#f8fafc', borderRadius: '16px',
-              border: '1px dashed #e2e8f0',
+              background: 'var(--bg-card,#f8fafc)', borderRadius: '16px',
+              border: '1px dashed var(--border,#e2e8f0)',
             }}>
               <div style={{ fontSize: '48px', marginBottom: '1rem' }}>🔖</div>
-              <p style={{ fontSize: '1rem', fontWeight: 600, color: '#334155', marginBottom: '0.5rem' }}>
+              <p style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text,#334155)', marginBottom: '0.5rem' }}>
                 {isEn ? 'No bookmarks yet' : 'Закладок поки немає'}
               </p>
               <p style={{ fontSize: '14px', color: '#94a3b8', marginBottom: '1.5rem' }}>
@@ -143,13 +143,13 @@ export default function BookmarksPage() {
                     transition: 'opacity 0.3s, border-color 0.15s',
                     boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
                   }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = '#2563eb'}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = '#e2e8f0'}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent,#2563eb)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border,#e2e8f0)'}
                   >
                     {/* Bookmark icon */}
                     <div style={{
                       width: '36px', height: '36px', borderRadius: '8px',
-                      background: '#eff6ff', display: 'flex',
+                      background: 'var(--accent-light,#eff6ff)', display: 'flex',
                       alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                     }}>
                       <svg width="16" height="16" viewBox="0 0 24 24"
@@ -162,19 +162,19 @@ export default function BookmarksPage() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <Link href={href} style={{
                         display: 'block', fontWeight: 600, fontSize: '14px',
-                        color: '#0f172a', textDecoration: 'none',
+                        color: 'var(--text,#0f172a)', textDecoration: 'none',
                         overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                       }}
-                      onMouseEnter={e => e.target.style.color = '#2563eb'}
-                      onMouseLeave={e => e.target.style.color = '#0f172a'}
+                      onMouseEnter={e => e.target.style.color = 'var(--accent,#2563eb)'}
+                      onMouseLeave={e => e.target.style.color = 'var(--text,#0f172a)'}
                       >
                         {b.title}
                       </Link>
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '3px' }}>
                         {b.tag && (
                           <span style={{
-                            fontSize: '11px', color: '#2563eb',
-                            background: '#eff6ff', padding: '1px 8px',
+                            fontSize: '11px', color: 'var(--accent,#2563eb)',
+                            background: 'var(--accent-light,#eff6ff)', padding: '1px 8px',
                             borderRadius: '4px', fontFamily: 'var(--font-mono)',
                           }}>
                             {b.tag}
@@ -190,12 +190,12 @@ export default function BookmarksPage() {
                     <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
                       <Link href={href} style={{
                         padding: '5px 12px', borderRadius: '7px', fontSize: '12px',
-                        background: '#f1f5f9', color: '#475569',
+                        background: 'var(--bg,#f1f5f9)', color: 'var(--muted,#475569)',
                         textDecoration: 'none', fontWeight: 600,
                         transition: 'background 0.15s',
                       }}
-                      onMouseEnter={e => e.target.style.background = '#e2e8f0'}
-                      onMouseLeave={e => e.target.style.background = '#f1f5f9'}
+                      onMouseEnter={e => e.target.style.background = 'var(--border,#e2e8f0)'}
+                      onMouseLeave={e => e.target.style.background = 'var(--bg,#f1f5f9)'}
                       >
                         {isEn ? 'Read →' : 'Читати →'}
                       </Link>
@@ -218,7 +218,7 @@ export default function BookmarksPage() {
           )}
 
           {/* Local storage note */}
-          <p style={{ fontSize: '12px', color: '#cbd5e1', marginTop: '2rem', textAlign: 'center' }}>
+          <p style={{ fontSize: '12px', color: 'var(--faint,#cbd5e1)', marginTop: '2rem', textAlign: 'center' }}>
             {isEn
               ? '🔒 Bookmarks are stored locally in your browser. Clearing browser data will remove them.'
               : '🔒 Закладки зберігаються локально у браузері. Очищення даних браузера видалить їх.'}
