@@ -60,12 +60,12 @@ const styles = {
     fontSize: 'clamp(1.5rem, 4vw, 1.75rem)',
     fontWeight: 700,
     marginBottom: '.5rem',
-    color: '#0f172a',
+    color: 'var(--text,#0f172a)',
   },
   subtitle: {
     fontFamily: 'var(--font-mono)',
     fontSize: '12px',
-    color: '#94a3b8',
+    color: 'var(--faint,#94a3b8)',
     marginBottom: '2rem',
   },
   grid: {
@@ -78,9 +78,9 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
     padding: '8px 14px',
-    border: '1px solid #e2e8f0',
+    border: '1px solid var(--border,#e2e8f0)',
     borderRadius: '8px',
-    background: '#ffffff',
+    background: 'var(--bg-card,#ffffff)',
     transition: 'border-color .15s, background .15s, transform .15s',
   },
   tagName: {
@@ -91,7 +91,7 @@ const styles = {
   tagCount: {
     fontFamily: 'var(--font-mono)',
     fontSize: '11px',
-    color: '#94a3b8',
+    color: 'var(--faint,#94a3b8)',
     background: '#eff6ff',
     padding: '1px 6px',
     borderRadius: '10px',

@@ -48,8 +48,8 @@ function fmt(d, isEn = false) {
 
 const s = {
   card: {
-    background: '#fff',
-    border: '1px solid #e2e8f0',
+    background: 'var(--bg-card,#fff)',
+    border: '1px solid var(--border,#e2e8f0)',
     borderRadius: '12px',
     overflow: 'hidden',
     transition: 'border-color .2s, box-shadow .2s, transform .15s',
@@ -66,14 +66,14 @@ const s = {
     fontWeight: 700,
     lineHeight: 1.3,
     marginBottom: '8px',
-    color: '#0f172a',
+    color: 'var(--text,#0f172a)',
     letterSpacing: '-.2px',
   },
   titleFeatured: { fontSize: '1.1rem' },
-  excerpt: { fontSize: '.88rem', color: '#475569', lineHeight: 1.6, marginBottom: '14px' },
+  excerpt: { fontSize: '.88rem', color: 'var(--muted,#475569)', lineHeight: 1.6, marginBottom: '14px' },
   footer: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
   meta: { display: 'flex', alignItems: 'center', gap: '6px' },
-  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#64748b' },
+  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--muted,#64748b)' },
   dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0, display: 'inline-block' },
   readBtn: {
     fontSize: '12px',

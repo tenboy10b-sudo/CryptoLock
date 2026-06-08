@@ -86,16 +86,16 @@ export async function getStaticProps({ params, locale }) {
 
 const styles = {
   bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem', flexWrap: 'wrap' },
-  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8' },
-  bcSep: { fontSize: '12px', color: '#cbd5e1' },
-  bcCur: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#64748b' },
+  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint,#94a3b8)' },
+  bcSep: { fontSize: '12px', color: 'var(--border-md,#cbd5e1)' },
+  bcCur: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--muted,#64748b)' },
   header: { marginBottom: '1.5rem' },
   title: {
     fontFamily: 'var(--font-display)',
     fontSize: 'clamp(1.35rem, 4vw, 1.6rem)',
     fontWeight: 700,
     margin: '10px 0 4px',
-    color: '#0f172a',
+    color: 'var(--text,#0f172a)',
   },
-  count: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#94a3b8', marginBottom: '.5rem' },
+  count: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--faint,#94a3b8)', marginBottom: '.5rem' },
 }

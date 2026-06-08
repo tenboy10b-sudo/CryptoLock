@@ -26,7 +26,7 @@ export default function Privacy() {
             {isEn ? 'Privacy Policy' : 'Політика конфіденційності'}
           </h1>
           <div className="prose">
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8' }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint,#94a3b8)' }}>
               {isEn ? `Effective date: ${effectiveDateEn}` : `Дата набрання чинності: ${effectiveDateUk}`}
             </p>
 
@@ -124,6 +124,6 @@ const styles = {
     fontSize: 'clamp(1.5rem, 4vw, 1.75rem)',
     fontWeight: 700,
     marginBottom: '1.5rem',
-    color: '#0f172a',
+    color: 'var(--text,#0f172a)',
   },
 }

@@ -73,7 +73,7 @@ export default function Tools() {
           <nav style={s.bc}>
             <Link href={isEn ? '/en' : '/'} style={s.bcLink}>{isEn ? 'Home' : 'Головна'}</Link>
             <span style={s.bcSep}>/</span>
-            <span style={{ ...s.bcLink, color: '#64748b' }}>{isEn ? 'Tools' : 'Інструменти'}</span>
+            <span style={{ ...s.bcLink, color: 'var(--muted,#64748b)' }}>{isEn ? 'Tools' : 'Інструменти'}</span>
           </nav>
 
           <h1 style={s.title}>{isEn ? 'Windows Tools' : 'Інструменти для Windows'}</h1>
@@ -109,18 +109,18 @@ export default function Tools() {
 
 const s = {
   bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem' },
-  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', textDecoration: 'none' },
-  bcSep: { fontSize: '12px', color: '#cbd5e1' },
-  title: { fontFamily: "'Unbounded', sans-serif", fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 700, color: '#0f172a', marginBottom: '1rem' },
-  lead: { fontSize: '1rem', color: '#475569', lineHeight: 1.7, padding: '1.25rem 1.5rem', background: '#eff6ff', borderRadius: '0 10px 10px 0', borderLeft: '3px solid #2563eb', marginBottom: '2.5rem' },
+  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint,#94a3b8)', textDecoration: 'none' },
+  bcSep: { fontSize: '12px', color: 'var(--border-md,#cbd5e1)' },
+  title: { fontFamily: "'Unbounded', sans-serif", fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--text,#0f172a)', marginBottom: '1rem' },
+  lead: { fontSize: '1rem', color: 'var(--muted,#475569)', lineHeight: 1.7, padding: '1.25rem 1.5rem', background: '#eff6ff', borderRadius: '0 10px 10px 0', borderLeft: '3px solid #2563eb', marginBottom: '2.5rem' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '14px', marginBottom: '2.5rem' },
-  card: { display: 'flex', alignItems: 'flex-start', gap: '14px', padding: '1.25rem', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '12px', textDecoration: 'none', cursor: 'pointer' },
+  card: { display: 'flex', alignItems: 'flex-start', gap: '14px', padding: '1.25rem', background: 'var(--bg-card,#fff)', border: '1px solid var(--border,#e2e8f0)', borderRadius: '12px', textDecoration: 'none', cursor: 'pointer' },
   cardIcon: { fontSize: '1.75rem', flexShrink: 0, marginTop: '2px' },
   cardContent: { flex: 1 },
   cardTop: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' },
-  cardName: { fontFamily: "'Unbounded', sans-serif", fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' },
+  cardName: { fontFamily: "'Unbounded', sans-serif", fontSize: '0.9rem', fontWeight: 700, color: 'var(--text,#0f172a)' },
   badge: { fontSize: '10px', fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#16a34a', background: '#dcfce7', padding: '2px 8px', borderRadius: '20px', textTransform: 'uppercase', letterSpacing: '0.5px' },
   cardTagline: { fontSize: '0.8rem', color: '#2563eb', fontWeight: 600, marginBottom: '4px' },
-  cardDesc: { fontSize: '0.825rem', color: '#64748b', lineHeight: 1.6, margin: 0 },
-  cardArrow: { fontSize: '1.1rem', color: '#94a3b8', flexShrink: 0, alignSelf: 'center' },
+  cardDesc: { fontSize: '0.825rem', color: 'var(--muted,#64748b)', lineHeight: 1.6, margin: 0 },
+  cardArrow: { fontSize: '1.1rem', color: 'var(--faint,#94a3b8)', flexShrink: 0, alignSelf: 'center' },
 }

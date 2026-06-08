@@ -11,7 +11,7 @@ export default function Offline() {
       <h1 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '1rem' }}>
         Crypto<span style={{ color: '#2563eb' }}>Lock</span>
       </h1>
-      <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '360px', lineHeight: 1.6 }}>
+      <p style={{ color: 'var(--faint,#94a3b8)', fontSize: '1rem', maxWidth: '360px', lineHeight: 1.6 }}>
         Немає підключення до інтернету. Раніше переглянуті статті доступні в кеші.
       </p>
       <button

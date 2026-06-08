@@ -89,20 +89,20 @@ export async function getStaticProps() {
 }
 
 const s = {
-  title: { fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,4vw,1.75rem)', fontWeight: 700, marginBottom: '1.5rem', color: '#0f172a' },
+  title: { fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,4vw,1.75rem)', fontWeight: 700, marginBottom: '1.5rem', color: 'var(--text,#0f172a)' },
   inputWrap: { position: 'relative', display: 'flex', alignItems: 'center', marginBottom: '1rem' },
-  icon: { position: 'absolute', left: '14px', width: '18px', height: '18px', color: '#94a3b8', pointerEvents: 'none' },
+  icon: { position: 'absolute', left: '14px', width: '18px', height: '18px', color: 'var(--faint,#94a3b8)', pointerEvents: 'none' },
   input: {
     width: '100%', padding: '12px 44px 12px 44px',
     fontSize: '16px', fontFamily: 'var(--font-body)',
     border: '1.5px solid #e2e8f0', borderRadius: '12px',
-    background: '#fff', outline: 'none', color: '#0f172a',
+    background: 'var(--bg-card,#fff)', outline: 'none', color: 'var(--text,#0f172a)',
     transition: 'border-color .15s',
   },
-  clear: { position: 'absolute', right: '12px', background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', fontSize: '16px', padding: '4px', lineHeight: 1 },
-  count: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', marginBottom: '1rem' },
+  clear: { position: 'absolute', right: '12px', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--faint,#94a3b8)', fontSize: '16px', padding: '4px', lineHeight: 1 },
+  count: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint,#94a3b8)', marginBottom: '1rem' },
   empty: { padding: '2rem 0', textAlign: 'center' },
-  emptyText: { fontSize: '14px', color: '#94a3b8' },
+  emptyText: { fontSize: '14px', color: 'var(--faint,#94a3b8)' },
   link: { color: '#2563eb' },
   list: { display: 'flex', flexDirection: 'column', gap: '10px' },
 }

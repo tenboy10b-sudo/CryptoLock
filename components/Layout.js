@@ -117,13 +117,7 @@ export default function Layout({ children, title, description, canonical, isArti
     <>
       <Head>
         {/* Google Fonts — preconnect для швидкого завантаження */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@600;700&display=swap"
-        />
-        <title>{pageTitle}</title>
+<title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href={pageUrl} />
@@ -324,7 +318,7 @@ const s = {
   footerLogo: { display: 'flex', alignItems: 'center', gap: '8px' },
   footerName: { fontFamily: "'Unbounded',sans-serif", fontSize: '13px', fontWeight: 600, color: '#0f172a' },
   footerLinks: { display: 'flex', gap: '16px', flexWrap: 'wrap' },
-  footerLink: { fontSize: '13px', color: '#94a3b8', transition: 'color .15s' },
+  footerLink: { fontSize: '13px', color: '#64748b', transition: 'color .15s' },
   footerSocial: { display: 'flex', gap: '8px' },
   footerSocialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', color: '#94a3b8', border: '1px solid #e2e8f0', background: '#f8fafc' },
   footerCopy: { borderTop: '1px solid #f1f5f9', padding: '.75rem 0' },

@@ -80,8 +80,8 @@ export default function TableOfContents({ contentHtml, sticky = false, className
 
 const s = {
   wrap: {
-    background: '#f8fafc',
-    border: '1px solid #e2e8f0',
+    background: 'var(--bg,#f8fafc)',
+    border: '1px solid var(--border,#e2e8f0)',
     borderRadius: '10px',
     padding: '1rem 1.25rem',
     marginBottom: '2rem',
@@ -90,7 +90,7 @@ const s = {
     fontFamily: 'var(--font-mono)',
     fontSize: '11px',
     fontWeight: 500,
-    color: '#94a3b8',
+    color: 'var(--faint,#94a3b8)',
     letterSpacing: '1px',
     textTransform: 'uppercase',
     marginBottom: '10px',
@@ -100,7 +100,7 @@ const s = {
     display: 'block',
     fontFamily: 'var(--font-body)',
     fontSize: '13px',
-    color: '#475569',
+    color: 'var(--muted,#475569)',
     padding: '4px 0',
     textDecoration: 'none',
     borderLeft: '2px solid transparent',
@@ -111,7 +111,7 @@ const s = {
   linkH3: {
     paddingLeft: '22px',
     fontSize: '12px',
-    color: '#64748b',
+    color: 'var(--muted,#64748b)',
   },
   linkActive: {
     color: '#2563eb',
