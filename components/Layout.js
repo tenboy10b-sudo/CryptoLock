@@ -394,8 +394,8 @@ const s = {
   header: { background: 'var(--bg-card,#fff)', borderBottom: '1px solid var(--border,#e2e8f0)', position: 'sticky', top: 0, zIndex: 50 },
   navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', height: '62px', width: '100%', padding: '0 20px' },
   logoWrap: { display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none', flexShrink: 0 },
-  logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: '#0f172a' },
-  logoAccent: { color: '#0f172a' },
+  logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: 'var(--text,#0f172a)' },
+  logoAccent: { color: 'var(--accent,#2563eb)' },
   rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end' },
   navLink: { fontSize: '14px', fontWeight: 500, color: 'var(--text,#0f172a)', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
   searchBtn: {
