@@ -44,7 +44,7 @@ img{max-width:100%;display:block}
 
 /* ── Nav classes (надійна заміна style-селекторів) ── */
 .nav-desktop{display:flex;gap:2px;align-items:center}
-.nav-divider{width:1px;height:20px;background:var(--border,#e2e8f0);margin:0 6px;flex-shrink:0}
+.nav-divider{width:1px;height:20px;background:#e2e8f0;margin:0 6px;flex-shrink:0}
 .nav-social{display:flex;align-items:center;gap:4px}
 .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;margin-left:4px;flex-shrink:0}
 
@@ -80,14 +80,14 @@ img{max-width:100%;display:block}
 .prose strong{font-weight:600}
 .prose a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 .prose a:hover{color:var(--accent-text)}
-.prose code{font-family:var(--font-mono);font-size:.84em;background:var(--bg,#f1f5f9);color:var(--accent-text);padding:2px 6px;border-radius:4px;border:1px solid var(--border,#e2e8f0);}
+.prose code{font-family:var(--font-mono);font-size:.84em;background:#f1f5f9;color:var(--accent-text);padding:2px 6px;border-radius:4px;border:1px solid #e2e8f0;}
 .prose pre{background:var(--bg-code);color:#cdd6f4;padding:1.25rem 1.5rem;border-radius:var(--r-md);overflow-x:auto;margin:1.5rem 0;font-family:var(--font-mono);font-size:.875rem;line-height:1.65;border:1px solid #313244;}
 .prose pre code{background:none;padding:0;border:none;color:inherit;font-size:inherit}
 .prose blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;background:var(--accent-light);border-radius:0 var(--r-sm) var(--r-sm) 0;margin:1.5rem 0;color:var(--muted);font-size:.95rem;}
 .prose table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.9rem}
-.prose th{background:var(--bg,#f1f5f9);font-weight:600;text-align:left;padding:.6rem .9rem;border:1px solid var(--border);font-size:.82rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);}
+.prose th{background:#f1f5f9;font-weight:600;text-align:left;padding:.6rem .9rem;border:1px solid var(--border);font-size:.82rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);}
 .prose td{padding:.6rem .9rem;border:1px solid var(--border);vertical-align:top}
-.prose tr:nth-child(even) td{background:var(--bg,#f8fafc)}
+.prose tr:nth-child(even) td{background:#f8fafc}
 .prose hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
 
 /* ── Back-to-top ── */
@@ -203,169 +203,11 @@ input[type="search"]::-webkit-search-cancel-button{display:none}
 /* Prevent flash on load */
 html { color-scheme: light dark; }
 
-/* ── Dark mode — головна сторінка ──────────────────────────── */
-[data-theme="dark"] .cat-card-item,
-[data-theme="dark"] [class*="catCard"] {
-  background: var(--bg-card) !important;
-  border-color: var(--border) !important;
-  color: var(--text) !important;
-}
-
-/* Категорії теги */
-[data-theme="dark"] .cat-tag-item {
-  background: var(--bg-card) !important;
-  border-color: var(--border) !important;
-  color: var(--text) !important;
-}
-[data-theme="dark"] .cat-tag-item:hover {
-  border-color: var(--accent) !important;
-  background: var(--accent-light) !important;
-}
-
-/* Post cards */
-[data-theme="dark"] .post-card {
-  background: var(--bg-card) !important;
-  border-color: var(--border) !important;
-}
-[data-theme="dark"] .post-card * {
-  color: var(--text);
-}
-[data-theme="dark"] .post-card h2,
-[data-theme="dark"] .post-card h3,
-[data-theme="dark"] .post-card a {
-  color: var(--text) !important;
-}
-
-/* Секції з білим фоном */
-[data-theme="dark"] .section-white {
-  background: var(--bg) !important;
-  border-color: var(--border) !important;
-}
-
-/* Загальний текст — тільки body рівень */
-[data-theme="dark"] body { color: var(--text); }
-
-/* Footer */
-[data-theme="dark"] footer {
-  background: var(--bg-card) !important;
-  border-color: var(--border) !important;
-}
-/* Nav — тільки border, не bg */
-[data-theme="dark"] nav {
-  border-color: var(--border) !important;
-}
-
-/* Інпути і кнопки */
-[data-theme="dark"] input,
-[data-theme="dark"] textarea {
-  background: var(--bg-card) !important;
-  border-color: var(--border) !important;
-  color: var(--text) !important;
-}
-
-/* Tag chips */
-[data-theme="dark"] .tag-chip {
-  background: var(--accent-light) !important;
-  color: var(--accent-text) !important;
-  border-color: var(--accent-dim) !important;
-}
-
-/* Search */
-[data-theme="dark"] .search-desktop input,
-[data-theme="dark"] .search-wrap,
-[data-theme="dark"] .search-input {
-  background: var(--bg-card) !important;
-  border-color: var(--border) !important;
-  color: var(--text) !important;
-}
-
-/* Featured card on homepage */
-[data-theme="dark"] .featured-card {
-  background: var(--bg-dark) !important;
-}
-
-/* Tools page */
-[data-theme="dark"] .tool-card {
-  background: var(--bg-card) !important;
-  border-color: var(--border) !important;
-}
-
-/* Кнопки без кольору */
-[data-theme="dark"] button:not([style*="background:#"]):not([style*="background: #2"]):not([style*="background: rgb"]) {
-  color: var(--text);
-}
-
-/* ── Scrollbar в коді ────────────────────────────────────────── */
-.prose pre::-webkit-scrollbar { height: 6px; }
-.prose pre::-webkit-scrollbar-track { background: transparent; }
-.prose pre::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
-.prose pre::-webkit-scrollbar-thumb:hover { background: #64748b; }
-
-/* ── Lead (description) блок ─────────────────────────────────── */
-[data-theme="dark"] .lead-block {
+[data-theme="dark"] .prose blockquote {
   background: #1e3a5f !important;
   border-color: #3b82f6 !important;
-  color: #e2e8f0 !important;
+  color: #94a3b8 !important;
 }
-
-/* ── PostCard кнопка Read ────────────────────────────────────── */
-[data-theme="dark"] .read-btn {
-  background: #1e293b !important;
-  color: #93c5fd !important;
-  border-color: #334155 !important;
-}
-[data-theme="dark"] .read-btn:hover {
-  background: #2563eb !important;
-  color: #fff !important;
-  border-color: #2563eb !important;
-}
-
-/* ── Bookmarks картки ─────────────────────────────────────────── */
-[data-theme="dark"] .bookmark-card {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-}
-[data-theme="dark"] .bookmark-card:hover { border-color: #3b82f6 !important; }
-[data-theme="dark"] .bookmark-card a { color: #e2e8f0 !important; }
-[data-theme="dark"] .bookmark-card span { color: #94a3b8 !important; }
-
-/* ── Bookmarks cards ─────────────────────────────────────────── */
-.bm-card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  transition: border-color 0.15s, opacity 0.3s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-.bm-card:hover { border-color: #2563eb; }
-
-[data-theme="dark"] .bm-card {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-}
-[data-theme="dark"] .bm-card:hover { border-color: #3b82f6 !important; }
-[data-theme="dark"] .bm-card a,
-[data-theme="dark"] .bm-card span:not(.tag-chip),
-[data-theme="dark"] .bm-card p { color: #e2e8f0 !important; }
-[data-theme="dark"] .bm-card .tag-chip {
+[data-theme="dark"] [style*="accent-light"] {
   background: #1e3a5f !important;
-  color: #93c5fd !important;
-  border-color: #3b82f6 !important;
-}
-
-[data-theme="dark"] .bm-card .bm-icon {
-  background: #1e3a5f !important;
-}
-
-/* ── Inline related блок ─────────────────────────────────────── */
-[data-theme="dark"] .inline-related {
-  background: #1e3a5f !important;
-  border-color: #2563eb !important;
-}
-[data-theme="dark"] .inline-related a {
-  color: #93c5fd !important;
-  border-color: #334155 !important;
-}
-[data-theme="dark"] .inline-related p {
-  color: #93c5fd !important;
 }

@@ -82,7 +82,7 @@ export default function AuditShield() {
             <span style={s.bcSep}>/</span>
             <Link href="/tools" style={s.bcLink}>Інструменти</Link>
             <span style={s.bcSep}>/</span>
-            <span style={{ ...s.bcLink, color: '#64748b' }}>AuditShield</span>
+            <span style={{ ...s.bcLink, color: 'var(--muted,#64748b)' }}>AuditShield</span>
           </nav>
 
           {/* Hero */}
@@ -239,13 +239,13 @@ export default function AuditShield() {
 
 const s = {
   bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2rem' },
-  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', textDecoration: 'none' },
-  bcSep: { fontSize: '12px', color: '#cbd5e1' },
+  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint,#94a3b8)', textDecoration: 'none' },
+  bcSep: { fontSize: '12px', color: 'var(--border-md,#cbd5e1)' },
 
   hero: {
     display: 'flex', gap: '1.5rem', alignItems: 'flex-start',
     background: 'linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%)',
-    border: '1px solid #e2e8f0', borderRadius: '16px',
+    border: '1px solid var(--border,#e2e8f0)', borderRadius: '16px',
     padding: '2rem', marginBottom: '3rem',
   },
   heroIcon: { fontSize: '3.5rem', flexShrink: 0 },
@@ -260,13 +260,13 @@ const s = {
   heroTitle: {
     fontFamily: "'Unbounded', sans-serif",
     fontSize: 'clamp(1.6rem, 4vw, 2.2rem)',
-    fontWeight: 700, color: '#0f172a',
+    fontWeight: 700, color: 'var(--text,#0f172a)',
     margin: '0 0 4px',
   },
-  heroSub: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#64748b', margin: '0 0 1rem' },
-  heroDesc: { fontSize: '0.95rem', color: '#475569', lineHeight: 1.7, margin: '0 0 1.5rem' },
+  heroSub: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--muted,#64748b)', margin: '0 0 1rem' },
+  heroDesc: { fontSize: '0.95rem', color: 'var(--muted,#475569)', lineHeight: 1.7, margin: '0 0 1.5rem' },
   heroActions: { display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' },
-  heroNote: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
+  heroNote: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--faint,#94a3b8)' },
 
   btnPrimary: {
     display: 'inline-block',
@@ -278,57 +278,57 @@ const s = {
   },
   btnSecondary: {
     display: 'inline-block',
-    background: '#f1f5f9', color: '#0f172a',
+    background: 'var(--bg,#f1f5f9)', color: 'var(--text,#0f172a)',
     padding: '12px 24px', borderRadius: '8px',
     fontWeight: 600, fontSize: '0.9rem',
-    textDecoration: 'none', border: '1px solid #e2e8f0',
+    textDecoration: 'none', border: '1px solid var(--border,#e2e8f0)',
   },
 
   section: { marginBottom: '3rem' },
   h2: {
     fontFamily: "'Unbounded', sans-serif",
-    fontSize: '1.15rem', fontWeight: 700, color: '#0f172a',
+    fontSize: '1.15rem', fontWeight: 700, color: 'var(--text,#0f172a)',
     marginBottom: '1.25rem',
   },
 
   forWhomGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px' },
   forWhomCard: {
     display: 'flex', gap: '12px', alignItems: 'flex-start',
-    padding: '1.25rem', background: '#fff',
-    border: '1px solid #e2e8f0', borderRadius: '12px',
+    padding: '1.25rem', background: 'var(--bg-card,#fff)',
+    border: '1px solid var(--border,#e2e8f0)', borderRadius: '12px',
   },
   forWhomIcon: { fontSize: '1.75rem', flexShrink: 0 },
-  forWhomTitle: { fontWeight: 700, color: '#0f172a', fontSize: '0.9rem', marginBottom: '4px' },
-  forWhomDesc: { fontSize: '0.85rem', color: '#64748b', lineHeight: 1.6, margin: 0 },
+  forWhomTitle: { fontWeight: 700, color: 'var(--text,#0f172a)', fontSize: '0.9rem', marginBottom: '4px' },
+  forWhomDesc: { fontSize: '0.85rem', color: 'var(--muted,#64748b)', lineHeight: 1.6, margin: 0 },
 
   advGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '10px' },
   advItem: {
     display: 'flex', gap: '10px', alignItems: 'flex-start',
-    padding: '1rem 1.25rem', background: '#f8fafc',
-    border: '1px solid #e2e8f0', borderRadius: '10px',
+    padding: '1rem 1.25rem', background: 'var(--bg,#f8fafc)',
+    border: '1px solid var(--border,#e2e8f0)', borderRadius: '10px',
   },
   advIcon: { fontSize: '1.25rem', flexShrink: 0 },
-  advText: { fontSize: '0.875rem', color: '#475569', lineHeight: 1.5 },
+  advText: { fontSize: '0.875rem', color: 'var(--muted,#475569)', lineHeight: 1.5 },
 
   modulesGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '8px' },
   moduleItem: {
     display: 'flex', gap: '10px', alignItems: 'center',
-    padding: '10px 14px', background: '#fff',
-    border: '1px solid #e2e8f0', borderRadius: '8px',
+    padding: '10px 14px', background: 'var(--bg-card,#fff)',
+    border: '1px solid var(--border,#e2e8f0)', borderRadius: '8px',
   },
-  moduleNum: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8', flexShrink: 0, width: '20px' },
-  moduleText: { fontSize: '0.85rem', color: '#334155' },
+  moduleNum: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--faint,#94a3b8)', flexShrink: 0, width: '20px' },
+  moduleText: { fontSize: '0.85rem', color: 'var(--text,#334155)' },
 
   plansGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px', marginBottom: '1rem' },
   planCard: {
     position: 'relative',
-    padding: '1.5rem', background: '#fff',
-    border: '1px solid #e2e8f0', borderRadius: '12px',
+    padding: '1.5rem', background: 'var(--bg-card,#fff)',
+    border: '1px solid var(--border,#e2e8f0)', borderRadius: '12px',
     textAlign: 'center',
   },
   planCardHL: {
     border: '2px solid #2563eb',
-    background: '#eff6ff',
+    background: 'var(--accent-light,#eff6ff)',
   },
   planBadge: {
     position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)',
@@ -337,15 +337,15 @@ const s = {
     padding: '3px 12px', borderRadius: '20px',
     whiteSpace: 'nowrap',
   },
-  planName: { fontFamily: "'Unbounded', sans-serif", fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', marginBottom: '8px' },
+  planName: { fontFamily: "'Unbounded', sans-serif", fontSize: '0.95rem', fontWeight: 700, color: 'var(--text,#0f172a)', marginBottom: '8px' },
   planPrice: { fontSize: '2rem', fontWeight: 800, color: '#2563eb', marginBottom: '4px' },
-  planRuns: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#64748b', marginBottom: '16px' },
+  planRuns: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--muted,#64748b)', marginBottom: '16px' },
   planPay: { display: 'flex', gap: '6px', justifyContent: 'center', marginBottom: '16px', flexWrap: 'wrap' },
   payChip: {
-    fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#475569',
-    background: '#f1f5f9', padding: '3px 8px', borderRadius: '6px',
+    fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--muted,#475569)',
+    background: 'var(--bg,#f1f5f9)', padding: '3px 8px', borderRadius: '6px',
   },
-  plansNote: { fontSize: '0.8rem', color: '#94a3b8', fontFamily: 'var(--font-mono)', textAlign: 'center' },
+  plansNote: { fontSize: '0.8rem', color: 'var(--faint,#94a3b8)', fontFamily: 'var(--font-mono)', textAlign: 'center' },
 
   cta: {
     textAlign: 'center',
@@ -359,11 +359,11 @@ const s = {
 
   faqItem: {
     padding: '1.25rem',
-    borderBottom: '1px solid #e2e8f0',
+    borderBottom: '1px solid var(--border,#e2e8f0)',
   },
-  faqQ: { fontWeight: 700, color: '#0f172a', fontSize: '0.9rem', marginBottom: '6px' },
-  faqA: { color: '#475569', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 },
+  faqQ: { fontWeight: 700, color: 'var(--text,#0f172a)', fontSize: '0.9rem', marginBottom: '6px' },
+  faqA: { color: 'var(--muted,#475569)', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 },
 
-  back: { marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0' },
+  back: { marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border,#e2e8f0)' },
   backLink: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#2563eb', fontWeight: 500, textDecoration: 'none' },
 }

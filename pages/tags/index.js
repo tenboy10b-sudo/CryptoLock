@@ -92,7 +92,7 @@ const styles = {
     fontFamily: 'var(--font-mono)',
     fontSize: '11px',
     color: 'var(--faint,#94a3b8)',
-    background: '#eff6ff',
+    background: 'var(--accent-light,#eff6ff)',
     padding: '1px 6px',
     borderRadius: '10px',
   },

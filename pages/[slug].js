@@ -5,7 +5,6 @@ import TableOfContents from '../components/TableOfContents'
 import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
 
 const SITE = siteConfig.url
 
@@ -43,167 +42,8 @@ function extractFaqSchema(contentHtml) {
 }
 
 
-// ── Copy Button (code blocks) ────────────────────────────────────
-function useCopyButtons(slug) {
-  useEffect(() => {
-    const blocks = document.querySelectorAll('.prose pre')
-    blocks.forEach(pre => {
-      if (pre.querySelector('.copy-btn')) return
-      const btn = document.createElement('button')
-      btn.className = 'copy-btn'
-      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
-      btn.title = 'Копіювати'
-      btn.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#e2e8f0;border-radius:6px;padding:5px 8px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:4px;transition:all 0.15s;z-index:10;line-height:1'
-      btn.addEventListener('click', () => {
-        const code = pre.querySelector('code')?.innerText || pre.innerText
-        navigator.clipboard.writeText(code).then(() => {
-          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
-          btn.style.background = 'rgba(74,222,128,0.15)'
-          setTimeout(() => {
-            btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>'
-            btn.style.background = 'rgba(255,255,255,0.1)'
-          }, 2000)
-        })
-      })
-      pre.style.position = 'relative'
-      pre.appendChild(btn)
-    })
-  }, [slug])
-}
-
-// ── Share Buttons ────────────────────────────────────────────────
-function ShareButtons({ title, url, isEn }) {
-  const [copied, setCopied] = useState(false)
-  const enc = encodeURIComponent(url)
-  const encT = encodeURIComponent(title)
-  const copyLink = () => {
-    navigator.clipboard.writeText(url).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) })
-  }
-  const btn = { display:'inline-flex', alignItems:'center', gap:'6px', padding:'7px 14px',
-    borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer', border:'none',
-    textDecoration:'none', transition:'opacity 0.15s' }
-  return (
-    <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap', margin:'1rem 0 1.5rem' }}>
-      <span style={{ fontSize:'13px', color:'#94a3b8' }}>{isEn ? 'Share:' : 'Поділитись:'}</span>
-      <a href={`https://t.me/share/url?url=${enc}&text=${encT}`} target="_blank" rel="noopener noreferrer"
-        style={{ ...btn, background:'#229ED9', color:'#fff' }}>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.01 9.47c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 14.676l-2.95-.924c-.642-.2-.654-.642.136-.953l11.52-4.44c.537-.194 1.006.131.686.889z"/>
-        </svg>
-        Telegram
-      </a>
-      <a href={`https://twitter.com/intent/tweet?url=${enc}&text=${encT}`} target="_blank" rel="noopener noreferrer"
-        style={{ ...btn, background:'#000', color:'#fff' }}>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-        X
-      </a>
-      <button onClick={copyLink} style={{ ...btn, background:copied?'#10b981':'#f1f5f9',
-        color:copied?'#fff':'#475569', border:'1px solid #e2e8f0' }}>
-        {copied ? ('✓ ' + (isEn ? 'Copied!' : 'Скопійовано!')) : (isEn ? '🔗 Copy link' : '🔗 Посилання')}
-      </button>
-    </div>
-  )
-}
-
-// ── Bookmark Button ──────────────────────────────────────────────
-function BookmarkButton({ slug, title, tag, isEn }) {
-  const [saved, setSaved] = useState(false)
-  useEffect(() => {
-    try { setSaved(JSON.parse(localStorage.getItem('cl-bookmarks')||'[]').some(x=>x.slug===slug)) } catch {}
-  }, [slug])
-  const toggle = () => {
-    try {
-      const b = JSON.parse(localStorage.getItem('cl-bookmarks')||'[]')
-      if (saved) { localStorage.setItem('cl-bookmarks', JSON.stringify(b.filter(x=>x.slug!==slug))); setSaved(false) }
-      else { localStorage.setItem('cl-bookmarks', JSON.stringify([...b,{slug,title,tag,locale:isEn?'en':'uk',savedAt:Date.now()}])); setSaved(true) }
-    } catch {}
-  }
-  return (
-    <button onClick={toggle} style={{ display:'inline-flex', alignItems:'center', gap:'5px',
-      padding:'6px 12px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer',
-      border:'1.5px solid', transition:'all 0.2s',
-      borderColor:saved?'#2563eb':'#e2e8f0', background:saved?'#eff6ff':'#fff', color:saved?'#2563eb':'#64748b' }}>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill={saved?'currentColor':'none'} stroke="currentColor" strokeWidth="2">
-        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-      </svg>
-      {saved ? (isEn?'Saved':'Збережено') : (isEn?'Save':'Зберегти')}
-    </button>
-  )
-}
-
-// ── Comments Section (без iframe) ───────────────────────────────
-function CommentsSection({ appId, pageId, pageUrl, pageTitle, isEn }) {
-  const [name, setName] = useState('')
-  const [text, setText] = useState('')
-  const [sent, setSent] = useState(false)
-  const [sending, setSending] = useState(false)
-
-  const submit = async (e) => {
-    e.preventDefault()
-    if (!name.trim() || !text.trim()) return
-    setSending(true)
-    try {
-      await fetch('https://cusdis.com/api/open/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ appId, pageId, pageUrl, pageTitle,
-          username: name, content: text }),
-      })
-      setSent(true)
-    } catch(e) { setSent(true) }
-    setSending(false)
-  }
-
-  const inp = {
-    width: '100%', padding: '10px 14px', borderRadius: '10px',
-    border: '1.5px solid var(--border, #e2e8f0)',
-    background: 'var(--bg-card, #fff)', color: 'var(--text, #0f172a)',
-    fontSize: '14px', fontFamily: 'inherit', outline: 'none',
-    boxSizing: 'border-box',
-  }
-
-  return (
-    <div style={{ marginTop:'3rem', paddingTop:'2rem', borderTop:'1px solid var(--border,#e2e8f0)' }}>
-      <p style={{ fontSize:'1.1rem', fontWeight:700, marginBottom:'1.5rem', color:'var(--text,#0f172a)' }}>
-        💬 {isEn ? 'Leave a comment' : 'Написати коментар'}
-      </p>
-      {sent ? (
-        <div style={{ padding:'14px 18px', background:'var(--accent-light,#eff6ff)',
-          border:'1px solid var(--accent-dim,#bfdbfe)', borderRadius:'10px',
-          color:'var(--accent-text,#1d4ed8)', fontSize:'14px' }}>
-          ✅ {isEn ? 'Thanks! Comment sent for moderation.' : 'Дякуємо! Коментар відправлено на модерацію.'}
-        </div>
-      ) : (
-        <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
-          <input style={inp} value={name} onChange={e=>setName(e.target.value)}
-            placeholder={isEn ? 'Your name *' : "Ваше ім'я *"} required />
-          <textarea style={{ ...inp, minHeight:'100px', resize:'vertical', lineHeight:'1.6' }}
-            value={text} onChange={e=>setText(e.target.value)}
-            placeholder={isEn ? 'Your comment *' : 'Ваш коментар *'} required />
-          <div>
-            <button type="submit" disabled={sending} style={{
-              padding:'9px 24px', borderRadius:'10px', border:'none',
-              background: sending ? '#94a3b8' : '#2563eb',
-              color:'#fff', fontWeight:600, fontSize:'14px', cursor: sending ? 'default' : 'pointer',
-            }}>
-              {sending ? '...' : (isEn ? 'Send' : 'Надіслати')}
-            </button>
-          </div>
-          <p style={{ fontSize:'12px', color:'var(--faint,#94a3b8)' }}>
-            {isEn ? 'Comments are moderated before publishing.' : 'Коментарі проходять модерацію перед публікацією.'}
-          </p>
-        </form>
-      )}
-    </div>
-  )
-}
-
-
 export default function Post({ post, related, locale }) {
   const isEn = locale === 'en'
-  useCopyButtons(post.slug)
   const postUrl = locale === 'en' ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
 
   const articleSchema = {
@@ -257,7 +97,7 @@ export default function Post({ post, related, locale }) {
       description={post.description}
       canonical={postUrl}
       isArticle
-      ogImage={`${SITE}/api/og?title=${encodeURIComponent(post.title)}&tags=${encodeURIComponent((post.tags||[]).slice(0,3).join(","))}&lang=${locale||"uk"}`}
+      ogImage={`${SITE}/logo.png`}
       translatesUk={post.translatesUk}
       translatesEn={post.translatesEn}
     >
@@ -313,11 +153,7 @@ export default function Post({ post, related, locale }) {
                 {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min read' : 'хв читання'}</span></>}
                 {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <time dateTime={post.updated}>{fmt(post.updated, locale)}</time></span></>}
               </div>
-              {post.description && <p style={s.lead} className="lead-block">{post.description}</p>}
-              <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'1rem', flexWrap:'wrap' }}>
-                <BookmarkButton slug={post.slug} title={post.title} tag={post.tags?.[0]||''} isEn={isEn} />
-              </div>
-              <ShareButtons title={post.title} url={postUrl} isEn={isEn} />
+              {post.description && <p style={s.lead}>{post.description}</p>}
             </header>
 
             {siteConfig.adsenseId && (
@@ -340,6 +176,7 @@ export default function Post({ post, related, locale }) {
               </div>
             )}
           </article>
+            </div>{/* /twoCol */}
 
           {related && related.length > 0 && (
             <section style={s.related} aria-label={isEn ? "Related articles" : "Схожі статті"}>
@@ -350,11 +187,6 @@ export default function Post({ post, related, locale }) {
             </section>
           )}
 
-          <CommentsSection
-            appId="5c61191d-573f-4970-beb5-63efb84a8730"
-            pageId={post.slug} pageUrl={postUrl}
-            pageTitle={post.title} isEn={isEn}
-          />
           <div style={s.back}>
             <Link href="/" style={s.backLink}>{isEn ? "← All articles" : "← Всі статті"}</Link>
           </div>
@@ -386,34 +218,9 @@ export async function getStaticProps({ params, locale }) {
     }
 
     const all = getAllPosts(locale)
-    const COMMON = new Set(['windows','налаштування','інструменти','administration'])
-    const scored = all
-      .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.length > 0)
-      .map(p => ({ ...p, _score: p.tags.filter(t => post.tags.includes(t)).reduce((a,t)=>a+(COMMON.has(t)?1:3),0) }))
-      .filter(p => p._score > 0)
-      .sort((a,b) => b._score - a._score)
-    const related = scored.slice(0, 3)
-
-    // Inline "Читай також" блок
-    let enrichedHtml = post.contentHtml || ''
-    if (scored.length >= 2 && enrichedHtml.length > 500) {
-      const isEnBlock = (locale||'uk') === 'en'
-      const label = isEnBlock ? 'Read also' : 'Читай також'
-      const picks = scored.slice(0,2)
-      const linksHtml = picks.map(p=>{
-        const href = isEnBlock
-          ? 'https://cryptolockua.com/en/' + p.slug
-          : 'https://cryptolockua.com/' + p.slug
-        return '<a href="' + href + '" style="display:block;color:var(--accent,#2563eb);text-decoration:none;padding:6px 0;font-size:0.9rem;border-bottom:1px solid var(--border,#e2e8f0)">→ ' + p.title + '</a>'
-      }).join('')
-      const block = '<div class="inline-related" style="background:var(--accent-light,#eff6ff);border:1px solid var(--accent-dim,#bfdbfe);border-radius:8px;padding:14px 18px;margin:2rem 0"><p style="font-size:0.75rem;font-weight:700;color:var(--accent-text,#1d4ed8);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 8px">' + label + '</p>' + linksHtml + '</div>'
-      const h2idx = enrichedHtml.indexOf('</h2>')
-      if (h2idx > 100) {
-        const ins = enrichedHtml.indexOf('</p>', h2idx) + 4
-        enrichedHtml = enrichedHtml.slice(0,ins) + block + enrichedHtml.slice(ins)
-      }
-    }
-    post.contentHtml = enrichedHtml
+    const related = all
+      .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
+      .slice(0, 3)
 
     return { props: { post, related, locale: locale || 'uk' }, revalidate: 3600 }
   } catch (e) {
@@ -437,9 +244,9 @@ const s = {
     minWidth: 0,
   },
   bc: { display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '1.5rem', flexWrap: 'wrap' },
-  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8' },
-  bcSep: { fontSize: '12px', color: '#cbd5e1' },
-  bcCur: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#64748b', wordBreak: 'break-word', maxWidth: '300px' },
+  bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint,#94a3b8)' },
+  bcSep: { fontSize: '12px', color: 'var(--border-md,#cbd5e1)' },
+  bcCur: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--muted,#64748b)', wordBreak: 'break-word', maxWidth: '300px' },
   header: { marginBottom: '2rem' },
   tagRow: { display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '14px' },
   title: {
@@ -449,22 +256,22 @@ const s = {
     lineHeight: 1.2,
     letterSpacing: '-.5px',
     marginBottom: '12px',
-    color: 'var(--text, #0f172a)',
+    color: 'var(--text,#0f172a)',
   },
   meta: { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem', flexWrap: 'wrap' },
-  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#94a3b8' },
+  metaItem: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--faint,#94a3b8)' },
   dot: { width: '3px', height: '3px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0, display: 'inline-block' },
   lead: {
-    fontSize: '1rem', color: 'var(--text, #0f172a)', lineHeight: 1.65,
-    padding: '1rem 1.25rem', background: 'var(--accent-light, #eff6ff)',
-    borderRadius: '0 10px 10px 0', borderLeft: '3px solid var(--accent, #2563eb)',
+    fontSize: '1rem', color: 'var(--muted,#475569)', lineHeight: 1.65,
+    padding: '1rem 1.25rem', background: 'var(--accent-light,#eff6ff)',
+    borderRadius: '0 10px 10px 0', borderLeft: '3px solid var(--accent,#2563eb)',
   },
-  related: { marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #e2e8f0' },
+  related: { marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border,#e2e8f0)' },
   relatedTitle: {
     fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 500,
-    color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '14px',
+    color: 'var(--faint,#94a3b8)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '14px',
   },
   relatedGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '10px' },
-  back: { marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0' },
+  back: { marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border,#e2e8f0)' },
   backLink: { fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#2563eb', fontWeight: 500 },
 }

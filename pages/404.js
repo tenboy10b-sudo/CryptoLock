@@ -78,7 +78,7 @@ const s = {
     fontFamily: "'Unbounded', sans-serif",
     fontSize: 'clamp(4rem, 15vw, 8rem)',
     fontWeight: 900,
-    color: 'var(--border,#e2e8f0)',
+    color: '#e2e8f0',
     lineHeight: 1,
     marginBottom: '1rem',
     letterSpacing: '-4px',

@@ -101,9 +101,9 @@ const s = {
     color: 'var(--muted,#475569)',
     lineHeight: 1.7,
     padding: '1.25rem 1.5rem',
-    background: '#eff6ff',
+    background: 'var(--accent-light,#eff6ff)',
     borderRadius: '0 10px 10px 0',
-    borderLeft: '3px solid #2563eb',
+    borderLeft: '3px solid var(--accent,#2563eb)',
     marginBottom: '2rem',
   },
   h2: {

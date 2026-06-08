@@ -112,7 +112,7 @@ const s = {
   bcLink: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint,#94a3b8)', textDecoration: 'none' },
   bcSep: { fontSize: '12px', color: 'var(--border-md,#cbd5e1)' },
   title: { fontFamily: "'Unbounded', sans-serif", fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--text,#0f172a)', marginBottom: '1rem' },
-  lead: { fontSize: '1rem', color: 'var(--muted,#475569)', lineHeight: 1.7, padding: '1.25rem 1.5rem', background: '#eff6ff', borderRadius: '0 10px 10px 0', borderLeft: '3px solid #2563eb', marginBottom: '2.5rem' },
+  lead: { fontSize: '1rem', color: 'var(--muted,#475569)', lineHeight: 1.7, padding: '1.25rem 1.5rem', background: 'var(--accent-light,#eff6ff)', borderRadius: '0 10px 10px 0', borderLeft: '3px solid var(--accent,#2563eb)', marginBottom: '2.5rem' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '14px', marginBottom: '2.5rem' },
   card: { display: 'flex', alignItems: 'flex-start', gap: '14px', padding: '1.25rem', background: 'var(--bg-card,#fff)', border: '1px solid var(--border,#e2e8f0)', borderRadius: '12px', textDecoration: 'none', cursor: 'pointer' },
   cardIcon: { fontSize: '1.75rem', flexShrink: 0, marginTop: '2px' },
