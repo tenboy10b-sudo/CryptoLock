@@ -33,7 +33,7 @@ export default function Home({ posts, tags }) {
   const { locale } = useRouter()
   const isEn = locale === 'en'
   const CATEGORIES = isEn ? CATEGORIES_EN : CATEGORIES_UK
-  const [openCats, setOpenCats] = useState({ security: true, windows: true })
+  const [openCats, setOpenCats] = useState({})
   const [visibleCount, setVisibleCount] = useState(12)
   const loadMoreRef = useRef(null)
 
@@ -240,11 +240,11 @@ const s = {
   hero: { background: 'linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#0f172a 100%)', padding: '3rem 0' },
   heroGrid: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' },
   heroText: { flex: 1, minWidth: '280px' },
-  heroBadge: { display: 'inline-flex', alignItems: 'center', gap: '7px', fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--faint, #94a3b8)', marginBottom: '16px', letterSpacing: '.3px' },
+  heroBadge: { display: 'inline-flex', alignItems: 'center', gap: '7px', fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#94a3b8', marginBottom: '16px', letterSpacing: '.3px' },
   heroBadgeDot: { width: '7px', height: '7px', borderRadius: '50%', background: '#3b82f6', display: 'inline-block', flexShrink: 0, boxShadow: '0 0 6px #3b82f6' },
   heroTitle: { fontFamily: "'Unbounded',sans-serif", fontSize: 'clamp(1.6rem,5vw,2.4rem)', fontWeight: 700, lineHeight: 1.2, letterSpacing: '-1px', color: '#f1f5f9', marginBottom: '1rem' },
   heroAccent: { color: '#3b82f6' },
-  heroSub: { fontSize: '.9rem', color: 'var(--faint, #94a3b8)', lineHeight: 1.7, marginBottom: '1.75rem' },
+  heroSub: { fontSize: '.9rem', color: '#94a3b8', lineHeight: 1.7, marginBottom: '1.75rem' },
   heroActions: { display: 'flex', gap: '8px', flexWrap: 'wrap' },
   heroBtnPrimary: { padding: '8px 18px', background: '#2563eb', color: '#fff', borderRadius: '20px', fontSize: '13px', fontWeight: 600 },
   heroBtnSecondary: { padding: '8px 18px', background: 'rgba(255,255,255,0.07)', color: '#cbd5e1', borderRadius: '20px', fontSize: '13px', fontWeight: 500, border: '1px solid rgba(255,255,255,0.1)' },
@@ -268,25 +268,25 @@ const s = {
     color: '#ffffff',
   },
 
-  catsSection: { padding: '2rem 0', background: 'var(--bg-card, #fff)', borderBottom: '1px solid var(--border, #e2e8f0)' },
+  catsSection: { padding: '2rem 0', background: '#fff', borderBottom: '1px solid #e2e8f0' },
   catsSectionHead: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' },
-  catsSectionTitle: { fontFamily: "'Unbounded',sans-serif", fontSize: '1rem', fontWeight: 700, color: 'var(--text, #0f172a)' },
+  catsSectionTitle: { fontFamily: "'Unbounded',sans-serif", fontSize: '1rem', fontWeight: 700, color: '#0f172a' },
   expandAllBtn: { fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#2563eb', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 500, padding: '4px 8px' },
   catsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '8px' },
-  catCard: { border: '1px solid var(--border, #e2e8f0)', borderRadius: '12px', overflow: 'hidden', background: 'var(--bg, #f8fafc)' },
+  catCard: { border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', background: '#f8fafc' },
   catHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' },
   catLeft: { display: 'flex', alignItems: 'center', gap: '8px' },
   catIcon: { fontSize: '16px', flexShrink: 0 },
-  catLabel: { fontFamily: "'Unbounded',sans-serif", fontSize: '12px', fontWeight: 700, color: 'var(--text, #0f172a)' },
-  catTotal: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--muted, #64748b)', background: 'var(--border, #e2e8f0)', padding: '1px 6px', borderRadius: '10px' },
-  catArrow: { fontSize: '12px', color: 'var(--faint, #94a3b8)', transition: 'transform .2s', display: 'inline-block' },
+  catLabel: { fontFamily: "'Unbounded',sans-serif", fontSize: '12px', fontWeight: 700, color: '#0f172a' },
+  catTotal: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#64748b', background: '#e2e8f0', padding: '1px 6px', borderRadius: '10px' },
+  catArrow: { fontSize: '12px', color: '#94a3b8', transition: 'transform .2s', display: 'inline-block' },
   catTags: { padding: '0 10px 10px', display: 'flex', flexDirection: 'column', gap: '2px' },
-  catTagItem: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', borderRadius: '7px', background: 'var(--bg-card, #fff)', border: '1px solid var(--border, #e2e8f0)', transition: 'border-color .15s,background .15s' },
-  catTagName: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text, #334155)', fontWeight: 500 },
-  catTagCount: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--muted, #64748b)' },
+  catTagItem: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', borderRadius: '7px', background: '#fff', border: '1px solid #e2e8f0', transition: 'border-color .15s,background .15s' },
+  catTagName: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#334155', fontWeight: 500 },
+  catTagCount: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#64748b' },
 
   postsSection: { padding: '2rem 0 3rem' },
   featuredWrap: { marginBottom: '2rem' },
-  sectionLabel: { fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 600, color: 'var(--muted, #64748b)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' },
+  sectionLabel: { fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 600, color: '#64748b', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(330px,1fr))', gap: '12px' },
 }

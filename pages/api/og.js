@@ -72,20 +72,15 @@ export default async function handler(req) {
           gap: '12px',
           marginBottom: '40px',
         }}>
-          {/* Shield іконка */}
-          <div style={{
-            width: '44px',
-            height: '44px',
-            background: 'rgba(37,99,235,0.2)',
-            border: '1px solid rgba(37,99,235,0.4)',
-            borderRadius: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '24px',
-          }}>
-            🔒
-          </div>
+          {/* Логотип сайту */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://cryptolockua.com/logo.webp"
+            width="44"
+            height="44"
+            alt="CryptoLock"
+            style={{ borderRadius: '10px', objectFit: 'contain' }}
+          />
           <span style={{
             fontSize: '22px',
             fontWeight: '700',
