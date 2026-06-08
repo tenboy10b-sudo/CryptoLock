@@ -14,18 +14,18 @@ export default function About() {
     name: isEn ? `About — ${siteConfig.name}` : `Про нас — ${siteConfig.name}`,
     url: `${SITE}/about`,
     description: isEn
-      ? `CryptoLock — independent Windows & security guides: BitLocker, GPO, CMD, PowerShell, and system administration.`
-      : `CryptoLock — незалежний україномовний ресурс з покрокових гайдів по Windows, безпеці та адмініструванню ПК.`,
+      ? `CryptoLock — Windows guides, security, developer tools and software reviews. BitLocker, GPO, PowerShell, Git, VirtualBox.`
+      : `CryptoLock — гайди Windows, безпека, інструменти розробника та огляди ПЗ. BitLocker, GPO, PowerShell, Git, VirtualBox.`,
     publisher: { '@type': 'Organization', name: siteConfig.name, url: SITE },
     inLanguage: locale || 'uk',
   }
 
   return (
     <Layout
-      title={isEn ? 'About CryptoLock — Windows & Security Guides' : 'Про CryptoLock — гайди Windows і безпека ПК'}
+      title={isEn ? 'About CryptoLock — Windows, Security & Developer Tools' : 'Про CryptoLock — Windows, безпека та інструменти розробника'}
       description={isEn
-        ? 'CryptoLock — independent resource with practical Windows 10 and 11 guides. BitLocker, GPO, PowerShell, security and PC administration.'
-        : 'CryptoLock — незалежний ресурс з практичними гайдами Windows 10 і 11. BitLocker, GPO, PowerShell, безпека і адміністрування ПК.'}
+        ? 'CryptoLock — practical Windows guides, security settings and developer tools. Git, VirtualBox, PowerShell, BitLocker, GPO — step by step.'
+        : 'CryptoLock — практичні гайди Windows, налаштування безпеки та інструменти розробника. Git, VirtualBox, PowerShell, BitLocker, GPO — покроково.'}
       canonical={`${SITE}/about`}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -36,17 +36,20 @@ export default function About() {
             <>
               <h1 style={s.title}>About CryptoLock</h1>
               <div style={s.lead}>
-                CryptoLock is an independent resource with step-by-step guides on Windows configuration,
-                data security, and PC administration. Practical instructions only — no fluff.
+                CryptoLock is an independent resource for those who work with Windows and want to understand how it really works.<br /><br />
+                Step-by-step guides, PowerShell and CMD commands, security settings, developer tools — practical content only, no fluff.
               </div>
               <h2 style={s.h2}>What you'll find here</h2>
               <ul style={s.list}>
                 <li>Step-by-step guides for Windows 10 and 11</li>
-                <li>Security settings: BitLocker, Windows Defender, Firewall</li>
-                <li>Group Policy (GPO) — from basics to advanced</li>
-                <li>Command Prompt (CMD) and PowerShell for administrators</li>
-                <li>System recovery, diagnostics, optimization</li>
+                <li>Security: BitLocker, Windows Defender, Firewall, UAC</li>
+                <li>Group Policy (GPO) and command line for administrators</li>
+                <li>PowerShell — automation and administration</li>
                 <li>Network settings: DNS, Wi-Fi, VPN, RDP</li>
+                <li>System recovery, diagnostics, optimization</li>
+                <li>Developer tools: Git, GitHub, VirtualBox, WSL</li>
+                <li>Software: installation, configuration, troubleshooting</li>
+                <li>Online tools: port checker, IP info, Base64, hash generator, regex</li>
               </ul>
               <h2 style={s.h2}>Feedback</h2>
               <p style={s.p}>
@@ -60,18 +63,20 @@ export default function About() {
             <>
               <h1 style={s.title}>Про нас</h1>
               <div style={s.lead}>
-                CryptoLock — незалежний україномовний ресурс з покрокових інструкцій по налаштуванню Windows,
-                захисту даних та системному адмініструванню ПК.<br /><br />
-                Всі матеріали написані практиками: тільки конкретні кроки, команди та пояснення що і навіщо — без зайвої теорії та «лийте воду».
+                CryptoLock — незалежний україномовний ресурс для тих хто працює з Windows і хоче розібратись як все влаштовано зсередини.<br /><br />
+                Покрокові інструкції, команди PowerShell і CMD, налаштування безпеки, огляди інструментів — тільки конкретика без зайвої води.
               </div>
               <h2 style={s.h2}>Що ви знайдете тут</h2>
               <ul style={s.list}>
                 <li>Покрокові гайди по Windows 10 і Windows 11</li>
-                <li>Налаштування безпеки: BitLocker, Windows Defender, брандмауер</li>
-                <li>Групова політика (GPO) — від базових до просунутих налаштувань</li>
-                <li>Командний рядок (CMD) і PowerShell для адміністраторів</li>
-                <li>Відновлення системи, діагностика, оптимізація</li>
+                <li>Безпека: BitLocker, Windows Defender, брандмауер, UAC</li>
+                <li>Групова політика (GPO) і командний рядок для адміністраторів</li>
+                <li>PowerShell — автоматизація і адміністрування</li>
                 <li>Мережеві налаштування: DNS, Wi-Fi, VPN, RDP</li>
+                <li>Відновлення системи, діагностика, оптимізація</li>
+                <li>Інструменти розробника: Git, GitHub, VirtualBox, WSL</li>
+                <li>Програмне забезпечення: встановлення, налаштування, вирішення проблем</li>
+                <li>Онлайн-інструменти: перевірка портів, IP info, Base64, хеші, regex</li>
               </ul>
               <h2 style={s.h2}>Зворотній зв'язок</h2>
               <p style={s.p}>

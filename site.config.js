@@ -4,7 +4,7 @@ const siteConfig = {
   name: 'CryptoLock',
   domain: 'cryptolockua.com',
   url: SITE_URL,
-  description: 'Покрокові гайди з налаштування Windows 10 і 11, безпеки та адміністрування ПК. PowerShell, GPO, BitLocker, захист від вірусів — українською.',
+  description: 'Покрокові гайди з Windows 10 і 11, безпеки, адміністрування ПК та інструментів розробника. PowerShell, GPO, BitLocker, Git, VirtualBox — українською.',
   language: 'uk',
   adsenseId: '',
   gaId: 'G-FQJ7326JW0',
