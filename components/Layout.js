@@ -397,7 +397,7 @@ const s = {
   logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: '#0f172a' },
   logoAccent: { color: '#0f172a' },
   rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end' },
-  navLink: { fontSize: '14px', fontWeight: 500, color: '#475569', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
+  navLink: { fontSize: '14px', fontWeight: 500, color: 'var(--text,#0f172a)', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
   searchBtn: {
     display: 'flex', alignItems: 'center', gap: '6px',
     padding: '5px 10px', borderRadius: '8px',
