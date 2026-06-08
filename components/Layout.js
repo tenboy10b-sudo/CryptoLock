@@ -391,7 +391,7 @@ export default function Layout({ children, title, description, canonical, isArti
 }
 
 const s = {
-  header: { background: '#fff', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 50 },
+  header: { background: 'var(--bg-card,#fff)', borderBottom: '1px solid var(--border,#e2e8f0)', position: 'sticky', top: 0, zIndex: 50 },
   navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', height: '62px', width: '100%', padding: '0 20px' },
   logoWrap: { display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none', flexShrink: 0 },
   logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: '#0f172a' },
@@ -412,12 +412,12 @@ const s = {
   bl1o: { transform: 'rotate(45deg) translate(5px,5px)' },
   bl2o: { opacity: 0 },
   bl3o: { transform: 'rotate(-45deg) translate(5px,-5px)' },
-  mobileMenu: { borderTop: '1px solid #e2e8f0', background: '#fff', padding: '4px 0 8px' },
+  mobileMenu: { borderTop: '1px solid var(--border,#e2e8f0)', background: 'var(--bg-card,#fff)', padding: '4px 0 8px' },
   mobileSearchLink: { display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#2563eb', borderBottom: '1px solid #f1f5f9' },
   mobileLink: { display: 'block', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#0f172a', borderBottom: '1px solid #f1f5f9' },
   mobileSocial: { display: 'flex', gap: '8px', padding: '12px 20px 4px', flexWrap: 'wrap' },
   mobileSocialBtn: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: '#475569', padding: '7px 14px', border: '1px solid #e2e8f0', borderRadius: '20px', background: '#f8fafc' },
-  footer: { borderTop: '1px solid #e2e8f0', background: '#fff', marginTop: '4rem' },
+  footer: { borderTop: '1px solid var(--border,#e2e8f0)', background: 'var(--bg-card,#fff)', marginTop: '4rem' },
   footerInner: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', padding: '1.25rem 20px' },
   footerLogo: { display: 'flex', alignItems: 'center', gap: '8px' },
   footerName: { fontFamily: "'Unbounded',sans-serif", fontSize: '13px', fontWeight: 600, color: '#0f172a' },
