@@ -40,6 +40,104 @@ const LogoIcon = () => (
   </svg>
 )
 
+// ── Theme Toggle ────────────────────────────────────────────────
+function ThemeToggle() {
+  const [dark, setDark] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+    setDark(document.documentElement.getAttribute('data-theme') === 'dark')
+  }, [])
+  const toggle = () => {
+    const next = dark ? 'light' : 'dark'
+    document.documentElement.setAttribute('data-theme', next)
+    localStorage.setItem('theme', next)
+    setDark(!dark)
+  }
+  if (!mounted) return (
+    <button style={{ width:'32px', height:'32px', borderRadius:'8px', background:'none',
+      border:'1px solid var(--border,#e2e8f0)', cursor:'pointer', flexShrink:0 }} aria-label="Тема" />
+  )
+  return (
+    <button onClick={toggle} aria-label={dark ? 'Світла тема' : 'Темна тема'}
+      style={{ display:'flex', alignItems:'center', justifyContent:'center',
+        width:'32px', height:'32px', borderRadius:'8px', background:'none',
+        border:'1px solid var(--border,#e2e8f0)', cursor:'pointer',
+        color:'var(--muted,#64748b)', transition:'all 0.15s', flexShrink:0 }}
+    >
+      {dark ? (
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      ) : (
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      )}
+    </button>
+  )
+}
+
+// ── Bookmarks Nav Link ──────────────────────────────────────────
+function BookmarksNavLink() {
+  const [count, setCount] = useState(0)
+  const [mounted, setMounted] = useState(false)
+  const { locale } = useRouter()
+  const isEn = locale === 'en'
+
+  useEffect(() => {
+    const update = () => {
+      try {
+        const b = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
+        setCount(b.length)
+      } catch {}
+    }
+    update()
+    setMounted(true)
+    window.addEventListener('storage', update)
+    window.addEventListener('focus', update)
+    return () => {
+      window.removeEventListener('storage', update)
+      window.removeEventListener('focus', update)
+    }
+  }, [])
+
+  const href = isEn ? '/en/bookmarks' : '/bookmarks'
+  return (
+    <Link href={href} style={{
+      display:'inline-flex', alignItems:'center', gap:'4px',
+      padding:'5px 10px', borderRadius:'8px',
+      border:'1px solid var(--border,#e2e8f0)',
+      color:'var(--muted,#64748b)', textDecoration:'none',
+      fontSize:'13px', transition:'all 0.15s', flexShrink:0,
+    }}
+    title={isEn ? 'Bookmarks' : 'Закладки'}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24"
+        fill={mounted && count > 0 ? 'currentColor' : 'none'}
+        stroke="currentColor" strokeWidth="2"
+        style={{ color: mounted && count > 0 ? 'var(--accent,#2563eb)' : 'currentColor' }}>
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+      {mounted && count > 0 && (
+        <span suppressHydrationWarning style={{
+          fontSize:'11px', fontWeight:700,
+          background:'var(--accent,#2563eb)', color:'#fff',
+          borderRadius:'10px', padding:'0 5px',
+          lineHeight:'16px', minWidth:'16px', textAlign:'center',
+        }}>
+          {count}
+        </span>
+      )}
+    </Link>
+  )
+}
+
+
 export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn }) {
   const pageTitle = title
     ? `${title} — ${siteConfig.name}`
@@ -184,6 +282,12 @@ export default function Layout({ children, title, description, canonical, isArti
             </nav>
 
             <div className="nav-divider" aria-hidden="true" />
+
+            {/* Закладки */}
+            <BookmarksNavLink />
+
+            {/* Тема */}
+            <ThemeToggle />
 
             {/* Пошук — SearchBar сам рендерить десктоп/мобайл */}
             <SearchBar />
