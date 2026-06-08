@@ -20,13 +20,14 @@
     "sertyfikaty-windows-keruvannya",
     "yak-nalashtuvatysy-robochyy-stit-windows",
     "yak-nalashtuvanty-druhyy-monitor-windows",
-    "cmd-komandy-merezha-diahnostyka"
+    "cmd-komandy-merezha-diahnostyka",
+    "nalashtuvannya-polityky-audytu-windows"
   ],
-  "count": 21,
-  "promo_index": 22,
+  "count": 22,
+  "promo_index": 23,
   "last_post": {
-    "slug": "cmd-komandy-merezha-diahnostyka",
-    "title": "CMD команди для діагностики мережі: ping, tracert, nslookup і netstat",
-    "time": "2026-06-07T08:01:09.666386"
+    "slug": "nalashtuvannya-polityky-audytu-windows",
+    "title": "Як налаштувати політику аудиту Windows для моніторингу безпеки",
+    "time": "2026-06-08T08:01:18.290388"
   }
 }
