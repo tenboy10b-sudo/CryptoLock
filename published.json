@@ -22,13 +22,14 @@
     "yak-nalashtuvanty-druhyy-monitor-windows",
     "cmd-komandy-merezha-diahnostyka",
     "nalashtuvannya-polityky-audytu-windows",
-    "yak-nalashtuvaty-windows-dlya-serveriv"
+    "yak-nalashtuvaty-windows-dlya-serveriv",
+    "istoriya-buferu-obminu-windows"
   ],
-  "count": 23,
+  "count": 24,
   "promo_index": 24,
   "last_post": {
-    "slug": "yak-nalashtuvaty-windows-dlya-serveriv",
-    "title": "Базове налаштування Windows Server для початківців",
-    "time": "2026-06-09T08:01:16.422806"
+    "slug": "istoriya-buferu-obminu-windows",
+    "title": "Як увімкнути і використовувати історію буфера обміну Windows",
+    "time": "2026-06-10T08:01:17.476820"
   }
 }
