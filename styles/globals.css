@@ -157,7 +157,7 @@ input[type="search"]::-webkit-search-cancel-button{display:none}
 
 /* Smooth transition при зміні теми */
 *, *::before, *::after {
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Dark mode — prose (статті) */
@@ -203,11 +203,133 @@ input[type="search"]::-webkit-search-cancel-button{display:none}
 /* Prevent flash on load */
 html { color-scheme: light dark; }
 
-[data-theme="dark"] .prose blockquote {
+/* ── Dark mode — головна сторінка ──────────────────────────── */
+[data-theme="dark"] .cat-card-item,
+[data-theme="dark"] [class*="catCard"] {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Категорії теги */
+[data-theme="dark"] .cat-tag-item {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+[data-theme="dark"] .cat-tag-item:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent-light) !important;
+}
+
+/* Post cards */
+[data-theme="dark"] .post-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] .post-card * {
+  color: var(--text);
+}
+[data-theme="dark"] .post-card h2,
+[data-theme="dark"] .post-card h3,
+[data-theme="dark"] .post-card a {
+  color: var(--text) !important;
+}
+
+/* Секції з білим фоном */
+[data-theme="dark"] section,
+[data-theme="dark"] .section-white {
+  background: var(--bg) !important;
+  border-color: var(--border) !important;
+}
+
+/* Загальний текст */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] li,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: var(--text);
+}
+
+/* Nav і footer */
+[data-theme="dark"] nav,
+[data-theme="dark"] footer {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* Інпути і кнопки */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Tag chips */
+[data-theme="dark"] .tag-chip {
+  background: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+  border-color: var(--accent-dim) !important;
+}
+
+/* Search */
+[data-theme="dark"] .search-wrap,
+[data-theme="dark"] .search-input {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* Featured card on homepage */
+[data-theme="dark"] .featured-card {
+  background: var(--bg-dark) !important;
+}
+
+/* Tools page */
+[data-theme="dark"] .tool-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* Кнопки без кольору */
+[data-theme="dark"] button:not([style*="background:#"]):not([style*="background: #2"]):not([style*="background: rgb"]) {
+  color: var(--text);
+}
+
+/* ── Scrollbar в коді ────────────────────────────────────────── */
+.prose pre::-webkit-scrollbar { height: 6px; }
+.prose pre::-webkit-scrollbar-track { background: transparent; }
+.prose pre::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+.prose pre::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+/* ── Lead (description) блок ─────────────────────────────────── */
+[data-theme="dark"] .lead-block {
   background: #1e3a5f !important;
   border-color: #3b82f6 !important;
-  color: #94a3b8 !important;
+  color: #e2e8f0 !important;
 }
-[data-theme="dark"] [style*="accent-light"] {
-  background: #1e3a5f !important;
+
+/* ── PostCard кнопка Read ────────────────────────────────────── */
+[data-theme="dark"] .read-btn {
+  background: #1e293b !important;
+  color: #93c5fd !important;
+  border-color: #334155 !important;
 }
+[data-theme="dark"] .read-btn:hover {
+  background: #2563eb !important;
+  color: #fff !important;
+  border-color: #2563eb !important;
+}
+
+/* ── Bookmarks картки ─────────────────────────────────────────── */
+[data-theme="dark"] .bookmark-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+[data-theme="dark"] .bookmark-card:hover { border-color: #3b82f6 !important; }
+[data-theme="dark"] .bookmark-card a { color: #e2e8f0 !important; }
+[data-theme="dark"] .bookmark-card span { color: #94a3b8 !important; }
