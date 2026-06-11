@@ -23,14 +23,15 @@
     "cmd-komandy-merezha-diahnostyka",
     "nalashtuvannya-polityky-audytu-windows",
     "yak-nalashtuvaty-windows-dlya-serveriv",
-    "istoriya-buferu-obminu-windows"
+    "istoriya-buferu-obminu-windows",
+    "defragmentatsiya-dysku-windows"
   ],
-  "count": 24,
+  "count": 25,
   "promo_index": 25,
   "last_post": {
-    "slug": "istoriya-buferu-obminu-windows",
-    "title": "Як увімкнути і використовувати історію буфера обміну Windows",
-    "time": "2026-06-10T08:01:17.476820"
+    "slug": "defragmentatsiya-dysku-windows",
+    "title": "Як дефрагментувати диск в Windows і чи потрібно це для SSD",
+    "time": "2026-06-11T08:01:20.221954"
   },
   "engage_index": 5
 }
