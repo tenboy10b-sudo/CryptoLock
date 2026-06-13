@@ -1,8 +1,9 @@
 ---
-title: "How to Configure Windows Update Delivery Optimization"
+title: "Windows Update Delivery Optimization: How to Configure and Save Bandwidth"
 date: "2026-03-25"
+updated: "2026-06-13"
 publishDate: "2026-03-25"
-description: "Windows Update Delivery Optimization uses your PC to share updates with others. Learn how to limit bandwidth usage, disable peer sharing, and keep updates from slowing your connection."
+description: "How to configure Windows Update Delivery Optimization on Windows 10 and 11. Limit bandwidth usage, disable P2P sharing, use local network only. Group Policy and registry settings."
 tags: ["windows", "windows-update", "network", "optimization"]
 readTime: 5
 ---

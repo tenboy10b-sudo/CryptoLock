@@ -1,8 +1,9 @@
 ---
-title: "How to Set a Static IP Address in Windows 10 and 11"
+title: "How to Set a Static IP Address on Windows 10 and 11: GUI and PowerShell"
 date: "2026-05-24"
+updated: "2026-06-13"
 publishDate: "2026-05-24"
-description: "Set a static IP address in Windows 10 and 11 via Settings, Control Panel and PowerShell. Configure IP, subnet mask, gateway and DNS without DHCP."
+description: "How to configure a static IP address on Windows 10 and 11 via network settings, PowerShell and Group Policy. Set IP, subnet mask, gateway and DNS. Fix common errors."
 tags: ["windows", "network", "ip", "dns", "administration"]
 readTime: 4
 ---

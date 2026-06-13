@@ -1,8 +1,9 @@
 ---
-title: "How to Add Windows Defender Exclusions Without Disabling Protection"
+title: "Windows Defender Exclusions: How to Add Files, Folders and Processes"
 date: "2026-06-28"
+updated: "2026-06-13"
 publishDate: "2026-06-28"
-description: "Add Windows Defender exclusions for files, folders, processes and extensions without disabling antivirus protection. Manage exclusions via PowerShell and Group Policy."
+description: "How to add exclusions in Windows Defender on Windows 10 and 11 via Settings, PowerShell and Group Policy. Exclude folders, file types, processes and IP addresses."
 tags: ["windows", "windows-defender", "security", "powershell", "administration"]
 readTime: 4
 ---
