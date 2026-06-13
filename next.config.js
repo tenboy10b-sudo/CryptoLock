@@ -356,6 +356,7 @@ const nextConfig = {
       { source: '/en/yak-zayty-v-bios', destination: '/yak-zayty-v-bios', permanent: true, locale: false },
       { source: '/en/avtomatychnyy-vkhid-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
 
+      { source: '/en/yak-zbilshyty-shvydkist-internetu-windows', destination: '/yak-zbilshyty-shvydkist-internetu-windows', permanent: true, locale: false },
       // ── EN /tools/* → UK /tools/* (інструменти тільки UK версія) ────
       // EN tools тепер окремі сторінки — redirect прибрано
       // { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
