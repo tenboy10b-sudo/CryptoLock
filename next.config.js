@@ -342,6 +342,20 @@ const nextConfig = {
       // ── Інші специфічні 404 ────────────────────────────────────
       { source: '/yak-nalashtuvanty-dvokrokov', destination: '/', permanent: true, locale: false },
 
+      // ── Canonical duplicates: /en/uk-slug → /uk-slug ────────────
+      { source: '/en/zaborona-cmd-dlya-korystuvachiv', destination: '/zaborona-cmd-dlya-korystuvachiv', permanent: true, locale: false },
+      { source: '/en/grupova-polityka-zaborona-usb', destination: '/grupova-polityka-zaborona-usb', permanent: true, locale: false },
+      { source: '/en/yak-vstanovyty-draiver', destination: '/yak-vstanovyty-draiver', permanent: true, locale: false },
+      { source: '/en/yak-vymknuty-avtozavantazhennya', destination: '/yak-vymknuty-avtozavantazhennya', permanent: true, locale: false },
+      { source: '/en/brandmauer-windows-cherez-gpo', destination: '/brandmauer-windows-cherez-gpo', permanent: true, locale: false },
+      { source: '/en/yak-zbilshyty-obsyah-ram-windows', destination: '/yak-zbilshyty-obsyah-ram-windows', permanent: true, locale: false },
+      { source: '/en/minimalna-dovzhyna-parolyu', destination: '/minimalna-dovzhyna-parolyu', permanent: true, locale: false },
+      { source: '/en/yak-uvimknuty-wifi-windows', destination: '/yak-uvimknuty-wifi-windows', permanent: true, locale: false },
+      { source: '/en/yak-uvimknuty-bluetooth', destination: '/yak-uvimknuty-bluetooth', permanent: true, locale: false },
+      { source: '/en/yak-vymknuty-uac-gpo', destination: '/yak-vymknuty-uac-gpo', permanent: true, locale: false },
+      { source: '/en/yak-zayty-v-bios', destination: '/yak-zayty-v-bios', permanent: true, locale: false },
+      { source: '/en/avtomatychnyy-vkhid-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
+
       // ── EN /tools/* → UK /tools/* (інструменти тільки UK версія) ────
       // EN tools тепер окремі сторінки — redirect прибрано
       // { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
