@@ -357,6 +357,20 @@ const nextConfig = {
       { source: '/en/avtomatychnyy-vkhid-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
 
       { source: '/en/yak-zbilshyty-shvydkist-internetu-windows', destination: '/yak-zbilshyty-shvydkist-internetu-windows', permanent: true, locale: false },
+      // ── Crawled not indexed: /en/yak-... → /yak-... ─────────────
+      { source: '/en/yak-nalashtuvanty-ldap-windows', destination: '/yak-nalashtuvanty-ldap-windows', permanent: true, locale: false },
+      { source: '/en/yak-pratsyuvaty-z-dostupoyu-do-fayiv-windows', destination: '/yak-pratsyuvaty-z-dostupoyu-do-fayiv-windows', permanent: true, locale: false },
+      { source: '/en/yak-shvydko-vidkryty-potribnu-program-windows', destination: '/yak-shvydko-vidkryty-potribnu-program-windows', permanent: true, locale: false },
+      { source: '/en/yak-nalashtuvaty-printer-windows', destination: '/yak-nalashtuvaty-printer-windows', permanent: true, locale: false },
+      { source: '/en/yak-nalashtuvaty-widkryttya-failiv-za-zamovchuvannyam', destination: '/yak-nalashtuvaty-widkryttya-failiv-za-zamovchuvannyam', permanent: true, locale: false },
+      { source: '/en/yak-pryskoryt-windows-11-v-2026', destination: '/yak-pryskoryt-windows-11-v-2026', permanent: true, locale: false },
+      { source: '/en/yak-nalashtuvanty-rdp-windows', destination: '/yak-nalashtuvanty-rdp-windows', permanent: true, locale: false },
+      { source: '/en/skynuti-parol-windows', destination: '/skynuti-parol-windows', permanent: true, locale: false },
+      { source: '/en/menedzher-paroliv-yak-vybraty-i-vykorystovuvaty', destination: '/menedzher-paroliv-yak-vybraty-i-vykorystovuvaty', permanent: true, locale: false },
+      { source: '/en/windows-subsystem-android-nalashtuvannya', destination: '/windows-subsystem-android-nalashtuvannya', permanent: true, locale: false },
+      { source: '/en/symlink-mklink-windows', destination: '/symlink-mklink-windows', permanent: true, locale: false },
+      { source: '/en/yak-nalashtuvatysy-windows-sandbox', destination: '/yak-nalashtuvatysy-windows-sandbox', permanent: true, locale: false },
+
       // ── EN /tools/* → UK /tools/* (інструменти тільки UK версія) ────
       // EN tools тепер окремі сторінки — redirect прибрано
       // { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
