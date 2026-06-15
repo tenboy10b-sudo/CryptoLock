@@ -26,14 +26,15 @@
     "istoriya-buferu-obminu-windows",
     "defragmentatsiya-dysku-windows",
     "yak-nalashtuvaty-windows-dlya-ofisu",
-    "yak-nalashtuvaty-widkryttya-failiv-za-zamovchuvannyam"
+    "yak-nalashtuvaty-widkryttya-failiv-za-zamovchuvannyam",
+    "redahuvannya-reyestru-windows"
   ],
-  "count": 27,
+  "count": 28,
   "promo_index": 28,
   "last_post": {
-    "slug": "yak-nalashtuvaty-widkryttya-failiv-za-zamovchuvannyam",
-    "title": "Як змінити програму за замовчуванням для відкриття файлів в Windows",
-    "time": "2026-06-13T08:01:09.575417"
+    "slug": "redahuvannya-reyestru-windows",
+    "title": "Реєстр Windows: редагування, резервна копія і відновлення",
+    "time": "2026-06-15T08:34:28.606134"
   },
   "engage_index": 11,
   "extra_index": 3
