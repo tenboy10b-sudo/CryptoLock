@@ -40,104 +40,6 @@ const LogoIcon = () => (
   </svg>
 )
 
-// ── Theme Toggle ────────────────────────────────────────────────
-function ThemeToggle() {
-  const [dark, setDark] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-    setDark(document.documentElement.getAttribute('data-theme') === 'dark')
-  }, [])
-  const toggle = () => {
-    const next = dark ? 'light' : 'dark'
-    document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('theme', next)
-    setDark(!dark)
-  }
-  if (!mounted) return (
-    <button style={{ width:'32px', height:'32px', borderRadius:'8px', background:'none',
-      border:'1px solid var(--border,#e2e8f0)', cursor:'pointer', flexShrink:0 }} aria-label="Тема" />
-  )
-  return (
-    <button onClick={toggle} aria-label={dark ? 'Світла тема' : 'Темна тема'}
-      style={{ display:'flex', alignItems:'center', justifyContent:'center',
-        width:'32px', height:'32px', borderRadius:'8px', background:'none',
-        border:'1px solid var(--border,#e2e8f0)', cursor:'pointer',
-        color:'var(--muted,#64748b)', transition:'all 0.15s', flexShrink:0 }}
-    >
-      {dark ? (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      ) : (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      )}
-    </button>
-  )
-}
-
-// ── Bookmarks Nav Link ──────────────────────────────────────────
-function BookmarksNavLink() {
-  const [count, setCount] = useState(0)
-  const [mounted, setMounted] = useState(false)
-  const { locale } = useRouter()
-  const isEn = locale === 'en'
-
-  useEffect(() => {
-    const update = () => {
-      try {
-        const b = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
-        setCount(b.length)
-      } catch {}
-    }
-    update()
-    setMounted(true)
-    window.addEventListener('storage', update)
-    window.addEventListener('focus', update)
-    return () => {
-      window.removeEventListener('storage', update)
-      window.removeEventListener('focus', update)
-    }
-  }, [])
-
-  const href = isEn ? '/en/bookmarks' : '/bookmarks'
-  return (
-    <Link href={href} style={{
-      display:'inline-flex', alignItems:'center', gap:'4px',
-      padding:'5px 10px', borderRadius:'8px',
-      border:'1px solid var(--border,#e2e8f0)',
-      color:'var(--muted,#64748b)', textDecoration:'none',
-      fontSize:'13px', transition:'all 0.15s', flexShrink:0,
-    }}
-    title={isEn ? 'Bookmarks' : 'Закладки'}
-    >
-      <svg width="14" height="14" viewBox="0 0 24 24"
-        fill={mounted && count > 0 ? 'currentColor' : 'none'}
-        stroke="currentColor" strokeWidth="2"
-        style={{ color: mounted && count > 0 ? 'var(--accent,#2563eb)' : 'currentColor' }}>
-        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-      </svg>
-      {mounted && count > 0 && (
-        <span suppressHydrationWarning style={{
-          fontSize:'11px', fontWeight:700,
-          background:'var(--accent,#2563eb)', color:'#fff',
-          borderRadius:'10px', padding:'0 5px',
-          lineHeight:'16px', minWidth:'16px', textAlign:'center',
-        }}>
-          {count}
-        </span>
-      )}
-    </Link>
-  )
-}
-
-
 export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn }) {
   const pageTitle = title
     ? `${title} — ${siteConfig.name}`
@@ -215,7 +117,13 @@ export default function Layout({ children, title, description, canonical, isArti
     <>
       <Head>
         {/* Google Fonts — preconnect для швидкого завантаження */}
-<title>{pageTitle}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@600;700&display=swap"
+        />
+        <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href={pageUrl} />
@@ -282,12 +190,6 @@ export default function Layout({ children, title, description, canonical, isArti
             </nav>
 
             <div className="nav-divider" aria-hidden="true" />
-
-            {/* Закладки */}
-            <BookmarksNavLink />
-
-            {/* Тема */}
-            <ThemeToggle />
 
             {/* Пошук — SearchBar сам рендерить десктоп/мобайл */}
             <SearchBar />
@@ -391,13 +293,13 @@ export default function Layout({ children, title, description, canonical, isArti
 }
 
 const s = {
-  header: { background: 'var(--bg-card,#fff)', borderBottom: '1px solid var(--border,#e2e8f0)', position: 'sticky', top: 0, zIndex: 50 },
+  header: { background: '#fff', borderBottom: '1px solid #e2e8f0', position: 'sticky', top: 0, zIndex: 50 },
   navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', height: '62px', width: '100%', padding: '0 20px' },
   logoWrap: { display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none', flexShrink: 0 },
-  logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: 'var(--text,#0f172a)' },
-  logoAccent: { color: 'var(--accent,#2563eb)' },
+  logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: '#0f172a' },
+  logoAccent: { color: '#0f172a' },
   rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end' },
-  navLink: { fontSize: '14px', fontWeight: 500, color: 'var(--text,#0f172a)', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
+  navLink: { fontSize: '14px', fontWeight: 500, color: '#475569', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
   searchBtn: {
     display: 'flex', alignItems: 'center', gap: '6px',
     padding: '5px 10px', borderRadius: '8px',
@@ -412,17 +314,17 @@ const s = {
   bl1o: { transform: 'rotate(45deg) translate(5px,5px)' },
   bl2o: { opacity: 0 },
   bl3o: { transform: 'rotate(-45deg) translate(5px,-5px)' },
-  mobileMenu: { borderTop: '1px solid var(--border,#e2e8f0)', background: 'var(--bg-card,#fff)', padding: '4px 0 8px' },
+  mobileMenu: { borderTop: '1px solid #e2e8f0', background: '#fff', padding: '4px 0 8px' },
   mobileSearchLink: { display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#2563eb', borderBottom: '1px solid #f1f5f9' },
   mobileLink: { display: 'block', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#0f172a', borderBottom: '1px solid #f1f5f9' },
   mobileSocial: { display: 'flex', gap: '8px', padding: '12px 20px 4px', flexWrap: 'wrap' },
   mobileSocialBtn: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: '#475569', padding: '7px 14px', border: '1px solid #e2e8f0', borderRadius: '20px', background: '#f8fafc' },
-  footer: { borderTop: '1px solid var(--border,#e2e8f0)', background: 'var(--bg-card,#fff)', marginTop: '4rem' },
+  footer: { borderTop: '1px solid #e2e8f0', background: '#fff', marginTop: '4rem' },
   footerInner: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', padding: '1.25rem 20px' },
   footerLogo: { display: 'flex', alignItems: 'center', gap: '8px' },
   footerName: { fontFamily: "'Unbounded',sans-serif", fontSize: '13px', fontWeight: 600, color: '#0f172a' },
   footerLinks: { display: 'flex', gap: '16px', flexWrap: 'wrap' },
-  footerLink: { fontSize: '13px', color: '#64748b', transition: 'color .15s' },
+  footerLink: { fontSize: '13px', color: '#94a3b8', transition: 'color .15s' },
   footerSocial: { display: 'flex', gap: '8px' },
   footerSocialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', color: '#94a3b8', border: '1px solid #e2e8f0', background: '#f8fafc' },
   footerCopy: { borderTop: '1px solid #f1f5f9', padding: '.75rem 0' },
