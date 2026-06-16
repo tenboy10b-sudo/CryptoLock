@@ -27,14 +27,15 @@
     "defragmentatsiya-dysku-windows",
     "yak-nalashtuvaty-windows-dlya-ofisu",
     "yak-nalashtuvaty-widkryttya-failiv-za-zamovchuvannyam",
-    "redahuvannya-reyestru-windows"
+    "redahuvannya-reyestru-windows",
+    "yak-nalashtuvanty-windows-sandbox"
   ],
-  "count": 28,
+  "count": 29,
   "promo_index": 30,
   "last_post": {
-    "slug": "redahuvannya-reyestru-windows",
-    "title": "Реєстр Windows: редагування, резервна копія і відновлення",
-    "time": "2026-06-15T08:34:28.606134"
+    "slug": "yak-nalashtuvanty-windows-sandbox",
+    "title": "Windows Sandbox: безпечне тестування програм без ризику",
+    "time": "2026-06-16T08:01:17.940175"
   },
   "engage_index": 13,
   "extra_index": 4
