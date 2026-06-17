@@ -28,14 +28,15 @@
     "yak-nalashtuvaty-windows-dlya-ofisu",
     "yak-nalashtuvaty-widkryttya-failiv-za-zamovchuvannyam",
     "redahuvannya-reyestru-windows",
-    "yak-nalashtuvanty-windows-sandbox"
+    "yak-nalashtuvanty-windows-sandbox",
+    "yak-zayty-v-bios"
   ],
-  "count": 29,
+  "count": 30,
   "promo_index": 30,
   "last_post": {
-    "slug": "yak-nalashtuvanty-windows-sandbox",
-    "title": "Windows Sandbox: безпечне тестування програм без ризику",
-    "time": "2026-06-16T08:01:17.940175"
+    "slug": "yak-zayty-v-bios",
+    "title": "Як зайти в BIOS на Windows 10 і 11: всі способи",
+    "time": "2026-06-17T08:01:27.038655"
   },
   "engage_index": 15,
   "extra_index": 5
