@@ -9,3 +9,5 @@ public/sitemap*.xml
 public/robots.txt
 token.json 
 client_secret*.json 
+.vercel
+.env*
