@@ -442,7 +442,37 @@ def main():
         return
     published_data = load_published()
 
-    if POST_TYPE == "extra":
+    if POST_TYPE == "middle":
+        # Чергуємо engage і promo по парних/непарних днях
+        day_of_month = datetime.now().day
+        if day_of_month % 2 == 0:
+            # Парний день — залученість
+            engage_index = published_data.get("engage_index", 0)
+            style = ENGAGE_STYLES[engage_index % len(ENGAGE_STYLES)]
+            print(f"Середній пост: ENGAGE (день {day_of_month}, стиль {engage_index % len(ENGAGE_STYLES) + 1})...")
+            text = generate_engage_post(style)
+            if send_telegram(text):
+                print("✅ Engage пост опубліковано!")
+                published_data["engage_index"] = engage_index + 1
+                save_published(published_data)
+                git_commit_published()
+            else:
+                print("❌ Помилка публікації")
+        else:
+            # Непарний день — реклама
+            promo_index = published_data.get("promo_index", 0)
+            module_data = PROMO_MODULES[promo_index % len(PROMO_MODULES)]
+            print(f"Середній пост: PROMO (день {day_of_month}, модуль {module_data['module']})...")
+            text = generate_promo_post(module_data)
+            if send_telegram(text):
+                print("✅ Promo пост опубліковано!")
+                published_data["promo_index"] = promo_index + 1
+                save_published(published_data)
+                git_commit_published()
+            else:
+                print("❌ Помилка публікації")
+
+    elif POST_TYPE == "extra":
         extra_index = published_data.get("extra_index", 0)
         style = EXTRA_STYLES[extra_index % len(EXTRA_STYLES)]
         print(f"Генеруємо extra пост (стиль {extra_index % len(EXTRA_STYLES) + 1}/{len(EXTRA_STYLES)})...")
