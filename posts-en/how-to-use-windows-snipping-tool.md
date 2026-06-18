@@ -1,8 +1,9 @@
 ---
-title: "How to Take Screenshots in Windows: Snipping Tool and Shortcuts"
+title: "Windows Screenshot Shortcut and Snipping Tool: Complete Guide for Windows 10 and 11"
 date: "2026-03-17"
 publishDate: "2026-03-17"
-description: "All ways to take screenshots in Windows 10 and 11: keyboard shortcuts, Snipping Tool, annotation tools, and how to capture scrolling pages or specific windows."
+updated: "2026-06-18"
+description: "All Windows screenshot shortcuts and how to use Snipping Tool on Windows 10 and 11. Screen clipping shortcuts, annotate screenshots, capture windows and scrolling pages."
 tags: ["windows", "tools", "productivity", "settings"]
 readTime: 5
 ---
