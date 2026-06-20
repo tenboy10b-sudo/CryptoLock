@@ -63,7 +63,7 @@ function ThemeToggle() {
       style={{ display:'flex', alignItems:'center', justifyContent:'center',
         width:'32px', height:'32px', borderRadius:'8px', background:'none',
         border:'1px solid var(--border,#e2e8f0)', cursor:'pointer',
-        color:'var(--muted,#64748b)', transition:'all 0.15s', flexShrink:0 }}
+        color:'var(--muted,#64748b)', transition:'border-color 0.15s, opacity 0.15s', flexShrink:0 }}
     >
       {dark ? (
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -118,9 +118,10 @@ function BookmarksNavLink() {
     title={isEn ? 'Bookmarks' : 'Закладки'}
     >
       <svg width="14" height="14" viewBox="0 0 24 24"
-        fill={mounted && count > 0 ? 'currentColor' : 'none'}
+        fill="none"
         stroke="currentColor" strokeWidth="2"
-        style={{ color: mounted && count > 0 ? 'var(--accent,#2563eb)' : 'currentColor' }}>
+        suppressHydrationWarning
+        style={{ color: 'currentColor' }}>
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
       </svg>
       {mounted && count > 0 && (
@@ -391,12 +392,12 @@ export default function Layout({ children, title, description, canonical, isArti
 }
 
 const s = {
-  header: { background: 'var(--bg-card,#fff)', borderBottom: '1px solid var(--border,#e2e8f0)', position: 'sticky', top: 0, zIndex: 50, overflow: 'visible' },
-  navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', height: '62px', width: '100%', padding: '0 20px', overflow: 'visible' },
+  header: { background: 'var(--bg-card,#fff)', borderBottom: '1px solid var(--border,#e2e8f0)', position: 'sticky', top: 0, zIndex: 50 },
+  navWrap: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', height: '62px', width: '100%', padding: '0 20px' },
   logoWrap: { display: 'flex', alignItems: 'center', gap: '9px', textDecoration: 'none', flexShrink: 0 },
   logoText: { fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.5px', color: 'var(--text,#0f172a)' },
   logoAccent: { color: 'var(--accent,#2563eb)' },
-  rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end', overflow: 'visible' },
+  rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end' },
   navLink: { fontSize: '14px', fontWeight: 500, color: 'var(--text,#0f172a)', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
   searchBtn: {
     display: 'flex', alignItems: 'center', gap: '6px',
