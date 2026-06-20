@@ -30,14 +30,15 @@
     "redahuvannya-reyestru-windows",
     "yak-nalashtuvanty-windows-sandbox",
     "yak-zayty-v-bios",
-    "nalashtuvannya-windows-10-11-povnyy-hid"
+    "nalashtuvannya-windows-10-11-povnyy-hid",
+    "keruvannya-parolyamy-windows-credential"
   ],
-  "count": 31,
+  "count": 32,
   "promo_index": 32,
   "last_post": {
-    "slug": "nalashtuvannya-windows-10-11-povnyy-hid",
-    "title": "Налаштування Windows 10 і 11: повний гід по параметрах системи",
-    "time": "2026-06-18T08:01:23.716460"
+    "slug": "keruvannya-parolyamy-windows-credential",
+    "title": "Credential Manager Windows: збереження і управління паролями",
+    "time": "2026-06-20T10:49:53.889652"
   },
   "engage_index": 20,
   "extra_index": 7
