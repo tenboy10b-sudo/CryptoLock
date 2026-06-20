@@ -9,7 +9,7 @@ const nextConfig = {
     localeDetection: false,
   },
 
-  // Заголовки безпеки
+  // Заголовки безпеки + кешування
   async headers() {
     return [
       {
@@ -21,28 +21,21 @@ const nextConfig = {
         ],
       },
       {
-        // Кешування зображень на 1 рік
-        source: '/:file(.*\\.(?:png|webp|jpg|jpeg|svg|ico|gif))',
+        // Кешування зображень на 1 рік (виправлено дублікат)
+        source: '/:file*.(png|webp|jpg|jpeg|svg|ico|gif)',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       {
-        // Кешування зображень на 1 рік
-        source: '/:file(.*\.(?:png|webp|jpg|jpeg|svg|ico|gif))',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      {
-        // Кешування статичних ресурсів на 1 рік
+        // Кешування статичних ресурсів Next.js на 1 рік
         source: '/_next/static/(.*)',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
       {
-        // Кешування HTML сторінок на 1 годину з stale-while-revalidate
+        // Кешування HTML сторінок
         source: '/:path*',
         headers: [
           { key: 'Cache-Control', value: 's-maxage=3600, stale-while-revalidate=86400' },
@@ -165,81 +158,43 @@ const nextConfig = {
       { source: '/en/yak-zablokuvaty-oblikovyy-zapys', destination: '/yak-zablokuvaty-oblikovyy-zapys', permanent: true, locale: false },
 
       // ── EN теги з UK назвами → UK версія тегу ────────────────────────
-      // безпека
       { source: '/en/tags/%D0%B1%D0%B5%D0%B7%D0%BF%D0%B5%D0%BA%D0%B0', destination: '/tags/%D0%B1%D0%B5%D0%B7%D0%BF%D0%B5%D0%BA%D0%B0', permanent: true, locale: false },
-      // групова-політика
       { source: '/en/tags/%D0%B3%D1%80%D1%83%D0%BF%D0%BE%D0%B2%D0%B0-%D0%BF%D0%BE%D0%BB%D1%96%D1%82%D0%B8%D0%BA%D0%B0', destination: '/tags/%D0%B3%D1%80%D1%83%D0%BF%D0%BE%D0%B2%D0%B0-%D0%BF%D0%BE%D0%BB%D1%96%D1%82%D0%B8%D0%BA%D0%B0', permanent: true, locale: false },
-      // налаштування
       { source: '/en/tags/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%BD%D0%B0%D0%BB%D0%B0%D1%88%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // оптимізація
       { source: '/en/tags/%D0%BE%D0%BF%D1%82%D0%B8%D0%BC%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F', destination: '/tags/%D0%BE%D0%BF%D1%82%D0%B8%D0%BC%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F', permanent: true, locale: false },
-      // прискорення
       { source: '/en/tags/%D0%BF%D1%80%D0%B8%D1%81%D0%BA%D0%BE%D1%80%D0%B5%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%BF%D1%80%D0%B8%D1%81%D0%BA%D0%BE%D1%80%D0%B5%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // завантаження
       { source: '/en/tags/%D0%B7%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%B7%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // помилки
       { source: '/en/tags/%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D0%B8', destination: '/tags/%D0%BF%D0%BE%D0%BC%D0%B8%D0%BB%D0%BA%D0%B8', permanent: true, locale: false },
-      // мережа
       { source: '/en/tags/%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D0%B0', destination: '/tags/%D0%BC%D0%B5%D1%80%D0%B5%D0%B6%D0%B0', permanent: true, locale: false },
-      // реєстр
       { source: '/en/tags/%D1%80%D0%B5%D1%94%D1%81%D1%82%D1%80', destination: '/tags/%D1%80%D0%B5%D1%94%D1%81%D1%82%D1%80', permanent: true, locale: false },
-      // інструменти
       { source: '/en/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', destination: '/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', permanent: true, locale: false },
-      // відновлення
       { source: '/en/tags/%D0%B2%D1%96%D0%B4%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%B2%D1%96%D0%B4%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // обладнання
       { source: '/en/tags/%D0%BE%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%BE%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // оновлення
       { source: '/en/tags/%D0%BE%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%BE%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // паролі
       { source: '/en/tags/%D0%BF%D0%B0%D1%80%D0%BE%D0%BB%D1%96', destination: '/tags/%D0%BF%D0%B0%D1%80%D0%BE%D0%BB%D1%96', permanent: true, locale: false },
-      // драйвери
       { source: '/en/tags/%D0%B4%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80%D0%B8', destination: '/tags/%D0%B4%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80%D0%B8', permanent: true, locale: false },
-      // діагностика
       { source: '/en/tags/%D0%B4%D1%96%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0', destination: '/tags/%D0%B4%D1%96%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0', permanent: true, locale: false },
-      // продуктивність
-      { source: '/en/tags/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%96%D1%81%D1%82%D1%8C', destination: '/tags/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%96%D1%81%D1%8C', permanent: true, locale: false },
-      // встановлення
+      { source: '/en/tags/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%96%D1%81%D1%82%D1%8C', destination: '/tags/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
       { source: '/en/tags/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%B2%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // очищення
       { source: '/en/tags/%D0%BE%D1%87%D0%B8%D1%89%D0%B5%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%BE%D1%87%D0%B8%D1%89%D0%B5%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // адміністрування
       { source: '/en/tags/%D0%B0%D0%B4%D0%BC%D1%96%D0%BD%D1%96%D1%81%D1%82%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%B0%D0%B4%D0%BC%D1%96%D0%BD%D1%96%D1%81%D1%82%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // автозавантаження
       { source: '/en/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F', destination: '/tags/%D0%B0%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // захист
       { source: '/en/tags/%D0%B7%D0%B0%D1%85%D0%B8%D1%81%D1%82', destination: '/tags/%D0%B7%D0%B0%D1%85%D0%B8%D1%81%D1%82', permanent: true, locale: false },
-      // темна-тема
       { source: '/en/tags/%D1%82%D0%B5%D0%BC%D0%BD%D0%B0-%D1%82%D0%B5%D0%BC%D0%B0', destination: '/tags/%D1%82%D0%B5%D0%BC%D0%BD%D0%B0-%D1%82%D0%B5%D0%BC%D0%B0', permanent: true, locale: false },
-      // шифрування
       { source: '/en/tags/%D1%88%D0%B8%D1%84%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', destination: '/tags/%D1%88%D0%B8%D1%84%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // скидання
       { source: '/en/tags/%D1%81%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F', destination: '/tags/%D1%81%D0%BA%D0%B8%D0%B4%D0%B0%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // переустановка
       { source: '/en/tags/%D0%BF%D0%B5%D1%80%D0%B5%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0', destination: '/tags/%D0%BF%D0%B5%D1%80%D0%B5%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0', permanent: true, locale: false },
-      // диспетчер-завдань
       { source: '/en/tags/%D0%B4%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80-%D0%B7%D0%B0%D0%B2%D0%B4%D0%B0%D0%BD%D1%8C', destination: '/tags/%D0%B4%D0%B8%D1%81%D0%BF%D0%B5%D1%82%D1%87%D0%B5%D1%80-%D0%B7%D0%B0%D0%B2%D0%B4%D0%B0%D0%BD%D1%8C', permanent: true, locale: false },
-      // планувальник
       { source: '/en/tags/%D0%BF%D0%BB%D0%B0%D0%BD%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA', destination: '/tags/%D0%BF%D0%BB%D0%B0%D0%BD%D1%83%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA', permanent: true, locale: false },
-      // персоналізація
       { source: '/en/tags/%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F', destination: '/tags/%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F', permanent: true, locale: false },
-      // резервне-копіювання
       { source: '/en/tags/%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', destination: '/tags/%D1%80%D0%B5%D0%B7%D0%B5%D1%80%D0%B2%D0%BD%D0%B5-%D0%BA%D0%BE%D0%BF%D1%96%D1%8E%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F', permanent: true, locale: false },
-      // моніторинг
       { source: '/en/tags/%D0%BC%D0%BE%D0%BD%D1%96%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3', destination: '/tags/%D0%BC%D0%BE%D0%BD%D1%96%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3', permanent: true, locale: false },
-      // облікові-записи
       { source: '/en/tags/%D0%BE%D0%B1%D0%BB%D1%96%D0%BA%D0%BE%D0%B2%D1%96-%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B8', destination: '/tags/%D0%BE%D0%B1%D0%BB%D1%96%D0%BA%D0%BE%D0%B2%D1%96-%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B8', permanent: true, locale: false },
-      // адміністратор
       { source: '/en/tags/%D0%B0%D0%B4%D0%BC%D1%96%D0%BD%D1%96%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80', destination: '/tags/%D0%B0%D0%B4%D0%BC%D1%96%D0%BD%D1%96%D1%81%D1%82%D1%80%D0%B0%D1%82%D0%BE%D1%80', permanent: true, locale: false },
-      // віруси
       { source: '/en/tags/%D0%B2%D1%96%D1%80%D1%83%D1%81%D0%B8', destination: '/tags/%D0%B2%D1%96%D1%80%D1%83%D1%81%D0%B8', permanent: true, locale: false },
-      // диск
       { source: '/en/tags/%D0%B4%D0%B8%D1%81%D0%BA', destination: '/tags/%D0%B4%D0%B8%D1%81%D0%BA', permanent: true, locale: false },
-      // швидкість
       { source: '/en/tags/%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D1%96%D1%81%D1%82%D1%8C', destination: '/tags/%D1%88%D0%B2%D0%B8%D0%B4%D0%BA%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
-      // gpedit (вже латиниця але на EN локалі — без UK статей)
       { source: '/en/tags/gpedit', destination: '/tags/gpedit', permanent: true, locale: false },
-
 
       // ── EN теги без Ukrainian prefix → UK теги (доповнення) ──────────
       { source: '/en/tags/applocker', destination: '/tags/applocker', permanent: true, locale: false },
@@ -338,8 +293,6 @@ const nextConfig = {
       { source: '/en/yak-nalashtuvaty-nychnyy-rezhym-windows', destination: '/yak-nalashtuvaty-nychnyy-rezhym-windows', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvanty-windows-dlya-shkoly', destination: '/yak-nalashtuvanty-windows-dlya-shkoly', permanent: true, locale: false },
       { source: '/en/yak-vypravyty-windows-update-zavisaye', destination: '/yak-vypravyty-windows-update-zavisaye', permanent: true, locale: false },
-      // ── Виправлення 404: /en/tags/кирилиця → /tags/кирилиця ──
-      // ── Інші специфічні 404 ────────────────────────────────────
       { source: '/yak-nalashtuvanty-dvokrokov', destination: '/', permanent: true, locale: false },
 
       // ── Canonical duplicates: /en/uk-slug → /uk-slug ────────────
@@ -355,8 +308,8 @@ const nextConfig = {
       { source: '/en/yak-vymknuty-uac-gpo', destination: '/yak-vymknuty-uac-gpo', permanent: true, locale: false },
       { source: '/en/yak-zayty-v-bios', destination: '/yak-zayty-v-bios', permanent: true, locale: false },
       { source: '/en/avtomatychnyy-vkhid-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
-
       { source: '/en/yak-zbilshyty-shvydkist-internetu-windows', destination: '/yak-zbilshyty-shvydkist-internetu-windows', permanent: true, locale: false },
+
       // ── Crawled not indexed: /en/yak-... → /yak-... ─────────────
       { source: '/en/yak-nalashtuvanty-ldap-windows', destination: '/yak-nalashtuvanty-ldap-windows', permanent: true, locale: false },
       { source: '/en/yak-pratsyuvaty-z-dostupoyu-do-fayiv-windows', destination: '/yak-pratsyuvaty-z-dostupoyu-do-fayiv-windows', permanent: true, locale: false },
@@ -388,11 +341,6 @@ const nextConfig = {
       { source: '/yak-ochystyty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true, locale: false },
       { source: '/yak-zashyfruvaty-dysk-bitlocker', destination: '/yak-uvimknuty-bitlocker-windows-11', permanent: true, locale: false },
       { source: '/en/gpo-nalashtuvannya-polityky-paroliv', destination: '/gpo-nalashtuvannya-polityky-paroliv', permanent: true, locale: false },
-
-      // ── EN /tools/* → UK /tools/* (інструменти тільки UK версія) ────
-      // EN tools тепер окремі сторінки — redirect прибрано
-      // { source: '/en/tools', destination: '/tools', permanent: false, locale: false },
-      // { source: '/en/tools/:path*', destination: '/tools/:path*', permanent: false, locale: false },
     ]
   },
 }

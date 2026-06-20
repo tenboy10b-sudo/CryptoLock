@@ -18,25 +18,9 @@ const TikTokIcon = () => (
     <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.15 8.15 0 004.78 1.54V6.78a4.85 4.85 0 01-1.01-.09z"/>
   </svg>
 )
-const YouTubeIcon = () => (
-  <svg width="19" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 00.5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 002.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 002.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/>
-  </svg>
-)
 const SearchIcon = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-  </svg>
-)
-
-// SVG-іконка без тексту — чиста монограма CL
-const LogoIcon = () => (
-  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect width="30" height="30" rx="7" fill="#0f172a"/>
-    <path d="M20 7 C10 7 7 10 7 15 C7 20 10 23 20 23"
-          fill="none" stroke="#3b82f6" strokeWidth="3.2" strokeLinecap="round"/>
-    <line x1="10" y1="15" x2="16" y2="15" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round"/>
-    <circle cx="9.5" cy="15" r="1.5" fill="#93c5fd"/>
   </svg>
 )
 
@@ -150,7 +134,6 @@ export default function Layout({ children, title, description, canonical, isArti
   const [searchOpen, setSearchOpen] = useState(false)
   const router = useRouter()
   const { locale, asPath, pathname, query } = router
-  // Чистий шлях без locale prefix для перемикача мов
   const cleanPath = asPath.replace(/^\/(uk|en)(\/|$)/, '/$2').replace(/^\/$/, '/') || '/'
 
   useEffect(() => {
@@ -181,7 +164,6 @@ export default function Layout({ children, title, description, canonical, isArti
   const socialLinks = [
     { key: 'telegram', icon: <TelegramIcon />, label: 'Telegram', cls: 'telegram' },
     { key: 'tiktok',   icon: <TikTokIcon />,   label: 'TikTok',   cls: 'tiktok'   },
-    { key: 'youtube',  icon: <YouTubeIcon />,   label: 'YouTube',  cls: 'youtube'  },
   ].filter(s => siteConfig.social[s.key])
 
   const orgSchema = {
@@ -215,10 +197,10 @@ export default function Layout({ children, title, description, canonical, isArti
   return (
     <>
       <Head>
-        {/* Google Fonts — preconnect для швидкого завантаження */}
-<title>{pageTitle}</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="canonical" href={pageUrl} />
         <link rel="alternate" hrefLang="uk"
           href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
@@ -264,7 +246,6 @@ export default function Layout({ children, title, description, canonical, isArti
       <header style={s.header}>
         <div className="container" style={s.navWrap}>
 
-          {/* Логотип — SVG-іконка + текст (без PNG) */}
           <Link href="/" style={s.logoWrap} aria-label={`${siteConfig.name} — на головну`}>
             <span style={s.logoText}>Crypto<span style={s.logoAccent}>Lock</span></span>
           </Link>
@@ -284,16 +265,10 @@ export default function Layout({ children, title, description, canonical, isArti
 
             <div className="nav-divider" aria-hidden="true" />
 
-            {/* Закладки */}
             <BookmarksNavLink />
-
-            {/* Тема */}
             <ThemeToggle />
-
-            {/* Пошук — SearchBar сам рендерить десктоп/мобайл */}
             <SearchBar />
 
-            {/* Перемикач мови — тільки якщо є переклад */}
             {(translatesUk || translatesEn) && (
               <div style={s.langSwitch} aria-label="Вибір мови">
                 {translatesUk && (
@@ -330,10 +305,8 @@ export default function Layout({ children, title, description, canonical, isArti
           </div>
         </div>
 
-        {/* Мобільне меню */}
         {menuOpen && (
           <div id="mobile-menu" style={s.mobileMenu} role="navigation" aria-label="Мобільна навігація">
-
             {(locale === 'en'
                 ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
                 : siteConfig.nav
@@ -425,9 +398,9 @@ const s = {
   footerLinks: { display: 'flex', gap: '16px', flexWrap: 'wrap' },
   footerLink: { fontSize: '13px', color: '#64748b', transition: 'color .15s' },
   footerSocial: { display: 'flex', gap: '8px' },
-  footerSocialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', color: '#94a3b8', border: '1px solid #e2e8f0', background: '#f8fafc' },
+  footerSocialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '8px', color: '#64748b', border: '1px solid #e2e8f0', background: '#f8fafc' },
   footerCopy: { borderTop: '1px solid #f1f5f9', padding: '.75rem 0' },
-  footerCopyText: { fontFamily: "'JetBrains Mono', monospace", fontSize: '11px', color: '#cbd5e1', textAlign: 'center' },
+  footerCopyText: { fontFamily: "'JetBrains Mono', monospace", fontSize: '11px', color: '#475569', textAlign: 'center' },
   langSwitch: { display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0, border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden', background: '#f8fafc' },
   langBtn: { fontSize: '11px', fontWeight: 600, fontFamily: 'var(--font-mono)', padding: '5px 9px', color: '#64748b', textDecoration: 'none', transition: 'background .15s, color .15s', letterSpacing: '.03em' },
   langBtnActive: { background: '#0f172a', color: '#fff' },
