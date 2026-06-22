@@ -50,7 +50,6 @@ function useSearch(index, query) {
   return results
 }
 
-// ── Мобільний оверлей ────────────────────────────────────────────────────
 function MobileOverlay({ onClose, index, loadIndex, isEn, locale }) {
   const [query, setQuery] = useState('')
   const results = useSearch(index, query)
@@ -121,7 +120,6 @@ function MobileOverlay({ onClose, index, loadIndex, isEn, locale }) {
   )
 }
 
-// ── Десктопний inline ────────────────────────────────────────────────────
 function DesktopSearch({ index, loadIndex, isEn, locale }) {
   const [query, setQuery]   = useState('')
   const [open, setOpen]     = useState(false)
@@ -131,7 +129,6 @@ function DesktopSearch({ index, loadIndex, isEn, locale }) {
   const inputRef = useRef(null)
   const wrapRef  = useRef(null)
 
-  // Закрити при кліку поза
   useEffect(() => {
     const h = e => {
       if (wrapRef.current && !wrapRef.current.contains(e.target)) {
@@ -142,7 +139,6 @@ function DesktopSearch({ index, loadIndex, isEn, locale }) {
     return () => document.removeEventListener('mousedown', h)
   }, [])
 
-  // Ctrl+K і Escape
   useEffect(() => {
     const h = e => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -154,20 +150,13 @@ function DesktopSearch({ index, loadIndex, isEn, locale }) {
     return () => window.removeEventListener('keydown', h)
   }, [])
 
-  // Обчислення позиції dropdown через getBoundingClientRect
   const updateDropPos = useCallback(() => {
     if (!wrapRef.current) return
     const rect = wrapRef.current.getBoundingClientRect()
-    // Dropdown шириною 420px, але не більше ніж від лівого краю до правого краю вікна
     const dropW = Math.min(420, window.innerWidth - 16)
-    // Вирівнюємо по правому краю поля пошуку
     let left = rect.right - dropW
     if (left < 8) left = 8
-    setDropPos({
-      top: rect.bottom + 6,
-      left,
-      width: dropW,
-    })
+    setDropPos({ top: rect.bottom + 6, left, width: dropW })
   }, [])
 
   const onFocus = () => {
@@ -213,15 +202,8 @@ function DesktopSearch({ index, loadIndex, isEn, locale }) {
           </button>
         )}
       </div>
-
-      {/* Dropdown через portal-like fixed позиціонування */}
       {show && (
-        <div style={{
-          ...d.dropdown,
-          top: dropPos.top,
-          left: dropPos.left,
-          width: dropPos.width,
-        }}>
+        <div style={{ ...d.dropdown, top: dropPos.top, left: dropPos.left, width: dropPos.width }}>
           {results.length > 0 ? results.map((post, i) => (
             <Link
               key={post.slug}
@@ -257,12 +239,46 @@ function DesktopSearch({ index, loadIndex, isEn, locale }) {
   )
 }
 
-// ── Головний компонент ───────────────────────────────────────────────────
+// ── Головний компонент з mounted патерном ────────────────────────────────
 export default function SearchBar() {
   const { locale } = useRouter()
   const isEn = locale === 'en'
   const [index, loadIndex] = useSearchIndex(locale || 'uk')
   const [overlayOpen, setOverlayOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // SSR: рендеримо статичну заглушку — без hydration mismatch
+  if (!mounted) {
+    return (
+      <>
+        <div className="search-desktop">
+          <div style={{ ...d.wrap }}>
+            <div style={d.box}>
+              <span style={d.icon}><SearchIcon /></span>
+              <input
+                type="text"
+                placeholder="Пошук..."
+                style={d.input}
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          className="search-mobile-btn"
+          style={sb.btn}
+          aria-label="Пошук"
+          suppressHydrationWarning
+        >
+          <SearchIcon />
+        </button>
+      </>
+    )
+  }
 
   return (
     <>
@@ -292,7 +308,6 @@ export default function SearchBar() {
   )
 }
 
-// ── Стилі мобайлу ────────────────────────────────────────────────────────
 const m = {
   overlay:  { position:'fixed', inset:0, background:'var(--bg-card,#fff)', zIndex:200, display:'flex', flexDirection:'column', overflowX:'hidden' },
   header:   { display:'flex', alignItems:'center', gap:'10px', padding:'12px 16px', borderBottom:'1px solid var(--border,#e2e8f0)', flexShrink:0 },
@@ -314,7 +329,6 @@ const m = {
   arrow:    { fontSize:'20px', color:'var(--border-md,#cbd5e1)', flexShrink:0 },
 }
 
-// ── Стилі десктопу ────────────────────────────────────────────────────────
 const d = {
   wrap:     { position:'relative', width:'100%' },
   box:      { display:'flex', alignItems:'center', gap:'7px', background:'var(--bg-card,#f1f5f9)', border:'1.5px solid var(--border,transparent)', borderRadius:'10px', padding:'0 10px', height:'36px', transition:'border-color .15s, background .15s, box-shadow .15s', cursor:'text' },
@@ -322,7 +336,6 @@ const d = {
   icon:     { color:'var(--faint,#94a3b8)', display:'flex', flexShrink:0, pointerEvents:'none' },
   input:    { flex:1, border:'none', outline:'none', background:'transparent', fontSize:'13px', fontFamily:'var(--font-body)', color:'var(--text,#0f172a)', minWidth:0 },
   clearBtn: { display:'flex', alignItems:'center', background:'none', border:'none', cursor:'pointer', color:'var(--faint,#94a3b8)', padding:'2px', flexShrink:0 },
-  // Dropdown через position:fixed — не обрізається батьківськими overflow
   dropdown: { position:'fixed', background:'var(--bg-card,#fff)', border:'1px solid var(--border,#e2e8f0)', borderRadius:'12px', boxShadow:'0 8px 32px rgba(15,23,42,0.14)', zIndex:1000, overflow:'hidden', maxHeight:'70vh', overflowY:'auto' },
   item:     { display:'flex', alignItems:'center', gap:'10px', padding:'11px 14px', textDecoration:'none', borderBottom:'1px solid var(--border,#f8fafc)', transition:'background .1s' },
   itemActive:{ background:'var(--accent-light,#eff6ff)' },
