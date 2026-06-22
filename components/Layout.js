@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import SearchBar from './SearchBar'
 import siteConfig from '../site.config'
@@ -18,36 +17,40 @@ const TikTokIcon = () => (
     <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.15 8.15 0 004.78 1.54V6.78a4.85 4.85 0 01-1.01-.09z"/>
   </svg>
 )
-const SearchIcon = () => (
-  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-  </svg>
-)
 
 // ── Theme Toggle ────────────────────────────────────────────────
 function ThemeToggle() {
   const [dark, setDark] = useState(false)
   const [mounted, setMounted] = useState(false)
+
   useEffect(() => {
     setMounted(true)
     setDark(document.documentElement.getAttribute('data-theme') === 'dark')
   }, [])
+
   const toggle = () => {
     const next = dark ? 'light' : 'dark'
     document.documentElement.setAttribute('data-theme', next)
     localStorage.setItem('theme', next)
     setDark(!dark)
   }
+
+  // SSR: порожня кнопка без вмісту — без hydration mismatch
   if (!mounted) return (
     <button style={{ width:'32px', height:'32px', borderRadius:'8px', background:'none',
-      border:'1px solid var(--border,#e2e8f0)', cursor:'pointer', flexShrink:0 }} aria-label="Тема" />
+      border:'1px solid var(--border,#e2e8f0)', cursor:'pointer', flexShrink:0 }}
+      aria-label="Тема" suppressHydrationWarning />
   )
+
   return (
-    <button onClick={toggle} aria-label={dark ? 'Світла тема' : 'Темна тема'}
+    <button onClick={toggle}
+      aria-label={dark ? 'Світла тема' : 'Темна тема'}
       style={{ display:'flex', alignItems:'center', justifyContent:'center',
         width:'32px', height:'32px', borderRadius:'8px', background:'none',
         border:'1px solid var(--border,#e2e8f0)', cursor:'pointer',
-        color:'var(--muted,#64748b)', transition:'border-color 0.15s, opacity 0.15s', flexShrink:0 }}
+        color:'var(--muted,#64748b)', transition:'border-color 0.15s, opacity 0.15s',
+        flexShrink:0 }}
+      suppressHydrationWarning
     >
       {dark ? (
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -91,21 +94,19 @@ function BookmarksNavLink() {
   }, [])
 
   const href = isEn ? '/en/bookmarks' : '/bookmarks'
+
   return (
-    <Link href={href} style={{
-      display:'inline-flex', alignItems:'center', gap:'4px',
-      padding:'5px 10px', borderRadius:'8px',
-      border:'1px solid var(--border,#e2e8f0)',
-      color:'var(--muted,#64748b)', textDecoration:'none',
-      fontSize:'13px', transition:'all 0.15s', flexShrink:0,
-    }}
-    title={isEn ? 'Bookmarks' : 'Закладки'}
+    <Link href={href}
+      title={isEn ? 'Bookmarks' : 'Закладки'}
+      suppressHydrationWarning
+      style={{ display:'inline-flex', alignItems:'center', gap:'4px',
+        padding:'5px 10px', borderRadius:'8px',
+        border:'1px solid var(--border,#e2e8f0)',
+        color:'var(--muted,#64748b)', textDecoration:'none',
+        fontSize:'13px', transition:'all 0.15s', flexShrink:0 }}
     >
-      <svg width="14" height="14" viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor" strokeWidth="2"
-        suppressHydrationWarning
-        style={{ color: 'currentColor' }}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" aria-hidden="true">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
       </svg>
       {mounted && count > 0 && (
@@ -122,7 +123,6 @@ function BookmarksNavLink() {
   )
 }
 
-
 export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn }) {
   const pageTitle = title
     ? `${title} — ${siteConfig.name}`
@@ -131,10 +131,8 @@ export default function Layout({ children, title, description, canonical, isArti
   const pageUrl  = canonical || SITE
   const ogImg    = ogImage || `${SITE}/logo.png`
   const [menuOpen, setMenuOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
   const router = useRouter()
-  const { locale, asPath, pathname, query } = router
-  const cleanPath = asPath.replace(/^\/(uk|en)(\/|$)/, '/$2').replace(/^\/$/, '/') || '/'
+  const { locale, asPath } = router
 
   useEffect(() => {
     const btn = document.getElementById('back-to-top')
@@ -200,7 +198,7 @@ export default function Layout({ children, title, description, canonical, isArti
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* БЕЗ preconnect тут — вони в _document.js */}
         <link rel="canonical" href={pageUrl} />
         <link rel="alternate" hrefLang="uk"
           href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
@@ -229,14 +227,19 @@ export default function Layout({ children, title, description, canonical, isArti
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
+        <script type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
         {siteConfig.adsenseId && (
-          <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseId}`} crossOrigin="anonymous" />
+          <script async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseId}`}
+            crossOrigin="anonymous" />
         )}
         {siteConfig.gaId && (
           <>
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`} />
-            <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${siteConfig.gaId}');` }} />
+            <script dangerouslySetInnerHTML={{ __html:
+              `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${siteConfig.gaId}');`
+            }} />
           </>
         )}
       </Head>
@@ -251,7 +254,6 @@ export default function Layout({ children, title, description, canonical, isArti
           </Link>
 
           <div style={s.rightSide}>
-            {/* Desktop nav */}
             <nav className="nav-desktop" aria-label="Головна навігація">
               {(locale === 'en'
                 ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
@@ -272,19 +274,18 @@ export default function Layout({ children, title, description, canonical, isArti
             {(translatesUk || translatesEn) && (
               <div style={s.langSwitch} aria-label="Вибір мови">
                 {translatesUk && (
-                  <Link href={`/${translatesUk}`} locale="uk" style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }} aria-label="Українська" title="Українська">
-                    UA
-                  </Link>
+                  <Link href={`/${translatesUk}`} locale="uk"
+                    style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }}
+                    aria-label="Українська" title="Українська">UA</Link>
                 )}
                 {translatesEn && (
-                  <Link href={`/${translatesEn}`} locale="en" style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }} aria-label="English" title="English">
-                    EN
-                  </Link>
+                  <Link href={`/${translatesEn}`} locale="en"
+                    style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }}
+                    aria-label="English" title="English">EN</Link>
                 )}
               </div>
             )}
 
-            {/* Social */}
             <div className="nav-social">
               {socialLinks.map(({ key, icon, label, cls }) => (
                 <a key={key} href={siteConfig.social[key]} target="_blank" rel="noopener noreferrer"
@@ -294,7 +295,6 @@ export default function Layout({ children, title, description, canonical, isArti
               ))}
             </div>
 
-            {/* Бургер */}
             <button className="nav-burger" onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? 'Закрити меню' : 'Відкрити меню'}
               aria-expanded={menuOpen} aria-controls="mobile-menu">
@@ -308,9 +308,9 @@ export default function Layout({ children, title, description, canonical, isArti
         {menuOpen && (
           <div id="mobile-menu" style={s.mobileMenu} role="navigation" aria-label="Мобільна навігація">
             {(locale === 'en'
-                ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
-                : siteConfig.nav
-              ).map(item => (
+              ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
+              : siteConfig.nav
+            ).map(item => (
               <Link key={item.href} href={item.href} style={s.mobileLink} onClick={() => setMenuOpen(false)}>
                 {item.label}
               </Link>
@@ -353,13 +353,17 @@ export default function Layout({ children, title, description, canonical, isArti
         <div style={s.footerCopy}>
           <div className="container">
             <p style={s.footerCopyText}>
-              {locale === "en" ? "© 2026 CryptoLock. Windows & Security guides." : "© 2026 CryptoLock. Всі матеріали українською мовою."}
+              {locale === "en"
+                ? "© 2026 CryptoLock. Windows & Security guides."
+                : "© 2026 CryptoLock. Всі матеріали українською мовою."}
             </p>
           </div>
         </div>
       </footer>
 
-      <button id="back-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Прокрутити нагору">↑</button>
+      <button id="back-to-top"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Прокрутити нагору">↑</button>
     </>
   )
 }
@@ -372,22 +376,12 @@ const s = {
   logoAccent: { color: 'var(--accent,#2563eb)' },
   rightSide: { display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1, justifyContent: 'flex-end' },
   navLink: { fontSize: '14px', fontWeight: 500, color: 'var(--text,#0f172a)', padding: '6px 10px', borderRadius: '8px', transition: 'color .15s, background .15s', whiteSpace: 'nowrap' },
-  searchBtn: {
-    display: 'flex', alignItems: 'center', gap: '6px',
-    padding: '5px 10px', borderRadius: '8px',
-    color: '#64748b', border: '1px solid #e2e8f0',
-    background: '#f8fafc', cursor: 'pointer',
-    fontSize: '12px', fontFamily: 'var(--font-mono)',
-    transition: 'color .15s, border-color .15s',
-    textDecoration: 'none', flexShrink: 0,
-  },
   socialBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', borderRadius: '8px', color: '#64748b', border: '1px solid #e2e8f0', background: '#f8fafc', transition: 'color .15s, border-color .15s, background .15s', flexShrink: 0, cursor: 'pointer' },
   bl: { display: 'block', width: '20px', height: '2px', background: '#334155', borderRadius: '2px', transition: 'transform .2s, opacity .2s' },
   bl1o: { transform: 'rotate(45deg) translate(5px,5px)' },
   bl2o: { opacity: 0 },
   bl3o: { transform: 'rotate(-45deg) translate(5px,-5px)' },
   mobileMenu: { borderTop: '1px solid var(--border,#e2e8f0)', background: 'var(--bg-card,#fff)', padding: '4px 0 8px' },
-  mobileSearchLink: { display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#2563eb', borderBottom: '1px solid #f1f5f9' },
   mobileLink: { display: 'block', padding: '11px 20px', fontSize: '15px', fontWeight: 500, color: '#0f172a', borderBottom: '1px solid #f1f5f9' },
   mobileSocial: { display: 'flex', gap: '8px', padding: '12px 20px 4px', flexWrap: 'wrap' },
   mobileSocialBtn: { display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 500, color: '#475569', padding: '7px 14px', border: '1px solid #e2e8f0', borderRadius: '20px', background: '#f8fafc' },

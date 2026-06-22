@@ -1,12 +1,13 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
+// Theme script — запускається ДО рендеру, усуває flash
 const themeScript = '(function(){try{var s=localStorage.getItem("theme");var d=window.matchMedia("(prefers-color-scheme:dark)").matches;document.documentElement.setAttribute("data-theme",s||(d?"dark":"light"));}catch(e){}})()'
 
 export default function Document() {
   return (
     <Html lang="uk" suppressHydrationWarning>
       <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/* Fonts — тільки тут, НЕ в Layout.js */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
