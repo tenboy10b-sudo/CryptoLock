@@ -31,8 +31,14 @@ const CATEGORIES_EN = [
 
 export default function Home({ posts, tags }) {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
+
+  // Після mount визначаємо locale — до mount завжди 'uk' щоб SSR і клієнт збігались
+  const isEn = mounted ? locale === 'en' : false
   const CATEGORIES = isEn ? CATEGORIES_EN : CATEGORIES_UK
+
   const [openCats, setOpenCats] = useState({})
   const [visibleCount, setVisibleCount] = useState(12)
   const loadMoreRef = useRef(null)
@@ -45,24 +51,20 @@ export default function Home({ posts, tags }) {
     obs.observe(loadMoreRef.current)
     return () => obs.disconnect()
   }, [])
+
   const tagMap = Object.fromEntries(tags.map(t => [t.tag, t.count]))
-
   const toggle = (id) => setOpenCats(prev => ({ ...prev, [id]: !prev[id] }))
-
   const featured = posts[0]
   const rest = posts.slice(1)
 
-  // WebSite + WebPage schema з SearchAction
   const webSiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': `${SITE}/#website`,
     url: SITE,
     name: siteConfig.name,
-    description: isEn
-      ? 'Step-by-step Windows guides, security tools and PC administration in Ukrainian.'
-      : 'Покрокові гайди з налаштування Windows, безпеки та адміністрування ПК українською мовою.',
-    inLanguage: locale || 'uk',
+    description: 'Покрокові гайди з налаштування Windows, безпеки та адміністрування ПК українською мовою.',
+    inLanguage: 'uk',
     potentialAction: {
       '@type': 'SearchAction',
       target: { '@type': 'EntryPoint', urlTemplate: `${SITE}/search?q={search_term_string}` },
@@ -75,13 +77,9 @@ export default function Home({ posts, tags }) {
     '@type': 'WebPage',
     '@id': `${SITE}/#webpage`,
     url: SITE,
-    name: isEn
-      ? `${siteConfig.name} — Windows guides and security tools`
-      : `${siteConfig.name} — налаштування Windows та захист ПК українською`,
-    description: isEn
-      ? 'Step-by-step Windows 10 and 11 guides, security audit tools, PowerShell commands and more.'
-      : 'Покрокові гайди з налаштування Windows 10 і 11, безпеки, PowerShell та адміністрування ПК.',
-    inLanguage: locale || 'uk',
+    name: `${siteConfig.name} — налаштування Windows та захист ПК українською`,
+    description: 'Покрокові гайди з налаштування Windows 10 і 11, безпеки, PowerShell та адміністрування ПК.',
+    inLanguage: 'uk',
     isPartOf: { '@id': `${SITE}/#website` },
   }
 
@@ -105,17 +103,22 @@ export default function Home({ posts, tags }) {
             <div style={s.heroText}>
               <div style={s.heroBadge} aria-hidden="true">
                 <span style={s.heroBadgeDot} />
-                {isEn ? `English guides · ${posts.length} articles` : `Гайди українською · ${posts.length} статей`}
+                {/* suppressHydrationWarning — текст різний до/після mount */}
+                <span suppressHydrationWarning>
+                  {isEn ? `English guides · ${posts.length} articles` : `Гайди українською · ${posts.length} статей`}
+                </span>
               </div>
               <h1 style={s.heroTitle}>
-                {isEn ? <>Security &amp;<br /><span style={s.heroAccent}>Windows Tips</span></> : <>Безпека та<br /><span style={s.heroAccent}>налаштування ПК</span></>}
+                {isEn
+                  ? <><>Security &amp;<br /></><span style={s.heroAccent}>Windows Tips</span></>
+                  : <>Безпека та<br /><span style={s.heroAccent}>налаштування ПК</span></>}
               </h1>
-              <p style={s.heroSub}>
+              <p style={s.heroSub} suppressHydrationWarning>
                 {isEn
                   ? 'Step-by-step guides on Windows settings, security, group policies and system administration.'
                   : 'Покрокові інструкції з Windows, захисту даних, групових політик і системного адміністрування.'}
               </p>
-              <nav style={s.heroActions} aria-label={isEn ? 'Popular topics' : 'Популярні теми'}>
+              <nav style={s.heroActions} aria-label={isEn ? 'Popular topics' : 'Популярні теми'} suppressHydrationWarning>
                 {isEn ? (
                   <>
                     <Link href="/tags/windows" style={s.heroBtnPrimary}>Windows</Link>
@@ -151,7 +154,7 @@ export default function Home({ posts, tags }) {
       <section style={s.catsSection} aria-label="Теми статей">
         <div className="container">
           <div style={s.catsSectionHead}>
-            <h2 style={s.catsSectionTitle}>{isEn ? "Topics" : "Теми"}</h2>
+            <h2 style={s.catsSectionTitle} suppressHydrationWarning>{isEn ? "Topics" : "Теми"}</h2>
             <button
               style={s.expandAllBtn}
               onClick={() => {
@@ -160,7 +163,7 @@ export default function Home({ posts, tags }) {
                 CATEGORIES.forEach(c => { next[c.id] = !allOpen })
                 setOpenCats(next)
               }}
-              aria-label={CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі категорії' : 'Розгорнути всі категорії'}
+              suppressHydrationWarning
             >
               {isEn ? (CATEGORIES.every(c => openCats[c.id]) ? 'Collapse all ↑' : 'Expand all ↓') : (CATEGORIES.every(c => openCats[c.id]) ? 'Згорнути всі ↑' : 'Розгорнути всі ↓')}
             </button>
@@ -183,7 +186,7 @@ export default function Home({ posts, tags }) {
                     <div style={s.catLeft}>
                       <span style={s.catIcon} aria-hidden="true">{cat.icon}</span>
                       <span style={s.catLabel}>{cat.label}</span>
-                      <span style={s.catTotal} aria-label={`${totalCount} статей`}>{totalCount}</span>
+                      <span style={s.catTotal}>{totalCount}</span>
                     </div>
                     <span style={{ ...s.catArrow, transform: isOpen ? 'rotate(180deg)' : 'none' }} aria-hidden="true">▾</span>
                   </button>
@@ -209,11 +212,11 @@ export default function Home({ posts, tags }) {
         <div className="container">
           {featured && (
             <div style={s.featuredWrap}>
-              <p style={s.sectionLabel} aria-hidden="true">{isEn ? "Latest article" : "Остання стаття"}</p>
+              <p style={s.sectionLabel} suppressHydrationWarning>{isEn ? "Latest article" : "Остання стаття"}</p>
               <PostCard post={featured} featured />
             </div>
           )}
-          <p style={s.sectionLabel} aria-hidden="true">{isEn ? "All articles" : "Всі статті"}</p>
+          <p style={s.sectionLabel} suppressHydrationWarning>{isEn ? "All articles" : "Всі статті"}</p>
           <div style={s.grid} role="list" aria-label="Список статей">
             {rest.slice(0, visibleCount).map(post => (
               <div key={post.slug} role="listitem">
@@ -249,25 +252,9 @@ const s = {
   heroBtnPrimary: { padding: '8px 18px', background: '#2563eb', color: '#fff', borderRadius: '20px', fontSize: '13px', fontWeight: 600 },
   heroBtnSecondary: { padding: '8px 18px', background: 'rgba(255,255,255,0.07)', color: '#cbd5e1', borderRadius: '20px', fontSize: '13px', fontWeight: 500, border: '1px solid rgba(255,255,255,0.1)' },
   heroLogoWrap: { flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' },
-  heroLogoBlock: {
-    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px',
-    background: 'rgba(37,99,235,0.18)',
-    border: '1px solid rgba(96,165,250,0.35)',
-    borderRadius: '24px',
-    padding: '32px 36px',
-  },
-  heroLogoImg: {
-    objectFit: 'contain',
-    filter: 'drop-shadow(0 4px 16px rgba(59,130,246,0.3))',
-  },
-  heroLogoCaption: {
-    fontFamily: "'Unbounded',sans-serif",
-    fontSize: '1rem',
-    fontWeight: 700,
-    letterSpacing: '-0.3px',
-    color: '#ffffff',
-  },
-
+  heroLogoBlock: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', background: 'rgba(37,99,235,0.18)', border: '1px solid rgba(96,165,250,0.35)', borderRadius: '24px', padding: '32px 36px' },
+  heroLogoImg: { objectFit: 'contain', filter: 'drop-shadow(0 4px 16px rgba(59,130,246,0.3))' },
+  heroLogoCaption: { fontFamily: "'Unbounded',sans-serif", fontSize: '1rem', fontWeight: 700, letterSpacing: '-0.3px', color: '#ffffff' },
   catsSection: { padding: '2rem 0', background: 'var(--bg,#f8fafc)', borderBottom: '1px solid var(--border,#e2e8f0)' },
   catsSectionHead: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' },
   catsSectionTitle: { fontFamily: "'Unbounded',sans-serif", fontSize: '1rem', fontWeight: 700, color: '#0f172a' },
@@ -284,7 +271,6 @@ const s = {
   catTagItem: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '6px 8px', borderRadius: '7px', background: '#fff', border: '1px solid #e2e8f0', transition: 'border-color .15s,background .15s' },
   catTagName: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text,#334155)', fontWeight: 500 },
   catTagCount: { fontFamily: 'var(--font-mono)', fontSize: '10px', color: '#64748b' },
-
   postsSection: { padding: '2rem 0 3rem' },
   featuredWrap: { marginBottom: '2rem' },
   sectionLabel: { fontFamily: 'var(--font-mono)', fontSize: '11px', fontWeight: 600, color: '#64748b', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' },
