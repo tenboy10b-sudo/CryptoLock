@@ -1,9 +1,19 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 export default function PostCard({ post, featured }) {
   const { locale } = useRouter()
   const isEn = locale === 'en'
+  const [formattedDate, setFormattedDate] = useState('')
+
+  // Форматуємо дату тільки на клієнті — уникаємо hydration mismatch
+  useEffect(() => {
+    if (post.date) {
+      setFormattedDate(fmt(post.date, isEn))
+    }
+  }, [post.date, isEn])
+
   return (
     <article
       className="post-card"
@@ -28,7 +38,9 @@ export default function PostCard({ post, featured }) {
         <div style={s.footer}>
           <div style={s.meta}>
             {post.date && (
-              <time dateTime={post.date} style={s.metaItem}>{fmt(post.date, isEn)}</time>
+              <time dateTime={post.date} style={s.metaItem} suppressHydrationWarning>
+                {formattedDate}
+              </time>
             )}
             {post.readTime && (
               <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min' : 'хв'}</span></>
