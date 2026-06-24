@@ -7,7 +7,7 @@ const siteConfig = {
   description: 'Покрокові гайди з Windows 10 і 11, безпеки, адміністрування ПК та інструментів розробника. PowerShell, GPO, BitLocker, Git, VirtualBox — українською.',
   language: 'uk',
   adsenseId: '',
-  gaId: 'G-FQJ7326JW0',
+  gaId: '',
   googleVerification: '',
   postsPerPage: 10,
   social: {
