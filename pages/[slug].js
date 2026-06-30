@@ -298,9 +298,9 @@ export default function Post({ post, related, locale }) {
               )}
               <h1 style={s.title}>{post.title}</h1>
               <div style={s.meta}>
-                {post.date && <time dateTime={post.date} style={s.metaItem}>{fmt(post.date, locale)}</time>}
+                {post.date && <span style={s.metaItem}><PublishDate date={post.date} locale={locale} /></span>}
                 {post.readTime && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{post.readTime} {isEn ? 'min read' : 'хв читання'}</span></>}
-                {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <time dateTime={post.updated}>{fmt(post.updated, locale)}</time></span></>}
+                {post.updated && <><span style={s.dot} aria-hidden="true"/><span style={s.metaItem}>{isEn ? 'Updated' : 'Оновлено'} <PublishDate date={post.updated} locale={locale} /></span></>}
               </div>
               {post.description && <p style={s.lead}>{post.description}</p>}
               <div style={{ display:'flex', alignItems:'center', gap:'8px', marginTop:'1rem', flexWrap:'wrap' }}>
@@ -356,6 +356,13 @@ export default function Post({ post, related, locale }) {
 function fmt(d, locale = 'uk') {
   if (!d) return ''
   return new Date(d).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })
+}
+
+// ── Безпечний рендер дати — форматування тільки на клієнті ────────
+function PublishDate({ date, locale }) {
+  const [text, setText] = useState('')
+  useEffect(() => { setText(fmt(date, locale)) }, [date, locale])
+  return <time dateTime={date} suppressHydrationWarning>{text}</time>
 }
 
 export async function getStaticPaths() {
