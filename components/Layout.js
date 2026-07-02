@@ -131,8 +131,12 @@ export default function Layout({ children, title, description, canonical, isArti
   const pageUrl  = canonical || SITE
   const ogImg    = ogImage || `${SITE}/logo.png`
   const [menuOpen, setMenuOpen] = useState(false)
+  const [layoutMounted, setLayoutMounted] = useState(false)
   const router = useRouter()
   const { locale, asPath } = router
+  const effectiveLocale = layoutMounted ? locale : 'uk'
+
+  useEffect(() => { setLayoutMounted(true) }, [])
 
   useEffect(() => {
     const btn = document.getElementById('back-to-top')
@@ -218,8 +222,8 @@ export default function Layout({ children, title, description, canonical, isArti
         <meta property="og:image" content={ogImg} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:locale" content={locale === "en" ? "en_US" : "uk_UA"} />
-        <meta property="og:locale:alternate" content={locale === "en" ? "uk_UA" : "en_US"} />
+        <meta property="og:locale" content={effectiveLocale === "en" ? "en_US" : "uk_UA"} suppressHydrationWarning />
+        <meta property="og:locale:alternate" content={effectiveLocale === "en" ? "uk_UA" : "en_US"} suppressHydrationWarning />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDesc} />
@@ -234,7 +238,14 @@ export default function Layout({ children, title, description, canonical, isArti
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseId}`}
             crossOrigin="anonymous" />
         )}
-        {/* GA4 перенесено в _document.js */}
+        {siteConfig.gaId && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`} />
+            <script dangerouslySetInnerHTML={{ __html:
+              `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${siteConfig.gaId}');`
+            }} />
+          </>
+        )}
       </Head>
 
       {isArticle && <div id="read-progress" role="progressbar" aria-hidden="true" />}
@@ -248,7 +259,7 @@ export default function Layout({ children, title, description, canonical, isArti
 
           <div style={s.rightSide}>
             <nav className="nav-desktop" aria-label="Головна навігація">
-              {(locale === 'en'
+              {(effectiveLocale === 'en'
                 ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
                 : siteConfig.nav
               ).map(item => (
@@ -268,12 +279,12 @@ export default function Layout({ children, title, description, canonical, isArti
               <div style={s.langSwitch} aria-label="Вибір мови">
                 {translatesUk && (
                   <Link href={`/${translatesUk}`} locale="uk"
-                    style={{ ...s.langBtn, ...(locale === 'uk' ? s.langBtnActive : {}) }}
+                    style={{ ...s.langBtn, ...(effectiveLocale === 'uk' ? s.langBtnActive : {}) }} suppressHydrationWarning
                     aria-label="Українська" title="Українська">UA</Link>
                 )}
                 {translatesEn && (
                   <Link href={`/${translatesEn}`} locale="en"
-                    style={{ ...s.langBtn, ...(locale === 'en' ? s.langBtnActive : {}) }}
+                    style={{ ...s.langBtn, ...(effectiveLocale === 'en' ? s.langBtnActive : {}) }} suppressHydrationWarning
                     aria-label="English" title="English">EN</Link>
                 )}
               </div>
@@ -300,11 +311,11 @@ export default function Layout({ children, title, description, canonical, isArti
 
         {menuOpen && (
           <div id="mobile-menu" style={s.mobileMenu} role="navigation" aria-label="Мобільна навігація">
-            {(locale === 'en'
+            {(effectiveLocale === 'en'
               ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
               : siteConfig.nav
             ).map(item => (
-              <Link key={item.href} href={item.href} style={s.mobileLink} onClick={() => setMenuOpen(false)}>
+              <Link key={item.href} href={item.href} style={s.mobileLink} onClick={() => setMenuOpen(false)} suppressHydrationWarning>
                 {item.label}
               </Link>
             ))}
@@ -330,9 +341,9 @@ export default function Layout({ children, title, description, canonical, isArti
             <span style={s.footerName}>CryptoLock</span>
           </div>
           <nav style={s.footerLinks} aria-label="Навігація в підвалі">
-            <Link href="/about" style={s.footerLink}>{locale === "en" ? "About" : "Про нас"}</Link>
-            <Link href="/tags" style={s.footerLink}>{locale === "en" ? "Tags" : "Теги"}</Link>
-            <Link href="/privacy" style={s.footerLink}>{locale === "en" ? "Privacy" : "Конфіденційність"}</Link>
+            <Link href="/about" style={s.footerLink} suppressHydrationWarning>{effectiveLocale === "en" ? "About" : "Про нас"}</Link>
+            <Link href="/tags" style={s.footerLink} suppressHydrationWarning>{effectiveLocale === "en" ? "Tags" : "Теги"}</Link>
+            <Link href="/privacy" style={s.footerLink} suppressHydrationWarning>{effectiveLocale === "en" ? "Privacy" : "Конфіденційність"}</Link>
           </nav>
           <div style={s.footerSocial}>
             {socialLinks.map(({ key, icon, label }) => (
@@ -346,9 +357,9 @@ export default function Layout({ children, title, description, canonical, isArti
         <div style={s.footerCopy}>
           <div className="container">
             <p style={s.footerCopyText}>
-              {locale === "en"
+              <span suppressHydrationWarning>{effectiveLocale === "en"
                 ? "© 2026 CryptoLock. Windows & Security guides."
-                : "© 2026 CryptoLock. Всі матеріали українською мовою."}
+                : "© 2026 CryptoLock. Всі матеріали українською мовою."}</span>
             </p>
           </div>
         </div>
