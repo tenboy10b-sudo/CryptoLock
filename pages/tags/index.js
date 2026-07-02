@@ -1,6 +1,7 @@
 import Layout from '../../components/Layout'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import { getAllTags } from '../../lib/posts'
 import siteConfig from '../../site.config'
 
@@ -8,7 +9,9 @@ const SITE = siteConfig.url
 
 export default function TagsPage({ tags }) {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
   const title = isEn ? `All Tags — ${siteConfig.name}` : `Всі теги — ${siteConfig.name}`
   const desc = `Повний список тем та тегів на ${siteConfig.name}: Windows, безпека, GPO, CMD, PowerShell та інше.`
 
