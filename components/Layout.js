@@ -93,11 +93,11 @@ function BookmarksNavLink() {
     }
   }, [])
 
-  const href = isEn ? '/en/bookmarks' : '/bookmarks'
+  const href = mounted ? (isEn ? '/en/bookmarks' : '/bookmarks') : '/bookmarks'
 
   return (
     <Link href={href}
-      title={isEn ? 'Bookmarks' : 'Закладки'}
+      title={mounted ? (isEn ? 'Bookmarks' : 'Закладки') : 'Закладки'}
       suppressHydrationWarning
       style={{ display:'inline-flex', alignItems:'center', gap:'4px',
         padding:'5px 10px', borderRadius:'8px',
@@ -259,7 +259,7 @@ export default function Layout({ children, title, description, canonical, isArti
                 ? [{ label: 'Articles', href: '/' }, { label: 'Tools', href: '/tools' }, { label: 'Tags', href: '/tags' }, { label: 'About', href: '/about' }]
                 : siteConfig.nav
               ).map(item => (
-                <Link key={item.href} href={item.href} style={s.navLink} className="nav-link">
+                <Link key={item.href} href={item.href} style={s.navLink} className="nav-link" suppressHydrationWarning>
                   {item.label}
                 </Link>
               ))}
