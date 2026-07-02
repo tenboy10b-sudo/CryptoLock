@@ -960,3 +960,99 @@ GSC → Налаштування → Статистика сканування �
 - [ ] Відновити доступ до акаунту Namecheap (загублено доступ, в процесі відновлення)
 - [ ] Розглянути стратегію зовнішніх посилань
 
+
+---
+
+### Сесія 3 (продовження 3) — Фінальний фікс: style тег + BookmarkButton
+
+#### Знайдено через dev режим (npm run dev)
+
+Попередні методи діагностики (PageSpeed, інкогніто браузер) показували мінімізований стек трейс без назв компонентів. Запуск `npm run dev` локально дав точну відповідь — Next.js в dev режимі показує повний unminifield стек з точним описом проблеми.
+
+#### Помилка 1: BookmarkButton в [slug].js — mounted guard
+
+`BookmarkButton` в `[slug].js` рендерив `fill={saved?'currentColor':'none'}` і стилі залежні від `saved` прямо в JSX. `saved` стартує з `false` на сервері, але якщо стаття вже збережена в `localStorage` — клієнт бачить `true`. React бачив розбіжність → #418.
+
+**Виправлено:** додано `mounted` патерн — до mount рендерить нейтральну кнопку без залежності від localStorage. Архів: `slug-hydration-fix-v2.zip`.
+
+#### Помилка 2: BookmarksNavLink в Layout.js — locale href без mounted
+
+`BookmarksNavLink` рендерив `href = isEn ? '/en/bookmarks' : '/bookmarks'` і `title` без mounted guard. На сервері locale може відрізнятись від клієнтського → розбіжність → #418.
+
+**Виправлено:** `href` і `title` тепер залежать від `mounted` — до mount завжди `/bookmarks` і `Закладки`. Архів: `layout-bookmarks-fix.zip`.
+
+#### Помилка 3 (КОРІННА): style тег з лапками в grid-template-areas
+
+Dev режим показав точну причину:
+
+```
+Server: grid-template-areas: &quot;article sidebar&quot;
+Client: grid-template-areas: "article sidebar"
+```
+
+В `[slug].js` був вбудований CSS через `<style>{`...`}</style>`. React/Next.js ескейпує HTML-символи всередині `<style>` на сервері (`"` → `&quot;`), але браузер при рендері читає реальні лапки. Різниця між `&quot;article sidebar&quot;` (сервер) і `"article sidebar"` (клієнт) спричиняла hydration mismatch на КОЖНІЙ сторінці статті.
+
+**Виправлено:** `<style>{`...`}</style>` → `<style dangerouslySetInnerHTML={{ __html: `...` }} />`. З `dangerouslySetInnerHTML` React не ескейпує вміст і сервер/клієнт рендерять ідентичний CSS.
+
+Архів: `slug-fix-v3.zip`.
+
+**Перевірено інші файли на ту ж проблему:**
+- `tools/port-checker.js` — `<style>{`...`}</style>` є, але CSS без лапок (тільки `from/to`) → безпечно
+- `links.js` — `<style>{`...`}</style>` є, але CSS з одинарними лапками в `@import url('...')` → безпечно
+- Тільки `[slug].js` мав проблему з подвійними лапками в `grid-template-areas`
+
+#### Фінальне підтвердження — PageSpeed на сторінці статті
+
+Після деплою `slug-fix-v3.zip` перевірено PageSpeed на:
+`https://cryptolockua.com/yak-nalashtuvanty-spilnyy-dostup-do-papky`
+
+**Результат: Оптимальні методи — 100%** ✅
+
+Консоль браузера (інкогніто) — чиста, жодних помилок #418/#423/#425.
+
+#### Повний список виправлених hydration-помилок (хронологія сесії 3)
+
+| # | Файл | Проблема | Архів |
+|---|------|----------|-------|
+| 1 | Layout.js | ThemeToggle без mounted guard | hydration-fix-v2.zip |
+| 2 | SearchBar.js | locale рендер + getBoundingClientRect без mounted | hydration-fix-v2.zip |
+| 3 | PostCard.js | toLocaleDateString() в JSX | hydration-fix-v3.zip |
+| 4 | index.js | locale-залежний контент без mounted | hydration-fix-v4.zip |
+| 5 | [slug].js | toLocaleDateString() в JSX (дата статті) | slug-hydration-fix.zip |
+| 6 | [slug].js | BookmarkButton saved-стан без mounted | slug-hydration-fix-v2.zip |
+| 7 | Layout.js | BookmarksNavLink href/title locale без mounted | layout-bookmarks-fix.zip |
+| 8 | [slug].js | style тег з &quot; vs " | slug-fix-v3.zip |
+
+#### На скільки % ця помилка (style тег) вплинула на падіння показів
+
+Чесна відповідь: неможливо виміряти точний відсоток. Але можна оцінити відносний вплив порівняно з іншими:
+
+**Чому style тег, ймовірно, був найвпливовішою помилкою:**
+
+1. **Масштаб** — зачіпала кожну з 600+ сторінок статей (на відміну від помилок в Layout/SearchBar що зачіпали навігацію навколо контенту)
+
+2. **Критичність** — ця помилка (#418 через style) викидала React в режим "повного перерендеру клієнтом" (`the entire root will switch to client rendering`) — тобто вся сторінка перемальовувалась наново в браузері замість hydration. Для Googlebot це означає що він бачив сторінку в нестабільному стані.
+
+3. **Діагноз** — помилка існувала з моменту додавання двоколонкового layout (серія "Fix dark mode" 8 червня) і залишалась **невиявленою** протягом усіх попередніх раундів фіксів (20-24 червня, 30 червня) бо тестували тільки PageSpeed на головній, а не на сторінках статей.
+
+**Орієнтовна оцінка розподілу відповідальності за падіння:**
+
+- Validate Fix (масовий запуск 13 червня) — ~30% впливу (crawl budget)
+- Серія hydration-помилок разом (5-8 червня до сьогодні) — ~70% впливу
+  - З них style тег (`&quot;`) — ймовірно ~40-50% від усієї серії, бо зачіпав основний контент
+  - Решта помилок (Layout/SearchBar/PostCard/index/BookmarkButton) — ~20-30% разом
+
+Але це оцінки, не точні цифри — Google не розкриває як саме hydration помилки впливають на ранжування. Впевнено можна сказати одне: **сьогодні, 1 липня 2026, вперше з 5 червня сайт технічно повністю чистий** — і це перша реальна можливість для Google побачити сайт таким яким він мав бути.
+
+#### Оновлений TODO
+
+- [x] ~~Виправити всі hydration-помилки~~ — ВИКОНАНО (8 джерел закрито)
+- [x] ~~Перевірити PageSpeed на сторінці статті~~ — 100% Оптимальні методи
+- [ ] Контрольна точка по GSC — 7-8 липня
+- [ ] Перевірити чи GitHub Support відповів (#4498412)
+- [ ] Відновити доступ до Namecheap і додати CNAME для www
+- [ ] Видалити стару GA4 property G-FQJ7326JW0
+- [ ] Виправити зламаний URL (dvokrokov...) в posts/
+- [ ] Прибрати дублікати з sitemap
+- [ ] Перегенерувати GSC OAuth токен
+
