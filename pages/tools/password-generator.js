@@ -68,7 +68,9 @@ function crackTime(bits, isEn) {
 
 export default function PasswordGenerator() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
 
   const [length, setLength]       = useState(16)
   const [opts, setOpts]           = useState({ upper: true, lower: true, digits: true, symbols: true, noSimilar: false })
