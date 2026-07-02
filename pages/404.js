@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import Link from 'next/link'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 const SITE = siteConfig.url
 
@@ -17,7 +18,9 @@ const POPULAR = [
 
 export default function NotFound() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
 
   return (
     <Layout
