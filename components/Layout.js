@@ -234,14 +234,7 @@ export default function Layout({ children, title, description, canonical, isArti
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseId}`}
             crossOrigin="anonymous" />
         )}
-        {siteConfig.gaId && (
-          <>
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`} />
-            <script dangerouslySetInnerHTML={{ __html:
-              `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${siteConfig.gaId}');`
-            }} />
-          </>
-        )}
+        {/* GA4 перенесено в _document.js */}
       </Head>
 
       {isArticle && <div id="read-progress" role="progressbar" aria-hidden="true" />}
