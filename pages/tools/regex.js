@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
@@ -36,7 +36,9 @@ const PRESETS = {
 
 export default function RegexTester() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
   const t = (uk, en) => isEn ? en : uk
 
   const [pattern, setPattern] = useState('')
