@@ -270,7 +270,7 @@ export default function Post({ post, related, locale }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       )}
 
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (min-width: 1200px) {
           .article-two-col {
             display: grid !important;
@@ -285,7 +285,7 @@ export default function Post({ post, related, locale }) {
           }
           .toc-inline { display: none !important; }
         }
-      `}</style>
+      ` }} />
       <div style={s.wrap}>
         <div className="container">
 
