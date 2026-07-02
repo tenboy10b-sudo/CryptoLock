@@ -1,12 +1,15 @@
 import Layout from '../components/Layout'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 const SITE = siteConfig.url
 
 export default function About() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
 
   const schema = {
     '@context': 'https://schema.org',
