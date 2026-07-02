@@ -109,7 +109,9 @@ function ShareButtons({ title, url, isEn }) {
 // ── Bookmark Button ──────────────────────────────────────────────
 function BookmarkButton({ slug, title, tag, isEn }) {
   const [saved, setSaved] = useState(false)
+  const [mounted, setMounted] = useState(false)
   useEffect(() => {
+    setMounted(true)
     try { setSaved(JSON.parse(localStorage.getItem('cl-bookmarks')||'[]').some(x=>x.slug===slug)) } catch {}
   }, [slug])
   const toggle = () => {
@@ -119,6 +121,18 @@ function BookmarkButton({ slug, title, tag, isEn }) {
       else { localStorage.setItem('cl-bookmarks', JSON.stringify([...b,{slug,title,tag,locale:isEn?'en':'uk',savedAt:Date.now()}])); setSaved(true) }
     } catch {}
   }
+  // SSR: нейтральна кнопка без залежності від localStorage
+  if (!mounted) return (
+    <button suppressHydrationWarning style={{ display:'inline-flex', alignItems:'center', gap:'5px',
+      padding:'6px 12px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer',
+      border:'1.5px solid var(--border,#e2e8f0)', background:'var(--bg-card,#fff)',
+      color:'var(--muted,#64748b)' }}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+      {isEn?'Save':'Зберегти'}
+    </button>
+  )
   return (
     <button onClick={toggle} style={{ display:'inline-flex', alignItems:'center', gap:'5px',
       padding:'6px 12px', borderRadius:'8px', fontSize:'13px', fontWeight:600, cursor:'pointer',
