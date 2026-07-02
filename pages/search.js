@@ -8,7 +8,9 @@ import siteConfig from '../site.config'
 export default function SearchPage({ posts, enPosts }) {
   const router = useRouter()
   const locale = router.locale || 'uk'
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
   const allPosts = isEn ? enPosts : posts
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
