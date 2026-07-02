@@ -1056,3 +1056,187 @@ Client: grid-template-areas: "article sidebar"
 - [ ] Прибрати дублікати з sitemap
 - [ ] Перегенерувати GSC OAuth токен
 
+
+---
+
+### Сесія 4 (1-2 липня 2026) — Повний аудит всіх файлів на hydration помилки
+
+#### Метод роботи
+Файли перевірялись по одному через копіювання коду з GitHub. Перевірялись на: `localStorage`, `toLocaleDateString()`, `getBoundingClientRect()`, `locale === 'en'` без mounted guard, `<style>` теги з лапками.
+
+#### Результати перевірки по файлах
+
+| Файл | Статус | Проблема | Виправлено |
+|------|--------|----------|-----------|
+| `pages/_app.js` | ✅ Чистий | — | — |
+| `pages/_document.js` | ✅ Чистий | — | — |
+| `pages/index.js` | ✅ Чистий | mounted патерн вже є | — |
+| `components/PostCard.js` | ✅ Чистий | date у useEffect вже є | — |
+| `components/SearchBar.js` | ✅ Чистий | mounted патерн вже є | — |
+| `components/TableOfContents.js` | ✅ Чистий | — | — |
+| `components/Layout.js` | ✅ Виправлено | locale в footer/nav/langSwitch без mounted; GA4 дублікат | layout-locale-fix.zip + layout-ga4-removed.zip |
+| `pages/[slug].js` | ✅ Виправлено | style тег з лапками (КОРІННА), BookmarkButton без mounted, date у JSX | slug-fix-v3.zip |
+| `pages/bookmarks.js` | ✅ Виправлено | locale без mounted в canonical/title | bookmarks-fix.zip |
+| `pages/search.js` | ✅ Виправлено | locale без mounted | search-fix.zip |
+| `pages/tags/[tag].js` | ✅ Чистий | getStaticPaths з locale — стабільний | — |
+| `pages/tags/index.js` | ✅ Виправлено | locale без mounted | tags-index-fix.zip |
+| `pages/about.js` | ✅ Виправлено | locale без mounted | about-fix.zip |
+| `pages/privacy.js` | ✅ Виправлено | locale без mounted | privacy-fix.zip |
+| `pages/404.js` | ✅ Виправлено | locale без mounted | 404-fix.zip |
+| `pages/links.js` | ✅ Чистий | Статичний компонент | — |
+| `pages/tools/index.js` | ⏳ НЕ ПЕРЕВІРЕНО | — | — |
+| `pages/tools/*.js` (інші) | ⏳ НЕ ПЕРЕВІРЕНО | — | — |
+
+#### Важливе відкриття — Vercel webhook
+
+Перевірено: Vercel webhook **досі не працює** (тест 2 липня 2026). При commit на GitHub — Vercel НЕ деплоїть автоматично. Потрібно вручну:
+```
+git pull  (якщо редагував на GitHub)
+git add .
+git commit -m "опис"
+git push
+vercel --prod
+```
+
+Щоб виправити webhook: Vercel → Settings → Git → відключити і підключити GitHub інтеграцію заново.
+
+#### GA4 + _document.js фікс (1 липня 2026)
+
+- GA4 перенесено з `Layout.js` в `_document.js` з атрибутом `defer` (замість `async`)
+- Google Fonts — додано `&display=swap` в URL (був відсутній — причина CLS)
+- Результат: CLS 0.534 → **0**, TBT → **0**, Ефективність → 65 (зріст з 53)
+- GA4 більше не дублюється
+
+#### Поточний стан після сесії 4 (2 липня 2026)
+
+**PageSpeed на сторінці статті:**
+- Ефективність: 65
+- Доступність: 100
+- Оптимальні методи: 100
+- SEO: 100
+- CLS: 0 ✅
+- TBT: 0 ✅
+- Консоль: чиста ✅
+
+**TODO на наступну сесію:**
+- [ ] Перевірити `pages/tools/index.js` і всі tools сторінки
+- [ ] Перевірити `pages/api/` файли
+- [ ] Перевірити Vercel webhook — відключити/підключити GitHub інтеграцію
+- [ ] Контрольна точка GSC — 7-8 липня (покази мають почати рости)
+- [ ] Перевірити чи GitHub Actions відновлено (тікет #4498412)
+- [ ] Відновити доступ до Namecheap і додати CNAME для www
+- [ ] Видалити стару GA4 property G-FQJ7326JW0
+- [ ] Виправити зламаний URL (dvokrokov...) в posts/
+- [ ] Прибрати дублікати з sitemap
+- [ ] Перегенерувати GSC OAuth токен
+
+#### Поточний робочий процес деплою
+
+```
+1. Отримати файл (з GitHub або від Claude)
+2. Замінити локально в C:\Users\rr\Desktop\pctips-template\
+3. git add .
+4. git commit -m "опис змін"
+5. git push
+6. vercel --prod
+```
+
+
+---
+
+### ЩО РОБИМО ПРЯМО ЗАРАЗ (для швидкого старту нового чату)
+
+**Контекст:** Проводимо повний аудит всіх React-файлів сайту на hydration помилки (#418/#423/#425). Перевіряємо файл за файлом — користувач копіює код з GitHub, Claude перевіряє і дає виправлений файл якщо є проблеми.
+
+**На чому зупинились:** Перевірили всі основні файли. Наступний на черзі — **`pages/tools/index.js`** (і після нього решта tools сторінок).
+
+**Список tools файлів для перевірки:**
+- `pages/tools/index.js` ← НАСТУПНИЙ
+- `pages/tools/auditshield.js`
+- `pages/tools/base64.js`
+- `pages/tools/hash.js`
+- `pages/tools/ip-info.js`
+- `pages/tools/password-generator.js`
+- `pages/tools/port-checker.js`
+- `pages/tools/powershell-commands.js`
+- `pages/tools/regex.js`
+- `pages/tools/subnet-calculator.js`
+- `pages/tools/windows-error-decoder.js`
+- `pages/tools/windows-event-id.js`
+
+**Що шукаємо в кожному файлі:**
+```js
+// НЕБЕЗПЕЧНО — без mounted guard:
+const { locale } = useRouter()
+const isEn = locale === 'en'  // ← якщо одразу після useRouter без mounted
+
+// БЕЗПЕЧНО — з mounted guard:
+const [mounted, setMounted] = useState(false)
+const isEn = mounted ? locale === 'en' : false
+useEffect(() => { setMounted(true) }, [])
+
+// НЕБЕЗПЕЧНО в JSX:
+{isEn ? 'English text' : 'Текст'}  // без suppressHydrationWarning
+
+// НЕБЕЗПЕЧНО:
+toLocaleDateString()  // в JSX без useEffect
+getBoundingClientRect()  // в JSX без useEffect
+localStorage  // поза useEffect
+<style>{`...`}</style>  // якщо є лапки " в CSS
+```
+
+**Стандартний фікс для кожного файлу з проблемою:**
+```js
+// 1. Додати імпорт якщо немає:
+import { useState, useEffect } from 'react'
+
+// 2. Додати на початку компонента:
+const [mounted, setMounted] = useState(false)
+const isEn = mounted ? locale === 'en' : false
+useEffect(() => { setMounted(true) }, [])
+
+// 3. Замінити старий рядок:
+// const isEn = locale === 'en'  ← видалити
+```
+
+---
+
+### КОД ДЛЯ ДЕПЛОЮ (копіювати кожного разу)
+
+**Стандартний деплой після заміни файлу:**
+```
+cd C:\Users\rr\Desktop\pctips-template
+git add .
+git commit -m "Fix: hydration in [назва файлу]"
+git push
+vercel --prod
+```
+
+**Якщо редагував на GitHub і потрібно синхронізувати локально:**
+```
+cd C:\Users\rr\Desktop\pctips-template
+git pull
+vercel --prod
+```
+
+**Якщо git push відхилено (rejected):**
+```
+git pull
+git push
+vercel --prod
+```
+
+**⚠️ Важливо:** Vercel webhook не працює — `vercel --prod` обов'язковий після кожного push!
+
+---
+
+### ШВИДКИЙ СТАРТ НОВОГО ЧАТУ
+
+Скажи: **"продовжуємо cryptolockua.com, перевіряємо tools файли"**
+
+Claude прочитає DOCUMENTATION.md і одразу знатиме:
+- Що вже перевірено (15 файлів)
+- Що наступне (tools/index.js)
+- Які фікси вже задеплоєні
+- Поточний стан сайту
+
