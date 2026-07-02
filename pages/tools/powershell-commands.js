@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
@@ -71,7 +71,9 @@ const SHELLS = [
 
 export default function PowershellCommands() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
 
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Всі')
