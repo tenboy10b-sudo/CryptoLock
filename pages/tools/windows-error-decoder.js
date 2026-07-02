@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
@@ -243,7 +243,9 @@ function normalizeCode(input) {
 
 export default function WindowsErrorDecoder() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
 
   const [query, setQuery]     = useState('')
   const [result, setResult]   = useState(null)
