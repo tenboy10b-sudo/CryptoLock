@@ -15,10 +15,12 @@ function fmt(ts, locale) {
 
 export default function BookmarksPage() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
   const [bookmarks, setBookmarks] = useState(null) // null = loading
   const [removing, setRemoving] = useState(null)
 
+  useEffect(() => { setMounted(true) }, [])
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem('cl-bookmarks') || '[]')
@@ -46,7 +48,7 @@ export default function BookmarksPage() {
     }
   }
 
-  const canonical = isEn ? `${SITE}/en/bookmarks` : `${SITE}/bookmarks`
+  const canonical = mounted ? (isEn ? `${SITE}/en/bookmarks` : `${SITE}/bookmarks`) : `${SITE}/bookmarks`
 
   return (
     <Layout
