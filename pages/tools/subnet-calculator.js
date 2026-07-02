@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
@@ -103,7 +103,9 @@ const COMMON_MASKS = [
 
 export default function SubnetCalculator() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
 
   const [input, setInput]     = useState('192.168.1.0/24')
   const [result, setResult]   = useState(null)
