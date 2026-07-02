@@ -1,12 +1,15 @@
 import Layout from '../components/Layout'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import siteConfig from '../site.config'
 
 const SITE = siteConfig.url
 
 export default function Privacy() {
   const { locale } = useRouter()
-  const isEn = locale === 'en'
+  const [mounted, setMounted] = useState(false)
+  const isEn = mounted ? locale === 'en' : false
+  useEffect(() => { setMounted(true) }, [])
 
   const effectiveDateUk = '1 квітня 2026 р.'
   const effectiveDateEn = 'April 1, 2026'
