@@ -1084,8 +1084,12 @@ Client: grid-template-areas: "article sidebar"
 | `pages/privacy.js` | ✅ Виправлено | locale без mounted | privacy-fix.zip |
 | `pages/404.js` | ✅ Виправлено | locale без mounted | 404-fix.zip |
 | `pages/links.js` | ✅ Чистий | Статичний компонент | — |
-| `pages/tools/index.js` | ⏳ НЕ ПЕРЕВІРЕНО | — | — |
-| `pages/tools/*.js` (інші) | ⏳ НЕ ПЕРЕВІРЕНО | — | — |
+| `pages/tools/index.js` | ✅ Виправлено (попередня сесія) | locale без mounted | коміт `d2bc10b` |
+| `pages/tools/auditshield.js` | ✅ Чистий | `useRouter`/`locale` не використовується — не залежить від locale | — |
+| `pages/tools/powershell-commands.js` | ✅ Виправлено (попередня сесія) | locale без mounted | коміт `e087044` |
+| `pages/tools/windows-error-decoder.js` | ✅ Виправлено (попередня сесія) | locale без mounted | коміт `d444a8b` |
+| `pages/tools/windows-event-id.js` | ✅ Виправлено (попередня сесія) | locale без mounted | коміт `86ea47d` |
+| `pages/tools/hash.js`, `base64.js`, `ip-info.js`, `port-checker.js` | ✅ Виправлено (сесія 5, 3 липня 2026) | locale без mounted | Claude Code, коміт `29e2d2e` |
 
 #### Важливе відкриття — Vercel webhook
 
@@ -1144,25 +1148,23 @@ vercel --prod
 
 ---
 
-### ЩО РОБИМО ПРЯМО ЗАРАЗ (для швидкого старту нового чату)
+### АУДИТ HYDRATION ПОМИЛОК — СТАТУС: ЗАВЕРШЕНО (3 липня 2026)
 
-**Контекст:** Проводимо повний аудит всіх React-файлів сайту на hydration помилки (#418/#423/#425). Перевіряємо файл за файлом — користувач копіює код з GitHub, Claude перевіряє і дає виправлений файл якщо є проблеми.
+**Контекст:** Проводили повний аудит всіх React-файлів сайту на hydration помилки (#418/#423/#425), включно з `pages/tools/*.js`. Усі файли проекту перевірені — далі описано фінальний стан.
 
-**На чому зупинились:** Перевірили всі основні файли. Наступний на черзі — **`pages/tools/index.js`** (і після нього решта tools сторінок).
-
-**Список tools файлів для перевірки:**
-- `pages/tools/index.js` ← НАСТУПНИЙ
-- `pages/tools/auditshield.js`
-- `pages/tools/base64.js`
-- `pages/tools/hash.js`
-- `pages/tools/ip-info.js`
-- `pages/tools/password-generator.js`
-- `pages/tools/port-checker.js`
-- `pages/tools/powershell-commands.js`
-- `pages/tools/regex.js`
-- `pages/tools/subnet-calculator.js`
-- `pages/tools/windows-error-decoder.js`
-- `pages/tools/windows-event-id.js`
+**Список tools файлів — всі перевірені:**
+- `pages/tools/index.js` — виправлено, коміт `d2bc10b`
+- `pages/tools/auditshield.js` — чистий (не залежить від locale)
+- `pages/tools/base64.js` — виправлено, коміт `29e2d2e`
+- `pages/tools/hash.js` — виправлено, коміт `29e2d2e`
+- `pages/tools/ip-info.js` — виправлено, коміт `29e2d2e`
+- `pages/tools/password-generator.js` — виправлено (попередня сесія)
+- `pages/tools/port-checker.js` — виправлено, коміт `29e2d2e`
+- `pages/tools/powershell-commands.js` — виправлено, коміт `e087044`
+- `pages/tools/regex.js` — виправлено (попередня сесія)
+- `pages/tools/subnet-calculator.js` — виправлено (попередня сесія)
+- `pages/tools/windows-error-decoder.js` — виправлено, коміт `d444a8b`
+- `pages/tools/windows-event-id.js` — виправлено, коміт `86ea47d`
 
 **Що шукаємо в кожному файлі:**
 ```js
@@ -1287,7 +1289,9 @@ useEffect(() => { setMounted(true) }, [])
 
 Задеплоєно: `git commit` → `git push` → `vercel --prod` → заалайожено на `https://cryptolockua.com`.
 
-**Аудит hydration-помилок #418/#423/#425 повністю завершено.**
+Решта 5 файлів зі старого списку "НЕ ПЕРЕВІРЕНО" (`tools/index.js`, `auditshield.js`, `powershell-commands.js`, `windows-error-decoder.js`, `windows-event-id.js`) перевірені — виявилось, що вони вже виправлені в попередніх сесіях (коміти `d2bc10b`, `e087044`, `d444a8b`, `86ea47d`) або взагалі не залежать від locale (`auditshield.js`). Список був застарілим, а не відображав реальний стан коду.
+
+**Аудит hydration-помилок #418/#423/#425 по всьому проекту (включно з усіма `pages/tools/*.js`) повністю завершено.**
 
 #### Робота через Claude Code
 
