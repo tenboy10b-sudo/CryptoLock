@@ -5,6 +5,7 @@ publishDate: "2026-05-19"
 description: "Create, configure and manage Windows network shares via PowerShell and GUI. Set permissions, manage access, configure SMB settings and audit share access."
 tags: ["windows", "network", "shares", "smb", "administration", "powershell"]
 readTime: 5
+translatesUk: "spilni-papky-merezha-windows"
 ---
 
 Network shares let you access folders from other PCs on the network. Here's how to manage them properly with PowerShell.

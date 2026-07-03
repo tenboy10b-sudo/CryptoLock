@@ -5,6 +5,7 @@ publishDate: "2026-06-12"
 description: "Set up Windows Server DHCP role to assign IP addresses automatically. Create scopes, reservations, configure options and manage leases via PowerShell."
 tags: ["windows", "dhcp", "network", "server", "administration", "powershell"]
 readTime: 6
+translatesUk: "nalashtuvannya-dhcp-servera-windows"
 ---
 
 Windows Server includes a full DHCP server role. Here's how to install it, create scopes and manage it entirely from PowerShell.

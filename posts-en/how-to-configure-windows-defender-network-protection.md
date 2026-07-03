@@ -5,6 +5,7 @@ publishDate: "2026-06-27"
 description: "Enable Windows Defender Network Protection to block connections to malicious IP addresses and domains. Configure via PowerShell, GPO and monitor blocked connections."
 tags: ["windows", "windows-defender", "network", "security", "powershell"]
 readTime: 4
+translatesUk: "windows-defender-network-protection"
 ---
 
 Network Protection extends SmartScreen to all apps — it blocks outbound connections to known malicious IP addresses and domains, not just in Edge.

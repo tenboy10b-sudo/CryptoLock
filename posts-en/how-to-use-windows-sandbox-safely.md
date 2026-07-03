@@ -5,6 +5,7 @@ publishDate: "2026-05-15"
 description: "Use Windows Sandbox to safely test suspicious installers, scripts and files. Configure .wsb files, share folders, disable networking and automate sandbox sessions."
 tags: ["windows", "sandbox", "security", "virtualization", "malware"]
 readTime: 5
+translatesUk: "windows-sandbox-bezpechne-testuvannya"
 ---
 
 Windows Sandbox gives you a disposable Windows environment. Every file you run inside it, every change it makes — gone the moment you close the window. Perfect for testing untrusted software.

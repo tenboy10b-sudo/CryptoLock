@@ -5,6 +5,7 @@ publishDate: "2027-02-02"
 description: "Fix internet connection lost after Windows 10 or 11 update. Reset TCP/IP stack, reinstall network adapter, restore driver, fix WINSOCK and DNS issues."
 tags: ["windows", "network", "windows-update", "troubleshooting", "errors"]
 readTime: 5
+translatesUk: "nemaye-internetu-pislya-onovlennya-windows"
 ---
 
 Windows updates occasionally break network connectivity. Here's how to restore it without reinstalling Windows.

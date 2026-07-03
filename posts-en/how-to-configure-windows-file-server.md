@@ -5,6 +5,7 @@ publishDate: "2026-06-20"
 description: "Set up a Windows file server with NTFS permissions, share access control, disk quotas, DFS namespaces and file screening via PowerShell and FSRM."
 tags: ["windows", "file-server", "ntfs", "shares", "administration", "powershell"]
 readTime: 6
+translatesUk: "nalashtuvannya-faylovoho-servera-windows"
 ---
 
 A properly configured file server controls who can access what, limits storage usage and audits file activity. Here's how to set it up.

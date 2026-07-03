@@ -5,6 +5,7 @@ publishDate: "2026-03-15"
 description: "Windows Clipboard History lets you access the last 25 items you copied. Enable it, use keyboard shortcuts, pin frequently used snippets, and sync across devices with Cloud Clipboard."
 tags: ["windows", "productivity", "tools", "settings"]
 readTime: 4
+translatesUk: "istoriya-buferu-obminu-windows"
 ---
 
 Copy something, then copy something else, and the first thing is gone forever — unless you enable Clipboard History. It keeps your last 25 copied items accessible instantly.

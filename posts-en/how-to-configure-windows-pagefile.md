@@ -5,6 +5,7 @@ publishDate: "2026-06-09"
 description: "Configure Windows page file size and location correctly. System-managed vs custom, move page file to another drive, disable safely and troubleshoot virtual memory errors."
 tags: ["windows", "pagefile", "performance", "memory", "optimization"]
 readTime: 5
+translatesUk: "nalashtuvannya-faylu-pidkachky-windows"
 ---
 
 The page file extends your RAM onto disk — when physical RAM fills up, Windows moves inactive pages there. Configured incorrectly, it degrades performance significantly.

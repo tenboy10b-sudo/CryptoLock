@@ -5,6 +5,7 @@ publishDate: "2026-05-14"
 description: "Windows 11 taking too long to boot? Fix slow startup with these 10 proven methods: disable startup programs, enable Fast Startup, update drivers, check disk health."
 tags: ["windows", "optimization", "performance", "boot"]
 readTime: 6
+translatesUk: "yak-pryskoryt-zavantazhennya-windows-11"
 ---
 
 A slow Windows 11 boot is usually caused by too many startup programs, a fragmented drive, or outdated drivers. Here are the most effective fixes in order of impact.

@@ -5,6 +5,7 @@ publishDate: "2026-06-23"
 description: "Manage BitLocker recovery keys — back up to Active Directory, Microsoft account or file. Recover encrypted drives, rotate keys and troubleshoot BitLocker issues."
 tags: ["windows", "bitlocker", "encryption", "security", "recovery", "powershell"]
 readTime: 5
+translatesUk: "bitlocker-klyuchi-vidnovlennya"
 ---
 
 BitLocker locks you out if it detects hardware changes or you forget your PIN. Here's how to manage recovery keys and unlock encrypted drives.

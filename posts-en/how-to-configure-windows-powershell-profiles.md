@@ -5,6 +5,7 @@ publishDate: "2026-06-22"
 description: "Create and configure PowerShell profiles to customize your environment. Add aliases, functions, variables and modules that load automatically on every session."
 tags: ["windows", "powershell", "scripting", "automation", "productivity"]
 readTime: 4
+translatesUk: "powershell-profil-nalashtuvannya"
 ---
 
 A PowerShell profile is a script that runs automatically when you start PowerShell — like `.bashrc` for Linux. Set it up once and get your custom environment every session.

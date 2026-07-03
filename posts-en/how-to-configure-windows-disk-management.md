@@ -5,6 +5,7 @@ publishDate: "2026-07-03"
 description: "Manage disks and partitions in Windows using Disk Management, PowerShell and DiskPart. Create, resize, format and assign drive letters to partitions."
 tags: ["windows", "disk", "partitions", "diskpart", "powershell", "administration"]
 readTime: 5
+translatesUk: "keruvannya-dyskamy-rozdilamy-windows"
 ---
 
 Windows has three tools for disk management — GUI Disk Management, PowerShell and DiskPart. Here's when to use each and how.

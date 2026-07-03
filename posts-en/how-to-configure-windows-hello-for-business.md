@@ -5,6 +5,7 @@ publishDate: "2026-03-27"
 description: "Enable Windows 11 advanced security features: Core Isolation with Memory Integrity, SmartScreen, Secure Boot verification, and Reputation-based protection."
 tags: ["windows", "security", "bios", "tools"]
 readTime: 6
+translatesUk: "windows-hello-nalashtuvannya-ta-vypravlennya"
 ---
 
 Windows 11 includes several hardware-backed security features that most users never enable. Together they significantly raise the bar for malware and exploit attempts.

@@ -5,6 +5,7 @@ publishDate: "2026-05-25"
 description: "Configure proxy settings in Windows 10 and 11 for system-wide, per-app or WinHTTP. Set proxy via Settings, PowerShell and registry. Fix proxy-related connection issues."
 tags: ["windows", "proxy", "network", "administration", "powershell"]
 readTime: 5
+translatesUk: "nalashtuvannya-proksy-windows"
 ---
 
 Windows proxy settings control how network traffic is routed through a proxy server. Here's how to configure them at every level.

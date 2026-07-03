@@ -5,6 +5,7 @@ publishDate: "2026-04-07"
 description: "Set up networking for Hyper-V virtual machines: External, Internal, and Private switches explained. Configure NAT, static IPs, and fix common network issues in VMs."
 tags: ["windows", "hyper-v", "network", "virtualization"]
 readTime: 6
+translatesUk: "nalashtuvannya-merezhi-hyper-v"
 ---
 
 Hyper-V networking confuses many people — there are three switch types and several ways to give VMs internet access. Here's a clear breakdown and how to configure each.

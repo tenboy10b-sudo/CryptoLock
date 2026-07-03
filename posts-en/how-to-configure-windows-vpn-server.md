@@ -5,6 +5,7 @@ publishDate: "2026-05-22"
 description: "Set up a Windows VPN server using RRAS (Routing and Remote Access). Configure PPTP or SSTP, manage user access and connect clients to your own Windows VPN."
 tags: ["windows", "vpn", "network", "server", "administration"]
 readTime: 6
+translatesUk: "windows-vpn-server-rras"
 ---
 
 Windows Server and even Windows 10/11 Pro can act as a VPN server using the built-in RRAS role. Here's how to set it up.

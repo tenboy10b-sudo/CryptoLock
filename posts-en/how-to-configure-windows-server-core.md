@@ -5,6 +5,7 @@ publishDate: "2026-06-21"
 description: "Manage Windows Server Core installation without a graphical interface. Configure networking, install roles, manage remotely via PowerShell and RSAT tools."
 tags: ["windows", "server-core", "powershell", "administration", "remote"]
 readTime: 5
+translatesUk: "keruvannya-windows-server-core"
 ---
 
 Server Core is Windows Server without the GUI — smaller attack surface, lower resource usage and reduced patch frequency. Everything is managed via PowerShell or remote tools.

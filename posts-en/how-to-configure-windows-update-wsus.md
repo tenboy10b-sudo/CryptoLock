@@ -5,6 +5,7 @@ publishDate: "2026-06-19"
 description: "Set up Windows Server Update Services (WSUS) to centrally manage Windows updates. Install WSUS, configure clients, approve updates and troubleshoot synchronization."
 tags: ["windows", "wsus", "windows-update", "administration", "powershell"]
 readTime: 6
+translatesUk: "nalashtuvannya-wsus-windows-update"
 ---
 
 WSUS (Windows Server Update Services) lets you control which updates deploy to which PCs on your network — saving bandwidth and preventing problematic updates.

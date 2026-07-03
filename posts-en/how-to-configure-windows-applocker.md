@@ -5,6 +5,7 @@ publishDate: "2026-06-07"
 description: "Configure AppLocker in Windows to allow or block apps by publisher, path or hash. Create rules for executables, scripts and installers via PowerShell and GPO."
 tags: ["windows", "applocker", "security", "gpo", "powershell", "administration"]
 readTime: 6
+translatesUk: "nalashtuvannya-applocker-windows"
 ---
 
 AppLocker lets you control which applications can run on a PC — by publisher signature, file path, or cryptographic hash. It's the enterprise answer to "how do I stop users from running unauthorized software."

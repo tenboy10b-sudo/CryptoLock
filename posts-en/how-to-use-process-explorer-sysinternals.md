@@ -5,6 +5,7 @@ publishDate: "2026-06-11"
 description: "Use Sysinternals Process Explorer to analyze running processes, find malware, view DLLs, check handles and replace Task Manager with a more powerful alternative."
 tags: ["windows", "process-explorer", "sysinternals", "diagnostics", "security"]
 readTime: 5
+translatesUk: "process-explorer-sysinternals"
 ---
 
 Process Explorer is the advanced replacement for Task Manager — it shows what each process is actually doing, what files it has open, and flags suspicious processes automatically.

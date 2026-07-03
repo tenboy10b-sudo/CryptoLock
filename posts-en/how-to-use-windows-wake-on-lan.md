@@ -5,6 +5,7 @@ publishDate: "2026-06-17"
 description: "Configure Wake-on-LAN (WoL) in Windows to remotely power on PCs over the network. Enable in BIOS and Windows, send magic packets and troubleshoot WoL issues."
 tags: ["windows", "wake-on-lan", "network", "remote", "administration"]
 readTime: 5
+translatesUk: "nalashtuvannya-wake-on-lan-windows"
 ---
 
 Wake-on-LAN lets you power on a PC remotely by sending a "magic packet" over the network. Essential for remote administration without physical access.

@@ -5,6 +5,7 @@ publishDate: "2026-03-07"
 description: "Group Policy Editor lets you control Windows behavior beyond what Settings allows. How to open gpedit.msc, navigate policies, and apply the most useful security and productivity settings."
 tags: ["windows", "gpo", "security", "administration"]
 readTime: 7
+translatesUk: "grupova-polityka-gpedit-windows"
 ---
 
 Group Policy Editor (gpedit.msc) gives you fine-grained control over Windows — far beyond what Settings and Control Panel expose. It's available on Windows 10/11 Pro, Enterprise, and Education.

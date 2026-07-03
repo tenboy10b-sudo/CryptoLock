@@ -5,6 +5,7 @@ publishDate: "2026-06-01"
 description: "Set up Windows Event Forwarding to collect logs from multiple PCs to a central collector. Configure subscriptions, WinRM and filter events via PowerShell."
 tags: ["windows", "event-log", "monitoring", "administration", "security"]
 readTime: 6
+translatesUk: "zbir-zhurnaliv-podiy-windows-tsentralno"
 ---
 
 Windows Event Forwarding lets you collect logs from dozens of PCs to one central location — essential for security monitoring and troubleshooting in multi-PC environments.

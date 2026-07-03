@@ -5,6 +5,7 @@ publishDate: "2026-06-26"
 description: "Configure Microsoft Defender for Endpoint (ATP) for advanced threat detection. Onboard devices, configure policies, review alerts and respond to incidents."
 tags: ["windows", "windows-defender", "atp", "security", "administration"]
 readTime: 5
+translatesUk: "windows-defender-for-endpoint-nalashtuvannya"
 ---
 
 Microsoft Defender for Endpoint (formerly ATP) provides enterprise-grade threat detection beyond what standard Defender offers — behavioral analysis, endpoint detection and response (EDR).

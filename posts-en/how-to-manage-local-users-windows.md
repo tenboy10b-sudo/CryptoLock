@@ -5,6 +5,7 @@ publishDate: "2026-05-10"
 description: "Create, modify and delete local user accounts in Windows 10 and 11. Set passwords, manage groups, configure account types and control access via PowerShell."
 tags: ["windows", "accounts", "security", "administration", "powershell"]
 readTime: 5
+translatesUk: "keruvannya-lokalnymy-korystuvachamy-windows"
 ---
 
 Managing local accounts is essential for shared PCs, security hardening and lab environments. Here's everything you need.

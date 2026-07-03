@@ -5,6 +5,7 @@ publishDate: "2026-05-13"
 description: "Enable DNS over HTTPS (DoH) in Windows 11 natively and Windows 10 via browser or third-party tools. Encrypt DNS queries and improve privacy with Cloudflare or Google."
 tags: ["windows", "dns", "privacy", "security", "network"]
 readTime: 4
+translatesUk: "dns-over-https-windows"
 ---
 
 DNS over HTTPS encrypts your DNS queries — without it, your ISP and anyone on the network can see every website you look up even if you use HTTPS.

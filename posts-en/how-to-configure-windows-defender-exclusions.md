@@ -6,6 +6,7 @@ publishDate: "2026-06-28"
 description: "How to add exclusions in Windows Defender on Windows 10 and 11 via Settings, PowerShell and Group Policy. Exclude folders, file types, processes and IP addresses."
 tags: ["windows", "windows-defender", "security", "powershell", "administration"]
 readTime: 4
+translatesUk: "yak-nalashtuvaty-windows-defender-vyklyuchennya"
 ---
 
 Sometimes legitimate apps trigger false positives in Windows Defender. Adding exclusions lets those apps run without disabling protection entirely.

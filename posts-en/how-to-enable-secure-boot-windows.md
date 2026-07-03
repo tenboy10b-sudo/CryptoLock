@@ -5,6 +5,7 @@ publishDate: "2027-02-06"
 description: "Enable Secure Boot in BIOS/UEFI for Windows 10 and 11. Check current status, switch from Legacy to UEFI mode, convert MBR to GPT without data loss."
 tags: ["windows", "bios", "secure-boot", "uefi", "installation"]
 readTime: 5
+translatesUk: "yak-uvimknuty-secure-boot"
 ---
 
 Secure Boot prevents unauthorized bootloaders from running at startup. Windows 11 requires it. Here's how to enable it without losing data.

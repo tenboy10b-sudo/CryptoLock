@@ -5,6 +5,7 @@ publishDate: "2026-05-16"
 description: "Create, modify and troubleshoot Windows scheduled tasks via PowerShell and Task Scheduler GUI. Run scripts at startup, on schedule, at login and on events."
 tags: ["windows", "task-scheduler", "powershell", "automation", "administration"]
 readTime: 5
+translatesUk: "keruvannya-zaplanovanym-zavdannyam-windows"
 ---
 
 Scheduled Tasks automate anything in Windows — scripts, backups, maintenance. PowerShell gives you full control without the GUI.

@@ -6,6 +6,7 @@ updated: "2026-06-18"
 description: "All Windows screenshot shortcuts and how to use Snipping Tool on Windows 10 and 11. Screen clipping shortcuts, annotate screenshots, capture windows and scrolling pages."
 tags: ["windows", "tools", "productivity", "settings"]
 readTime: 5
+translatesUk: "yak-robyt-skrynshoty-windows"
 ---
 
 Windows has several built-in screenshot methods — each suited to different situations. Here's every option and when to use it.

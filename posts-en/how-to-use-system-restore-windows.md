@@ -6,6 +6,7 @@ publishDate: "2026-04-26"
 description: "System Restore can undo driver installations, bad updates, and software changes without deleting your files. Here's how to use it, create restore points, and fix it when it stops working."
 tags: ["windows", "recovery", "troubleshooting", "tools"]
 readTime: 6
+translatesUk: "vidnovlennya-systemy-windows"
 ---
 
 System Restore rolls Windows back to a previous state — undoing driver installs, bad updates, and software changes. It doesn't touch your personal files. It's one of the most useful recovery tools in Windows, and most people only remember it exists when something breaks.

@@ -5,6 +5,7 @@ publishDate: "2026-05-27"
 description: "Fix DNS resolution failures in Windows: sites not loading, DNS_PROBE_FINISHED_NXDOMAIN errors. Flush DNS cache, change DNS servers, reset network stack."
 tags: ["windows", "dns", "network", "troubleshooting", "errors"]
 readTime: 5
+translatesUk: "yak-vypravyty-dns-windows"
 ---
 
 DNS failures cause sites to fail loading even when internet is working. Here's a systematic approach to fix them.

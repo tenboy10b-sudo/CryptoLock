@@ -5,6 +5,7 @@ publishDate: "2026-06-25"
 description: "Set up Windows Storage Spaces to create mirror, parity or simple pools from multiple drives. Configure via PowerShell and Settings for redundancy without hardware RAID."
 tags: ["windows", "storage-spaces", "raid", "disk", "administration", "powershell"]
 readTime: 5
+translatesUk: "nalashtuvannya-storage-spaces-windows"
 ---
 
 Storage Spaces lets you combine multiple drives into a redundant pool — similar to RAID, but built into Windows with no extra hardware.

@@ -6,6 +6,7 @@ publishDate: "2026-05-24"
 description: "How to configure a static IP address on Windows 10 and 11 via network settings, PowerShell and Group Policy. Set IP, subnet mask, gateway and DNS. Fix common errors."
 tags: ["windows", "network", "ip", "dns", "administration"]
 readTime: 4
+translatesUk: "yak-vstanovyty-statychnyy-ip-windows"
 ---
 
 A static IP ensures your PC always has the same address — useful for servers, RDP, NAS access and network rules.

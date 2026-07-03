@@ -5,6 +5,7 @@ publishDate: "2026-06-15"
 description: "Install and configure IIS (Internet Information Services) on Windows 10 and Server. Set up websites, SSL certificates, virtual directories and manage via PowerShell."
 tags: ["windows", "iis", "web-server", "ssl", "administration", "powershell"]
 readTime: 6
+translatesUk: "nalashtuvannya-iis-web-server-windows"
 ---
 
 IIS is Windows' built-in web server — included in Windows 10/11 Pro and all Server editions. Here's how to install it and configure production-ready websites.

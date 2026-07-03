@@ -5,6 +5,7 @@ publishDate: "2026-05-21"
 description: "Fix black screen after login in Windows 10 and 11. Desktop doesn't load, cursor visible but no icons — restart Explorer, fix GPU driver, repair startup entries."
 tags: ["windows", "black-screen", "troubleshooting", "errors", "drivers"]
 readTime: 5
+translatesUk: "chornyy-ekran-pislya-vkhodu-windows"
 ---
 
 Black screen after login — Windows loads but the desktop never appears. Here's how to diagnose and fix every variant.

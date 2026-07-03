@@ -5,6 +5,7 @@ publishDate: "2026-06-03"
 description: "Manage Windows services via PowerShell. Start, stop, disable, configure startup type, set recovery options, create custom services and troubleshoot failures."
 tags: ["windows", "services", "powershell", "administration", "automation"]
 readTime: 5
+translatesUk: "keruvannya-sluzhbamy-windows-powershell"
 ---
 
 Windows Services run in the background and control everything from networking to print spooling. PowerShell gives you complete control over all of them.

@@ -5,6 +5,7 @@ publishDate: "2026-05-13"
 description: "Windows Update stuck at 0%, stuck downloading, or freezing during install? Step-by-step fixes: clear update cache, reset services, run troubleshooter, DISM repair."
 tags: ["windows", "windows-update", "troubleshooting", "errors"]
 readTime: 5
+translatesUk: "yak-vypravyty-windows-update-zavisaye"
 ---
 
 Windows Update getting stuck is one of the most common Windows issues. Here's a systematic approach that fixes it in most cases.

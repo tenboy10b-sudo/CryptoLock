@@ -5,6 +5,7 @@ publishDate: "2026-06-06"
 description: "Enable IP routing in Windows to forward packets between network interfaces. Configure Windows as a software router, add static routes and troubleshoot routing issues."
 tags: ["windows", "network", "routing", "ip", "administration", "powershell"]
 readTime: 5
+translatesUk: "ip-marshrutyzatsiya-windows"
 ---
 
 Windows can forward packets between network interfaces — useful for lab environments, VMs, IoT networks and when a hardware router isn't available.

@@ -5,6 +5,7 @@ publishDate: "2026-05-27"
 description: "Install .NET Framework 3.5 and modern .NET 6/7/8 on Windows 10 and 11. Fix .NET installation errors, check installed versions and repair corrupted .NET installations."
 tags: ["windows", "dotnet", "errors", "installation", "administration"]
 readTime: 5
+translatesUk: "yak-vstanovyty-net-framework-windows"
 ---
 
 Many Windows apps and games require .NET Framework or modern .NET. Here's how to install any version and fix common errors.

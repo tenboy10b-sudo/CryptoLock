@@ -5,6 +5,7 @@ publishDate: "2027-02-08"
 description: "Run PowerShell as Administrator in Windows 10 and 11. All methods: keyboard shortcuts, right-click, Task Manager, scheduled tasks and auto-elevate scripts."
 tags: ["windows", "powershell", "administration", "security", "automation"]
 readTime: 4
+translatesUk: "yak-zapustyty-powershell-administratora"
 ---
 
 Many PowerShell commands require Administrator rights. Here are all the ways to open an elevated PowerShell session.

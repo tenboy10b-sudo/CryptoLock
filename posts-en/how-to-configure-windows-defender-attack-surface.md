@@ -5,6 +5,7 @@ publishDate: "2026-06-04"
 description: "Enable Windows Defender Attack Surface Reduction (ASR) rules to block common attack techniques. Configure ASR via PowerShell and Group Policy, monitor blocked actions."
 tags: ["windows", "windows-defender", "security", "asr", "powershell"]
 readTime: 5
+translatesUk: "pravyla-zmenshennya-poverkhni-ataky-asr"
 ---
 
 Attack Surface Reduction (ASR) rules block specific behaviors that malware commonly uses — Office macros calling child processes, credential dumping, ransomware-style file encryption attempts.

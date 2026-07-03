@@ -5,6 +5,7 @@ publishDate: "2026-06-14"
 description: "Learn PowerShell scripting fundamentals for Windows administration. Variables, conditionals, loops, functions, error handling and running scripts securely."
 tags: ["windows", "powershell", "scripting", "automation", "administration"]
 readTime: 6
+translatesUk: "osnovy-powershell-skripty-windows"
 ---
 
 PowerShell scripts automate repetitive tasks. Here's everything you need to go from copy-pasting commands to writing reusable scripts.

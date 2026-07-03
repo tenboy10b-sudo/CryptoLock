@@ -5,6 +5,7 @@ publishDate: "2026-05-12"
 description: "Upgrade from Windows 10 to Windows 11 in 2026. Check compatibility, use PC Health Check, upgrade via Windows Update or ISO, and troubleshoot common upgrade errors."
 tags: ["windows", "windows-11", "upgrade", "installation", "migration"]
 readTime: 5
+translatesUk: "yak-onovyty-windows-10-do-11"
 ---
 
 Windows 10 reaches end of support in October 2025. Here's how to upgrade to Windows 11 safely — with or without hardware requirements.

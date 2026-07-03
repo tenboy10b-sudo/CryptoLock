@@ -5,6 +5,7 @@ publishDate: "2026-05-20"
 description: "Complete Windows 10 and 11 security hardening checklist for 2026. Enable all built-in protections, configure account security, network settings and audit policies."
 tags: ["windows", "security", "hardening", "powershell", "administration"]
 readTime: 6
+translatesUk: "posylennya-bezpeky-windows-cheklist"
 ---
 
 A properly hardened Windows PC is dramatically harder to compromise. Here's a practical checklist organized by priority.

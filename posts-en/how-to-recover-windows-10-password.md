@@ -5,6 +5,7 @@ publishDate: "2026-05-16"
 description: "Forgot your Windows 10 or 11 password? Reset it via Microsoft account online, Recovery Mode, or CMD from boot. Works for local and Microsoft accounts."
 tags: ["windows", "accounts", "security", "recovery"]
 readTime: 5
+translatesUk: "skynuti-parol-windows"
 ---
 
 Forgot your Windows password? The fix depends on whether you use a Microsoft account or a local account.

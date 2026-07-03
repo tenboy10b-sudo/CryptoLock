@@ -5,6 +5,7 @@ publishDate: "2026-06-24"
 description: "Advanced Windows Task Scheduler configuration. Event-based triggers, conditions, run-on-demand without UAC, find hidden tasks and debug failed scheduled jobs."
 tags: ["windows", "task-scheduler", "automation", "powershell", "administration"]
 readTime: 5
+translatesUk: "planuvalnyk-zavdan-rozshyreni-mozhlyvosti"
 ---
 
 Beyond basic scheduling, Task Scheduler has powerful trigger types and execution conditions that most admins never use.

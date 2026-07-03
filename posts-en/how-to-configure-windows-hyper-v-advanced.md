@@ -5,6 +5,7 @@ publishDate: "2026-06-18"
 description: "Advanced Hyper-V configuration: manage checkpoints, configure VM resources, enable nested virtualization, set memory weight and use PowerShell for VM automation."
 tags: ["windows", "hyper-v", "virtualization", "powershell", "administration"]
 readTime: 5
+translatesUk: "hyper-v-rozshyreni-mozhlyvosti"
 ---
 
 Beyond basic VM creation, Hyper-V has powerful features for resource management, automation and VM lifecycle control.

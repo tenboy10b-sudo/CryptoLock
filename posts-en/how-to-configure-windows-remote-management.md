@@ -5,6 +5,7 @@ publishDate: "2026-04-28"
 description: "WinRM is the foundation for PowerShell Remoting and remote management. How to enable it, configure authentication, restrict access, and troubleshoot connection issues."
 tags: ["windows", "administration", "network", "powershell"]
 readTime: 5
+translatesUk: "winrm-powershell-viddalene-keruvanya"
 ---
 
 WinRM (Windows Remote Management) is the service that enables PowerShell Remoting, remote management via Server Manager, and CIM/WMI over the network. Here's how to set it up securely.

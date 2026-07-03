@@ -5,6 +5,7 @@ publishDate: "2026-06-05"
 description: "Enable and configure Windows Defender Controlled Folder Access to protect against ransomware. Allow trusted apps, add protected folders and monitor blocked attempts."
 tags: ["windows", "windows-defender", "ransomware", "security", "powershell"]
 readTime: 5
+translatesUk: "zakhyst-vid-ransomware-controlled-folder"
 ---
 
 Controlled Folder Access blocks unauthorized apps from modifying protected folders — your main defense against ransomware encrypting files.

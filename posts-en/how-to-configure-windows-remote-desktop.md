@@ -5,6 +5,7 @@ publishDate: "2026-06-29"
 description: "Enable Remote Desktop in Windows 10 and 11, configure NLA authentication, change RDP port, restrict access and troubleshoot common connection issues."
 tags: ["windows", "rdp", "remote", "security", "administration", "powershell"]
 readTime: 5
+translatesUk: "yak-nalashtuvanty-rdp-windows"
 ---
 
 Remote Desktop lets you control a Windows PC from anywhere. Here's how to enable it securely and avoid common misconfigurations.

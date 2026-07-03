@@ -5,6 +5,7 @@ publishDate: "2026-05-03"
 description: "Manage Windows 10 and 11 notifications: disable specific app alerts, configure Focus Assist (Do Not Disturb), customize notification banners and clear notification history."
 tags: ["windows", "notifications", "productivity", "personalization", "optimization"]
 readTime: 4
+translatesUk: "nalashtuvannya-spovishchen-windows"
 ---
 
 Windows notifications can be distracting when poorly configured. Here's how to take full control.

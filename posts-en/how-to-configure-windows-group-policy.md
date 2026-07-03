@@ -5,6 +5,7 @@ publishDate: "2026-07-02"
 description: "Use Group Policy Editor to configure Windows security, restrictions and settings. Apply GPO policies, force refresh, troubleshoot with gpresult and rsop.msc."
 tags: ["windows", "gpo", "group-policy", "administration", "security", "powershell"]
 readTime: 5
+translatesUk: "redaktor-hrupovykh-polityky-gpedit"
 ---
 
 Group Policy Editor is the most powerful configuration tool in Windows — letting you enforce settings that can't be changed through the normal Settings app.

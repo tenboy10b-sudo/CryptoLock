@@ -5,6 +5,7 @@ publishDate: "2026-05-04"
 description: "Reset Windows 11 to factory settings while keeping personal files. Use Fresh Start, Reset this PC, or cloud download to fix persistent issues without data loss."
 tags: ["windows", "reset", "recovery", "installation", "troubleshooting"]
 readTime: 5
+translatesUk: "yak-skydannya-windows-11-bez-vtraty-fayliv"
 ---
 
 When Windows has persistent issues that can't be fixed otherwise, resetting it is the nuclear option — but it doesn't have to mean losing your files.

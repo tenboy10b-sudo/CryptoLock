@@ -5,6 +5,7 @@ publishDate: "2026-06-02"
 description: "Configure Windows audit policy to track logons, account changes, process creation and privilege use. Enable advanced audit via PowerShell and Group Policy."
 tags: ["windows", "audit", "security", "event-log", "powershell", "administration"]
 readTime: 5
+translatesUk: "nalashtuvannya-polityky-audytu-windows"
 ---
 
 Windows Audit Policy controls what security events get recorded in the Security Event Log. Without it, you're flying blind — attacks happen but leave no trace.

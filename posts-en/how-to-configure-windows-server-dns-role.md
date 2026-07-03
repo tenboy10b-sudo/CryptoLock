@@ -5,6 +5,7 @@ publishDate: "2026-06-13"
 description: "Set up Windows Server DNS role. Create forward and reverse lookup zones, add A, CNAME, MX records, configure forwarders and manage DNS via PowerShell."
 tags: ["windows", "dns", "server", "network", "administration", "powershell"]
 readTime: 6
+translatesUk: "nalashtuvannya-dns-servera-windows"
 ---
 
 Windows Server DNS is the backbone of Active Directory and internal name resolution. Here's how to install it and manage every aspect via PowerShell.

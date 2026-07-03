@@ -5,6 +5,7 @@ publishDate: "2026-04-23"
 description: "Windows Credential Manager stores passwords for websites, network shares, and apps. How to view, add, edit, and back up credentials, and fix credential-related errors."
 tags: ["windows", "security", "accounts", "tools"]
 readTime: 5
+translatesUk: "keruvannya-parolyamy-windows-credential"
 ---
 
 Windows Credential Manager stores saved passwords for network resources, websites (Internet Explorer/Edge), and apps. It's the system behind "remember my password" for Windows authentication.

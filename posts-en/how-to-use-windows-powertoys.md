@@ -5,6 +5,7 @@ publishDate: "2026-04-19"
 description: "PowerToys is a free Microsoft utility pack that adds powerful features to Windows. The 10 most useful tools: FancyZones, PowerRename, File Locksmith, Always on Top, and more."
 tags: ["windows", "productivity", "tools", "settings"]
 readTime: 6
+translatesUk: "windows-powertoys-povnyy-posibnyk"
 ---
 
 Microsoft PowerToys is a free open-source utility pack that adds features Windows should have built in. Here are the 10 most useful tools and how to use each.

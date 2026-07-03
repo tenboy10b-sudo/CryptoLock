@@ -5,6 +5,7 @@ publishDate: "2026-05-11"
 description: "Optimize SSD performance in Windows 10 and 11. Enable TRIM, disable defragmentation, configure page file, check health and get maximum speed from your SSD."
 tags: ["windows", "ssd", "performance", "optimization", "disk"]
 readTime: 5
+translatesUk: "optymizatsiya-ssd-windows"
 ---
 
 SSDs perform best when Windows is properly configured for them. Several default settings designed for HDDs can hurt SSD performance and longevity.

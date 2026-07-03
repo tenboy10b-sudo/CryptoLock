@@ -5,6 +5,7 @@ publishDate: "2026-05-08"
 description: "Configure User Account Control (UAC) in Windows 10 and 11. Adjust notification level, disable UAC for specific apps, manage elevation prompts via Group Policy."
 tags: ["windows", "uac", "security", "administration", "powershell"]
 readTime: 5
+translatesUk: "nalashtuvannya-uac-windows"
 ---
 
 UAC prompts are annoying but they're also your last line of defense against unauthorized system changes. Here's how to tune them properly.

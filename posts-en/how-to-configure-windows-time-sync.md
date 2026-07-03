@@ -5,6 +5,7 @@ publishDate: "2026-06-30"
 description: "Fix Windows clock sync issues and configure NTP time server. Force time sync, set custom NTP server, troubleshoot W32tm errors and configure domain time hierarchy."
 tags: ["windows", "ntp", "time-sync", "administration", "powershell"]
 readTime: 4
+translatesUk: "synkhronizatsiya-chasu-windows-ntp"
 ---
 
 Wrong system time breaks SSL certificates, Kerberos authentication and scheduled tasks. Here's how to fix sync and configure NTP properly.

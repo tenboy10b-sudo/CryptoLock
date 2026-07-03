@@ -5,6 +5,7 @@ publishDate: "2026-05-30"
 description: "Configure Windows Defender SmartScreen to protect against phishing and malware. Manage SmartScreen for Edge, apps, and Explorer via Settings, GPO and PowerShell."
 tags: ["windows", "smartscreen", "security", "windows-defender", "powershell"]
 readTime: 4
+translatesUk: "nalashtuvannya-smartscreen-windows"
 ---
 
 SmartScreen checks files and websites against Microsoft's threat database. It blocks known malware and warns about suspicious downloads before they run.

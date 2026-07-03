@@ -5,6 +5,7 @@ publishDate: "2026-04-16"
 description: "Precisely control Windows Update behavior: defer feature and quality updates, block specific updates, force update schedules, and configure update sources using Group Policy and PowerShell."
 tags: ["windows", "windows-update", "gpo", "administration"]
 readTime: 6
+translatesUk: "yak-nalashtuvaty-windows-update-gpo"
 ---
 
 Windows Update settings in the basic UI are limited. Group Policy and registry give you precise control over when, what, and how updates install.

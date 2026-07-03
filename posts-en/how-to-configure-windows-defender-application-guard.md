@@ -5,6 +5,7 @@ publishDate: "2026-06-08"
 description: "Enable Windows Defender Application Guard to open untrusted websites in an isolated Hyper-V container. Configure WDAG for Edge, manage trusted sites and monitor sessions."
 tags: ["windows", "application-guard", "security", "edge", "virtualization"]
 readTime: 5
+translatesUk: "windows-defender-application-guard"
 ---
 
 Application Guard opens untrusted websites in a disposable Hyper-V container — if the site delivers malware, it can't escape to your real PC.

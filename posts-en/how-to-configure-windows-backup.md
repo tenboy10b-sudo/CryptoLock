@@ -5,6 +5,7 @@ publishDate: "2026-05-02"
 description: "Set up Windows backups using File History, Windows Backup, system image and OneDrive. Automate backups with PowerShell and restore files and the OS after failure."
 tags: ["windows", "backup", "recovery", "onedrive", "administration"]
 readTime: 6
+translatesUk: "yak-zrobyty-rezervnu-kopiyu-windows"
 ---
 
 No backup means no recovery. Windows has several built-in backup tools — here's how to use each one effectively.

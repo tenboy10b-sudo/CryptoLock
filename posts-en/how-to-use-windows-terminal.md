@@ -5,6 +5,7 @@ publishDate: "2026-05-09"
 description: "Master Windows Terminal in Windows 10 and 11. Configure profiles for PowerShell, CMD and WSL, set up tabs, customize appearance, key bindings and JSON settings."
 tags: ["windows", "terminal", "powershell", "wsl", "productivity"]
 readTime: 5
+translatesUk: "yak-korystuvatys-windows-terminal"
 ---
 
 Windows Terminal is the modern replacement for the old CMD and PowerShell windows — it supports tabs, multiple shells, GPU rendering and full customization.

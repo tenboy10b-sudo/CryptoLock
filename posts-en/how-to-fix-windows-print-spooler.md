@@ -5,6 +5,7 @@ publishDate: "2026-05-26"
 description: "Fix Windows Print Spooler errors: spooler not running, stuck jobs, print spooler crashes and printing stopped working. Clear queue, restart service, reinstall drivers."
 tags: ["windows", "printer", "spooler", "troubleshooting", "errors"]
 readTime: 5
+translatesUk: "vypravlennya-spuler-druku-windows"
 ---
 
 Print Spooler manages all print jobs in Windows. When it crashes or gets stuck, nothing prints. Here's how to fix every variant.

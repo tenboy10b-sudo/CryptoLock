@@ -5,6 +5,7 @@ publishDate: "2026-06-16"
 description: "Configure network adapter settings in Windows. Set IPv4, IPv6, DNS, MTU, duplex and speed. Disable unused adapters and troubleshoot adapter issues via PowerShell."
 tags: ["windows", "network", "adapter", "ip", "administration", "powershell"]
 readTime: 5
+translatesUk: "nalashtuvannya-merezhevoho-adaptera-windows"
 ---
 
 Network adapter settings control how your PC communicates on the network. Here's how to configure everything — from IP addresses to advanced NIC settings.
