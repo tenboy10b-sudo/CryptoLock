@@ -31,14 +31,15 @@
     "yak-nalashtuvanty-windows-sandbox",
     "yak-zayty-v-bios",
     "nalashtuvannya-windows-10-11-povnyy-hid",
-    "keruvannya-parolyamy-windows-credential"
+    "keruvannya-parolyamy-windows-credential",
+    "malwarebytes-windows-skanuvanna-shkidlyve-pz"
   ],
-  "count": 32,
+  "count": 33,
   "promo_index": 32,
   "last_post": {
-    "slug": "keruvannya-parolyamy-windows-credential",
-    "title": "Credential Manager Windows: збереження і управління паролями",
-    "time": "2026-06-20T10:49:53.889652"
+    "slug": "malwarebytes-windows-skanuvanna-shkidlyve-pz",
+    "title": "Malwarebytes на Windows: перевірка і видалення шкідливого ПЗ",
+    "time": "2026-07-03T10:58:54.958012"
   },
   "engage_index": 23,
   "extra_index": 9
