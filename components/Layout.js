@@ -123,7 +123,7 @@ function BookmarksNavLink() {
   )
 }
 
-export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn }) {
+export default function Layout({ children, title, description, canonical, isArticle, ogImage, noindex, translatesUk, translatesEn, altUkUrl, altEnUrl }) {
   const pageTitle = title
     ? `${title} — ${siteConfig.name}`
     : `${siteConfig.name} — налаштування Windows та захист ПК українською`
@@ -204,12 +204,25 @@ export default function Layout({ children, title, description, canonical, isArti
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* БЕЗ preconnect тут — вони в _document.js */}
         <link rel="canonical" href={pageUrl} />
-        <link rel="alternate" hrefLang="uk"
-          href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
-        <link rel="alternate" hrefLang="en"
-          href={asPath.startsWith('/en') ? `${SITE}${asPath}` : `${SITE}/en${asPath === '/' ? '' : asPath}`} />
-        <link rel="alternate" hrefLang="x-default"
-          href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
+        {/* Для статей (isArticle) hreflang будується з реальних перекладів (altUkUrl/altEnUrl),
+            щоб не заявляти /en/... сторінки, яких насправді не існує (fallback-дублікати UK контенту).
+            Для решти сторінок (about, tags тощо) — старий механічний варіант з asPath, бо там EN-версія завжди реальна. */}
+        {isArticle ? (
+          <>
+            {altUkUrl && <link rel="alternate" hrefLang="uk" href={altUkUrl} />}
+            {altEnUrl && <link rel="alternate" hrefLang="en" href={altEnUrl} />}
+            {altUkUrl && <link rel="alternate" hrefLang="x-default" href={altUkUrl} />}
+          </>
+        ) : (
+          <>
+            <link rel="alternate" hrefLang="uk"
+              href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
+            <link rel="alternate" hrefLang="en"
+              href={asPath.startsWith('/en') ? `${SITE}${asPath}` : `${SITE}/en${asPath === '/' ? '' : asPath}`} />
+            <link rel="alternate" hrefLang="x-default"
+              href={`${SITE}${asPath.replace(/^\/en/, '') || '/'}`} />
+          </>
+        )}
         <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
         {siteConfig.googleVerification && (
           <meta name="google-site-verification" content={siteConfig.googleVerification} />

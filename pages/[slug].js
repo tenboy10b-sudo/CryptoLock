@@ -207,7 +207,16 @@ function CommentsSection({ appId, pageId, pageUrl, pageTitle, isEn }) {
 export default function Post({ post, related, locale }) {
   const isEn = locale === 'en'
   useCopyButtons(post.slug)
-  const postUrl = locale === 'en' ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
+  // isFallback = ця /en/ сторінка не має реального перекладу і показує UK-контент.
+  // В такому разі canonical/schema мають вести на UK-оригінал, а не заявляти окрему EN-сторінку.
+  const isFallback = isEn && post.isFallback
+  const postUrl = (isEn && !isFallback) ? `${SITE}/en/${post.slug}` : `${SITE}/${post.slug}`
+  const altUkUrl = isEn
+    ? (isFallback ? `${SITE}/${post.slug}` : (post.translatesUk ? `${SITE}/${post.translatesUk}` : null))
+    : `${SITE}/${post.slug}`
+  const altEnUrl = isEn
+    ? (isFallback ? null : `${SITE}/en/${post.slug}`)
+    : (post.translatesEn ? `${SITE}/en/${post.translatesEn}` : null)
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -263,6 +272,8 @@ export default function Post({ post, related, locale }) {
       ogImage={`${SITE}/api/og?title=${encodeURIComponent(post.title)}&tags=${encodeURIComponent((post.tags||[]).slice(0,3).join(","))}&lang=${locale||"uk"}`}
       translatesUk={post.translatesUk}
       translatesEn={post.translatesEn}
+      altUkUrl={altUkUrl}
+      altEnUrl={altEnUrl}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />

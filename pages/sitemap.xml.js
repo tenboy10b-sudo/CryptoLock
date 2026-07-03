@@ -53,16 +53,21 @@ function generateSitemap(posts, enPosts, tags) {
     lastmod: today,
   }))
 
-  // Хелпер для запису URL з hreflang
-  const urlEntry = (ukUrl, lastmod, priority, changefreq) => {
-    const enUrl = ukUrl === '' ? `${SITE}/en` : `${SITE}/en${ukUrl}`
+  // Хелпер для запису URL з hreflang.
+  // enSlug === undefined -> статична/тег сторінка, EN версія завжди реальна (/en{ukUrl})
+  // enSlug === null      -> стаття без реального перекладу, hreflang="en" НЕ додається (fallback-дублікат ховаємо від Google)
+  // enSlug === 'slug'    -> стаття з реальним перекладом, hreflang="en" веде на справжній EN slug
+  const urlEntry = (ukUrl, lastmod, priority, changefreq, enSlug) => {
+    const hasEn = enSlug !== null
+    const enUrl = enSlug
+      ? `${SITE}/en/${enSlug}`
+      : (ukUrl === '' ? `${SITE}/en` : `${SITE}/en${ukUrl}`)
     return `  <url>
     <loc>${SITE}${ukUrl}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="${SITE}${ukUrl}"/>
-    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="${SITE}${ukUrl}"/>${hasEn ? `\n    <xhtml:link rel="alternate" hreflang="en" href="${enUrl}"/>` : ''}
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${ukUrl}"/>
   </url>`
   }
@@ -76,7 +81,8 @@ ${posts.map(post => urlEntry(
   `/${post.slug}`,
   post.date || today,
   '0.9',
-  'monthly'
+  'monthly',
+  post.translatesEn || null
 )).join('\n')}
 ${enPosts.map(post => {
   const enUrl = `${SITE}/en/${post.slug}`
