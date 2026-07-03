@@ -1263,3 +1263,33 @@ const [category, setCategory] = useState('__all__')
 
 **Статус:** відкладено, не критично.
 
+---
+
+### Сесія 5 (3 липня 2026) — Завершення аудиту hydration + підключено Claude Code
+
+#### Аудит tools файлів завершено
+
+Останні 4 файли зі списку "НЕ ПЕРЕВІРЕНО" виправлені через Claude Code:
+
+| Файл | Проблема | Виправлено |
+|------|----------|-----------|
+| `pages/tools/hash.js` | `isEn = locale === 'en'` без mounted guard | mounted патерн додано |
+| `pages/tools/base64.js` | `isEn = locale === 'en'` без mounted guard | mounted патерн додано |
+| `pages/tools/ip-info.js` | `isEn = locale === 'en'` без mounted guard | mounted патерн додано |
+| `pages/tools/port-checker.js` | `isEn = locale === 'en'` без mounted guard | mounted патерн додано |
+
+Фікс стандартний (як в `regex.js` та інших раніше виправлених файлах):
+```js
+const [mounted, setMounted] = useState(false)
+const isEn = mounted ? locale === 'en' : false
+useEffect(() => { setMounted(true) }, [])
+```
+
+Задеплоєно: `git commit` → `git push` → `vercel --prod` → заалайожено на `https://cryptolockua.com`.
+
+**Аудит hydration-помилок #418/#423/#425 повністю завершено.**
+
+#### Робота через Claude Code
+
+З цієї сесії робота над проектом ведеться через **Claude Code** (CLI-агент), встановлений локально в `C:\Users\rr\Desktop\pctips-template`. Claude Code має прямий доступ до файлової системи, git та Vercel CLI — редагує файли, комітить, пушить і деплоїть напряму, без ручного копіювання коду через чат.
+
