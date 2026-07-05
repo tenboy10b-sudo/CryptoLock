@@ -21,10 +21,10 @@ const nextConfig = {
         ],
       },
       {
-        // Кешування зображень на 1 рік (виправлено дублікат)
-        source: '/:file*.(png|webp|jpg|jpeg|svg|ico|gif)',
+        // Кешування HTML сторінок
+        source: '/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+          { key: 'Cache-Control', value: 's-maxage=3600, stale-while-revalidate=86400' },
         ],
       },
       {
@@ -35,10 +35,13 @@ const nextConfig = {
         ],
       },
       {
-        // Кешування HTML сторінок
-        source: '/:path*',
+        // Кешування зображень на 1 рік — оголошено ПІСЛЯ '/:path*' щоб не перебивалось ним
+        // (Next.js: якщо кілька правил headers() збігаються з одним шляхом і задають той самий
+        // ключ — виграє те, що оголошене пізніше; /logo.webp збігався і з цим правилом, і з
+        // загальним '/:path*', і той раніше "вигравав", тому картинки кешувались лише на 1 годину)
+        source: '/:file*.(png|webp|jpg|jpeg|svg|ico|gif)',
         headers: [
-          { key: 'Cache-Control', value: 's-maxage=3600, stale-while-revalidate=86400' },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
     ]
