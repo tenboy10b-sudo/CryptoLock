@@ -264,6 +264,67 @@ async function sendTelegram(token, channelId, text) {
   return false
 }
 
+// Справжнє інтерактивне опитування Telegram (тап-щоб-проголосувати, Telegram сам рахує голоси)
+async function sendTelegramPoll(token, channelId, poll) {
+  const url = `https://api.telegram.org/bot${token}/sendPoll`
+  const body = {
+    chat_id: channelId,
+    question: poll.question.slice(0, 300),
+    options: poll.options.slice(0, 10).map(o => o.slice(0, 100)),
+    is_anonymous: true,
+  }
+  if (poll.isQuiz) {
+    body.type = 'quiz'
+    body.correct_option_id = poll.correctIndex ?? 0
+    if (poll.explanation) body.explanation = poll.explanation.slice(0, 200)
+  }
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+  if (res.ok) return true
+  console.error('Telegram sendPoll error', res.status, await res.text())
+  return false
+}
+
+// Стилі ENGAGE, які структурно підходять під формат опитування (явний вибір з 2+ варіантів)
+// — індекси відповідають позиції в масиві ENGAGE_STYLES вище
+const POLL_STYLE_INDICES = new Set([1, 5, 14]) // суперечка двох підходів / швидке голосування / дилема
+const QUIZ_STYLE_INDEX = 16 // швидкий тест знань — окремо, з правильною відповіддю
+
+function promptPollJSON(style, isQuiz) {
+  return `Ти адміністратор Telegram каналу про Windows і кібербезпеку (CryptoLock, @cryptolock888).
+На основі цього формату посту — створи дані для інтерактивного опитування Telegram:
+
+${style}
+
+Поверни ТІЛЬКИ валідний JSON, без жодного тексту навколо, без markdown-обгортки, у форматі:
+${isQuiz
+  ? `{"question": "текст питання (до 200 символів)", "options": ["варіант 1", "варіант 2", "варіант 3", "варіант 4"], "correct_index": 0, "explanation": "коротке пояснення правильної відповіді (до 150 символів)"}`
+  : `{"question": "текст питання (до 200 символів)", "options": ["варіант 1", "варіант 2"]}`}
+
+Вимоги:
+- Українська мова
+- Питання коротке і конкретне, без емодзі на початку
+- Варіанти відповіді — короткі (2-6 слів кожен)
+- ${isQuiz ? '4 варіанти, correct_index — індекс правильного (0-3)' : '2-4 варіанти'}
+- НЕ рекламуй жодних продуктів`
+}
+
+async function generatePollData(apiKey, style, isQuiz) {
+  const raw = await generateText(apiKey, promptPollJSON(style, isQuiz), 400)
+  const cleaned = raw.trim().replace(/^```(json)?/i, '').replace(/```$/, '').trim()
+  const data = JSON.parse(cleaned)
+  return {
+    question: data.question,
+    options: data.options,
+    isQuiz,
+    correctIndex: data.correct_index,
+    explanation: data.explanation,
+  }
+}
+
 // ── Генератори промптів (1:1 з bot.py) ──
 function promptContent(article, includeLink) {
   let linkInstruction = ''
@@ -395,13 +456,29 @@ export default async function handler(req, res) {
     published.engage_index = published.engage_index || 0
     published.extra_index = published.extra_index || 0
 
-    let text, commitMsg, updated = { ...published }
+    let text, poll, commitMsg, updated = { ...published }
+
+    // Engage-контент: якщо стиль структурно є вибором з варіантів — реальне опитування Telegram,
+    // інакше — звичайний текстовий пост (як і раніше).
+    async function generateEngageContent(idx) {
+      const styleIdx = idx % ENGAGE_STYLES.length
+      const style = ENGAGE_STYLES[styleIdx]
+      if (styleIdx === QUIZ_STYLE_INDEX) {
+        return { poll: await generatePollData(ANTHROPIC_KEY, style, true) }
+      }
+      if (POLL_STYLE_INDICES.has(styleIdx)) {
+        return { poll: await generatePollData(ANTHROPIC_KEY, style, false) }
+      }
+      return { text: await generateText(ANTHROPIC_KEY, promptEngage(style), 400) }
+    }
 
     if (type === 'middle') {
       const dayOfMonth = new Date().getUTCDate()
       if (dayOfMonth % 2 === 0) {
         const idx = published.engage_index
-        text = await generateText(ANTHROPIC_KEY, promptEngage(ENGAGE_STYLES[idx % ENGAGE_STYLES.length]), 400)
+        const content = await generateEngageContent(idx)
+        text = content.text
+        poll = content.poll
         updated.engage_index = idx + 1
         commitMsg = 'bot: update published.json [middle-engage]'
       } else {
@@ -417,7 +494,9 @@ export default async function handler(req, res) {
       commitMsg = 'bot: update published.json [extra]'
     } else if (type === 'engage') {
       const idx = published.engage_index
-      text = await generateText(ANTHROPIC_KEY, promptEngage(ENGAGE_STYLES[idx % ENGAGE_STYLES.length]), 400)
+      const content = await generateEngageContent(idx)
+      text = content.text
+      poll = content.poll
       updated.engage_index = idx + 1
       commitMsg = 'bot: update published.json [engage]'
     } else if (type === 'promo') {
@@ -444,15 +523,17 @@ export default async function handler(req, res) {
     }
 
     if (dry) {
-      return res.status(200).json({ ok: true, dry: true, type, text })
+      return res.status(200).json({ ok: true, dry: true, type, text: text || null, poll: poll || null })
     }
 
-    const sent = await sendTelegram(TELEGRAM_TOKEN, CHANNEL_ID, text)
+    const sent = poll
+      ? await sendTelegramPoll(TELEGRAM_TOKEN, CHANNEL_ID, poll)
+      : await sendTelegram(TELEGRAM_TOKEN, CHANNEL_ID, text)
     if (!sent) return res.status(502).json({ error: 'telegram send failed' })
 
     await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN, updated, sha, commitMsg)
 
-    return res.status(200).json({ ok: true, type, length: text.length })
+    return res.status(200).json({ ok: true, type, poll: !!poll, length: text ? text.length : undefined })
   } catch (err) {
     console.error('autopost error:', err)
     return res.status(500).json({ error: String(err.message || err) })
