@@ -34,14 +34,15 @@
     "keruvannya-parolyamy-windows-credential",
     "malwarebytes-windows-skanuvanna-shkidlyve-pz",
     "windows-server-2022-2019-nalashtuvannya",
-    "windows-11-tips-tricks"
+    "windows-11-tips-tricks",
+    "how-to-configure-windows-server-dns-role"
   ],
-  "count": 35,
+  "count": 36,
   "promo_index": 32,
   "last_post": {
-    "slug": "windows-11-tips-tricks",
-    "title": "25 Windows 11 Tips and Tricks You Should Know",
-    "time": "2026-07-04T08:01:10.764Z"
+    "slug": "how-to-configure-windows-server-dns-role",
+    "title": "How to Configure Windows DNS Server: Zones, Records and PowerShell",
+    "time": "2026-07-05T08:01:16.582Z"
   },
   "engage_index": 25,
   "extra_index": 11
