@@ -503,7 +503,7 @@ python bot.py
 | GitHub | tenboy10b-sudo |
 | Vercel | (через GitHub OAuth) |
 | Google (GSC, Analytics, Cloud) | tenboy.10b@gmail.com |
-| Namecheap (домен) | (власний акаунт) |
+| Реєстратор домену | **NIC.UA** (не Namecheap — виправлено 6 липня 2026, див. Сесію 8), термін дії до 30.04.2027, акаунт доступний |
 | Telegram канал | @cryptolock888 |
 
 ---
@@ -1666,7 +1666,6 @@ dee1237 — Fix: stop claiming fake /en/ translations for articles without real 
 
 | Що | Деталі | Проєкт |
 |---|---|---|
-| **Namecheap** (домен cryptolockua.com) | Втрачено доступ до акаунту, відновлення в процесі, не завершено | CryptoLock |
 | **GSC OAuth токен** | Засвічений відкритим текстом у чаті (сесія 3) — треба перегенерувати через `auth.py` | CryptoLock |
 | **Oxapay** (автоплатіж для клієнтів) | Очікує підтвердження акаунту, ще не інтегровано | AuditShield |
 
@@ -1675,6 +1674,7 @@ dee1237 — Fix: stop claiming fake /en/ translations for articles without real 
 | Що | Було | Стало |
 |---|---|---|
 | **Railway** (обидва боти — AuditShield `caring-exploration` + StaffSpy `remarkable-integrity`, той самий акаунт на обидва) | Trial, $2.94/0 днів лишилось — саме це спричинило "Build failed" лист | Перейшли на **Hobby, $5/міс**. Вхід був заблокований через GitHub OAuth (акаунт "flagged") — обійшли через "Log in using email" |
+| **Домен cryptolockua.com** | Раніше в документації помилково значився як "Namecheap, втрачено доступ" | Насправді реєстратор — **NIC.UA**, доступ є, термін дії до **30.04.2027** — жодної проблеми немає |
 
 #### 🟡 Разові інциденти безпеки (не оплата, але пов'язане)
 
