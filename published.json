@@ -35,14 +35,15 @@
     "malwarebytes-windows-skanuvanna-shkidlyve-pz",
     "windows-server-2022-2019-nalashtuvannya",
     "windows-11-tips-tricks",
-    "how-to-configure-windows-server-dns-role"
+    "how-to-configure-windows-server-dns-role",
+    "active-directory-osnovy-dlya-admina"
   ],
-  "count": 36,
+  "count": 37,
   "promo_index": 33,
   "last_post": {
-    "slug": "how-to-configure-windows-server-dns-role",
-    "title": "How to Configure Windows DNS Server: Zones, Records and PowerShell",
-    "time": "2026-07-05T08:01:16.582Z"
+    "slug": "active-directory-osnovy-dlya-admina",
+    "title": "Active Directory: основи для системного адміністратора",
+    "time": "2026-07-06T08:01:16.624Z"
   },
   "engage_index": 26,
   "extra_index": 12
