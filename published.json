@@ -36,14 +36,15 @@
     "windows-server-2022-2019-nalashtuvannya",
     "windows-11-tips-tricks",
     "how-to-configure-windows-server-dns-role",
-    "active-directory-osnovy-dlya-admina"
+    "active-directory-osnovy-dlya-admina",
+    "how-to-recover-windows-10-password"
   ],
-  "count": 37,
+  "count": 38,
   "promo_index": 33,
   "last_post": {
-    "slug": "active-directory-osnovy-dlya-admina",
-    "title": "Active Directory: основи для системного адміністратора",
-    "time": "2026-07-06T08:01:16.624Z"
+    "slug": "how-to-recover-windows-10-password",
+    "title": "How to Reset a Forgotten Windows 10 or 11 Password",
+    "time": "2026-07-07T08:01:19.356Z"
   },
   "engage_index": 27,
   "extra_index": 13
