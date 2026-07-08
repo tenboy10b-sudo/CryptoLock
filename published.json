@@ -37,14 +37,15 @@
     "windows-11-tips-tricks",
     "how-to-configure-windows-server-dns-role",
     "active-directory-osnovy-dlya-admina",
-    "how-to-recover-windows-10-password"
+    "how-to-recover-windows-10-password",
+    "how-to-configure-windows-task-scheduler-advanced"
   ],
-  "count": 38,
+  "count": 39,
   "promo_index": 34,
   "last_post": {
-    "slug": "how-to-recover-windows-10-password",
-    "title": "How to Reset a Forgotten Windows 10 or 11 Password",
-    "time": "2026-07-07T08:01:19.356Z"
+    "slug": "how-to-configure-windows-task-scheduler-advanced",
+    "title": "Windows Task Scheduler: Advanced Triggers, Conditions and Hidden Tasks",
+    "time": "2026-07-08T08:01:28.944Z"
   },
   "engage_index": 27,
   "extra_index": 14
