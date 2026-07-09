@@ -38,14 +38,15 @@
     "how-to-configure-windows-server-dns-role",
     "active-directory-osnovy-dlya-admina",
     "how-to-recover-windows-10-password",
-    "how-to-configure-windows-task-scheduler-advanced"
+    "how-to-configure-windows-task-scheduler-advanced",
+    "ochyschennya-dns-keshu-windows"
   ],
-  "count": 39,
+  "count": 40,
   "promo_index": 34,
   "last_post": {
-    "slug": "how-to-configure-windows-task-scheduler-advanced",
-    "title": "Windows Task Scheduler: Advanced Triggers, Conditions and Hidden Tasks",
-    "time": "2026-07-08T08:01:28.944Z"
+    "slug": "ochyschennya-dns-keshu-windows",
+    "title": "Очищення DNS кешу Windows: навіщо і як правильно",
+    "time": "2026-07-09T08:01:25.935Z"
   },
   "engage_index": 28,
   "extra_index": 15
