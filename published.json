@@ -39,14 +39,15 @@
     "active-directory-osnovy-dlya-admina",
     "how-to-recover-windows-10-password",
     "how-to-configure-windows-task-scheduler-advanced",
-    "ochyschennya-dns-keshu-windows"
+    "ochyschennya-dns-keshu-windows",
+    "how-to-install-net-framework-windows"
   ],
-  "count": 40,
+  "count": 41,
   "promo_index": 35,
   "last_post": {
-    "slug": "ochyschennya-dns-keshu-windows",
-    "title": "Очищення DNS кешу Windows: навіщо і як правильно",
-    "time": "2026-07-09T08:01:25.935Z"
+    "slug": "how-to-install-net-framework-windows",
+    "title": "How to Install .NET Framework 3.5 and .NET 6/7/8 on Windows 10 and 11",
+    "time": "2026-07-10T08:01:29.389Z"
   },
   "engage_index": 28,
   "extra_index": 16
