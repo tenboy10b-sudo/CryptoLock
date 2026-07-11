@@ -40,14 +40,15 @@
     "how-to-recover-windows-10-password",
     "how-to-configure-windows-task-scheduler-advanced",
     "ochyschennya-dns-keshu-windows",
-    "how-to-install-net-framework-windows"
+    "how-to-install-net-framework-windows",
+    "yak-nalashtuvaty-ekran-blokuvannya-windows"
   ],
-  "count": 41,
+  "count": 42,
   "promo_index": 35,
   "last_post": {
-    "slug": "how-to-install-net-framework-windows",
-    "title": "How to Install .NET Framework 3.5 and .NET 6/7/8 on Windows 10 and 11",
-    "time": "2026-07-10T08:01:29.389Z"
+    "slug": "yak-nalashtuvaty-ekran-blokuvannya-windows",
+    "title": "Як налаштувати екран блокування Windows 10 і 11",
+    "time": "2026-07-11T08:01:27.236Z"
   },
   "engage_index": 29,
   "extra_index": 17
