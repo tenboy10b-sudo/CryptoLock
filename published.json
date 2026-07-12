@@ -41,14 +41,15 @@
     "how-to-configure-windows-task-scheduler-advanced",
     "ochyschennya-dns-keshu-windows",
     "how-to-install-net-framework-windows",
-    "yak-nalashtuvaty-ekran-blokuvannya-windows"
+    "yak-nalashtuvaty-ekran-blokuvannya-windows",
+    "how-to-configure-windows-proxy-settings"
   ],
-  "count": 42,
+  "count": 43,
   "promo_index": 36,
   "last_post": {
-    "slug": "yak-nalashtuvaty-ekran-blokuvannya-windows",
-    "title": "Як налаштувати екран блокування Windows 10 і 11",
-    "time": "2026-07-11T08:01:27.236Z"
+    "slug": "how-to-configure-windows-proxy-settings",
+    "title": "How to Configure Proxy Settings in Windows 10 and 11",
+    "time": "2026-07-12T08:01:23.692Z"
   },
   "engage_index": 29,
   "extra_index": 18
