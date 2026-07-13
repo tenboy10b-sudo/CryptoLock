@@ -42,14 +42,15 @@
     "ochyschennya-dns-keshu-windows",
     "how-to-install-net-framework-windows",
     "yak-nalashtuvaty-ekran-blokuvannya-windows",
-    "how-to-configure-windows-proxy-settings"
+    "how-to-configure-windows-proxy-settings",
+    "yak-nalashtuvaty-vpn-windows"
   ],
-  "count": 43,
+  "count": 44,
   "promo_index": 36,
   "last_post": {
-    "slug": "how-to-configure-windows-proxy-settings",
-    "title": "How to Configure Proxy Settings in Windows 10 and 11",
-    "time": "2026-07-12T08:01:23.692Z"
+    "slug": "yak-nalashtuvaty-vpn-windows",
+    "title": "Як підключити VPN на Windows 10 і 11 без сторонніх програм",
+    "time": "2026-07-13T08:01:28.743Z"
   },
   "engage_index": 30,
   "extra_index": 19
