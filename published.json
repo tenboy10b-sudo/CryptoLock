@@ -43,14 +43,15 @@
     "how-to-install-net-framework-windows",
     "yak-nalashtuvaty-ekran-blokuvannya-windows",
     "how-to-configure-windows-proxy-settings",
-    "yak-nalashtuvaty-vpn-windows"
+    "yak-nalashtuvaty-vpn-windows",
+    "how-to-configure-windows-notifications"
   ],
-  "count": 44,
+  "count": 45,
   "promo_index": 37,
   "last_post": {
-    "slug": "yak-nalashtuvaty-vpn-windows",
-    "title": "Як підключити VPN на Windows 10 і 11 без сторонніх програм",
-    "time": "2026-07-13T08:01:28.743Z"
+    "slug": "how-to-configure-windows-notifications",
+    "title": "How to Manage Windows Notifications: Disable, Customize and Focus Assist",
+    "time": "2026-07-14T08:01:29.778Z"
   },
   "engage_index": 30,
   "extra_index": 20
