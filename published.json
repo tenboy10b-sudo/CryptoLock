@@ -40,15 +40,20 @@
     "how-to-recover-windows-10-password",
     "how-to-configure-windows-task-scheduler-advanced",
     "ochyschennya-dns-keshu-windows",
-    "how-to-install-net-framework-windows"
+    "how-to-install-net-framework-windows",
+    "yak-nalashtuvaty-ekran-blokuvannya-windows",
+    "how-to-configure-windows-proxy-settings",
+    "yak-nalashtuvaty-vpn-windows",
+    "how-to-configure-windows-notifications",
+    "how-to-set-up-vpn-windows-11"
   ],
-  "count": 41,
-  "promo_index": 35,
+  "count": 46,
+  "promo_index": 37,
   "last_post": {
-    "slug": "how-to-install-net-framework-windows",
-    "title": "How to Install .NET Framework 3.5 and .NET 6/7/8 on Windows 10 and 11",
-    "time": "2026-07-10T08:01:29.389Z"
+    "slug": "how-to-set-up-vpn-windows-11",
+    "title": "How to Set Up a VPN in Windows 10 and 11: Built-in and Manual",
+    "time": "2026-07-15T08:01:29.399Z"
   },
-  "engage_index": 29,
-  "extra_index": 16
+  "engage_index": 31,
+  "extra_index": 21
 }
