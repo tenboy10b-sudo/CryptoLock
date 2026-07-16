@@ -45,14 +45,15 @@
     "how-to-configure-windows-proxy-settings",
     "yak-nalashtuvaty-vpn-windows",
     "how-to-configure-windows-notifications",
-    "how-to-set-up-vpn-windows-11"
+    "how-to-set-up-vpn-windows-11",
+    "yak-pereviryt-port-vidkrytyy-windows"
   ],
-  "count": 46,
+  "count": 47,
   "promo_index": 38,
   "last_post": {
-    "slug": "how-to-set-up-vpn-windows-11",
-    "title": "How to Set Up a VPN in Windows 10 and 11: Built-in and Manual",
-    "time": "2026-07-15T08:01:29.399Z"
+    "slug": "yak-pereviryt-port-vidkrytyy-windows",
+    "title": "Як перевірити чи відкритий порт в Windows: netstat, Test-NetConnection і telnet",
+    "time": "2026-07-16T08:01:30.769Z"
   },
   "engage_index": 31,
   "extra_index": 22
