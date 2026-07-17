@@ -46,14 +46,15 @@
     "yak-nalashtuvaty-vpn-windows",
     "how-to-configure-windows-notifications",
     "how-to-set-up-vpn-windows-11",
-    "yak-pereviryt-port-vidkrytyy-windows"
+    "yak-pereviryt-port-vidkrytyy-windows",
+    "yak-nalashtuvaty-monitorynh-merezhi-windows"
   ],
-  "count": 47,
+  "count": 48,
   "promo_index": 38,
   "last_post": {
-    "slug": "yak-pereviryt-port-vidkrytyy-windows",
-    "title": "Як перевірити чи відкритий порт в Windows: netstat, Test-NetConnection і telnet",
-    "time": "2026-07-16T08:01:30.769Z"
+    "slug": "yak-nalashtuvaty-monitorynh-merezhi-windows",
+    "title": "Моніторинг мережі в Windows: як відстежити трафік і знайти зайві підключення",
+    "time": "2026-07-17T08:01:17.124Z"
   },
   "engage_index": 32,
   "extra_index": 23
