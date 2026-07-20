@@ -49,14 +49,15 @@
     "yak-pereviryt-port-vidkrytyy-windows",
     "yak-nalashtuvaty-monitorynh-merezhi-windows",
     "yak-nalashtuvanty-korporatyvnyy-email-windows",
-    "yak-pidklyuchyty-merezhevyy-dysk-windows"
+    "yak-pidklyuchyty-merezhevyy-dysk-windows",
+    "how-to-configure-remote-registry-windows"
   ],
-  "count": 50,
+  "count": 51,
   "promo_index": 40,
   "last_post": {
-    "slug": "yak-pidklyuchyty-merezhevyy-dysk-windows",
-    "title": "Як підключити мережевий диск в Windows: всі способи",
-    "time": "2026-07-19T08:01:14.027Z"
+    "slug": "how-to-configure-remote-registry-windows",
+    "title": "Windows Registry: How to Edit, Backup and Restore Registry Keys",
+    "time": "2026-07-20T08:01:14.048Z"
   },
   "engage_index": 33,
   "extra_index": 26
