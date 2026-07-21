@@ -80,6 +80,11 @@ const nextConfig = {
       { source: '/yak-pryskoryt-zavantazhennya-windows', destination: '/yak-pryskoryt-windows', permanent: true },
       { source: '/yak-pryskoryt-zavantazhennya-windows-11', destination: '/yak-pryskoryt-windows', permanent: true },
 
+      // "Спільний доступ до папок" — 4 статті об'єднано в yak-nalashtuvanty-spilnyy-dostup-do-papky
+      { source: '/yak-nalashtuvatysy-spilnyy-dostup-do-papky', destination: '/yak-nalashtuvanty-spilnyy-dostup-do-papky', permanent: true },
+      { source: '/yak-nalashtuvanty-shared-folder-windows', destination: '/yak-nalashtuvanty-spilnyy-dostup-do-papky', permanent: true },
+      { source: '/spilni-papky-merezha-windows', destination: '/yak-nalashtuvanty-spilnyy-dostup-do-papky', permanent: true },
+
       // ── /en/tags/tools → /tools ──────────────────────────────────────
       { source: '/en/tags/tools', destination: '/tools', permanent: true, locale: false },
       { source: '/en/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', destination: '/tools', permanent: true, locale: false },
