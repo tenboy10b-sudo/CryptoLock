@@ -5,7 +5,7 @@ publishDate: "2026-05-01"
 description: "Use Windows Event Viewer to diagnose crashes, errors and security events. Filter logs, find critical errors, export events and automate monitoring with PowerShell."
 tags: ["windows", "event-viewer", "diagnostics", "powershell", "administration"]
 readTime: 5
-translatesUk: "yak-korystuvatys-zhurnalom-podiy-eventvwr"
+translatesUk: "yak-korystuvatys-zhurnalom-podiy-windows"
 ---
 
 Event Viewer records everything that happens in Windows. It's the first place to look when diagnosing crashes, slow boot, or security incidents.
