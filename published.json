@@ -50,14 +50,15 @@
     "yak-nalashtuvaty-monitorynh-merezhi-windows",
     "yak-nalashtuvanty-korporatyvnyy-email-windows",
     "yak-pidklyuchyty-merezhevyy-dysk-windows",
-    "how-to-configure-remote-registry-windows"
+    "how-to-configure-remote-registry-windows",
+    "how-to-troubleshoot-windows-update-stuck"
   ],
-  "count": 51,
+  "count": 52,
   "promo_index": 40,
   "last_post": {
-    "slug": "how-to-configure-remote-registry-windows",
-    "title": "Windows Registry: How to Edit, Backup and Restore Registry Keys",
-    "time": "2026-07-20T08:01:14.048Z"
+    "slug": "how-to-troubleshoot-windows-update-stuck",
+    "title": "Windows Update Stuck at 0% or 100%: How to Fix It",
+    "time": "2026-07-21T08:01:07.688Z"
   },
   "engage_index": 34,
   "extra_index": 27
