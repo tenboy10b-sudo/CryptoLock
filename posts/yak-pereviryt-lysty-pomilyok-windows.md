@@ -38,7 +38,7 @@ readTime: 6
 
 Джерела на які варто звертати увагу: `Kernel-Power` (помилка живлення), `BugCheck` (код BSOD), `disk` (проблеми з диском).
 
-Детальніше про BSOD: [Синій екран смерті — причини і рішення](/siniy-ekran-smerti-bsod-yak-vypravyty)
+Детальніше про BSOD: [Синій екран смерті — причини і рішення](/siniy-ekran-smerti-windows-11-24h2)
 
 ---
 

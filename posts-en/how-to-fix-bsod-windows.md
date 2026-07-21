@@ -5,7 +5,7 @@ publishDate: "2026-04-24"
 description: "Blue screen with a stop code? Here's how to read BSOD error codes, find the cause in Event Viewer, and fix the most common stop errors including MEMORY_MANAGEMENT, DRIVER_IRQL, and CRITICAL_PROCESS_DIED."
 tags: ["windows", "troubleshooting", "bsod", "diagnostics"]
 readTime: 8
-translatesUk: "yak-vypravyty-bsod-windows"
+translatesUk: "siniy-ekran-smerti-windows-11-24h2"
 ---
 
 A blue screen means Windows hit a critical error it couldn't recover from. The stop code tells you exactly what went wrong — if you know how to read it.

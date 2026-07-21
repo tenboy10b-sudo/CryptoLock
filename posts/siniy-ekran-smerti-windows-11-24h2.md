@@ -1,164 +1,216 @@
 ---
-title: "Синій екран смерті Windows 11 після оновлення: як виправити у 2025-2026"
+title: "Синій екран смерті (BSOD) в Windows: причини, коди помилок і повне виправлення"
 date: "2026-05-22"
+updated: "2026-07-21"
 publishDate: "2026-05-22"
-description: "Windows 11 24H2 показує синій екран після оновлення KB5055523 або KB5053656? Покрокове виправлення BSOD: 0x18B, SECURE_KERNEL_ERROR, UNSUPPORTED_PROCESSOR та інших."
-tags: ["windows", "bsod", "помилки", "windows-11", "відновлення"]
-readTime: 7
+description: "Повний гайд по BSOD у Windows 10 і 11: що означають коди помилок, відомий інцидент з оновленнями 24H2 (0x18B), діагностика драйверів/RAM/диска, аналіз дампів пам'яті."
+tags: ["windows", "bsod", "помилки", "windows-11", "відновлення", "діагностика"]
+translatesEn: "how-to-fix-bsod-windows"
+readTime: 10
 ---
 
-Оновлення Windows 11 24H2 за березень-квітень 2026 року спричинили хвилю BSOD на мільйонах ПК. Microsoft визнала проблему і випустила екстрений патч — але не всі отримали його автоматично. Ось що робити прямо зараз.
+Синій екран з кодом помилки виглядає страшно, але в більшості випадків вирішується самостійно за 10-20 хвилин. BSOD (Blue Screen of Death) — це захисний механізм: коли Windows виявляє критичну помилку, що загрожує даним, вона примусово зупиняє роботу замість продовжувати з пошкодженим станом.
+
+**Основні причини:** несправний або несумісний драйвер, пошкоджена оперативна пам'ять, проблеми з диском, перегрів, несумісне ПЗ, вірус, або (див. розділ нижче) конкретне проблемне оновлення Windows.
 
 ---
 
-## Які BSOD найчастіше виникають після оновлень 2025-2026
+## Спочатку перевір: чи це відомий інцидент з оновленнями 24H2
+
+Починаючи з березня 2026 Microsoft підтвердила серію BSOD після встановлення кумулятивних оновлень для Windows 11 24H2 на мільйонах ПК. Якщо синій екран з'явився одразу після оновлення Windows — велика ймовірність, що причина саме тут, і рішення простіше за загальну діагностику нижче.
+
+**Які оновлення викликають проблему:**
 
 | Код помилки | Назва | Причина |
-|-------------|-------|---------|
-| `0x0000018B` | SECURE_KERNEL_ERROR | Конфлікт оновлень KB5053656 / KB5055523 |
+|---|---|---|
+| `0x0000018B` | SECURE_KERNEL_ERROR | KB5053656 (березень 2026) / KB5055523 (квітень 2026) |
 | `0x000000C5` | DRIVER_CORRUPTED_EXPOOL | Пошкоджений драйвер після оновлення |
 | `0xC000021A` | SYSTEM_PROCESS_TERMINATED | Критичний системний процес впав |
 | `0x0000007E` | SYSTEM_THREAD_EXCEPTION | Несумісний драйвер |
-| `UNSUPPORTED_PROCESSOR` | — | Конфлікт з материнськими платами MSI/Intel |
+| `UNSUPPORTED_PROCESSOR` | — | KB5029351, конфлікт з платами MSI + Intel 12/13 Gen |
 
----
+Microsoft застосувала **Known Issue Rollback (KIR)** — автоматичний відкат проблемних змін, розгортається до 24 годин, не завжди спрацьовує сам.
 
-## Крок 1: Перевір чи є для тебе Known Issue Rollback
-
-Microsoft випустила KIR (Known Issue Rollback) — автоматичний відкат проблемного оновлення. Він застосовується сам, але може зайняти до 24 годин.
+### Крок 1: Перевір чи прийшов автоматичний фікс
 
 ```powershell
-# Перевір версію і дату останнього оновлення
-(Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").DisplayVersion
-Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 3 HotFixID, InstalledOn
+(New-Object -ComObject Microsoft.Update.SystemInfo).RebootRequired
+# Якщо True — перезавантаж і перевір чи проблема зникла
 ```
 
-Якщо ПК взагалі не завантажується — переходь одразу до Кроку 3.
+`Win + I` → **Windows Update** → **Перевірити наявність оновлень** → встанови все.
 
----
-
-## Крок 2: Видалити проблемне оновлення (якщо Windows завантажується)
+### Крок 2: Видалити проблемне оновлення (якщо Windows завантажується)
 
 ```powershell
 # Переглянути останні оновлення
-Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 5 HotFixID, InstalledOn
+Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 10 HotFixID, InstalledOn
 
-# Видалити конкретне оновлення (замінити KB-номер)
+# Видалити конкретне (заміни номер KB на своє)
 wusa /uninstall /kb:5055523 /quiet /norestart
-
-# Або через Settings
-# Win+I → Windows Update → Update history → Uninstall updates
 ```
 
-Після видалення перезавантаж і перевір стабільність.
+Через графічний інтерфейс: `Win + I` → **Windows Update** → **Журнал оновлень** → **Видалити оновлення**.
+
+### Крок 3: Якщо Windows взагалі не завантажується
+
+Перебий завантаження 3 рази кнопкою живлення → увійде в **Recovery Mode** → **Усунення несправностей** → **Розширені параметри**:
+
+- **Uninstall Updates** → Uninstall latest quality update
+- **System Restore** → точка відновлення до появи BSOD
+- **Startup Settings → F4** — безпечний режим, звідти виконати видалення оновлення вручну
+
+### Оновити BIOS, якщо плата MSI/ASUS/Gigabyte
+
+Деякі BSOD цієї хвилі пов'язані з несумісністю оновлення Windows зі старою прошивкою материнської плати:
+
+```powershell
+(Get-WmiObject Win32_BIOS).SMBIOSBIOSVersion
+(Get-WmiObject Win32_BaseBoard) | Select-Object Manufacturer, Product, Version
+```
+
+Перевір сайт виробника плати на нову версію BIOS.
+
+### Призупинити оновлення, щоб не повторилось
+
+```powershell
+$pause = (Get-Date).AddDays(35).ToString("yyyy-MM-ddTHH:mm:ssZ")
+Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" -Name "PauseQualityUpdatesEndTime" -Value $pause
+```
+
+Або: `Win + I` → **Windows Update** → **Призупинити на 1-4 тижні** — дає час іншим користувачам виявити нові баги перед тобою.
 
 ---
 
-## Крок 3: Якщо Windows не завантажується — Recovery Mode
+## Загальна діагностика BSOD (якщо причина не в конкретному оновленні)
 
-**При старті ПК натискай F8 або перервати завантаження 3 рази підряд.**
+### Крок 1: Запиши код помилки
 
-Автоматичне відновлення → **Усунення несправностей** → **Розширені параметри**:
+На синьому екрані є рядок STOP CODE — найважливіша інформація, запиши або сфотографуй до перезавантаження.
 
-### Варіант А: Видалити оновлення через Recovery
-**Uninstall Updates** → **Uninstall latest quality update**
+| Код | Причина |
+|---|---|
+| `MEMORY_MANAGEMENT` | Проблема з RAM |
+| `PAGE_FAULT_IN_NONPAGED_AREA` | Пошкоджена RAM або диск |
+| `DRIVER_IRQL_NOT_LESS_OR_EQUAL` | Несправний драйвер |
+| `SYSTEM_SERVICE_EXCEPTION` | Конфлікт драйверів або вірус |
+| `NTFS_FILE_SYSTEM` | Проблема з диском |
+| `KERNEL_SECURITY_CHECK_FAILURE` | Несумісний драйвер або оновлення |
+| `CRITICAL_PROCESS_DIED` | Пошкоджені системні файли |
+| `SYSTEM_THREAD_EXCEPTION_NOT_HANDLED` | Драйвер |
+| `DPC_WATCHDOG_VIOLATION` | Драйвер або прошивка SSD |
 
-### Варіант Б: Відновлення системи
-**System Restore** → вибери точку до появи BSOD
+**Якщо BSOD з'явився один раз і не повторюється** — це, ймовірно, разовий збій, можна просто продовжувати роботу. Якщо повторюється — читай далі.
 
-### Варіант В: Безпечний режим
-**Startup Settings** → F4 (Safe Mode) або F5 (Safe Mode with Networking)
+### Крок 2: Перевір останні зміни
 
-В безпечному режимі:
+BSOD часто з'являється після встановлення драйвера, оновлення Windows, підключення нового обладнання чи програми. Якщо знаєш що змінилось — відкоти:
+
+**Відкотити драйвер:** `Win + X` → Диспетчер пристроїв → знайди пристрій → Властивості → вкладка Драйвер → **Відкотити драйвер**.
+
 ```powershell
-# Видалити оновлення в безпечному режимі
-dism /image:C:\ /get-packages | findstr KB5055523
-dism /image:C:\ /remove-package /packagename:Package_for_RollupFix~...
+# Останні встановлені драйвери
+Get-WindowsDriver -Online | Sort-Object Date -Descending | Select-Object -First 15 Driver, Date, ProviderName
+
+# Видалити конкретний
+pnputil /delete-driver oem12.inf /uninstall /force
 ```
 
----
+### Крок 3: Відновити системні файли
 
-## Крок 4: Відновити системні файли
-
-```powershell
-# Запусти від адміністратора після завантаження
+```cmd
 DISM /Online /Cleanup-Image /RestoreHealth
 sfc /scannow
 ```
 
-Перезавантаж після завершення.
+Детальніше: [SFC і DISM — повний гайд](/sfc-dism-povnyy-gaid)
 
----
+### Крок 4: Перевір оперативну пам'ять
 
-## Крок 5: Оновити або відкотити драйвери
+Якщо код пов'язаний з пам'яттю (`MEMORY_MANAGEMENT`, `PAGE_FAULT`) або BSOD випадкові з різними кодами:
 
-BSOD часто спричинені конфліктом оновлення з драйвером відеокарти або чіпсета:
-
-```powershell
-# Знайти проблемні драйвери
-Get-WinEvent -FilterHashtable @{LogName='System'; Id=7034,7023} -MaxEvents 10 |
-  Select-Object TimeCreated, Message
-
-# Перевірити Device Manager на помилки
-Get-PnpDevice | Where-Object {$_.Status -ne 'OK'} | Select-Object Name, Status, Class
+```
+Win + R → mdsched → Перезавантажити і перевірити зараз
 ```
 
-**NVIDIA/AMD**: завантаж останній драйвер з сайту виробника (не через Windows Update).
+Займає 20-40 хвилин. Детальніше: [Як перевірити оперативну пам'ять](/perevirka-ram-na-pomylky)
 
-**MSI материнські плати** + Intel 12/13 Gen: оновити BIOS до останньої версії з сайту MSI.
+### Крок 5: Перевір диск
+
+```cmd
+chkdsk C: /f /r
+```
+
+Погодься на перезавантаження, якщо запропонує — перевірка запуститься до старту Windows. Детальніше: [Перевірка диска на помилки chkdsk](/perevirka-dysku-na-pomylky-chkdsk)
+
+### Крок 6: Перевір температуру
+
+Перегрів — часта причина BSOD саме під навантаженням:
+
+```powershell
+winget install REALiX.HWiNFO
+```
+
+Норма для CPU — до 85°C під навантаженням, вище 90°C — проблема з охолодженням (почисти від пилу, перевір кулер).
+
+### Крок 7: Подивись журнал подій
+
+`Win + X` → Перегляд подій → Журнали Windows → Система → фільтр "Критичний" і "Помилка" навколо часу BSOD.
+
+Детальніше: [Журнал подій Windows](/zhurnal-podiy-event-viewer)
 
 ---
 
-## Крок 6: Аналіз файлу дампу (для досвідчених)
+## Аналіз файлу дампу (для досвідчених)
 
-Windows зберігає файл дампу при BSOD:
+Windows зберігає файл дампу при кожному BSOD:
 
 ```powershell
 # Знайти файли мінідампу
 Get-ChildItem "C:\Windows\Minidump" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 5
 
-# Переглянути тип BSOD з логів
+# Тип BSOD з журналу подій
 Get-WinEvent -FilterHashtable @{LogName='System'; Id=41} -MaxEvents 3 |
   Select-Object TimeCreated, @{n='BugCheckCode';e={$_.Properties[0].Value}}
 ```
 
-Event ID 41 → BugCheckCode 0x18B = підтверджений SECURE_KERNEL_ERROR від оновлення.
+Для глибокого аналізу — безкоштовний **WinDbg** з Microsoft Store: відкрий `.dmp` файл → команда `!analyze -v` покаже точну причину, включно з конкретним драйвером-винуватцем.
 
 ---
 
-## Крок 7: Якщо нічого не допомогло — Reset Windows
+## Якщо нічого не допомогло
 
-```powershell
-# Через PowerShell (якщо доступний)
-systemreset --factoryreset
-```
-
-Або: **Win+I → Система → Відновлення → Скинути ПК → Cloud download**
-
-Cloud download завантажить чистий образ від Microsoft — гарантовано без проблем від оновлення.
+1. **Безпечний режим** — завантаж Windows у безпечному режимі (Shift+Restart) і перевір чи повторюється BSOD. Якщо ні — проблема в драйвері або програмі, що не завантажується в safe mode.
+2. **Відновлення системи** — поверни Windows до точки відновлення до появи проблеми.
+3. **Скидання з хмарним завантаженням:** Win+I → Система → Відновлення → Скинути ПК → **Cloud download** — гарантовано чистий образ від Microsoft, без пошкоджень від проблемного оновлення.
+4. **Чисте встановлення** — крайній варіант: [Встановлення Windows 11 з флешки](/yak-vstanovyty-windows-11-z-fleshky).
 
 ---
 
-## 🔍 Не знаєш що означає твій код помилки?
+## Часті питання
 
-**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код BSOD (наприклад `0x0000018B` або `0xC000021A`) і дізнайся що він означає та покрокове виправлення.
+### Як зрозуміти — це драйвер чи несправне залізо?
 
----
+**Драйвер:** BSOD з'являється після зміни ПЗ, завжди той самий код, зникає після видалення/відкату драйвера. **Залізо:** випадкові BSOD з різними кодами, повторюються навіть після перевстановлення Windows.
 
-## Як запобігти в майбутньому
+### ПК перезавантажується занадто швидко, не встигаю прочитати код
 
-```powershell
-# Відкласти оновлення на 14 днів (дати час виявити баги)
-$path = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
-New-Item -Path $path -Force | Out-Null
-Set-ItemProperty -Path $path -Name "DeferQualityUpdatesPeriodInDays" -Value 14 -Type DWord
+Вимкни автоперезапуск: `sysdm.cpl` → Додатково → Завантаження та відновлення → зніми **Автоматичний перезапуск**. Тоді BSOD залишиться на екрані до ручного перезавантаження.
 
-# Або через Settings:
-# Win+I → Windows Update → Advanced options → Pause updates
-```
+### BBOD з'явився одразу після оновлення Windows — з чого почати?
+
+Спочатку перевір розділ "Відомий інцидент з оновленнями 24H2" вище — якщо код збігається з таблицею, рішення набагато швидше за загальну діагностику.
 
 ---
 
-## Резюме
+## Підсумок
 
-**Якщо Windows завантажується:** видали проблемне оновлення через `wusa /uninstall /kb:НОМЕР`. **Якщо ні:** Recovery Mode → Uninstall latest quality update. Після відновлення: `DISM /RestoreHealth` + `sfc /scannow`. Код помилки невідомий — [Декодер помилок](/tools/windows-error-decoder).
+**Якщо BSOD стався одразу після оновлення Windows** — перевір таблицю відомих кодів на початку статті, видали проблемне оновлення (`wusa /uninstall /kb:НОМЕР`) або пройди через Recovery Mode.
+
+**Для решти випадків:** запиши STOP-код → відкоти останню зміну (драйвер/оновлення/нову програму) → `DISM /RestoreHealth` + `sfc /scannow` → тест RAM (`mdsched`) і диска (`chkdsk`) → перевір температури. Код помилки — це підказка напрямку, не вирок.
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код (наприклад `0x0000018B` або `0xC000021A`) і одразу дізнайся що він означає та як виправити.

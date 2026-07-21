@@ -154,7 +154,7 @@ Recovery → **Усунення несправностей** → **Скинут�
 ---
 
 **Читай також:**
-- [синій екран після оновлення](/siniy-ekran-pislya-onovlennya-windows-11)
+- [синій екран смерті (BSOD)](/siniy-ekran-smerti-windows-11-24h2)
 - [відновлення завантажувача Windows](/vidnovlennya-zavantazhuvach-windows)
 
 ## Резюме
