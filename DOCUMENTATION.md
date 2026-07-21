@@ -2012,3 +2012,99 @@ Vercel Dashboard → Settings → Git → "Select a Git Namespace" вимага�
 - [ ] Контрольна точка GSC — 22.07.2026 (з сесії 9, без змін)
 - [ ] Решта TODO з сесій 9-10 без змін (2FA-стаття запросити індексацію, `/en/tags/адміністратор`, тощо)
 
+---
+
+### Сесія 12 (21 липня 2026) — Ймовірна справжня причина краху трафіку: scaled content abuse. Повний аудит масиву статей + план консолідації
+
+#### Контекст і як дійшли до цієї гіпотези
+
+Користувач попросив продовжити генерувати статті. Перевірка черги показала — контенту вже достатньо (88 UK + 70 EN заплановано наперед до лютого 2027), тож фокус змістився на GSC-аналіз. Користувач показав повний графік Ефективності (29.04–14.07): покази стабільно росли до ~300/день і кілька кліків щодня аж до **10-13 червня**, після чого **різкий обрив до майже нуля**, що тримається й досі (33 кліки, 3.27 тис. показів за весь період). Моя початкова версія ("новий домен, 0 backlinks, конкурентна ніша") не витримала критики користувача — це не пояснює **форму обриву** (різкий, не поступовий) і те, що сайт явно вже мав робочий трафік до 13 червня.
+
+Перевірено і відкинуто:
+- **Malware/Safe Browsing флаг** — домен чистий (`sb.ssr` статус: жодного прапорця)
+- **Manual Actions / Security Issues** — "Проблем не виявлено" (перевірено користувачем напряму в GSC UI)
+
+Це не суперечить наступній гіпотезі — алгоритмічні санкції (Helpful Content System / spam policies) **ніколи не показуються** в Manual Actions, вони мовчазні за задумом.
+
+#### Дослідження актуальних практик (WebSearch, липень 2026)
+
+- Google's March 2026 core update зробив **scaled content abuse** головною ціллю правозастосування; сайти, що накопичували рейтинг через масові AI/шаблонні сторінки, втрачали 50-80% органічного трафіку за ~2 тижні
+- Політика **метод-агностична**: не важливо чи написано людиною, AI чи скраплено — оцінюється намір (маніпуляція рейтингом) і результат (мало цінності для читача) при **масовому** публікуванні
+- Ефективна практика відновлення: **консолідація** тонких сторінок в комплексні гайди + 301-редирект зі старих URL, а не покращення кожної сторінки окремо — сайти з сотнями тонких сторінок рідко відновлюються "по одній"
+- Один задокументований кейс: після консолідації в pillar-сторінки сайт **повернув весь втрачений трафік + отримав 15% нових користувачів**
+- **Часові рамки відновлення:** зазвичай 3-6 місяців після впровадження покращень; Google перескановує і переоцінює покращений контент 2-3 місяці; повне відновлення часто вимагає наступного великого core update. Офіційна цитата Google Search Central: "it could take several months for our systems to learn and confirm that the site as a whole is now producing helpful, reliable, people-first content"
+
+Джерела: [Site Reputation Abuse Recovery 2026](https://medium.com/predict/site-reputation-abuse-google-recovery-how-publishers-and-affiliate-networks-can-rebuild-trust-in-cf1b5a82c428), [Scaled Content Abuse Guide](https://www.digitalapplied.com/blog/scaled-content-abuse-google-march-update-ai-pages-decimated), [Understanding Scaled Content Abuse Policy](https://bulkbase.ai/seo/understanding-googles-scaled-content-abuse-policy), [Pillar Page Strategy 2026](https://www.w3era.com/blog/seo/pillar-page-strategy-guide/), [Content Consolidation Guide](https://contentmation.com/seo/content-consolidation-guide), [Core Update Recovery Playbook](https://www.dataslayer.ai/blog/google-core-update-december-2025-what-changed-and-how-to-fix-your-rankings)
+
+#### Повний аудит масиву — статистика (програмний аналіз усіх 449 UK + 244 EN файлів)
+
+**UK (`posts/`, 449 статей):**
+| Метрика | Значення |
+|---|---|
+| Медіана слів | **429** |
+| Середнє слів | 437 |
+| Мін / Макс | 108 / 1140 |
+| Статей до 400 слів | **199 (44%)** |
+| Статей 700+ слів | лише 19 (4%) |
+| Статей з шаблонним розділом "Резюме"/"Підсумок" | **394 (87%)** |
+
+**EN (`posts-en/`, 244 статті) — здоровіший, але той самий патерн у меншому масштабі:**
+| Метрика | Значення |
+|---|---|
+| Медіана слів | 537 |
+| Середнє слів | 521 |
+| Мін / Макс | 211 / 1434 |
+| Статей до 400 слів | 56 (22%) |
+
+**Найкоротші UK-статті (108-198 слів)** — вузькі одноналаштувальні теми, розтягнуті ледь більше ніж на абзац: DNS кеш (108), DHCP порт-переадресація (111), перемикання мережевого профілю (149), Windows Defender Network Protection (164), NTP синхронізація (166), PnPUtil (169), Credential Manager (172), gpedit.msc обмеження (192).
+
+#### КРИТИЧНА ЗНАХІДКА — масове дублювання тем, не лише "тонкий контент"
+
+Ручний огляд заголовків у 9 найбільших тематичних кластерах (мережа-86, powershell-97, оптимізація-61, продуктивність-46, cmd-45, діагностика-39, відновлення-36, обладнання-31 — разом покривають більшість масиву з перетинами) виявив **~30 підтверджених груп статей на одну й ту саму тему**, деякі навіть з майже ідентичними slug (одруківки на кшталт `nalashtuvanty` vs `nalashtuvatysy`, `pereviryty` vs `pereviryt` — сильний доказ що статті писались окремими сесіями без перевірки що тема вже покрита).
+
+**Найпоказовіші приклади (тема — кількість статей — приклади slug):**
+
+| Тема | К-сть | Приклади |
+|---|---|---|
+| Як прискорити Windows / чому гальмує | **8** | `yak-pryskoryt-windows`, `chomu-windows-halmuie-yak-pryskoryt`, `noutbuk-galmuje-prichyny-rishennya`, `yak-zrobyty-windows-11-shvydshe-na-slabkomu-pk`, `yak-pryskoryt-windows-11-v-2026`, `yak-nalashtuvaty-windows-na-stariy-pk`, +2 про завантаження |
+| Спільний доступ до папок | 4 | `yak-nalashtuvanty-spilnyy-dostup-do-papky`, `yak-nalashtuvatysy-spilnyy-dostup-do-papky` (одруківка в slug!), `yak-nalashtuvanty-shared-folder-windows`, `spilni-papky-merezha-windows` |
+| Мережевий принтер | 4 | `yak-nalashtuvanty-printery-merezhevy-domen`, `nalashtuvannya-merezhenoho-pryntera-windows`, `yak-nalashtuvanty-printer-ip-merezhi`, `yak-pidklyuchyty-printer-windows` |
+| Windows Terminal | 4 | `yak-nalashtuvaty-windows-terminal`, `yak-korystuvatysya-windows-terminal`, `windows-terminal-povnyy-gaid`, `windows-terminal-nalashtuvannya` |
+| Журнал подій / Event Viewer | 4 | `yak-korystuvatys-zhurnalom-podiy-windows`, `yak-pereviryty-zhurnaly-podiy-windows`, `yak-korystuvatys-zhurnalom-podiy-eventvwr`, `yak-ochystyty-zhurnaly-podiy-windows` |
+| BSOD / синій екран | 4 | `siniy-ekran-smerti-bsod-yak-vypravyty`, `siniy-ekran-pislya-onovlennya-windows-11`, `siniy-ekran-smerti-windows-11-24h2`, `yak-vypravyty-bsod-windows` |
+| Ігрова оптимізація | 4 | `optymizatsiya-windows-dlya-igor`, `yak-nalashtuvaty-windows-dlya-igher`, `nalashtuvannya-igrovogo-pk-windows`, `yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka` |
+| Мережевий диск | 3 | `yak-nalashtuvaty-merezhevyy-dysk-windows`, `pidklyuchennya-setevykh-dyskiv-windows`, `yak-pidklyuchyty-merezhevyy-dysk-windows` |
+| Firewall-правила | 3 | `windows-firewall-nalashtuvannya-pravyl`, `nalashtuvannya-brandmauera-windows`, `rozshyreni-pravyla-brandmauera-windows` |
+| PowerShell — служби Windows | 3 | `keruvannya-sluzhbamy-windows-powershell`, `keruvanya-sluzhbamy-windows`, `powershell-robota-z-sluzhbamy-windows` |
+| PowerShell — топ-скрипти для адміна | 3 | `powershell-skrypty-dlya-admina-top20`, `powershell-komandy-administratora`, `powershell-skrypty-dlya-systemnykh-admyniv` |
+| Task Manager (буквально та сама назва) | 2 | `dispecher-zavdan-windows-povnyy-gaid`, `dispecher-zavdan-windows-povnyy-posibnyk` |
+| Температура CPU/GPU (та сама назва) | 2 | `yak-pereviryty-temperaturu-protsesora-windows`, `yak-pereviryt-temperaturu-protsesora-windows` (одна літера різниці в slug) |
+| Реклама Windows 11 (одруківка в slug) | 2 | `yak-prybravty-reklamu-z-windows-11`, `yak-pryberty-reklamu-z-windows-11` |
+| Налаштування миші (одруківка в slug) | 2 | `yak-nalashtuvaty-mysh-windows`, `yak-nalashtuvanty-myszhu-windows` |
+| + ще ~15 менших пар/трійок | ~30 | DNS over HTTPS, швидкість інтернету, перенесення Windows на SSD, віртуальні робочі столи, Windows 11 після встановлення, CPU 100%, DNS налаштування/виправлення, відкритий порт, winget, NTP, робочий стіл (одруківка в slug) |
+
+**EN-масив — той самий патерн, менший масштаб:** знайдено вже в першому скануванні `how-to-clean-install-windows-10-11` vs `how-to-clean-install-windows-11`, `how-to-configure-network-adapter-settings` vs `how-to-configure-windows-network-adapter` — повний аудит EN не проведено (менший пріоритет, EN і так менше постраждав за трафіком).
+
+**Оцінка масштабу:** ~30 підтверджених груп × в середньому 3 статті ≈ **90+ статей** (з 449, тобто ~20% усього UK-масиву) є прямим дублюванням/канібалізацією, а не просто окремими темами. Це значно серйозніший сигнал для scaled-content-abuse класифікатора, ніж просто "багато коротких статей" — це "багато статей що конкурують одна з одною за той самий запит".
+
+#### План консолідації (запропонований, ще не виконується — очікує рішення користувача про обсяг)
+
+**Фаза 1 (негайно):** не публікувати нові статті з поточної черги (88 UK + 70 EN) у теперішньому форматі — вже узгоджено з користувачем раніше в цій сесії.
+
+**Фаза 2 (основна робота):** об'єднати ~30 виявлених груп у pillar-статті 1500-2500+ слів кожна, зі старих slug зробити 301-редирект на нову консолідовану статтю. Пріоритет — почати з найбільшої й найпоказовішої групи ("Як прискорити Windows", 8 статей) як пілотний кейс, оцінити витрачений час, тоді продовжувати рештою.
+
+**Фаза 3:** нова редакційна політика — 1-2 глибокі статті на тиждень замість 4-10 тонких; перед написанням нової статті — обов'язкова перевірка чи тема вже не покрита (це б запобігло переважній більшості знайдених дублікатів).
+
+**Фаза 4 (паралельно, довгостроково):** зовнішні сигнали довіри (backlinks) — 0 backlinks і досі задокументована слабкість, підсилює відновлення після фіксу контенту, не замінює його.
+
+**Фаза 5:** реалістичні очікування — 3-6 місяців до помітного відновлення навіть при ідеальному виконанні, за офіційною позицією Google.
+
+#### Оновлений TODO
+
+- [ ] **Рішення користувача:** підтвердити обсяг Фази 2 — усі ~30 груп одразу, чи почати з пілотної групи ("Як прискорити Windows", 8→1 статей) і оцінити ефект/зусилля перед масштабуванням
+- [ ] Провести такий самий детальний аудит дублікатів на решті менших UK-тегів (не всі 40+ тегів охоплено — цей прохід покрив 9 найбільших кластерів)
+- [ ] Провести повний (не вибірковий) аудит EN-масиву (244 статті) на дублікати
+- [ ] Розробити конкретний список 301-редиректів для кожної об'єднаної групи (стара URL → нова pillar URL) — робити одночасно з написанням pillar-статей, не окремим кроком (уникнути 404 в проміжку)
+- [ ] Після першої хвилі консолідації — задокументувати "до/після" (кількість статей, охоплення тем) для відстеження прогресу
+- [ ] Контрольна точка GSC — 22.07.2026 (з сесії 9, без змін, хоча тепер очікування скориговане: це фіксація факту "ще не відновилось", а не сюрприз)
+
