@@ -6,7 +6,7 @@ updated: "2026-06-18"
 description: "Reasons why Windows 10 and 11 runs slow and step-by-step fixes. Clean up startup, optimize services, update drivers, fix disk issues and configure power settings for maximum speed."
 tags: ["windows", "optimization", "performance", "settings", "speed"]
 readTime: 9
-translatesUk: "chomu-windows-halmuie-yak-pryskoryt"
+translatesUk: "yak-pryskoryt-windows"
 ---
 
 Windows slows down over time — that's normal. But causes and solutions differ. Here's a systematic approach: from quick wins to deep optimization.

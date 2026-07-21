@@ -5,7 +5,7 @@ updated: "2026-05-23"
 publishDate: "2026-05-09"
 description: "Windows 11 running slow? These proven methods genuinely improve performance: disable startup apps, switch power plan, reduce visual effects, clean disk, and update drivers."
 tags: ["windows", "optimization", "performance", "settings"]
-translatesUk: "yak-pryskoryt-windows-11-v-2026"
+translatesUk: "yak-pryskoryt-windows"
 readTime: 6
 ---
 
