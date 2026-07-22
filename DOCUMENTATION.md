@@ -2450,3 +2450,24 @@ Vercel Dashboard → Settings → Git → "Select a Git Namespace" вимага�
 
 - [ ] Продовжити за розміром групи — наступні кандидати по 3 статті: Мережевий диск, Firewall-правила, PowerShell-служби, PowerShell топ-скрипти
 
+---
+
+### Сесія 12 (продовження 11) — Десята консолідація: "Мережевий диск" (3→1)
+
+Наступна за розміром групи (3 статті), як домовлено в попередньому TODO. Усі три — той самий намір пошуку (підключення мережевого диска), без різних підтем, як у деяких попередніх групах. Canonical обрано не за GSC (усі ≤3 покази), а за двома незалежними сигналами: `yak-pidklyuchyty-merezhevyy-dysk-windows` вже була найповнішою (Провідник + CMD + PowerShell + **GPO Drive Maps** для домену + найбільше троблшутингу) і на неї вже було живе внутрішнє посилання з `yak-perenesty-fayly-z-staroho-pk-na-novyy.md`.
+
+**Унікальні пункти, додані з двох інших статей:** `cmdkey` для збереження credentials окремо від `net use`, WMI-запит (`Get-WmiObject Win32_MappedLogicalDisk`) для списку дисків з вільним місцем, заплановане завдання при вході через `Register-ScheduledTask` (надійніше за папку автозапуску), і реєстровий фікс `KeepConn` для дисків що зникають після сну (окрема причина від `net config server /autodisconnect`, який лишився в статті для проблеми з боку сервера).
+
+**Видалено:** `pidklyuchennya-setevykh-dyskiv-windows`, `yak-nalashtuvaty-merezhevyy-dysk-windows`. Виправлено `translatesUk` в `posts-en/how-to-map-network-drives-windows.md` (раніше вказував на видалений `pidklyuchennya-setevykh-dyskiv-windows`). Додано 2 редиректи. Внутрішнє посилання з `yak-perenesty-fayly-z-staroho-pk-na-novyy.md` вже вказувало на canonical — правити не довелось.
+
+**Перевірено:** `npm run build` без помилок, задеплоєно `vercel --prod`, наживо — canonical 200, обидва старих URL 308.
+
+#### Прогрес консолідації
+
+**Разом: 39 статей → 10, 29 URL на редирект.** Лишається ~20 груп.
+
+#### Оновлений TODO
+
+- [ ] Продовжити за розміром групи — наступні кандидати по 3 статті: Firewall-правила, PowerShell — служби Windows, PowerShell — топ-скрипти адміна
+- [ ] Почекати кілька днів, перевірити індексацію десятої консолідованої статті
+
