@@ -5,7 +5,7 @@ publishDate: "2026-05-11"
 description: "Configure Windows Firewall to block or allow specific apps, open ports, and create inbound and outbound rules. Covers both GUI and PowerShell methods."
 tags: ["windows", "security", "firewall", "network"]
 readTime: 6
-translatesUk: "nalashtuvannya-brandmauera-windows"
+translatesUk: "windows-firewall-nalashtuvannya-pravyl"
 ---
 
 Windows Firewall blocks unauthorized network traffic by default. Most users never touch it — but when you need to open a port, block an app, or troubleshoot a connection issue, knowing how it works saves time.

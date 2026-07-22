@@ -2,9 +2,10 @@
 title: "Брандмауер Windows: налаштування правил для програм і портів"
 date: "2025-11-23"
 publishDate: "2025-11-23"
-description: "Як налаштувати брандмауер Windows: дозволити або заблокувати програму, відкрити або закрити порт, створити правила через GUI і PowerShell."
-tags: ["безпека", "windows", "мережа", "адміністрування", "powershell"]
-readTime: 6
+description: "Як налаштувати брандмауер Windows: дозволити або заблокувати програму, відкрити або закрити порт, обмежити доступ за IP, створити правила через GUI і PowerShell. Логування, резервна копія і відновлення."
+tags: ["безпека", "windows", "мережа", "адміністрування", "powershell", "firewall"]
+readTime: 7
+translatesEn: "how-to-configure-windows-firewall-rules"
 ---
 
 Брандмауер Windows — вбудований фільтр мережевого трафіку. Правильно налаштований він блокує небажані підключення не ламаючи потрібні програми.
@@ -165,6 +166,20 @@ New-NetFirewallRule `
 
 Детальніше: [Налаштування Remote Desktop](/nalashtuvannya-remote-desktop-rdp)
 
+### Обмежити RDP тільки одним IP (наприклад офісом)
+
+Замість повністю відкритого порту 3389 — дозволь підключення лише з довіреної адреси:
+
+```powershell
+New-NetFirewallRule `
+  -DisplayName "RDP з офісу" `
+  -Direction Inbound `
+  -Protocol TCP `
+  -LocalPort 3389 `
+  -RemoteAddress "192.168.1.100" `
+  -Action Allow
+```
+
 ### Дозволити ping (ICMP)
 
 ```powershell
@@ -184,6 +199,39 @@ Set-NetFirewallProfile -Profile Private -DefaultInboundAction Block
 
 ---
 
+## Логування — знайти яке правило блокує програму
+
+Якщо якийсь трафік мовчки блокується і незрозуміло чому:
+
+```powershell
+# Увімкнути логування заблокованих пакетів
+Set-NetFirewallProfile -Profile Domain,Public,Private `
+  -LogBlocked True `
+  -LogFileName "C:\Windows\System32\LogFiles\Firewall\pfirewall.log"
+
+# Переглянути останні заблоковані пакети
+Get-Content "C:\Windows\System32\LogFiles\Firewall\pfirewall.log" -Tail 20 |
+  Where-Object { $_ -like "*DROP*" }
+```
+
+Відтвори проблему (запусти програму/з'єднання), потім перевір лог на записи `DROP` з потрібним портом чи IP — так видно яке саме правило або профіль блокує трафік.
+
+---
+
+## Резервна копія і відновлення правил
+
+Перед масовими змінами правил — обов'язково зроби бекап:
+
+```cmd
+rem Експортувати всі правила
+netsh advfirewall export "C:\Backup\firewall.wfw"
+
+rem Відновити з бекапу
+netsh advfirewall import "C:\Backup\firewall.wfw"
+```
+
+---
+
 ## Скидання брандмауера до стандартних налаштувань
 
 Якщо правила заплутались і щось перестало працювати:
@@ -198,7 +246,9 @@ netsh advfirewall reset
 
 ## Підсумок
 
-`wf.msc` — для одиничних правил через GUI. PowerShell `New-NetFirewallRule` — для скриптів і масового розгортання. Завжди вказуй профіль (Domain/Private/Public) щоб правило спрацьовувало тільки в потрібних мережах.
+`wf.msc` — для одиничних правил через GUI. PowerShell `New-NetFirewallRule` — для скриптів і масового розгортання. Завжди вказуй профіль (Domain/Private/Public) щоб правило спрацьовувало тільки в потрібних мережах. `RemoteAddress` обмежує правило конкретним IP чи діапазоном. Логування (`LogBlocked True`) — коли незрозуміло що саме блокує трафік. `netsh advfirewall export` — обов'язковий бекап перед масовими змінами.
+
+Для розгортання тих самих правил централізовано на всі ПК домену — дивись [Брандмауер через GPO](/brandmauer-windows-cherez-gpo).
 
 ---
 

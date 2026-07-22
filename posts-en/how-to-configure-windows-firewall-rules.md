@@ -5,7 +5,7 @@ publishDate: "2026-05-06"
 description: "Create advanced Windows Firewall rules to block or allow specific apps, ports and IP ranges. Export configuration, monitor connections and troubleshoot blocked traffic."
 tags: ["windows", "firewall", "network", "security", "powershell"]
 readTime: 5
-translatesUk: "rozshyreni-pravyla-brandmauera-windows"
+translatesUk: "windows-firewall-nalashtuvannya-pravyl"
 ---
 
 Windows Defender Firewall with Advanced Security gives you granular control over every network connection. Here's how to use it effectively.

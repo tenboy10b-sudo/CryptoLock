@@ -100,6 +100,10 @@ const nextConfig = {
       { source: '/pidklyuchennya-setevykh-dyskiv-windows', destination: '/yak-pidklyuchyty-merezhevyy-dysk-windows', permanent: true },
       { source: '/yak-nalashtuvaty-merezhevyy-dysk-windows', destination: '/yak-pidklyuchyty-merezhevyy-dysk-windows', permanent: true },
 
+      // "Firewall-правила" — 3 статті об'єднано в windows-firewall-nalashtuvannya-pravyl
+      { source: '/nalashtuvannya-brandmauera-windows', destination: '/windows-firewall-nalashtuvannya-pravyl', permanent: true },
+      { source: '/rozshyreni-pravyla-brandmauera-windows', destination: '/windows-firewall-nalashtuvannya-pravyl', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
