@@ -96,6 +96,10 @@ const nextConfig = {
       { source: '/yak-nalashtuvaty-windows-dlya-igher', destination: '/yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka', permanent: true },
       { source: '/nalashtuvannya-igrovogo-pk-windows', destination: '/yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka', permanent: true },
 
+      // "Мережевий диск" — 3 статті об'єднано в yak-pidklyuchyty-merezhevyy-dysk-windows
+      { source: '/pidklyuchennya-setevykh-dyskiv-windows', destination: '/yak-pidklyuchyty-merezhevyy-dysk-windows', permanent: true },
+      { source: '/yak-nalashtuvaty-merezhevyy-dysk-windows', destination: '/yak-pidklyuchyty-merezhevyy-dysk-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

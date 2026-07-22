@@ -5,7 +5,7 @@ publishDate: "2026-05-17"
 description: "Map network drives in Windows 10 and 11 via GUI, PowerShell and Group Policy. Persist mapped drives, fix reconnect issues and manage credentials for network shares."
 tags: ["windows", "network", "drives", "administration", "powershell"]
 readTime: 5
-translatesUk: "pidklyuchennya-setevykh-dyskiv-windows"
+translatesUk: "yak-pidklyuchyty-merezhevyy-dysk-windows"
 ---
 
 Mapped network drives let you access shared folders as if they were local drives. Here's how to set them up reliably.
