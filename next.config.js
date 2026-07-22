@@ -106,6 +106,11 @@ const nextConfig = {
       { source: '/yak-korystuvatysya-windows-terminal', destination: '/windows-terminal-povnyy-gaid', permanent: true },
       { source: '/windows-terminal-nalashtuvannya', destination: '/windows-terminal-povnyy-gaid', permanent: true },
 
+      // "Мережевий принтер" — 4 статті об'єднано в yak-nalashtuvanty-printery-merezhevy-domen
+      { source: '/nalashtuvannya-merezhenoho-pryntera-windows', destination: '/yak-nalashtuvanty-printery-merezhevy-domen', permanent: true },
+      { source: '/yak-nalashtuvanty-printer-ip-merezhi', destination: '/yak-nalashtuvanty-printery-merezhevy-domen', permanent: true },
+      { source: '/yak-pidklyuchyty-printer-windows', destination: '/yak-nalashtuvanty-printery-merezhevy-domen', permanent: true },
+
       // ── /en/tags/tools → /tools ──────────────────────────────────────
       { source: '/en/tags/tools', destination: '/tools', permanent: true, locale: false },
       { source: '/en/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', destination: '/tools', permanent: true, locale: false },

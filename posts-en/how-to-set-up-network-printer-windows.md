@@ -5,7 +5,7 @@ publishDate: "2027-02-11"
 description: "Add network and wireless printers in Windows 10 and 11. Connect via IP, share printer over network, fix printer offline errors and troubleshoot print queue."
 tags: ["windows", "printer", "network", "administration", "troubleshooting"]
 readTime: 5
-translatesUk: "nalashtuvannya-merezhenoho-pryntera-windows"
+translatesUk: "yak-nalashtuvanty-printery-merezhevy-domen"
 ---
 
 Adding a network printer in Windows is usually straightforward. Here's how to handle both simple and problematic cases.

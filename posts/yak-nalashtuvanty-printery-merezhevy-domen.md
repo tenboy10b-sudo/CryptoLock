@@ -1,181 +1,220 @@
 ---
-title: "Мережевий принтер у домені Windows: встановлення і управління через GPO"
+title: "Підключення принтера в Windows: USB, Wi-Fi, мережа і домен — повний гайд"
 date: "2025-11-24"
+updated: "2026-07-22"
 publishDate: "2025-11-24"
-description: "Підключення мережевого принтера в домені Active Directory, автоматичне розгортання принтерів через GPO і Print Server, управління чергою друку через PowerShell."
-tags: ["адміністрування", "мережа", "windows", "групова-політика", "gpo"]
-readTime: 7
+description: "Як підключити принтер в Windows: USB, Wi-Fi, по IP-адресі в мережі, спільний принтер з іншого ПК. Для організацій — Print Server і розгортання через GPO. Усі типові проблеми."
+tags: ["адміністрування", "мережа", "windows", "групова-політика", "gpo", "принтер", "налаштування"]
+translatesEn: "how-to-set-up-network-printer-windows"
+readTime: 10
 ---
 
-Ручне підключення принтерів на 50+ комп'ютерах — типовий головний біль адміністратора. GPO і Print Server автоматизують це до нуля ручної роботи.
+Принтер не друкує або Windows його не бачить — одна з найпоширеніших проблем. Цей гайд охоплює всі способи підключення — від простого USB до розгортання сотень принтерів у домені через GPO.
 
 ---
 
-## Варіант 1: Пряме підключення мережевого принтера
+## Спосіб 1: USB (найпростіший)
 
-Для одиничних підключень без домену або сервера друку.
+1. Підключи USB-кабель, увімкни принтер
+2. Windows зазвичай сама встановлює драйвер через Windows Update — зачекай 1-2 хвилини
+3. Перевір: `Пуск` → `Параметри` → `Пристрої` → `Принтери та сканери` → якщо з'явився, натисни → **Керувати** → **Друк тестової сторінки**
+
+**Якщо драйвер не встановився сам:** знайди модель принтера (на корпусі), зайди на сайт виробника (hp.com, canon.com, epson.com, brother.com) → Підтримка → Драйвери → введи модель → завантаж.
+
+---
+
+## Спосіб 2: Wi-Fi
+
+### Через WPS (найшвидше)
+
+На принтері знайди кнопку **WPS** (значок хвиль) → натисни WPS на роутері → утримуй WPS на принтері 2-3 секунди → підключення відбудеться автоматично.
+
+### Через меню принтера
+
+На панелі принтера: **Мережа** або **Wi-Fi Setup** → вибери свою мережу → введи пароль. Принтер отримає IP-адресу.
+
+### Додати в Windows після підключення до Wi-Fi
+
+`Параметри` → `Пристрої` → `Принтери та сканери` → **Додати принтер або сканер** — Windows знайде його автоматично. Якщо ні — **"Потрібного принтера немає в списку"** → **"Додати принтер за IP-адресою"**.
+
+---
+
+## Спосіб 3: По IP-адресі в мережі (офісний стандарт)
+
+Коли один принтер обслуговує кілька ПК — підключення йде через мережу по IP, не USB.
+
+### Крок 1: Дізнатись IP-адресу принтера
+
+Роздрукуй тестову/конфігураційну сторінку (кнопка на принтері, утримати 5-10 сек) — IP буде в інформації про мережу. Або перевір список пристроїв на роутері.
+
+### Крок 2: Перевірити доступність
 
 ```cmd
-rem Підключити мережевий принтер
-rundll32 printui.dll,PrintUIEntry /in /n \\printserver\HP-LaserJet
+ping 192.168.1.50
+```
 
-rem Або через PowerShell
-Add-Printer -ConnectionName "\\printserver\HP-LaserJet"
+Якщо не відповідає — принтер не в тій самій мережі або вимкнений.
 
-rem Встановити принтер за замовчуванням
-(Get-WmiObject Win32_Printer -Filter "Name='\\\\printserver\\HP-LaserJet'").SetDefaultPrinter()
+### Крок 3: Додати через TCP/IP порт
+
+**Через GUI:** `Параметри` → `Принтери та сканери` → **Додати пристрій** → **"Потрібного принтера немає в списку"** → **"Додати принтер по TCP/IP адресі"** → введи IP.
+
+**Через PowerShell:**
+```powershell
+Add-PrinterPort -Name "IP_192.168.1.50" -PrinterHostAddress "192.168.1.50"
+Add-PrinterDriver -Name "HP Universal Printing PCL 6"
+Add-Printer -Name "Office Printer" -DriverName "HP Universal Printing PCL 6" -PortName "IP_192.168.1.50"
+(Get-WmiObject -Class Win32_Printer -Filter "Name='Office Printer'").SetDefaultPrinter()
+```
+
+**Якщо драйвер не знайшовся автоматично:** завантаж з сайту виробника, при виборі типу підключення — **Мережа**. Універсальні драйвери: **HP Universal Print Driver**, **Kyocera Universal Printer Driver** — підходять для більшості моделей відповідного бренду.
+
+### Перевірка підключення
+
+```powershell
+Get-Printer | Select-Object Name, PortName, DriverName, PrinterStatus
+
+# Порт 9100 — стандарт для мережевого друку
+Test-NetConnection -ComputerName 192.168.1.50 -Port 9100
+
+# Тестова сторінка
+(Get-WmiObject -Class Win32_Printer -Filter "Name='Office Printer'").PrintTestPage()
+```
+
+**Якщо Windows не бачить принтер при автопошуку** — він може не підтримувати WSD (Web Services for Devices), підключай вручну через TCP/IP як вище.
+
+---
+
+## Спосіб 4: Підключитись до принтера, спільного з іншого ПК
+
+Якщо принтер підключений до чужого комп'ютера в мережі (не сервера):
+
+`Параметри` → `Принтери та сканери` → **Додати принтер** → **"Потрібного принтера немає в списку"** → **"Вибрати спільний принтер за іменем"** → введи:
+
+```
+\\ім'я-комп'ютера\ім'я-принтера
+```
+або
+```
+\\192.168.1.100\HP_LaserJet
+```
+
+Через PowerShell:
+```powershell
+Set-Printer -Name "EPSON" -Shared $true -ShareName "EpsonOffice"
+Add-Printer -ConnectionName "\\НазваПК\EpsonOffice"
 ```
 
 ---
 
-## Варіант 2: Print Server — централізоване управління
+## Для організацій з доменом Active Directory
 
-Print Server — роль Windows Server яка централізує управління всіма принтерами в організації.
+Ручне підключення принтерів на десятках комп'ютерів — типовий головний біль адміністратора. Print Server і GPO автоматизують це до нуля ручної роботи.
 
-### Встановлення ролі Print Server
+### Print Server — централізоване управління
 
 ```powershell
+# Встановити роль
 Install-WindowsFeature -Name Print-Server -IncludeManagementTools
-```
 
-### Додати принтер на Print Server
-
-```powershell
-# Додати драйвер
+# Додати драйвер, порт і принтер на сервері
 Add-PrinterDriver -Name "HP Universal Printing PCL 6"
-
-# Додати порт (IP принтера)
 Add-PrinterPort -Name "IP_192.168.1.50" -PrinterHostAddress "192.168.1.50"
-
-# Додати принтер
-Add-Printer `
-  -Name "HP-LaserJet-Floor2" `
-  -DriverName "HP Universal Printing PCL 6" `
-  -PortName "IP_192.168.1.50" `
-  -Shared `
-  -ShareName "HP-LaserJet-2"
+Add-Printer -Name "HP-LaserJet-Floor2" -DriverName "HP Universal Printing PCL 6" `
+  -PortName "IP_192.168.1.50" -Shared -ShareName "HP-LaserJet-2"
 ```
 
-### Управління чергою через PowerShell
+### Управління чергою через PowerShell (централізовано)
 
 ```powershell
-# Список всіх принтерів на сервері
 Get-Printer -ComputerName printserver | Select-Object Name, DriverName, PortName, Shared
-
-# Список завдань у черзі
 Get-PrintJob -PrinterName "HP-LaserJet-Floor2" -ComputerName printserver
-
-# Видалити зависле завдання
 Remove-PrintJob -PrinterName "HP-LaserJet-Floor2" -ID 15 -ComputerName printserver
 
-# Очистити всю чергу
-Get-PrintJob -PrinterName "HP-LaserJet-Floor2" | Remove-PrintJob
-
-# Перезапустити службу Spooler (якщо черга зависла)
+# Перезапустити Spooler віддалено, якщо черга зависла
 Invoke-Command -ComputerName printserver -ScriptBlock {
     Stop-Service -Name Spooler -Force
     Start-Service -Name Spooler
 }
 ```
 
----
+### GPO — автоматичне розгортання при вході користувача
 
-## Варіант 3: GPO — автоматичне розгортання принтерів
+`gpmc.msc` → GPO для потрібного OU → **User Configuration** → **Preferences** → **Control Panel Settings** → **Printers** → правою кнопкою → **New** → **Shared Printer**:
+- **Action:** Create (або Replace для перестворення)
+- **Share path:** `\\printserver\HP-LaserJet-2`
+- Вкладка **Common** → **Item-level targeting** — для призначення конкретним групам/OU
 
-Найкращий варіант для організацій — принтери підключаються автоматично при вході користувача.
-
-### Через GPMC
-
-1. `gpmc.msc` → вибери GPO для потрібного OU
-2. **User Configuration** → **Preferences** → **Control Panel Settings** → **Printers**
-3. Правою кнопкою → **New** → **Shared Printer**
-4. **Action:** Create (або Replace щоб перестворювати)
-5. **Share path:** `\\printserver\HP-LaserJet-2`
-6. Постав галочку **Set this printer as the default printer** якщо потрібно
-7. Вкладка **Common** → **Item-level targeting** — для призначення конкретним користувачам або OU
-
-### Через PowerShell і GPO
+**Item-Level Targeting** дозволяє видавати принтер вибірково: **Security Group** (наприклад тільки "Бухгалтерія"), **Organizational Unit**, **Computer Name**, або **IP Address Range** (за поверхом/відділом).
 
 ```powershell
-# Показати поточні підключені принтери
-Get-Printer | Select-Object Name, Type, PortName
-
-# Підключити принтер скриптом при вході (logon script через GPO)
+# Підключення принтера скриптом при вході (альтернатива GPO Preferences)
 Add-Printer -ConnectionName "\\printserver\HP-LaserJet-2" -ErrorAction SilentlyContinue
-
-# Встановити за замовчуванням
-$printer = Get-Printer -Name "\\printserver\HP-LaserJet-2"
-(Get-WmiObject -Class Win32_Printer -Filter "Name='$($printer.Name.Replace('\','\\'))'").SetDefaultPrinter()
 ```
-
----
-
-## Item-Level Targeting — принтер тільки для певних відділів
-
-GPO Preferences дозволяє призначати принтери вибірково:
-
-1. Відкрий правило принтера → вкладка **Common**
-2. Постав галочку **Item-level targeting** → **Targeting**
-3. **New Item** → вибери тип умови:
-   - **Security Group** — тільки для членів групи (наприклад "Бухгалтерія")
-   - **Organizational Unit** — тільки для OU
-   - **Computer Name** — для конкретних ПК
-   - **IP Address Range** — для певного поверху або відділу
 
 ---
 
 ## Типові проблеми
 
-### Принтер є але не друкує — черга зависла
+### Принтер є в списку, але не друкує (черга зависла)
 
-```powershell
-# На клієнті або сервері
+```cmd
 net stop spooler
-Remove-Item "C:\Windows\System32\spool\PRINTERS\*" -Force -ErrorAction SilentlyContinue
+del /Q /F /S "%systemroot%\System32\spool\PRINTERS\*.*"
 net start spooler
 ```
 
-### Помилка "Driver not installed"
+Або через PowerShell: `Stop-Service Spooler -Force` → очистити папку → `Start-Service Spooler`.
 
-Переконайся що на Print Server встановлений правильний драйвер. Для 64-бітних клієнтів потрібен 64-бітний драйвер:
+### Принтер показує "Офлайн"
+
+`Параметри` → `Принтери та сканери` → вибери принтер → **Керувати** → зніми **"Використовувати принтер в автономному режимі"**. Часто причина — DHCP переприсвоїв принтеру нову IP-адресу; постав принтеру статичний IP, щоб це не повторювалось.
 
 ```powershell
-# Переглянути встановлені драйвери
-Get-PrinterDriver -ComputerName printserver
+Set-Printer -Name "Офісний принтер" -WorkOffline $false
+Restart-Service Spooler -Force
+```
 
-# Встановити додатковий драйвер (для x86 клієнтів)
+### Помилка "Принтер недоступний" / порт не відповідає
+
+```cmd
+telnet 192.168.1.50 9100
+```
+
+З'єднання встановлюється — порт відкритий, проблема деінде. Не встановлюється — перевір брандмауер принтера або мережеві налаштування.
+
+### "Driver not installed" (для Print Server)
+
+Для 64-бітних клієнтів потрібен саме 64-бітний драйвер на сервері:
+
+```powershell
+Get-PrinterDriver -ComputerName printserver
 Add-PrinterDriver -Name "HP Universal Printing PCL 6" -InfPath "C:\Drivers\HP\hpcu215u.inf"
 ```
 
 ### GPO-принтер не підключається
 
 ```cmd
-rem На клієнті перевір застосування GPO
 gpresult /r /scope user | findstr /i "printer"
-
-rem Примусово застосувати GPO
 gpupdate /force
 ```
 
-### Принтер показує "Offline"
+### Поганий друк, смуги або сміття замість тексту
 
-```powershell
-# Перевірити доступність Print Server
-Test-Connection printserver
+Запусти очищення головки через меню принтера (Обслуговування → Очищення головки), перевір рівень чорнила/тонера. Сміття замість тексту зазвичай означає невірний драйвер — встанови рідний з сайту виробника або спробуй інший PCL/PostScript варіант.
 
-# Перевірити доступність IP принтера
-Test-NetConnection -ComputerName 192.168.1.50 -Port 9100
-```
+### Принтер зник після оновлення Windows
+
+Оновлення іноді ламає драйвер. Видали принтер зі списку і додай заново, або перевстанови драйвер з сайту виробника.
 
 ---
 
 ## Підсумок
 
-Для організацій з доменом: встанови Print Server, додай принтери через `Add-Printer`, розгортай через GPO Preferences з Item-Level Targeting по групах безпеки. Черга зависла — `net stop spooler`, очисти папку PRINTERS, `net start spooler`. Це закриває 90% проблем з мережевими принтерами.
+**Вдома/невеликий офіс:** USB — найнадійніше, Wi-Fi через WPS — найзручніше, по IP — коли принтер один на кілька ПК. **Для домену:** Print Server + `Add-Printer` + розгортання через GPO Preferences з Item-Level Targeting по групах безпеки. **Зависла черга** (найчастіша проблема в обох випадках) — `net stop spooler` → очистити папку PRINTERS → `net start spooler`.
 
 ---
 
 ## 🌐 Розрахувати параметри підмережі?
 
 **[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
-
