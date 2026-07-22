@@ -101,6 +101,11 @@ const nextConfig = {
       { source: '/siniy-ekran-pislya-onovlennya-windows-11', destination: '/siniy-ekran-smerti-windows-11-24h2', permanent: true },
       { source: '/yak-vypravyty-bsod-windows', destination: '/siniy-ekran-smerti-windows-11-24h2', permanent: true },
 
+      // "Windows Terminal" — 4 статті об'єднано в windows-terminal-povnyy-gaid
+      { source: '/yak-nalashtuvaty-windows-terminal', destination: '/windows-terminal-povnyy-gaid', permanent: true },
+      { source: '/yak-korystuvatysya-windows-terminal', destination: '/windows-terminal-povnyy-gaid', permanent: true },
+      { source: '/windows-terminal-nalashtuvannya', destination: '/windows-terminal-povnyy-gaid', permanent: true },
+
       // ── /en/tags/tools → /tools ──────────────────────────────────────
       { source: '/en/tags/tools', destination: '/tools', permanent: true, locale: false },
       { source: '/en/tags/%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8', destination: '/tools', permanent: true, locale: false },

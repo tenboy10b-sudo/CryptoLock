@@ -6,7 +6,7 @@ updated: "2026-06-18"
 description: "How to install and configure Windows Terminal on Windows 10 and 11. Tabs, profiles, themes, fonts, keyboard shortcuts and settings.json configuration."
 tags: ["windows", "windows-terminal", "terminal", "powershell", "tools", "development"]
 readTime: 7
-translatesUk: "windows-terminal-nalashtuvannya"
+translatesUk: "windows-terminal-povnyy-gaid"
 ---
 
 Windows Terminal is Microsoft's modern terminal replacing old cmd.exe and PowerShell windows. Tabs, GPU acceleration, Unicode support, full customization — all in one.
