@@ -157,7 +157,7 @@ winget install REALiX.HWiNFO
 
 `Win + X` → Перегляд подій → Журнали Windows → Система → фільтр "Критичний" і "Помилка" навколо часу BSOD.
 
-Детальніше: [Журнал подій Windows](/zhurnal-podiy-event-viewer)
+Детальніше: [Журнал подій Windows](/yak-korystuvatys-zhurnalom-podiy-windows)
 
 ---
 

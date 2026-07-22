@@ -95,8 +95,9 @@ Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625} |
 | ID | Журнал | Що означає |
 |---|---|---|
 | 41 | System | Жорстке вимкнення (BSOD або знеструмлення) |
-| 6008 | System | Неочікуване вимкнення |
+| 6005 | System | Система запущена |
 | 6006 | System | Чисте завершення роботи |
+| 6008 | System | Неочікуване вимкнення |
 | 7034 | System | Служба впала несподівано |
 | 7045 | System | Встановлено нову службу (перевір — типова ознака малваре) |
 | 1000 / 1001 | Application | Краш програми / Windows Error Reporting |
@@ -123,7 +124,16 @@ Get-WinEvent -FilterHashtable @{LogName='System','Application'; Level=1,2; Start
 
 # Знайти події BSOD
 Get-WinEvent -FilterHashtable @{LogName='System'; Id=41} -MaxEvents 5
+```
 
+Файли дампів пам'яті при BSOD зберігаються окремо від журналу подій — для аналізу через WinDbg чи WhoCrashed:
+```cmd
+dir %SystemRoot%\Minidump
+```
+
+Детальніше про діагностику BSOD: [Синій екран смерті — повний гайд](/siniy-ekran-smerti-windows-11-24h2)
+
+```powershell
 # Експортувати журнал для передачі/аналізу деінде
 wevtutil epl System C:\system-log.evtx
 

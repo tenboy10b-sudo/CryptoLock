@@ -89,6 +89,7 @@ const nextConfig = {
       { source: '/yak-pereviryty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true },
       { source: '/yak-korystuvatys-zhurnalom-podiy-eventvwr', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true },
       { source: '/yak-ochystyty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true },
+      { source: '/zhurnal-podiy-event-viewer', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true },
 
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
