@@ -91,6 +91,11 @@ const nextConfig = {
       { source: '/yak-ochystyty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true },
       { source: '/zhurnal-podiy-event-viewer', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true },
 
+      // "Ігрова оптимізація" — 4 статті об'єднано в yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka
+      { source: '/optymizatsiya-windows-dlya-igor', destination: '/yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka', permanent: true },
+      { source: '/yak-nalashtuvaty-windows-dlya-igher', destination: '/yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka', permanent: true },
+      { source: '/nalashtuvannya-igrovogo-pk-windows', destination: '/yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

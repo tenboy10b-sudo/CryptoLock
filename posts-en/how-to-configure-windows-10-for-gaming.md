@@ -5,7 +5,7 @@ publishDate: "2026-06-10"
 description: "Optimize Windows 10 and 11 for gaming. Enable Game Mode, configure GPU settings, reduce input lag, disable background processes and get maximum FPS."
 tags: ["windows", "gaming", "performance", "optimization", "gpu"]
 readTime: 5
-translatesUk: "optymizatsiya-windows-dlya-igor"
+translatesUk: "yak-nalashtuvanty-windows-dlya-igrovogo-noutbuka"
 ---
 
 Windows has dozens of settings that affect gaming performance. Here's what actually matters.
