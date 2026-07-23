@@ -121,6 +121,9 @@ const nextConfig = {
       // "Реклама Windows 11" — 2 статті об'єднано в yak-prybravty-reklamu-z-windows-11
       { source: '/yak-pryberty-reklamu-z-windows-11', destination: '/yak-prybravty-reklamu-z-windows-11', permanent: true },
 
+      // "Налаштування миші" — 2 статті об'єднано в yak-nalashtuvaty-mysh-windows
+      { source: '/yak-nalashtuvanty-myszhu-windows', destination: '/yak-nalashtuvaty-mysh-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
