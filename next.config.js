@@ -118,6 +118,9 @@ const nextConfig = {
       // "Температура CPU/GPU" — 2 статті об'єднано в yak-pereviryt-temperaturu-protsesora-windows
       { source: '/yak-pereviryty-temperaturu-protsesora-windows', destination: '/yak-pereviryt-temperaturu-protsesora-windows', permanent: true },
 
+      // "Реклама Windows 11" — 2 статті об'єднано в yak-prybravty-reklamu-z-windows-11
+      { source: '/yak-pryberty-reklamu-z-windows-11', destination: '/yak-prybravty-reklamu-z-windows-11', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

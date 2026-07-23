@@ -2,9 +2,9 @@
 title: "Як прибрати рекламу з Windows 11: повний гайд"
 date: "2025-12-30"
 publishDate: "2025-12-30"
-description: "Вимкнення реклами і рекомендацій в Windows 11: в меню Пуск, на екрані блокування, у провіднику, Spotlight і персоналізованих порадах. Через Параметри і реєстр."
+description: "Вимкнення реклами і рекомендацій в Windows 11: в меню Пуск, на екрані блокування, у провіднику, Spotlight, Edge і персоналізованих порадах. Через Параметри, реєстр і PowerShell."
 tags: ["windows", "налаштування", "оптимізація", "приватність", "персоналізація"]
-readTime: 5
+readTime: 6
 ---
 
 Windows 11 показує рекламу в меню Пуск, на екрані блокування, у Провіднику і налаштуваннях. Все це вимикається — розповідаємо де.
@@ -82,7 +82,17 @@ Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advan
 
 ---
 
-## 8. Масове вимкнення через PowerShell
+## 8. Реклама в Microsoft Edge
+
+Edge показує спонсоровані посилання і новини Microsoft на сторінці нової вкладки:
+
+`Edge` → `...` → **Налаштування** → **Нова вкладка** → **Налаштувати** → вимкни **Sponsored links** і **Microsoft News**.
+
+Якщо не користуєшся Edge — Firefox і Chrome реклами Microsoft на новій вкладці не показують.
+
+---
+
+## 9. Масове вимкнення через PowerShell
 
 ```powershell
 # Вимкнути більшість рекламних функцій одним скриптом
@@ -96,9 +106,10 @@ $settings = @{
         "PreInstalledAppsEnabled"      = 0
         "SilentInstalledAppsEnabled"   = 0
     }
-    # Провідник
+    # Провідник і меню Пуск
     "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" = @{
         "ShowSyncProviderNotifications" = 0
+        "Start_IrisRecommendations"      = 0
     }
     # Загальна реклама
     "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo" = @{
@@ -118,7 +129,7 @@ Write-Output "✓ Рекламу вимкнено. Перезапусти Про
 
 ---
 
-## 9. Перезапустити Провідник
+## 10. Перезапустити Провідник
 
 Щоб зміни набули чинності без перезавантаження:
 
