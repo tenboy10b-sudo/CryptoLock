@@ -112,6 +112,9 @@ const nextConfig = {
       { source: '/powershell-komandy-administratora', destination: '/powershell-skrypty-dlya-admina-top20', permanent: true },
       { source: '/powershell-skrypty-dlya-systemnykh-admyniv', destination: '/powershell-skrypty-dlya-admina-top20', permanent: true },
 
+      // "Диспетчер завдань" — 2 статті об'єднано в dispecher-zavdan-windows-povnyy-gaid
+      { source: '/dispecher-zavdan-windows-povnyy-posibnyk', destination: '/dispecher-zavdan-windows-povnyy-gaid', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

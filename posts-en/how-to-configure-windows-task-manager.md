@@ -5,7 +5,7 @@ publishDate: "2026-05-05"
 description: "Master Windows Task Manager in Windows 10 and 11. Monitor CPU, RAM, disk usage, manage startup programs, end tasks, find resource hogs and analyze performance."
 tags: ["windows", "task-manager", "performance", "diagnostics", "optimization"]
 readTime: 5
-translatesUk: "dispecher-zavdan-windows-povnyy-posibnyk"
+translatesUk: "dispecher-zavdan-windows-povnyy-gaid"
 ---
 
 Task Manager is the fastest way to see what's running, what's slow, and what's using all your resources.
