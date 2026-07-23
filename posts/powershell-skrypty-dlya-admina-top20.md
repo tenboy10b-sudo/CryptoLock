@@ -2,9 +2,9 @@
 title: "20 PowerShell скриптів які має кожен адміністратор Windows"
 date: "2026-02-08"
 publishDate: "2026-02-08"
-description: "Збірка готових PowerShell скриптів для системного адміністратора: інвентаризація, моніторинг, очищення, управління акаунтами і автоматичні звіти."
+description: "Збірка готових PowerShell скриптів для системного адміністратора: інвентаризація, моніторинг, безпека, очищення, управління акаунтами, мережа, автоматичні звіти — і швидкі однорядкові команди на щодень."
 tags: ["powershell", "адміністрування", "windows", "автоматизація", "інструменти"]
-readTime: 8
+readTime: 12
 ---
 
 Збірка перевірених скриптів для щоденної роботи адміністратора. Кожен можна запустити відразу або адаптувати під своє середовище.
@@ -70,6 +70,32 @@ foreach ($svc in $criticalServices) {
     $s = Get-Service $svc -ErrorAction SilentlyContinue
     if ($s.Status -ne "Running") {
         Write-Warning "$svc не запущений! Статус: $($s.Status)"
+    }
+}
+```
+
+### 5а. Перевірка і автоматичний перезапуск критичних служб на конкретних серверах
+
+Розширена версія скрипта 5 — не просто попереджає, а сама перезапускає службу на віддаленому сервері:
+
+```powershell
+$criticalServices = @(
+    @{Server="DC01"; Service="NTDS"},
+    @{Server="DC01"; Service="DNS"},
+    @{Server="FileServer"; Service="LanmanServer"},
+    @{Server="PrintServer"; Service="Spooler"}
+)
+
+foreach ($item in $criticalServices) {
+    $svc = Get-Service -Name $item.Service -ComputerName $item.Server -ErrorAction SilentlyContinue
+    if ($svc.Status -ne "Running") {
+        Write-Warning "$($item.Server): служба $($item.Service) не запущена — перезапускаю"
+        Invoke-Command -ComputerName $item.Server -ScriptBlock {
+            param($svcName)
+            Start-Service -Name $svcName
+        } -ArgumentList $item.Service
+    } else {
+        Write-Output "OK: $($item.Server)\$($item.Service)"
     }
 }
 ```
@@ -149,9 +175,76 @@ foreach ($log in $logs) {
 }
 ```
 
+### 11а. Очищення профілів застарілих користувачів
+
+```powershell
+# Знайти профілі на ПК що не використовувались більше 90 днів
+$computers = Get-ADComputer -Filter * | Select-Object -ExpandProperty Name
+
+foreach ($pc in $computers) {
+    try {
+        $profiles = Get-WmiObject Win32_UserProfile -ComputerName $pc |
+          Where-Object {
+            -not $_.Special -and
+            $_.LastUseTime -lt (Get-Date).AddDays(-90).ToFileTime()
+          }
+
+        foreach ($profile in $profiles) {
+            $sid = New-Object System.Security.Principal.SecurityIdentifier($profile.SID)
+            $user = $sid.Translate([System.Security.Principal.NTAccount]).Value
+            Write-Output "$pc : видаляю профіль $user (останній вхід: $($profile.LastUseTime))"
+            # $profile.Delete()  # розкоментуй щоб реально видаляти
+        }
+    } catch { }
+}
+```
+
 ---
 
 ## Управління акаунтами
+
+### 12а. Масове розблокування і скидання паролів
+
+```powershell
+# Розблокувати всі заблоковані акаунти
+$locked = Search-ADAccount -LockedOut
+$locked | ForEach-Object {
+    Unlock-ADAccount -Identity $_
+    Write-Output "Розблоковано: $($_.SamAccountName)"
+}
+Write-Output "Всього розблоковано: $($locked.Count)"
+
+# Примусово скинути паролі для групи
+$newPass = ConvertTo-SecureString "TempPass123!" -AsPlainText -Force
+Get-ADGroupMember "IT_Department" | ForEach-Object {
+    Set-ADAccountPassword -Identity $_.SamAccountName -NewPassword $newPass -Reset
+    Set-ADUser -Identity $_.SamAccountName -ChangePasswordAtLogon $true
+    Write-Output "Пароль скинуто: $($_.SamAccountName)"
+}
+```
+
+### 12б. Звіт про акаунти чий пароль скоро закінчується
+
+На відміну від скрипта 9 (шукає акаунти де пароль взагалі ніколи не закінчується) — цей знаходить акаунти де закінчення вже близько:
+
+```powershell
+$maxAge = (Get-ADDefaultDomainPasswordPolicy).MaxPasswordAge.Days
+
+Get-ADUser -Filter {Enabled -eq $true -and PasswordNeverExpires -eq $false} `
+  -Properties PasswordLastSet, EmailAddress |
+  ForEach-Object {
+    $expiry = $_.PasswordLastSet.AddDays($maxAge)
+    $daysLeft = ($expiry - (Get-Date)).Days
+    if ($daysLeft -le 14 -and $daysLeft -ge 0) {
+        [PSCustomObject]@{
+            User     = $_.SamAccountName
+            Email    = $_.EmailAddress
+            Expires  = $expiry.ToString("dd.MM.yyyy")
+            DaysLeft = $daysLeft
+        }
+    }
+} | Sort-Object DaysLeft | Format-Table -AutoSize
+```
 
 ### 12. Масове створення користувачів з CSV
 
@@ -262,6 +355,35 @@ Invoke-Command -ComputerName $computers -ThrottleLimit 20 -ScriptBlock {
 } -ErrorAction SilentlyContinue
 ```
 
+### 18а. Масова установка програм через winget на кількох ПК
+
+```powershell
+$computers = @("PC-001", "PC-002", "PC-003")
+$apps = @("7zip.7zip", "VideoLAN.VLC", "Notepad++.Notepad++")
+
+Invoke-Command -ComputerName $computers -ScriptBlock {
+    param($appList)
+    foreach ($app in $appList) {
+        winget install $app --silent --accept-package-agreements --accept-source-agreements
+        Write-Output "Встановлено: $app на $env:COMPUTERNAME"
+    }
+} -ArgumentList (,$apps)
+```
+
+### 18б. Аудит прав на спільних папках файлового сервера
+
+```powershell
+$shares = Get-SmbShare -Special $false |
+  Where-Object { $_.Name -ne "IPC$" }
+
+foreach ($share in $shares) {
+    Write-Output "`n=== $($share.Name) ($($share.Path)) ==="
+    Get-SmbShareAccess -Name $share.Name |
+      Select-Object AccountName, AccessRight, AccessControlType |
+      Format-Table -AutoSize
+}
+```
+
 ### 19. Знайти файли з чутливими даними
 
 ```powershell
@@ -283,9 +405,63 @@ Get-ChildItem Cert:\LocalMachine\My |
 
 ---
 
+## Швидкі однорядкові команди (без Active Directory)
+
+Не завжди потрібен цілий скрипт — іноді достатньо одного рядка. Ці працюють і на самотньому ПК, без домену:
+
+**Користувачі:**
+```powershell
+Get-LocalUser
+$pass = ConvertTo-SecureString "Password123!" -AsPlainText -Force
+New-LocalUser -Name "john" -Password $pass -FullName "John Smith"
+Add-LocalGroupMember -Group "Administrators" -Member "john"
+Disable-LocalUser -Name "john"
+Remove-LocalUser -Name "john"
+```
+
+**Процеси:**
+```powershell
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 10 Name, CPU, Id
+Get-Process | Sort-Object WorkingSet -Descending | Select-Object -First 10 Name, @{N="RAM(MB)";E={[Math]::Round($_.WorkingSet/1MB)}}
+Stop-Process -Name "notepad" -Force
+```
+
+**Мережа:**
+```powershell
+Get-NetIPAddress | Select-Object InterfaceAlias, IPAddress, PrefixLength
+Get-NetRoute | Select-Object DestinationPrefix, NextHop, InterfaceAlias
+Test-NetConnection google.com
+Get-NetTCPConnection | Where-Object {$_.State -eq "Listen"} | Select-Object LocalPort, OwningProcess
+```
+
+**Диски і файли:**
+```powershell
+Get-PSDrive -PSProvider FileSystem | Select-Object Name, @{N="Free(GB)";E={[Math]::Round($_.Free/1GB,1)}}, @{N="Used(GB)";E={[Math]::Round(($_.Used)/1GB,1)}}
+Get-ChildItem C:\ -Recurse -ErrorAction SilentlyContinue | Where-Object {$_.Length -gt 100MB} | Sort-Object Length -Descending | Select-Object FullName, @{N="Size(MB)";E={[Math]::Round($_.Length/1MB)}}
+```
+
+**Оновлення Windows:**
+```powershell
+Install-Module PSWindowsUpdate -Force
+Get-WindowsUpdate
+Install-WindowsUpdate -AcceptAll -AutoReboot
+```
+
+**Системна інформація:**
+```powershell
+(Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+(Get-CimInstance Win32_BIOS).SerialNumber
+(Get-CimInstance Win32_Processor).Name
+[Math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory/1GB)
+```
+
+> Також дивись: [Як заборонити запуск PowerShell через групову політику](/zaborona-zapusku-powershell)
+
+---
+
 ## Підсумок
 
-Збережи ці скрипти в папку `C:\Scripts\` і додай найважливіші в Task Scheduler для автоматичного запуску. Скрипти 4, 5, 7 — запускай щодня. Скрипти 1, 8, 9, 13 — щотижня. Скрипт 16 — щодня для зберігання в архів.
+Скрипти на цій сторінці — для домену/автоматизації, однорядкові команди вище — для швидкої разової перевірки на одному ПК. Збережи скрипти в папку `C:\Scripts\` і додай найважливіші в Task Scheduler для автоматичного запуску. Скрипти 4, 5, 7 — запускай щодня. Скрипти 1, 8, 9, 12б, 13 — щотижня. Скрипт 16 — щодня для зберігання в архів.
 
 ---
 

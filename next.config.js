@@ -108,6 +108,10 @@ const nextConfig = {
       { source: '/keruvannya-sluzhbamy-windows-powershell', destination: '/powershell-robota-z-sluzhbamy-windows', permanent: true },
       { source: '/keruvanya-sluzhbamy-windows', destination: '/powershell-robota-z-sluzhbamy-windows', permanent: true },
 
+      // "PowerShell — топ-скрипти адміна" — 3 статті об'єднано в powershell-skrypty-dlya-admina-top20
+      { source: '/powershell-komandy-administratora', destination: '/powershell-skrypty-dlya-admina-top20', permanent: true },
+      { source: '/powershell-skrypty-dlya-systemnykh-admyniv', destination: '/powershell-skrypty-dlya-admina-top20', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
@@ -172,7 +176,7 @@ const nextConfig = {
       { source: '/en/zaborona-zapusku-prohram-gpo', destination: '/zaborona-zapusku-prohram-gpo', permanent: true, locale: false },
       { source: '/en/yak-vymknuty-wifi-cherez-gpo', destination: '/yak-vymknuty-wifi-cherez-gpo', permanent: true, locale: false },
       { source: '/en/yak-podyvytys-produktyvnist-pk', destination: '/yak-podyvytys-produktyvnist-pk', permanent: true, locale: false },
-      { source: '/en/powershell-komandy-administratora', destination: '/powershell-komandy-administratora', permanent: true, locale: false },
+      { source: '/en/powershell-komandy-administratora', destination: '/powershell-skrypty-dlya-admina-top20', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvanty-avtomatychne-blokuvannya-windows', destination: '/yak-nalashtuvanty-avtomatychne-blokuvannya-windows', permanent: true, locale: false },
       { source: '/en/zhurnal-podiy-event-viewer', destination: '/zhurnal-podiy-event-viewer', permanent: true, locale: false },
       { source: '/en/perevirka-produktyvnosti-dysku', destination: '/perevirka-produktyvnosti-dysku', permanent: true, locale: false },
