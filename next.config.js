@@ -115,6 +115,9 @@ const nextConfig = {
       // "Диспетчер завдань" — 2 статті об'єднано в dispecher-zavdan-windows-povnyy-gaid
       { source: '/dispecher-zavdan-windows-povnyy-posibnyk', destination: '/dispecher-zavdan-windows-povnyy-gaid', permanent: true },
 
+      // "Температура CPU/GPU" — 2 статті об'єднано в yak-pereviryt-temperaturu-protsesora-windows
+      { source: '/yak-pereviryty-temperaturu-protsesora-windows', destination: '/yak-pereviryt-temperaturu-protsesora-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
