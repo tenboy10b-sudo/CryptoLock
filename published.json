@@ -52,14 +52,15 @@
     "yak-pidklyuchyty-merezhevyy-dysk-windows",
     "how-to-configure-remote-registry-windows",
     "how-to-troubleshoot-windows-update-stuck",
-    "osnovy-powershell-skripty-windows"
+    "osnovy-powershell-skripty-windows",
+    "how-to-clean-install-windows-11"
   ],
-  "count": 53,
+  "count": 54,
   "promo_index": 41,
   "last_post": {
-    "slug": "osnovy-powershell-skripty-windows",
-    "title": "Основи PowerShell скриптів для адміністраторів Windows",
-    "time": "2026-07-22T08:01:14.991Z"
+    "slug": "how-to-clean-install-windows-11",
+    "title": "How to Clean Install Windows 11: Step-by-Step Guide",
+    "time": "2026-07-23T08:01:19.704Z"
   },
   "engage_index": 35,
   "extra_index": 29
