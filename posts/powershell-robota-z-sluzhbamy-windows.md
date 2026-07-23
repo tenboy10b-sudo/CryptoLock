@@ -2,12 +2,13 @@
 title: "PowerShell: управління службами Windows — запуск, зупинка, моніторинг"
 date: "2025-12-05"
 publishDate: "2025-12-05"
-description: "Управління службами Windows через PowerShell: Get-Service, Start-Service, Set-Service, пошук завислих служб, автозапуск і масове управління службами в домені."
-tags: ["powershell", "адміністрування", "windows", "інструменти", "cmd"]
-readTime: 6
+description: "Управління службами Windows через services.msc і PowerShell: Get-Service, Start-Service, Set-Service, автовідновлення при збоях, створення власних служб, пошук завислих служб, масове управління в домені."
+tags: ["powershell", "адміністрування", "windows", "інструменти", "служби"]
+readTime: 8
+translatesEn: "how-to-manage-windows-services-powershell"
 ---
 
-Служби Windows — фонові процеси що забезпечують роботу системи і програм. PowerShell дає повний контроль над ними: від перевірки статусу до масового управління в домені.
+Служби Windows — фонові процеси що забезпечують роботу системи і програм. PowerShell дає повний контроль над ними: від перевірки статусу до масового управління в домені. Для одиничного випадку є і GUI: `Win + R` → `services.msc`.
 
 ---
 
@@ -69,6 +70,36 @@ Set-Service -Name "wuauserv" -StartupType Manual
 
 # Вимкнути службу
 Set-Service -Name "wuauserv" -StartupType Disabled
+```
+
+---
+
+## Автовідновлення при збої
+
+Замість monitoring-скрипта (нижче) для критичних служб краще налаштувати автоматичний перезапуск на рівні самої служби:
+
+```powershell
+sc.exe failure "Spooler" reset= 86400 actions= restart/5000/restart/10000/restart/30000
+```
+
+Це каже Windows: якщо служба впаде — перезапустити через 5с, вдруге через 10с, втретє через 30с, і скинути лічильник збоїв через добу (`reset= 86400`).
+
+---
+
+## Створити і видалити власну службу
+
+```powershell
+# Створити
+New-Service -Name "MyMonitor" `
+  -BinaryPathName "C:\Tools\monitor.exe" `
+  -DisplayName "My Monitoring Service" `
+  -StartupType Automatic
+
+Start-Service "MyMonitor"
+
+# Видалити
+Stop-Service "MyMonitor" -Force
+Remove-Service -Name "MyMonitor"
 ```
 
 ---
@@ -177,11 +208,23 @@ while ($true) {
 
 ## Корисні служби — що вмикати і вимикати
 
-**Можна вимкнути якщо не використовуєш:**
+**Можна вимкнути якщо не використовуєш (домашній ПК):**
 - `TabletInputService` — введення з планшета (якщо немає сенсорного екрана)
 - `Fax` — факс
 - `WSearch` — індексування пошуку (уповільнює якщо HDD, вмикай тільки на SSD)
-- `XblGameSave` — збереження ігор Xbox (якщо не граєш)
+- `XblGameSave`, `XblAuthManager`, `XboxNetApiSvc` — сервіси Xbox (якщо не граєш)
+- `RemoteRegistry` — віддалений доступ до реєстру (ризик безпеки, не потрібен вдома)
+- `lfsvc` — геолокація
+- `MapsBroker` — оффлайн-карти
+
+```powershell
+$toDisable = @("Fax", "RemoteRegistry", "XblGameSave", "XblAuthManager", "XboxNetApiSvc", "lfsvc", "MapsBroker")
+foreach ($svc in $toDisable) {
+  Stop-Service $svc -Force -EA 0
+  Set-Service $svc -StartupType Disabled -EA 0
+  Write-Host "Вимкнено: $svc"
+}
+```
 
 **Не вимикай:**
 - `wuauserv` — Windows Update (безпека)
@@ -191,9 +234,26 @@ while ($true) {
 
 ---
 
+## Служба не запускається — діагностика
+
+```powershell
+# Перевірити журнал помилок служб
+Get-WinEvent -FilterHashtable @{LogName='System'; Level=1,2} -MaxEvents 20 |
+  Where-Object {$_.Message -like "*служб*" -or $_.Message -like "*service*"} |
+  Select-Object TimeCreated, Message | Format-List
+```
+
+Якщо причина не в конкретній залежності, а щось на рівні системних файлів:
+- `sfc /scannow` — відновлює пошкоджені файли служб
+- `DISM /Online /Cleanup-Image /RestoreHealth` — відновлює образ Windows
+
+Якщо підозра що якась служба уповільнює завантаження — `Win + R` → `msconfig` → вкладка **Служби** → вмикай/вимикай по черзі, перезавантажуючись між спробами, щоб ізолювати винуватця.
+
+---
+
 ## Підсумок
 
-`Get-Service | Where-Object { $_.StartType -eq "Automatic" -and $_.Status -ne "Running" }` — швидка діагностика проблемних служб. `Restart-Service -Name "ім'я" -Force` — перезапуск. `Set-Service -StartupType Disabled` — вимкнути назавжди. `Invoke-Command -ComputerName` — управління на всіх ПК домену одразу.
+`Get-Service | Where-Object { $_.StartType -eq "Automatic" -and $_.Status -ne "Running" }` — швидка діагностика проблемних служб. `Restart-Service -Name "ім'я" -Force` — перезапуск. `Set-Service -StartupType Disabled` — вимкнути назавжди. `sc.exe failure` — автовідновлення критичної служби після падіння. `Invoke-Command -ComputerName` — управління на всіх ПК домену одразу. При помилках запуску — `sfc /scannow`, `DISM /RestoreHealth` і Event Viewer.
 
 ---
 

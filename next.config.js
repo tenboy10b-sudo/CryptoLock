@@ -104,6 +104,10 @@ const nextConfig = {
       { source: '/nalashtuvannya-brandmauera-windows', destination: '/windows-firewall-nalashtuvannya-pravyl', permanent: true },
       { source: '/rozshyreni-pravyla-brandmauera-windows', destination: '/windows-firewall-nalashtuvannya-pravyl', permanent: true },
 
+      // "PowerShell — служби Windows" — 3 статті об'єднано в powershell-robota-z-sluzhbamy-windows
+      { source: '/keruvannya-sluzhbamy-windows-powershell', destination: '/powershell-robota-z-sluzhbamy-windows', permanent: true },
+      { source: '/keruvanya-sluzhbamy-windows', destination: '/powershell-robota-z-sluzhbamy-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
@@ -179,7 +183,7 @@ const nextConfig = {
       { source: '/en/applocker-gpo-nalashtuvannya', destination: '/applocker-gpo-nalashtuvannya', permanent: true, locale: false },
       { source: '/en/zaborona-zapusku-powershell', destination: '/zaborona-zapusku-powershell', permanent: true, locale: false },
       { source: '/en/hyper-v-virtualna-mashyna', destination: '/hyper-v-virtualna-mashyna', permanent: true, locale: false },
-      { source: '/en/keruvanya-sluzhbamy-windows', destination: '/keruvanya-sluzhbamy-windows', permanent: true, locale: false },
+      { source: '/en/keruvanya-sluzhbamy-windows', destination: '/powershell-robota-z-sluzhbamy-windows', permanent: true, locale: false },
       { source: '/en/windows-defender-cherez-gpo', destination: '/windows-defender-cherez-gpo', permanent: true, locale: false },
       { source: '/en/yak-zrobyty-screenshot-windows', destination: '/yak-zrobyty-screenshot-windows', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvatv-vpn-windows', destination: '/yak-nalashtuvaty-vpn-windows', permanent: true, locale: false },

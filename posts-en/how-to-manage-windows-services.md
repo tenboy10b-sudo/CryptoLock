@@ -5,7 +5,7 @@ publishDate: "2026-05-12"
 description: "Start, stop, disable and configure Windows services via Services.msc, PowerShell and SC command. Find which services are safe to disable and fix service errors."
 tags: ["windows", "services", "administration", "powershell", "optimization"]
 readTime: 5
-translatesUk: "keruvanya-sluzhbamy-windows"
+translatesUk: "powershell-robota-z-sluzhbamy-windows"
 ---
 
 Windows runs dozens of background services. Knowing how to manage them helps fix errors, improve performance, and secure your system.
