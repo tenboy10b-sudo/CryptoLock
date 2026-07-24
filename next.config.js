@@ -127,6 +127,9 @@ const nextConfig = {
       // "Робочий стіл" — 2 статті об'єднано в yak-nalashtuvanty-robochyy-stil-windows
       { source: '/yak-nalashtuvatysy-robochyy-stit-windows', destination: '/yak-nalashtuvanty-robochyy-stil-windows', permanent: true },
 
+      // "Windows 11 після встановлення" — 2 статті об'єднано в windows-11-nalashtuvannya-pislya-vstanovlennya
+      { source: '/yak-nalashtuvanty-windows-11-pislya-vstanovlennya', destination: '/windows-11-nalashtuvannya-pislya-vstanovlennya', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
