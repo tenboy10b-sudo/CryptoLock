@@ -124,6 +124,9 @@ const nextConfig = {
       // "Налаштування миші" — 2 статті об'єднано в yak-nalashtuvaty-mysh-windows
       { source: '/yak-nalashtuvanty-myszhu-windows', destination: '/yak-nalashtuvaty-mysh-windows', permanent: true },
 
+      // "Робочий стіл" — 2 статті об'єднано в yak-nalashtuvanty-robochyy-stil-windows
+      { source: '/yak-nalashtuvatysy-robochyy-stit-windows', destination: '/yak-nalashtuvanty-robochyy-stil-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
