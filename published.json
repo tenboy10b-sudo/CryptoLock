@@ -53,14 +53,15 @@
     "how-to-configure-remote-registry-windows",
     "how-to-troubleshoot-windows-update-stuck",
     "osnovy-powershell-skripty-windows",
-    "how-to-clean-install-windows-11"
+    "how-to-clean-install-windows-11",
+    "nalashtuvannya-wsus-windows-update"
   ],
-  "count": 54,
+  "count": 55,
   "promo_index": 42,
   "last_post": {
-    "slug": "how-to-clean-install-windows-11",
-    "title": "How to Clean Install Windows 11: Step-by-Step Guide",
-    "time": "2026-07-23T08:01:19.704Z"
+    "slug": "nalashtuvannya-wsus-windows-update",
+    "title": "Як налаштувати WSUS для централізованого управління оновленнями Windows",
+    "time": "2026-07-24T08:01:18.288Z"
   },
   "engage_index": 35,
   "extra_index": 30
