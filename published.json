@@ -54,14 +54,15 @@
     "how-to-troubleshoot-windows-update-stuck",
     "osnovy-powershell-skripty-windows",
     "how-to-clean-install-windows-11",
-    "nalashtuvannya-wsus-windows-update"
+    "nalashtuvannya-wsus-windows-update",
+    "yak-nalashtuvaty-rezervuvannya-ip-marshrutyzator"
   ],
-  "count": 55,
+  "count": 56,
   "promo_index": 42,
   "last_post": {
-    "slug": "nalashtuvannya-wsus-windows-update",
-    "title": "Як налаштувати WSUS для централізованого управління оновленнями Windows",
-    "time": "2026-07-24T08:01:18.288Z"
+    "slug": "yak-nalashtuvaty-rezervuvannya-ip-marshrutyzator",
+    "title": "Як призначити статичний IP комп'ютеру в локальній мережі",
+    "time": "2026-07-25T08:01:14.878Z"
   },
   "engage_index": 36,
   "extra_index": 31
