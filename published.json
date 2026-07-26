@@ -55,14 +55,15 @@
     "osnovy-powershell-skripty-windows",
     "how-to-clean-install-windows-11",
     "nalashtuvannya-wsus-windows-update",
-    "yak-nalashtuvaty-rezervuvannya-ip-marshrutyzator"
+    "yak-nalashtuvaty-rezervuvannya-ip-marshrutyzator",
+    "yak-sformuvaty-zvit-systemy-windows"
   ],
-  "count": 56,
+  "count": 57,
   "promo_index": 43,
   "last_post": {
-    "slug": "yak-nalashtuvaty-rezervuvannya-ip-marshrutyzator",
-    "title": "Як призначити статичний IP комп'ютеру в локальній мережі",
-    "time": "2026-07-25T08:01:14.878Z"
+    "slug": "yak-sformuvaty-zvit-systemy-windows",
+    "title": "Як переглянути повну інформацію про комп'ютер в Windows",
+    "time": "2026-07-26T08:01:13.772Z"
   },
   "engage_index": 36,
   "extra_index": 32
