@@ -56,14 +56,15 @@
     "how-to-clean-install-windows-11",
     "nalashtuvannya-wsus-windows-update",
     "yak-nalashtuvaty-rezervuvannya-ip-marshrutyzator",
-    "yak-sformuvaty-zvit-systemy-windows"
+    "yak-sformuvaty-zvit-systemy-windows",
+    "yak-nalashtuvaty-windows-perevirka-trafiku"
   ],
-  "count": 57,
+  "count": 58,
   "promo_index": 43,
   "last_post": {
-    "slug": "yak-sformuvaty-zvit-systemy-windows",
-    "title": "Як переглянути повну інформацію про комп'ютер в Windows",
-    "time": "2026-07-26T08:01:13.772Z"
+    "slug": "yak-nalashtuvaty-windows-perevirka-trafiku",
+    "title": "Як перевірити що Windows відправляє в інтернет",
+    "time": "2026-07-27T08:01:20.144Z"
   },
   "engage_index": 37,
   "extra_index": 33
