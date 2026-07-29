@@ -58,14 +58,15 @@
     "yak-nalashtuvaty-rezervuvannya-ip-marshrutyzator",
     "yak-sformuvaty-zvit-systemy-windows",
     "yak-nalashtuvaty-windows-perevirka-trafiku",
-    "zaborona-zapusku-powershell"
+    "zaborona-zapusku-powershell",
+    "monitorynh-merezhi-windows-netstat-wireshark"
   ],
-  "count": 59,
+  "count": 60,
   "promo_index": 44,
   "last_post": {
-    "slug": "zaborona-zapusku-powershell",
-    "title": "Як заблокувати запуск PowerShell через групову політику",
-    "time": "2026-07-28T08:01:16.754Z"
+    "slug": "monitorynh-merezhi-windows-netstat-wireshark",
+    "title": "Моніторинг мережі в Windows: netstat, Resource Monitor і Wireshark",
+    "time": "2026-07-29T08:01:21.928Z"
   },
   "engage_index": 38,
   "extra_index": 35
