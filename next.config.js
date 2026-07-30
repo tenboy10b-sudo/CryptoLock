@@ -246,6 +246,10 @@ const nextConfig = {
       { source: '/en/how-to-configure-windows-scheduled-tasks', destination: '/en/how-to-use-task-scheduler-windows', permanent: true, locale: false },
       { source: '/en/how-to-use-windows-task-scheduler-advanced', destination: '/en/how-to-configure-windows-task-scheduler-advanced', permanent: true, locale: false },
 
+      // EN "PowerShell командний довідник" cluster — 3 статті об'єднано в 1 (лишились окремими: scripting-basics і automate-windows-with-powershell-scripts, інший намір)
+      { source: '/en/how-to-use-powershell-for-system-administration', destination: '/en/how-to-use-powershell-for-daily-windows-tasks', permanent: true, locale: false },
+      { source: '/en/how-to-use-powershell-for-windows-admin', destination: '/en/how-to-use-powershell-for-daily-windows-tasks', permanent: true, locale: false },
+
       // ── UK slugs що потрапили на EN локаль → UK версія ────────────────
       { source: '/en/yak-vstanovyty-wsl-linux-v-windows', destination: '/yak-vstanovyty-wsl-windows', permanent: true, locale: false },
       { source: '/en/vidklyuchennya-avtoonovlennya-windows', destination: '/vidklyuchennya-avtoonovlennya-windows', permanent: true, locale: false },

@@ -224,3 +224,5 @@ param(
 )
 # Run: .\script.ps1 -ServerName "PC01" -Port 80
 ```
+
+Ready to build a full deployable script — structure, logging, scheduling? See [How to Write and Run PowerShell Scripts to Automate Windows Tasks](/en/how-to-automate-windows-with-powershell-scripts). Looking for ready-made one-liners instead? See [PowerShell One-Liners for Common Windows Admin Tasks](/en/how-to-use-powershell-for-daily-windows-tasks).

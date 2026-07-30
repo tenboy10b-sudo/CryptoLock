@@ -225,3 +225,5 @@ Invoke-Command -ComputerName $computers -FilePath "C:\Scripts\health-check.ps1" 
 ## Summary
 
 Set `RemoteSigned` execution policy. Always include `try/catch` and a log function. Use `param()` with `[CmdletBinding()]` for reusable scripts. Test with `-WhatIf` before running destructively. Schedule with `Register-ScheduledTask` and run as `SYSTEM` for unattended execution. Share to remote PCs with `Invoke-Command -FilePath`.
+
+Looking for ready-to-run one-liners instead of building a full script? See [PowerShell One-Liners for Common Windows Admin Tasks](/en/how-to-use-powershell-for-daily-windows-tasks).

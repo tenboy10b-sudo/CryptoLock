@@ -5,10 +5,36 @@ publishDate: "2026-05-03"
 description: "Practical PowerShell one-liners for daily Windows administration: network troubleshooting, disk usage, security checks, process management, and service control."
 tags: ["windows", "powershell", "administration", "tools"]
 translatesUk: "yak-vykorystovuvaty-powershell-shchodnya"
-readTime: 5
+readTime: 8
 ---
 
 These PowerShell commands solve real daily problems. No setup, no modules — just copy and run in an elevated PowerShell window.
+
+---
+
+## User Management
+
+```powershell
+# List local users
+Get-LocalUser | Select-Object Name, Enabled, LastLogon
+
+# Create a new user
+New-LocalUser -Name "john" -Password (ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force) -FullName "John Smith"
+Add-LocalGroupMember -Group "Administrators" -Member "john"
+
+# Disable / remove a user
+Disable-LocalUser -Name "john"
+Remove-LocalUser -Name "john"
+
+# Force password change at next login
+net user john /logonpasswordchg:yes
+
+# Who's currently logged in
+query user
+
+# Check group membership
+Get-LocalGroupMember -Group "Administrators"
+```
 
 ---
 
@@ -103,6 +129,56 @@ Start-Service wuauserv
 
 ---
 
+## System Information
+
+```powershell
+# System overview
+Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsBuildNumber, CsTotalPhysicalMemory
+
+# Uptime
+(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+
+# List installed software
+Get-Package | Select-Object Name, Version | Sort-Object Name
+
+# Check Windows license/activation status
+slmgr /dli
+```
+
+---
+
+## Scheduled Tasks
+
+```powershell
+# List all tasks
+Get-ScheduledTask | Select-Object TaskName, State, TaskPath
+
+# Run a task immediately
+Start-ScheduledTask -TaskName "TaskName"
+
+# Create a daily task
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File C:\script.ps1"
+$trigger = New-ScheduledTaskTrigger -Daily -At "02:00"
+Register-ScheduledTask -TaskName "MyTask" -Action $action -Trigger $trigger -RunLevel Highest -Force
+```
+
+---
+
+## Remote Management
+
+```powershell
+# Enable PSRemoting (run once on the target PC)
+Enable-PSRemoting -Force
+
+# Run a command on a remote PC
+Invoke-Command -ComputerName "PC-NAME" -ScriptBlock {Get-Process | Sort-Object CPU -Descending | Select-Object -First 5}
+
+# Interactive remote session
+Enter-PSSession -ComputerName "PC-NAME"
+```
+
+---
+
 ## File Operations
 
 ```powershell
@@ -121,6 +197,19 @@ Get-FileHash "C:\Downloads\installer.exe" -Algorithm SHA256
 
 ---
 
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| Get system info | `Get-ComputerInfo` |
+| List processes by CPU | `Get-Process \| Sort CPU -Desc` |
+| Find large files | `Get-ChildItem -Recurse \| Where {$_.Length -gt 100MB}` |
+| Test port connectivity | `Test-NetConnection host -Port 443` |
+| Check service status | `Get-Service servicename` |
+| View recent errors | `Get-EventLog System -EntryType Error -Newest 10` |
+
+---
+
 ## ⚡ Need More Commands?
 
 **[→ PowerShell & CMD Command Reference](/tools/powershell-commands)** — search 40+ commands by task. Type "network", "disk", "security" and get the right command instantly.
@@ -130,3 +219,5 @@ Get-FileHash "C:\Downloads\installer.exe" -Algorithm SHA256
 ## Summary
 
 Run PowerShell as Administrator: `Win + X` → Windows Terminal (Admin). All commands tested on Windows 10 and 11 with PowerShell 5.1+. For a searchable reference of 40+ commands — use the [command reference tool](/tools/powershell-commands).
+
+Need to *write* a full script instead of one-liners? See [How to Write and Run PowerShell Scripts to Automate Windows Tasks](/en/how-to-automate-windows-with-powershell-scripts). New to PowerShell's syntax itself — variables, loops, functions? Start with [PowerShell Scripting for Windows Admins](/en/how-to-use-powershell-scripting-basics).
