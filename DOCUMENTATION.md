@@ -2713,7 +2713,37 @@ Canonical — `powershell-skrypty-dlya-admina-top20` (найбільша кол�
 
 #### Оновлений TODO
 
-- [ ] Виправити 5 slug↔вміст розсинхронізацій в EN (готово до виконання, дослідження вже зроблено)
+- [x] Виправити 5 slug↔вміст розсинхронізацій в EN (готово до виконання, дослідження вже зроблено)
 - [ ] Почати EN-консолідацію найбільших кластерів
 - [ ] Продовжити рештою ~11 UK-груп
+
+---
+
+### Сесія 12 (продовження 21) — Виправлено 5 EN slug↔вміст розсинхронізацій + знайдено і виправлено ширший баг редиректів
+
+**Виконано за планом з попереднього дослідження:**
+
+1. `how-to-configure-windows-defender-firewall` (вміст — Antivirus CLI) → перейменовано на `how-to-use-windows-defender-command-line`
+2. `how-to-configure-windows-hello-for-business` (вміст — Secure Boot/Core Isolation/SmartScreen) → перейменовано на `how-to-configure-windows-security-key-features`
+3. `how-to-configure-windows-sandbox-networking` (вміст — загальна діагностика мережі) → перейменовано на `how-to-troubleshoot-windows-network-issues`
+4. `how-to-configure-windows-defender-firewall-advanced` (вміст — Offline Scan, прихований дублікат) → видалено, злито в уже коректну `how-to-use-windows-defender-offline-scan`
+5. `how-to-enable-remote-desktop-without-admin` (вміст — Task Scheduler, прихований дублікат) → видалено, злито в `how-to-use-task-scheduler-windows` (додано унікальний розділ "Common Issues" перед видаленням)
+
+**Виправлено зламаний hreflang-ланцюжок,** який тягнувся звідси: UK-стаття "Windows Hello" (`windows-hello-nalashtuvannya-ta-vypravlennya`) через `translatesEn` вказувала саме на розсинхронізований slug (тепер це вже інша тема — Security Key Features). Перенаправлено на реальну, вже опубліковану `how-to-configure-windows-hello.md`. Для перейменованої Security-Key-Features статті знайдено і підв'язано справжню UK-пару — `yak-pereviryt-yadro-windows-bezpechno` ("Безпечне ядро... як перевірити за 2 хвилини").
+
+**Побічна знахідка при перевірці:** інша потенційна EN-пара для Windows Hello (`how-to-set-up-windows-hello-pin.md`) мала `publishDate: "2027-02-03"` — стаття в майбутньому, ще 404-ить (`getStaticProps` в `pages/[slug].js` повертає `notFound` для `publishDate > now`). Уникнули підв'язки hreflang на неопубліковану сторінку.
+
+#### Ширший, раніше не задокументований баг: `/en/→/en/` редиректи без `locale: false` не спрацьовували
+
+При першій перевірці нових редиректів наживо — усі 5 повертали **404 замість 308**. Причина: цей сайт має `i18n: { locales: ['uk','en'] }` в `next.config.js`, і Next.js **автоматично** обробляє префікс локалі в `source` редиректу, якщо не вказано `locale: false` — тому `/en/<slug>` в `source` не матчиться буквально, запит "проваливається" до звичайного динамічного роуту, де спрацьовує EN-fallback механізм (показ UK-контенту під `/en/` URL, як і задумано для СТАТЕЙ БЕЗ ПЕРЕКЛАДУ) — і віддає 200 замість очікуваного редиректу.
+
+**Це виявилось не лише моєю помилкою** — перевірка показала, що **4 вже існуючих** `/en/→/en/` редиректи (вірус, prискорити windows, bitlocker, remote desktop) мали ту саму ваду і теж мовчки не спрацьовували, ймовірно, відколи були додані. Додано `locale: false` до всіх 9 (5 нових + 4 старих).
+
+**Перевірено:** усі 9 редиректів наживо повертають 308, усі цільові сторінки — 200.
+
+#### Оновлений TODO
+
+- [ ] Почати EN-консолідацію найбільших кластерів (Task Scheduler, PowerShell-адмін, "прискорити Windows", Update-помилки)
+- [ ] Продовжити рештою ~11 UK-груп
+- [ ] Взяти на замітку: будь-який майбутній `/en/→/en/` редирект в next.config.js МАЄ включати `locale: false`, інакше мовчки не працює
 
