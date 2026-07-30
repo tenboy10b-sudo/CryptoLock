@@ -5,7 +5,7 @@ publishDate: "2026-04-18"
 updated: "2026-07-21"
 description: "Чому гальмує Windows і як це виправити: діагностика вузького місця, автозавантаження, план живлення, служби, температури, SSD і RAM. Що реально допомагає, а що ні."
 tags: ["windows", "оптимізація", "продуктивність", "прискорення", "обладнання"]
-translatesEn: "why-windows-slow-how-to-speed-up"
+translatesEn: "how-to-speed-up-windows-11"
 readTime: 13
 ---
 

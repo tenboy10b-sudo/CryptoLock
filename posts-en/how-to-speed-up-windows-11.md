@@ -6,10 +6,34 @@ publishDate: "2026-05-09"
 description: "Windows 11 running slow? These proven methods genuinely improve performance: disable startup apps, switch power plan, reduce visual effects, clean disk, and update drivers."
 tags: ["windows", "optimization", "performance", "settings"]
 translatesUk: "yak-pryskoryt-windows"
-readTime: 6
+readTime: 8
 ---
 
 Windows 11 slows down after months of use — mostly from accumulated startup programs, fragmented storage, and outdated drivers. Here's what actually works.
+
+---
+
+## Diagnose the Bottleneck First
+
+Before changing anything, find out what's actually slow:
+
+```powershell
+Get-Counter '\Processor(_Total)\% Processor Time',
+    '\Memory\Available MBytes',
+    '\PhysicalDisk(_Total)\% Disk Time' |
+    Select-Object -ExpandProperty CounterSamples |
+    Select-Object Path, CookedValue
+```
+
+Or Task Manager: `Ctrl+Shift+Esc` → **Performance** tab.
+
+| Metric | Normal | Problem |
+|--------|--------|---------|
+| CPU | < 70% | > 90% constantly |
+| RAM | < 80% | > 90% or pagefile constantly active |
+| Disk | < 50% | 100% constantly |
+
+Less than 8 GB RAM is the #1 cause of slowness on modern Windows — if RAM is consistently near full, more RAM will help more than any setting below.
 
 ---
 
@@ -150,6 +174,20 @@ Configure to run monthly and clean Downloads older than 60 days.
 
 ---
 
+## 11. Adjust Virtual Memory (Page File)
+
+`Win + R` → `sysdm.cpl` → **Advanced** → **Performance Settings** → **Advanced** → **Change** → uncheck automatic → set Initial and Maximum to 1.5× your RAM.
+
+---
+
+## 12. Reset Windows (Last Resort)
+
+If nothing above helps and the system still feels sluggish, a clean state often outperforms hours of tweaking:
+
+`Settings` → **Recovery** → **Reset this PC** → **Remove everything**. Back up your files first.
+
+---
+
 ## What Doesn't Actually Help
 
 - Registry cleaners — Windows 11 doesn't slow down from registry bloat
@@ -164,6 +202,18 @@ Configure to run monthly and clean Downloads older than 60 days.
 - [install Windows 11 without TPM](/en/how-to-install-windows-11-without-tpm)
 - [add Defender exclusions](/en/how-to-configure-windows-defender-exclusions)
 
+## Quick Checklist (10 minutes)
+
+- [ ] Disable unnecessary startup programs
+- [ ] Run disk cleanup (`cleanmgr`)
+- [ ] Set High Performance power plan
+- [ ] Check Task Manager for the actual bottleneck
+- [ ] Check disk health (`Get-PhysicalDisk`)
+
+---
+
 ## Summary
 
 Best ROI: **disable startup apps** + **switch to High Performance plan** + **clean disk**. For older hardware: also disable animations and SysMain. If still slow: check temperatures and run SFC/DISM. Never use third-party "optimizers" — Windows has all the tools built in.
+
+If the slowness is specifically at boot (not day-to-day use), see the dedicated guide: [How to Fix Slow Boot in Windows 10 and 11](/en/how-to-fix-slow-boot-windows).

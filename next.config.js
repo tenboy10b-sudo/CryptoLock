@@ -231,7 +231,7 @@ const nextConfig = {
         permanent: true,
       },
       { source: '/en/yak-vydatyly-virus-z-windows', destination: '/en/how-to-remove-virus-windows', permanent: true, locale: false },
-      { source: '/en/yak-pryskoryt-windows', destination: '/en/how-to-speed-up-windows', permanent: true, locale: false },
+      { source: '/en/yak-pryskoryt-windows', destination: '/en/how-to-speed-up-windows-11', permanent: true, locale: false },
       { source: '/en/yak-zashyfruvaty-dysk-bitlocker', destination: '/en/how-to-enable-bitlocker', permanent: true, locale: false },
       { source: '/en/nalashtuvannya-remote-desktop-rdp', destination: '/en/how-to-set-up-remote-desktop', permanent: true, locale: false },
 
@@ -249,6 +249,10 @@ const nextConfig = {
       // EN "PowerShell командний довідник" cluster — 3 статті об'єднано в 1 (лишились окремими: scripting-basics і automate-windows-with-powershell-scripts, інший намір)
       { source: '/en/how-to-use-powershell-for-system-administration', destination: '/en/how-to-use-powershell-for-daily-windows-tasks', permanent: true, locale: false },
       { source: '/en/how-to-use-powershell-for-windows-admin', destination: '/en/how-to-use-powershell-for-daily-windows-tasks', permanent: true, locale: false },
+
+      // EN "Speed up Windows / Slow boot" cluster — 6 статей об'єднано у 2 (загальна оптимізація + boot-специфічна)
+      { source: '/en/how-to-speed-up-windows', destination: '/en/how-to-speed-up-windows-11', permanent: true, locale: false },
+      { source: '/en/why-windows-slow-how-to-speed-up', destination: '/en/how-to-speed-up-windows-11', permanent: true, locale: false },
 
       // ── UK slugs що потрапили на EN локаль → UK версія ────────────────
       { source: '/en/yak-vstanovyty-wsl-linux-v-windows', destination: '/yak-vstanovyty-wsl-windows', permanent: true, locale: false },

@@ -4,7 +4,7 @@ date: "2026-05-19"
 publishDate: "2026-05-19"
 description: "Windows taking too long to start? Find out what's slowing your boot with Event Viewer and fix it: startup programs, services, fast startup, and driver issues."
 tags: ["windows", "optimization", "performance", "startup"]
-readTime: 6
+readTime: 8
 ---
 
 A slow boot is almost always caused by one of three things: too many startup programs, a slow or failing drive, or a problematic driver. Here's how to find the culprit and fix it.
@@ -25,6 +25,20 @@ For detailed boot analysis, open Event Viewer:
 `Win + R` → `eventvwr.msc` → **Applications and Services Logs** → **Microsoft** → **Windows** → **Diagnostics-Performance** → **Operational**
 
 Filter for **Event ID 100** — this shows total boot time in milliseconds and lists which processes delayed startup.
+
+For which specific component caused the delay, filter **Event ID 101** instead:
+
+```powershell
+Get-WinEvent -FilterHashtable @{
+  LogName = 'Microsoft-Windows-Diagnostics-Performance/Operational'
+  Id = 101
+} -MaxEvents 20 | Select-Object TimeCreated,
+  @{n='Component';e={$_.Properties[1].Value}},
+  @{n='Delay(ms)';e={$_.Properties[4].Value}} |
+  Sort-Object 'Delay(ms)' -Descending
+```
+
+The top entries show which service, driver, or app is slowing boot the most.
 
 ---
 
@@ -115,13 +129,63 @@ Also run a full scan if the quick scan finds nothing but boot is still slow.
 
 ---
 
-## Step 7: Rebuild BCD (If Boot Is Very Slow Before Login)
+## Step 7: BIOS Settings
+
+Some of the delay can happen before Windows even starts loading:
+
+- **POST delay** / **Boot delay** — set to 0 or minimum
+- **Network/PXE boot** — disable if not needed (adds 5–15 seconds)
+- **Boot order** — set the SSD first, remove unused boot devices
+- **Fast Boot / Quick Boot** — enable if available
+
+---
+
+## Step 8: Clean Boot to Isolate the Problem
+
+Test with third-party services and startup programs disabled:
+
+`Win + R` → `msconfig` → **Services** tab → check **Hide all Microsoft services** → **Disable all** → **Startup** tab → **Open Task Manager** → disable all → **Apply** → restart.
+
+If boot is fast in clean boot, re-enable items in batches to find the culprit.
+
+---
+
+## Step 9: Check for Pending Windows Updates
+
+Pending updates often process during startup and slow the boot down:
+
+```powershell
+(New-Object -ComObject Microsoft.Update.SystemInfo).RebootRequired
+```
+
+If `True` — restart and let the update finish. Boot should be faster afterward.
+
+---
+
+## Monitor Boot Time Over Time
+
+```powershell
+# Last 10 boot times — see if it's getting worse
+Get-WinEvent -FilterHashtable @{
+  LogName = 'Microsoft-Windows-Diagnostics-Performance/Operational'
+  Id = 100
+} -MaxEvents 10 | Select-Object TimeCreated,
+  @{n='Boot(sec)';e={[math]::Round($_.Properties[0].Value/1000,1)}} |
+  Sort-Object TimeCreated
+```
+
+A rising trend points to a growing problem — drive health, accumulating startup programs, or a software issue rather than a one-off.
+
+---
+
+## Rebuild BCD (If Boot Is Very Slow Before Login)
 
 If Windows is slow before the login screen appears, the Boot Configuration Data may be corrupted.
 
 Boot from Windows installation USB → **Repair your computer** → **Troubleshoot** → **Advanced options** → **Command Prompt**:
 
 ```cmd
+bcdedit /deletevalue {current} safeboot
 bootrec /fixmbr
 bootrec /fixboot
 bootrec /rebuildbcd
@@ -152,6 +216,24 @@ If Windows shows a code like `0x80070005`, `0x80070002` or `0xC000021A` — use 
 **[→ Windows Error Decoder](/tools/windows-error-decoder)** — enter the code and instantly find out what it means and how to fix it.
 
 
+## Frequently Asked Questions
+
+### How long should Windows boot take?
+
+On an SSD: 10-20 seconds from power button to desktop. On an HDD: 45-90 seconds is normal. Over 2 minutes on SSD or over 5 minutes on HDD indicates a problem.
+
+### Does reinstalling Windows fix slow boot?
+
+Yes — a clean install is the nuclear option but works. Before doing that, try DISM + SFC and disabling startup programs. A clean install takes about 30 minutes but gives you a fresh start.
+
+### Why is Windows 11 slower to boot than Windows 10?
+
+Windows 11 has more visual effects and background services enabled by default. Disabling startup programs and enabling Fast Startup usually closes the gap.
+
+---
+
 ## Summary
 
 Check Event Viewer (Event ID 100) to see total boot time and what's slowing it. Fix in order: disable high-impact startup programs → enable Fast Startup → check drive health → delay non-essential services. If nothing helps, upgrade from HDD to SSD — it's the single biggest improvement possible.
+
+For general day-to-day performance (not just boot), see [How to Speed Up Windows 11 in 2026: Proven Methods](/en/how-to-speed-up-windows-11).
