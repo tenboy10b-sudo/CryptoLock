@@ -4,7 +4,7 @@ date: "2026-06-24"
 publishDate: "2026-06-24"
 description: "Advanced Windows Task Scheduler configuration. Event-based triggers, conditions, run-on-demand without UAC, find hidden tasks and debug failed scheduled jobs."
 tags: ["windows", "task-scheduler", "automation", "powershell", "administration"]
-readTime: 5
+readTime: 7
 translatesUk: "planuvalnyk-zavdan-rozshyreni-mozhlyvosti"
 ---
 
@@ -31,6 +31,57 @@ Register-ScheduledTask -TaskName "Alert-FailedLogin" `
 # Trigger on new USB device connected (Event ID 2003)
 $trigger = New-ScheduledTaskTrigger -OnEvent `
   -Subscription '<QueryList><Query><Select Path="Microsoft-Windows-DriverFrameworks-UserMode/Operational">*[System[EventID=2003]]</Select></Query></QueryList>'
+```
+
+---
+
+## Event Triggers via XML (Most Reliable Method)
+
+For event triggers that need to survive edits or be portable across PCs, defining the task as XML is more reliable than building it purely from `New-ScheduledTaskTrigger -OnEvent`:
+
+```powershell
+$xml = @"
+<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.4" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <Triggers>
+    <EventTrigger>
+      <Subscription><![CDATA[
+        <QueryList>
+          <Query Id="0" Path="Security">
+            <Select Path="Security">*[System[EventID=4625]]</Select>
+          </Query>
+        </QueryList>
+      ]]></Subscription>
+    </EventTrigger>
+  </Triggers>
+  <Actions Context="Author">
+    <Exec>
+      <Command>powershell.exe</Command>
+      <Arguments>-File C:\Scripts\alert-login-fail.ps1</Arguments>
+    </Exec>
+  </Actions>
+</Task>
+"@
+Register-ScheduledTask -Xml $xml -TaskName "AlertOnFailedLogin" -Force
+```
+
+You can also pass event data (like the specific computer or event ID that fired) into the triggered script:
+
+```xml
+<Arguments>-File C:\Scripts\handler.ps1 -EventID $(EventID) -Computer $(Computer)</Arguments>
+```
+
+Access these in the script via `$args` or named parameters.
+
+---
+
+## Retry on Failure
+
+```powershell
+$settings = New-ScheduledTaskSettingsSet `
+  -RestartCount 3 `                      # Retry 3 times on failure
+  -RestartInterval "00:05:00" `          # Wait 5 minutes between retries
+  -StartWhenAvailable $true              # Run if the scheduled time was missed (PC was off)
 ```
 
 ---
@@ -69,6 +120,31 @@ $principal = New-ScheduledTaskPrincipal `
 Register-ScheduledTask -TaskName "SilentAdminTask" `
   -Action $action -Trigger $trigger -Principal $principal
 ```
+
+---
+
+## Pass Arguments to Scripts
+
+```powershell
+# Script that accepts parameters
+$action = New-ScheduledTaskAction -Execute "powershell.exe" `
+  -Argument '-NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -Command "& C:\Scripts\backup.ps1 -Source C:\Data -Dest D:\Backup -Verbose"'
+```
+
+---
+
+## Export and Import Tasks (Backup or Move to Another PC)
+
+```powershell
+# Export a task to XML
+Export-ScheduledTask -TaskName "NightlyMaintenance" | Out-File "C:\TaskBackup.xml"
+
+# Import it (on this PC or another)
+Register-ScheduledTask -Xml (Get-Content "C:\TaskBackup.xml" | Out-String) `
+  -TaskName "NightlyMaintenance" -Force
+```
+
+Export before making major changes to a task — restoring from XML is much faster than rebuilding it from scratch.
 
 ---
 
@@ -139,7 +215,9 @@ Get-ScheduledTask | Where-Object {$_.TaskPath -notlike "*\Microsoft\*"} |
 
 ## Summary
 
-Event triggers with `<QueryList>` XML. Idle conditions with `-RunOnlyIfIdle`. Run silently as SYSTEM with SYSTEM principal. Audit all non-Microsoft tasks for malware. Enable history with `wevtutil sl` for debugging. Result 0x0 = success.
+Event triggers with `<QueryList>` XML. Idle conditions with `-RunOnlyIfIdle`. `RestartCount`/`RestartInterval` for automatic retry on failure. Run silently as SYSTEM with SYSTEM principal. Audit all non-Microsoft tasks for malware. Export tasks to XML before major changes. Enable history with `wevtutil sl` for debugging. Result 0x0 = success.
+
+For basic setup — GUI walkthrough, common trigger types, everyday examples — see [How to Use Task Scheduler in Windows 10 and 11: Full Guide](/en/how-to-use-task-scheduler-windows).
 
 ## Frequently Asked Questions
 

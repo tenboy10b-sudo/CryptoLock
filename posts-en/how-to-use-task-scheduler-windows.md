@@ -4,7 +4,8 @@ date: "2026-05-10"
 publishDate: "2026-05-10"
 description: "Create, edit and manage scheduled tasks in Windows Task Scheduler. Run scripts, programs and backups automatically on schedule, login, or system event."
 tags: ["windows", "automation", "administration", "powershell"]
-readTime: 6
+readTime: 7
+translatesUk: "keruvannya-zaplanovanym-zavdannyam-windows"
 ---
 
 Task Scheduler lets you run any program, script, or command automatically — on a schedule, at login, on system startup, or triggered by an event. Here's how to use it effectively.
@@ -16,6 +17,15 @@ Task Scheduler lets you run any program, script, or command automatically — on
 `Win + R` → `taskschd.msc`
 
 Or: `Win + S` → search **Task Scheduler**
+
+---
+
+## Basic Concepts
+
+A scheduled task has three parts:
+- **Trigger** — when to run (time, event, login, startup)
+- **Action** — what to run (executable, script, arguments)
+- **Principal** — which account to run as (user, SYSTEM, highest privileges)
 
 ---
 
@@ -135,6 +145,37 @@ In task properties → **Conditions** → check **Wake the computer to run this 
 
 ---
 
+## Modify an Existing Task
+
+```powershell
+# Change trigger time
+$task = Get-ScheduledTask -TaskName "DailyBackup"
+$task.Triggers[0].StartBoundary = "2026-06-01T08:00:00"
+$task | Set-ScheduledTask
+
+# Change the action's script
+Set-ScheduledTask -TaskName "DailyBackup" `
+  -Action (New-ScheduledTaskAction -Execute "powershell.exe" `
+    -Argument "-File C:\Scripts\new-script.ps1")
+```
+
+---
+
+## Run a Task as a Different User
+
+```powershell
+$principal = New-ScheduledTaskPrincipal `
+  -UserId "DOMAIN\ServiceAccount" `
+  -LogonType Password `
+  -RunLevel Highest
+
+Register-ScheduledTask -TaskName "ServiceTask" `
+  -Action $action -Trigger $trigger -Principal $principal `
+  -Password "ServicePassword123!"
+```
+
+---
+
 ## Common Issues
 
 - Task runs but the script fails silently → add logging inside your script to capture errors
@@ -166,6 +207,20 @@ Get-WinEvent -LogName "Microsoft-Windows-TaskScheduler/Operational" -MaxEvents 2
 
 ---
 
+## Frequently Asked Questions
+
+### My scheduled task runs fine when I trigger it manually but not on schedule — why?
+
+Most common causes: the user account doesn't have the "Log on as batch job" right, or the task is set to run only when a user is logged in. Check the Principal settings — use SYSTEM or "Run whether user is logged on or not".
+
+### Can scheduled tasks run PowerShell scripts silently, with no window?
+
+Yes: add `-WindowStyle Hidden` to the action, e.g. `-Argument "-WindowStyle Hidden -File C:\script.ps1"`.
+
+---
+
 ## Summary
 
 `taskschd.msc` opens Task Scheduler. Use `Register-ScheduledTask` in PowerShell for scripted task creation. Always use `-NonInteractive -ExecutionPolicy Bypass` for PowerShell scripts. Run as SYSTEM for tasks that need to run without a logged-in user. Check Last Run Result — 0 means success.
+
+For event-based triggers, retry logic, hidden-task auditing and other advanced scenarios, see [Windows Task Scheduler: Advanced Triggers, Conditions and Hidden Tasks](/en/how-to-configure-windows-task-scheduler-advanced).

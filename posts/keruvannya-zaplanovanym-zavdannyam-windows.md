@@ -5,7 +5,7 @@ publishDate: "2026-05-29"
 description: "Створення і управління запланованими завданнями Windows через PowerShell і GUI. Запуск скриптів за розкладом, при вході, при старті і за подіями."
 tags: ["windows", "планувальник-завдань", "powershell", "автоматизація", "адміністрування"]
 readTime: 4
-translatesEn: "how-to-configure-windows-scheduled-tasks"
+translatesEn: "how-to-use-task-scheduler-windows"
 ---
 
 Заплановані завдання автоматизують все в Windows. PowerShell дає повний контроль без GUI.
