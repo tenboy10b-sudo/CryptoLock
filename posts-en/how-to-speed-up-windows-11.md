@@ -160,7 +160,7 @@ Configure to run monthly and clean Downloads older than 60 days.
 
 ---
 
-**Читай також:**
+**Related:**
 - [install Windows 11 without TPM](/en/how-to-install-windows-11-without-tpm)
 - [add Defender exclusions](/en/how-to-configure-windows-defender-exclusions)
 

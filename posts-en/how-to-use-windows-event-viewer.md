@@ -175,9 +175,9 @@ Or in GUI: right-click any log → **Save All Events As** → `.evtx` format can
 
 ---
 
-## 📋 Не знаєш що означає Event ID?
+## 📋 Not sure what an Event ID means?
 
-**[→ Windows Event ID довідник](/tools/windows-event-id)** — пошук по 20+ ключових подіях безпеки з описом, рівнем загрози і рекомендаціями.
+**[→ Windows Event ID Reference](/tools/windows-event-id)** — search 20+ key security events with descriptions, threat level and recommendations.
 
 
 ## Summary

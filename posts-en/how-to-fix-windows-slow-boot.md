@@ -186,11 +186,11 @@ A trend of increasing boot times suggests a growing problem — drive health, ac
 
 ---
 
-## 🔍 Не знаєш що означає код помилки Windows?
+## 🔍 Not sure what a Windows error code means?
 
-Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+If Windows shows a code like `0x80070005`, `0x80070002` or `0xC000021A` — use this free tool:
 
-**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
+**[→ Windows Error Decoder](/tools/windows-error-decoder)** — enter the code and instantly find out what it means and how to fix it.
 
 
 ## Summary

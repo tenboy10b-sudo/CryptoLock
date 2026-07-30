@@ -168,7 +168,7 @@ For maximum control: Windows LTSC (Long Term Servicing Channel) removes most tel
 
 ---
 
-**Читай також:**
+**Related:**
 - [speed up Windows 11](/en/how-to-speed-up-windows-11)
 - [manage Windows Update](/en/how-to-configure-windows-update-policies)
 

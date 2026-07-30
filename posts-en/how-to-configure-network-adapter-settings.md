@@ -172,9 +172,9 @@ Remove-Item "C:\Temp\test.iso"
 
 ---
 
-## 🌐 Розрахувати параметри підмережі?
+## 🌐 Calculate subnet parameters?
 
-**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.
+**[→ IP/Subnet Calculator](/tools/subnet-calculator)** — enter IP and CIDR, get the mask, broadcast, host range and binary representation.
 
 
 ## Summary

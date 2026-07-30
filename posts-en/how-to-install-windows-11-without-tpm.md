@@ -137,7 +137,7 @@ Microsoft officially states unsupported PCs **may not receive future updates**. 
 
 ---
 
-**Читай також:**
+**Related:**
 - [speed up Windows 11](/en/how-to-speed-up-windows-11)
 - [control Windows Update](/en/how-to-configure-windows-update-policies)
 

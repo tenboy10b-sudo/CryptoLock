@@ -100,9 +100,9 @@ Both work alongside Windows Clipboard History without conflicts.
 
 ---
 
-## ⚡ Шукаєш потрібну команду?
+## ⚡ Looking for the right command?
 
-**[→ PowerShell і CMD довідник](/tools/powershell-commands)** — 40+ команд з пошуком за задачею. Введи "мережа", "диск" або "безпека" і одразу отримай готову команду.
+**[→ PowerShell & CMD Reference](/tools/powershell-commands)** — 40+ commands searchable by task. Type "network", "disk" or "security" to get a ready-to-use command instantly.
 
 
 ## Summary

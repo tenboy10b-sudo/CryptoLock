@@ -174,9 +174,9 @@ For sensitive passwords, use a dedicated password manager (Bitwarden, KeePass) i
 
 ---
 
-## 🔑 Потрібен надійний пароль?
+## 🔑 Need a strong password?
 
-**[→ Генератор паролів](/tools/password-generator)** — криптографічно надійні паролі прямо в браузері. Нічого не передається на сервер.
+**[→ Password Generator](/tools/password-generator)** — cryptographically secure passwords generated right in your browser. Nothing is sent to a server.
 
 
 ## Summary
