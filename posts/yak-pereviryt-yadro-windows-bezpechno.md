@@ -6,6 +6,7 @@ publishDate: "2026-04-30"
 description: "Як перевірити чи увімкнені HVCI, Secure Boot і захист ядра в Windows 11. Команди PowerShell і де подивитись в Безпека Windows."
 tags: ["windows", "безпека", "налаштування", "захист"]
 readTime: 4
+translatesEn: "how-to-configure-windows-security-key-features"
 ---
 
 Secured-core PC — рівень апаратного захисту що Microsoft вимагає від корпоративних пристроїв. Але перевірити і частково увімкнути можна на будь-якому ПК.

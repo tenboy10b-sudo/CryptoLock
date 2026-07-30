@@ -5,6 +5,7 @@ publishDate: "2026-03-13"
 description: "Set up Windows Hello for fast, secure login without typing a password. Configure fingerprint reader, facial recognition, or PIN — and fix common Windows Hello problems."
 tags: ["windows", "security", "accounts", "tools"]
 readTime: 5
+translatesUk: "windows-hello-nalashtuvannya-ta-vypravlennya"
 ---
 
 Windows Hello lets you sign in with a fingerprint, face scan, or PIN instead of typing your password every time. It's faster, more secure than passwords, and the biometric data never leaves your PC.

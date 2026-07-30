@@ -5,7 +5,7 @@ publishDate: "2026-05-26"
 description: "Налаштування Windows Hello PIN, відбитка пальця і розпізнавання обличчя. Виправлення: Hello не працює після оновлення, цикл скидання PIN, біометрія недоступна."
 tags: ["windows", "windows-hello", "безпека", "автентифікація", "біометрія"]
 readTime: 4
-translatesEn: "how-to-configure-windows-hello-for-business"
+translatesEn: "how-to-configure-windows-hello"
 ---
 
 Windows Hello забезпечує вхід без пароля через PIN, відбиток або обличчя. Ось як налаштувати і виправити коли зламалось.

@@ -135,6 +135,19 @@ In task properties → **Conditions** → check **Wake the computer to run this 
 
 ---
 
+## Common Issues
+
+- Task runs but the script fails silently → add logging inside your script to capture errors
+- **"The task image is corrupt"** → delete and recreate the task
+- Script works when run manually but not when scheduled → check the execution policy and use full paths in the script arguments
+
+```powershell
+# Test with full path and explicit execution policy, same as Task Scheduler would run it
+powershell.exe -ExecutionPolicy Bypass -NonInteractive -File "C:\Scripts\myscript.ps1"
+```
+
+---
+
 ## Troubleshoot Scheduled Tasks
 
 ```powershell
