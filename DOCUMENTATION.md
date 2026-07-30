@@ -2743,7 +2743,30 @@ Canonical — `powershell-skrypty-dlya-admina-top20` (найбільша кол�
 
 #### Оновлений TODO
 
-- [ ] Почати EN-консолідацію найбільших кластерів (Task Scheduler, PowerShell-адмін, "прискорити Windows", Update-помилки)
+- [x] Почати EN-консолідацію найбільших кластерів (Task Scheduler зроблено)
 - [ ] Продовжити рештою ~11 UK-груп
-- [ ] Взяти на замітку: будь-який майбутній `/en/→/en/` редирект в next.config.js МАЄ включати `locale: false`, інакше мовчки не працює
+- [x] Взяти на замітку: будь-який майбутній `/en/→/en/` редирект в next.config.js МАЄ включати `locale: false`, інакше мовчки не працює
+
+---
+
+### Сесія 12 (продовження 22) — Перша EN-консолідація: "Task Scheduler" (4→2)
+
+Перший реальний кластер з EN-аудиту. На відміну від UK-груп, тут виявилось **два дійсно різні наміри пошуку** в одному кластері: базове налаштування (GUI+PowerShell для новачка) і "advanced" (тригери на подіях, умови, аудит прихованих завдань — для досвідченого адміна). Обидва "advanced" файли дублювали один одного, обидва "базові" — теж. Тому об'єднано **4→2**, а не 4→1, з перехресними посиланнями між гайдами.
+
+**Базовий гайд** — canonical `how-to-use-task-scheduler-windows` (вже мав редирект з попереднього виправлення remote-desktop-without-admin). Додано з `how-to-configure-windows-scheduled-tasks`: концептуальний розбір Trigger/Action/Principal, розділи "Modify Existing Task" і "Run as Different User". UK-пару (`translatesEn`) перенесено на цей canonical.
+
+**Advanced-гайд** — canonical `how-to-configure-windows-task-scheduler-advanced` (вже мав валідний `translatesUk`, не чіпали). Додано з `how-to-use-windows-task-scheduler-advanced`: XML-триґери на подіях (надійніший метод), передача аргументів у скрипт, `RestartCount`/`RestartInterval` для авто-повтору при збої, експорт/імпорт завдань у XML.
+
+**Видалено:** `how-to-configure-windows-scheduled-tasks`, `how-to-use-windows-task-scheduler-advanced`. Додано 2 редиректи (вже з `locale: false` одразу, без повторної помилки).
+
+**Перевірено:** білд, деплой, наживо — обидва canonical 200, обидва старих URL 308. Помічено що UK-пара `planuvalnyk-zavdan-rozshyreni-mozhlyvosti` дає 404 — не баг, стаття запланована на майбутнє (`publishDate: 2026-08-02`), ще не опублікована автопостом.
+
+#### Прогрес EN-консолідації
+
+**Разом: 244→240 EN-статей** (2 видалено при виправленні slug-розсинхронізацій + 2 в цьому кластері), **7 URL на редирект в EN** (5 з розсинхронізацій + 2 з цього кластера). Лишається ~24 кластери.
+
+#### Оновлений TODO
+
+- [ ] Продовжити EN-консолідацію — PowerShell-адмін (5), "прискорити Windows" (~6), Windows Update помилки (6)
+- [ ] Продовжити рештою ~11 UK-груп
 
