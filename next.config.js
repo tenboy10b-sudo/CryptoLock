@@ -230,17 +230,17 @@ const nextConfig = {
         destination: '/en/how-to-remove-virus-windows',
         permanent: true,
       },
-      { source: '/en/yak-vydatyly-virus-z-windows', destination: '/en/how-to-remove-virus-windows', permanent: true },
-      { source: '/en/yak-pryskoryt-windows', destination: '/en/how-to-speed-up-windows', permanent: true },
-      { source: '/en/yak-zashyfruvaty-dysk-bitlocker', destination: '/en/how-to-enable-bitlocker', permanent: true },
-      { source: '/en/nalashtuvannya-remote-desktop-rdp', destination: '/en/how-to-set-up-remote-desktop', permanent: true },
+      { source: '/en/yak-vydatyly-virus-z-windows', destination: '/en/how-to-remove-virus-windows', permanent: true, locale: false },
+      { source: '/en/yak-pryskoryt-windows', destination: '/en/how-to-speed-up-windows', permanent: true, locale: false },
+      { source: '/en/yak-zashyfruvaty-dysk-bitlocker', destination: '/en/how-to-enable-bitlocker', permanent: true, locale: false },
+      { source: '/en/nalashtuvannya-remote-desktop-rdp', destination: '/en/how-to-set-up-remote-desktop', permanent: true, locale: false },
 
       // EN slug↔content mismatch fixes — renamed to match actual content, or merged as hidden duplicates
-      { source: '/en/how-to-configure-windows-defender-firewall', destination: '/en/how-to-use-windows-defender-command-line', permanent: true },
-      { source: '/en/how-to-configure-windows-hello-for-business', destination: '/en/how-to-configure-windows-security-key-features', permanent: true },
-      { source: '/en/how-to-configure-windows-sandbox-networking', destination: '/en/how-to-troubleshoot-windows-network-issues', permanent: true },
-      { source: '/en/how-to-configure-windows-defender-firewall-advanced', destination: '/en/how-to-use-windows-defender-offline-scan', permanent: true },
-      { source: '/en/how-to-enable-remote-desktop-without-admin', destination: '/en/how-to-use-task-scheduler-windows', permanent: true },
+      { source: '/en/how-to-configure-windows-defender-firewall', destination: '/en/how-to-use-windows-defender-command-line', permanent: true, locale: false },
+      { source: '/en/how-to-configure-windows-hello-for-business', destination: '/en/how-to-configure-windows-security-key-features', permanent: true, locale: false },
+      { source: '/en/how-to-configure-windows-sandbox-networking', destination: '/en/how-to-troubleshoot-windows-network-issues', permanent: true, locale: false },
+      { source: '/en/how-to-configure-windows-defender-firewall-advanced', destination: '/en/how-to-use-windows-defender-offline-scan', permanent: true, locale: false },
+      { source: '/en/how-to-enable-remote-desktop-without-admin', destination: '/en/how-to-use-task-scheduler-windows', permanent: true, locale: false },
 
       // ── UK slugs що потрапили на EN локаль → UK версія ────────────────
       { source: '/en/yak-vstanovyty-wsl-linux-v-windows', destination: '/yak-vstanovyty-wsl-windows', permanent: true, locale: false },
