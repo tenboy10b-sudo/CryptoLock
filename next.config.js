@@ -130,6 +130,10 @@ const nextConfig = {
       // "Windows 11 після встановлення" — 2 статті об'єднано в windows-11-nalashtuvannya-pislya-vstanovlennya
       { source: '/yak-nalashtuvanty-windows-11-pislya-vstanovlennya', destination: '/windows-11-nalashtuvannya-pislya-vstanovlennya', permanent: true },
 
+      // "DNS over HTTPS" — 3 статті об'єднано в dns-over-https-windows
+      { source: '/yak-nalashtuvanty-dns-over-https-windows', destination: '/dns-over-https-windows', permanent: true },
+      { source: '/yak-nalashtuvaty-dns-over-https-windows', destination: '/dns-over-https-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
@@ -397,7 +401,7 @@ const nextConfig = {
       { source: '/en/yak-nalashtuvaty-windows-dlya-pryvatnosti', destination: '/yak-nalashtuvaty-windows-dlya-pryvatnosti', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvaty-faierbol-windows-dlya-ihor', destination: '/yak-nalashtuvaty-faierbol-windows-dlya-ihor', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvaty-windows-zaplyh-portiv', destination: '/yak-nalashtuvaty-windows-zaplyh-portiv', permanent: true, locale: false },
-      { source: '/en/yak-nalashtuvaty-dns-over-https-windows', destination: '/yak-nalashtuvaty-dns-over-https-windows', permanent: true, locale: false },
+      { source: '/en/yak-nalashtuvaty-dns-over-https-windows', destination: '/dns-over-https-windows', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvaty-nychnyy-rezhym-windows', destination: '/yak-nalashtuvaty-nychnyy-rezhym-windows', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvanty-windows-dlya-shkoly', destination: '/yak-nalashtuvanty-windows-dlya-shkoly', permanent: true, locale: false },
       { source: '/en/yak-vypravyty-windows-update-zavisaye', destination: '/yak-vypravyty-windows-update-zavisaye', permanent: true, locale: false },
