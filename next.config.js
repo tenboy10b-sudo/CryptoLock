@@ -134,6 +134,9 @@ const nextConfig = {
       { source: '/yak-nalashtuvanty-dns-over-https-windows', destination: '/dns-over-https-windows', permanent: true },
       { source: '/yak-nalashtuvaty-dns-over-https-windows', destination: '/dns-over-https-windows', permanent: true },
 
+      // "CPU 100%" — 2 статті об'єднано в 100-zavantazhennya-cpu-windows-prychyny-vyrishennya (обидві ще не були опубліковані)
+      { source: '/yak-vypravyty-100-protsent-cpu-windows', destination: '/100-zavantazhennya-cpu-windows-prychyny-vyrishennya', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

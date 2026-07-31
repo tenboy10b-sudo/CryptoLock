@@ -5,7 +5,7 @@ publishDate: "2026-10-03"
 updated: "2026-06-18"
 description: "Чому CPU завантажений на 100% в Windows 10 і 11 і як це виправити. Знайти який процес їсть процесор, вимкнути телеметрію і SysMain, виправити WMI і антивірус."
 tags: ["windows", "cpu", "продуктивність", "оптимізація", "діагностика"]
-readTime: 8
+readTime: 9
 translatesEn: "windows-high-cpu-usage-fix"
 ---
 
@@ -163,7 +163,11 @@ Get-WmiObject MSAcpi_ThermalZoneTemperature -Namespace root/wmi |
     Select-Object @{N='Temp°C';E={($_.CurrentTemperature - 2732) / 10}}
 ```
 
-Або перевір через HWiNFO — якщо CPU > 90°C під навантаженням, міняй термопасту.
+Або встанови HWiNFO для точнішого моніторингу:
+```powershell
+winget install REALiX.HWiNFO
+```
+Якщо CPU > 90°C під навантаженням, міняй термопасту.
 
 ---
 
@@ -187,6 +191,18 @@ Get-WmiObject Win32_PnPEntity |
 Write-Host "`n=== Стан системних файлів ===" -ForegroundColor Cyan
 sfc /verifyonly 2>&1 | Select-Object -Last 3
 ```
+
+---
+
+## Часті питання
+
+### 100% CPU — це завжди проблема?
+
+Ні — під час оновлень, антивірусного сканування або великих операцій з файлами це нормально і тимчасово. Проблема — якщо тривало кілька годин без очевидної причини.
+
+### System Interrupts з високим CPU — що це?
+
+Обробка апаратних переривань. Висока завантаженість = проблема з драйвером або залізом: застарілі драйвери, несправне залізо або конфлікт USB-пристроїв.
 
 ---
 

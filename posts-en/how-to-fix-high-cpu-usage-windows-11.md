@@ -5,7 +5,7 @@ publishDate: "2027-02-01"
 description: "Fix 100% CPU usage in Windows 10 and 11. Find what process is consuming CPU, stop runaway processes, fix Windows Update, antivirus and WMI provider host issues."
 tags: ["windows", "cpu", "performance", "troubleshooting", "powershell"]
 readTime: 5
-translatesUk: "yak-vypravyty-100-protsent-cpu-windows"
+translatesUk: "100-zavantazhennya-cpu-windows-prychyny-vyrishennya"
 ---
 
 100% CPU usage makes Windows sluggish and unresponsive. Here's how to identify the cause and fix it permanently.
