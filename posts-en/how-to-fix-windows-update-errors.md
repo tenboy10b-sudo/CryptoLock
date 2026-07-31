@@ -176,3 +176,5 @@ If Windows shows a code like `0x80070005`, `0x80070002` or `0xC000021A` — use 
 ## Summary
 
 For most errors: run the troubleshooter → reset update components → run SFC + DISM. If you're getting a specific error code, use the lookup in Step 5. Manual KB download (Step 6) solves ~90% of stubborn cases.
+
+Update frozen at a percentage rather than showing an error? See [How to Fix Windows Update Stuck at 0%, Downloading or Installing](/en/how-to-fix-windows-update-stuck). For a deep dive specifically on error 0x80070005, see [How to Fix Windows Update Error 0x80070005 (Access Denied)](/en/how-to-fix-windows-update-error-0x80070005).

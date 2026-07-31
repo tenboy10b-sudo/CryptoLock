@@ -4,7 +4,7 @@ date: "2026-03-19"
 publishDate: "2026-03-19"
 description: "Windows Update error 0x80070005 means access denied — a permissions problem preventing updates from installing. Here are all the fixes: reset permissions, restart services, and run as SYSTEM."
 tags: ["windows", "windows-update", "troubleshooting", "security"]
-readTime: 5
+readTime: 6
 ---
 
 Error 0x80070005 during Windows Update means "Access Denied" — something is blocking the update process from writing files or accessing a registry key. Here's how to fix it.
@@ -131,7 +131,21 @@ Manual installation bypasses the Windows Update agent that's getting the access 
 
 ---
 
-## Fix 9: Check User Account Control
+## Fix 9: Run the Update as Administrator via PSWindowsUpdate
+
+```powershell
+Install-Module PSWindowsUpdate -Force -EA 0
+Start-Process powershell -Verb RunAs -ArgumentList {
+  Import-Module PSWindowsUpdate
+  Get-WUInstall -AcceptAll -AutoReboot
+}
+```
+
+This runs the update check and install with full elevated privileges — sometimes fixes access-denied errors that persist even when you're already an administrator.
+
+---
+
+## Fix 10: Check User Account Control
 
 ```powershell
 # Check UAC level
@@ -150,7 +164,7 @@ Restart required.
 
 ---
 
-## Fix 10: Reset Windows Update Components Script
+## Fix 11: Reset Windows Update Components Script
 
 ```powershell
 # Comprehensive reset script
@@ -195,3 +209,5 @@ If Windows shows a code like `0x80070005`, `0x80070002` or `0xC000021A` — use 
 ## Summary
 
 Most common fix: disable antivirus temporarily → run Windows Update → re-enable. If that fails: reset SoftwareDistribution folder and restart update services. For persistent cases: run the comprehensive reset script above or install the failing update manually from Microsoft Update Catalog.
+
+Update stuck rather than erroring out? See [How to Fix Windows Update Stuck at 0%, Downloading or Installing](/en/how-to-fix-windows-update-stuck). Seeing a different error code? See [How to Fix Windows Update Errors: The Complete Guide](/en/how-to-fix-windows-update-errors).

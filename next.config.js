@@ -254,6 +254,11 @@ const nextConfig = {
       { source: '/en/how-to-speed-up-windows', destination: '/en/how-to-speed-up-windows-11', permanent: true, locale: false },
       { source: '/en/why-windows-slow-how-to-speed-up', destination: '/en/how-to-speed-up-windows-11', permanent: true, locale: false },
 
+      // EN "Windows Update помилки/зависання" cluster — 6 статей об'єднано у 3 (загальний гайд, 0x80070005, зависло/повільно)
+      { source: '/en/how-to-fix-windows-update-0x80070005', destination: '/en/how-to-fix-windows-update-error-0x80070005', permanent: true, locale: false },
+      { source: '/en/how-to-troubleshoot-windows-update-stuck', destination: '/en/how-to-fix-windows-update-stuck', permanent: true, locale: false },
+      { source: '/en/how-to-fix-windows-update-taking-forever', destination: '/en/how-to-fix-windows-update-stuck', permanent: true, locale: false },
+
       // ── UK slugs що потрапили на EN локаль → UK версія ────────────────
       { source: '/en/yak-vstanovyty-wsl-linux-v-windows', destination: '/yak-vstanovyty-wsl-windows', permanent: true, locale: false },
       { source: '/en/vidklyuchennya-avtoonovlennya-windows', destination: '/vidklyuchennya-avtoonovlennya-windows', permanent: true, locale: false },
