@@ -60,14 +60,15 @@
     "yak-nalashtuvaty-windows-perevirka-trafiku",
     "zaborona-zapusku-powershell",
     "monitorynh-merezhi-windows-netstat-wireshark",
-    "yak-prybravty-reklamu-z-windows-11"
+    "yak-prybravty-reklamu-z-windows-11",
+    "yak-nalashtuvaty-windows-zminnye-seredovyshhe"
   ],
-  "count": 61,
+  "count": 62,
   "promo_index": 45,
   "last_post": {
-    "slug": "yak-prybravty-reklamu-z-windows-11",
-    "title": "Як прибрати рекламу з Windows 11: повний гайд",
-    "time": "2026-07-30T08:01:21.508Z"
+    "slug": "yak-nalashtuvaty-windows-zminnye-seredovyshhe",
+    "title": "Змінні середовища Windows: як переглянути і налаштувати PATH",
+    "time": "2026-07-31T08:01:16.281Z"
   },
   "engage_index": 39,
   "extra_index": 37
