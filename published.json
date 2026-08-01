@@ -61,14 +61,15 @@
     "zaborona-zapusku-powershell",
     "monitorynh-merezhi-windows-netstat-wireshark",
     "yak-prybravty-reklamu-z-windows-11",
-    "yak-nalashtuvaty-windows-zminnye-seredovyshhe"
+    "yak-nalashtuvaty-windows-zminnye-seredovyshhe",
+    "how-to-configure-windows-powershell-scripts-advanced"
   ],
-  "count": 62,
+  "count": 63,
   "promo_index": 46,
   "last_post": {
-    "slug": "yak-nalashtuvaty-windows-zminnye-seredovyshhe",
-    "title": "Змінні середовища Windows: як переглянути і налаштувати PATH",
-    "time": "2026-07-31T08:01:16.281Z"
+    "slug": "how-to-configure-windows-powershell-scripts-advanced",
+    "title": "How to Use PowerShell Script Modules and Profiles",
+    "time": "2026-08-01T08:01:14.397Z"
   },
   "engage_index": 39,
   "extra_index": 38
