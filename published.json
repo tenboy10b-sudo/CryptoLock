@@ -62,14 +62,15 @@
     "monitorynh-merezhi-windows-netstat-wireshark",
     "yak-prybravty-reklamu-z-windows-11",
     "yak-nalashtuvaty-windows-zminnye-seredovyshhe",
-    "how-to-configure-windows-powershell-scripts-advanced"
+    "how-to-configure-windows-powershell-scripts-advanced",
+    "yak-nalashtuvaty-robotu-iz-zasobamy-windows"
   ],
-  "count": 63,
+  "count": 64,
   "promo_index": 47,
   "last_post": {
-    "slug": "how-to-configure-windows-powershell-scripts-advanced",
-    "title": "How to Use PowerShell Script Modules and Profiles",
-    "time": "2026-08-01T08:01:14.397Z"
+    "slug": "yak-nalashtuvaty-robotu-iz-zasobamy-windows",
+    "title": "Sysinternals: найкорисніші утиліти для діагностики Windows",
+    "time": "2026-08-02T08:01:15.306Z"
   },
   "engage_index": 39,
   "extra_index": 39
