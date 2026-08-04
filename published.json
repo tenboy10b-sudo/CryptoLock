@@ -64,14 +64,15 @@
     "yak-nalashtuvaty-windows-zminnye-seredovyshhe",
     "how-to-configure-windows-powershell-scripts-advanced",
     "yak-nalashtuvaty-robotu-iz-zasobamy-windows",
-    "yak-nalashtuvaty-robotu-iz-virtualnoyu-pamyattyu"
+    "yak-nalashtuvaty-robotu-iz-virtualnoyu-pamyattyu",
+    "how-to-configure-windows-update-policies"
   ],
-  "count": 65,
+  "count": 66,
   "promo_index": 48,
   "last_post": {
-    "slug": "yak-nalashtuvaty-robotu-iz-virtualnoyu-pamyattyu",
-    "title": "Файл підкачки Windows: як налаштувати для максимальної продуктивності",
-    "time": "2026-08-03T08:01:17.988Z"
+    "slug": "how-to-configure-windows-update-policies",
+    "title": "How to Control Windows Update with Group Policy and Registry",
+    "time": "2026-08-04T08:01:10.327Z"
   },
   "engage_index": 40,
   "extra_index": 41
