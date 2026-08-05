@@ -137,6 +137,9 @@ const nextConfig = {
       // "CPU 100%" — 2 статті об'єднано в 100-zavantazhennya-cpu-windows-prychyny-vyrishennya (обидві ще не були опубліковані)
       { source: '/yak-vypravyty-100-protsent-cpu-windows', destination: '/100-zavantazhennya-cpu-windows-prychyny-vyrishennya', permanent: true },
 
+      // "Швидкість інтернету" — 2 статті об'єднано в yak-zbilshyty-shvydkist-internetu-windows
+      { source: '/yak-pryskoryt-internet-windows', destination: '/yak-zbilshyty-shvydkist-internetu-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

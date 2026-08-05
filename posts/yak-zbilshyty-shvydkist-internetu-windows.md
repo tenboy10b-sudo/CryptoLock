@@ -4,7 +4,7 @@ date: "2026-04-26"
 publishDate: "2026-04-26"
 description: "Чому інтернет повільний в Windows і як прискорити: DNS на Cloudflare, вимкнення обмежень Windows Update, перевірка паразитного трафіку і налаштування адаптера."
 tags: ["мережа", "windows", "оптимізація", "wifi", "налаштування"]
-readTime: 5
+readTime: 7
 ---
 
 Провайдер дає 100 Мбіт але реально отримуєш 30? Або Wi-Fi показує сигнал але сайти відкриваються повільно? Ось де шукати причину.
@@ -50,6 +50,12 @@ Windows Update резервує до 20% пропускної здатності
 `Параметри` → `Windows Update` → `Додаткові параметри` → **Оптимізація доставки** → **Додаткові параметри**:
 - **Абсолютна пропускна здатність** → зніми обмеження або встанови 0%
 
+Або через реєстр:
+```powershell
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\DefaultMediaCost" `
+  -Name "Default" -Value 2 -Type DWord
+```
+
 ---
 
 ## Крок 4: Перевірити паразитний трафік
@@ -66,9 +72,21 @@ Get-NetTCPConnection -State Established |
   Sort-Object Process | Format-Table -AutoSize
 ```
 
+Або просто відкрий **Resource Monitor**: `Win + R` → `resmon` → вкладка **Network** — покаже які програми зараз завантажують або відвантажують дані.
+
 ---
 
-## Крок 5: Налаштувати мережевий адаптер
+## Крок 5: Оновити драйвер мережевого адаптера
+
+Старий драйвер може знижувати швидкість.
+
+`Win + X` → **Диспетчер пристроїв** → **Мережеві адаптери** → правий клік на Wi-Fi або Ethernet адаптері → **Оновити драйвер** → **Автоматичний пошук**.
+
+Або завантаж драйвер вручну з сайту виробника ноутбука/материнської плати.
+
+---
+
+## Крок 6: Налаштувати мережевий адаптер
 
 ```powershell
 # Переглянути налаштування адаптера
@@ -84,9 +102,19 @@ Set-NetAdapterAdvancedProperty -Name "Ethernet" `
   -DisplayName "Interrupt Moderation" -DisplayValue "Disabled"
 ```
 
+Через **Диспетчер пристроїв** → **Мережеві адаптери** → правий клік → **Властивості** → вкладка **Додатково**:
+- **Speed & Duplex** — встанови **1 Gbps Full Duplex** для Ethernet замість Auto
+- **Receive Buffers / Transmit Buffers** — збільш до максимуму
+
+Також іноді допомагає вимкнути автонастройку TCP:
+```cmd
+netsh int tcp set global autotuninglevel=disabled
+```
+Якщо не допомогло або стало гірше — повернути назад: `netsh int tcp set global autotuninglevel=normal`
+
 ---
 
-## Крок 6: Wi-Fi оптимізація
+## Крок 7: Wi-Fi оптимізація
 
 - Підключись по кабелю якщо можливо — стабільніше і швидше
 - Зміни канал Wi-Fi на роутері (1, 6 або 11 для 2.4 ГГц)
@@ -101,7 +129,7 @@ Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config" `
 
 ---
 
-## Крок 7: QoS резервування
+## Крок 8: QoS резервування
 
 Windows резервує 20% пропускної здатності для QoS. На домашньому ПК це можна вимкнути.
 
