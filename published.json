@@ -61,15 +61,20 @@
     "zaborona-zapusku-powershell",
     "monitorynh-merezhi-windows-netstat-wireshark",
     "yak-prybravty-reklamu-z-windows-11",
-    "yak-nalashtuvaty-windows-zminnye-seredovyshhe"
+    "yak-nalashtuvaty-windows-zminnye-seredovyshhe",
+    "how-to-configure-windows-powershell-scripts-advanced",
+    "yak-nalashtuvaty-robotu-iz-zasobamy-windows",
+    "yak-nalashtuvaty-robotu-iz-virtualnoyu-pamyattyu",
+    "how-to-configure-windows-update-policies",
+    "how-to-monitor-windows-security-events"
   ],
-  "count": 62,
-  "promo_index": 46,
+  "count": 67,
+  "promo_index": 49,
   "last_post": {
-    "slug": "yak-nalashtuvaty-windows-zminnye-seredovyshhe",
-    "title": "Змінні середовища Windows: як переглянути і налаштувати PATH",
-    "time": "2026-07-31T08:01:16.281Z"
+    "slug": "how-to-monitor-windows-security-events",
+    "title": "How to Monitor Windows Security Events with Event Viewer",
+    "time": "2026-08-05T08:01:19.469Z"
   },
-  "engage_index": 39,
-  "extra_index": 38
+  "engage_index": 41,
+  "extra_index": 42
 }
