@@ -65,14 +65,15 @@
     "how-to-configure-windows-powershell-scripts-advanced",
     "yak-nalashtuvaty-robotu-iz-zasobamy-windows",
     "yak-nalashtuvaty-robotu-iz-virtualnoyu-pamyattyu",
-    "how-to-configure-windows-update-policies"
+    "how-to-configure-windows-update-policies",
+    "how-to-monitor-windows-security-events"
   ],
-  "count": 66,
+  "count": 67,
   "promo_index": 48,
   "last_post": {
-    "slug": "how-to-configure-windows-update-policies",
-    "title": "How to Control Windows Update with Group Policy and Registry",
-    "time": "2026-08-04T08:01:10.327Z"
+    "slug": "how-to-monitor-windows-security-events",
+    "title": "How to Monitor Windows Security Events with Event Viewer",
+    "time": "2026-08-05T08:01:19.469Z"
   },
   "engage_index": 41,
   "extra_index": 42
