@@ -66,14 +66,15 @@
     "yak-nalashtuvaty-robotu-iz-zasobamy-windows",
     "yak-nalashtuvaty-robotu-iz-virtualnoyu-pamyattyu",
     "how-to-configure-windows-update-policies",
-    "how-to-monitor-windows-security-events"
+    "how-to-monitor-windows-security-events",
+    "yak-nalashtuvanty-grayf-viddalkiv-windows"
   ],
-  "count": 67,
+  "count": 68,
   "promo_index": 49,
   "last_post": {
-    "slug": "how-to-monitor-windows-security-events",
-    "title": "How to Monitor Windows Security Events with Event Viewer",
-    "time": "2026-08-05T08:01:19.469Z"
+    "slug": "yak-nalashtuvanty-grayf-viddalkiv-windows",
+    "title": "Як налаштувати графік відкладених завдань і нагадувань в Windows",
+    "time": "2026-08-06T08:01:19.707Z"
   },
   "engage_index": 41,
   "extra_index": 43
