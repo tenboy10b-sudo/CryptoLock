@@ -66,15 +66,17 @@
     "yak-nalashtuvaty-robotu-iz-zasobamy-windows",
     "yak-nalashtuvaty-robotu-iz-virtualnoyu-pamyattyu",
     "how-to-configure-windows-update-policies",
-    "how-to-monitor-windows-security-events"
+    "how-to-monitor-windows-security-events",
+    "yak-nalashtuvanty-grayf-viddalkiv-windows",
+    "yak-stvoryt-nadiynyy-parol-windows"
   ],
-  "count": 67,
-  "promo_index": 49,
+  "count": 69,
+  "promo_index": 50,
   "last_post": {
-    "slug": "how-to-monitor-windows-security-events",
-    "title": "How to Monitor Windows Security Events with Event Viewer",
-    "time": "2026-08-05T08:01:19.469Z"
+    "slug": "yak-stvoryt-nadiynyy-parol-windows",
+    "title": "Як створити надійний пароль і де його зберігати",
+    "time": "2026-08-07T08:01:21.418Z"
   },
-  "engage_index": 41,
-  "extra_index": 42
+  "engage_index": 42,
+  "extra_index": 45
 }
