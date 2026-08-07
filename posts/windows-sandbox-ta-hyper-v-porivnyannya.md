@@ -53,7 +53,7 @@ readTime: 5
 </Configuration>
 ```
 
-Детальніше: [Windows Sandbox — повний гайд](/windows-sandbox-bezpechne-seredovyshe)
+Детальніше: [Windows Sandbox — повний гайд](/windows-sandbox-izolovane-seredovyshche)
 
 ---
 

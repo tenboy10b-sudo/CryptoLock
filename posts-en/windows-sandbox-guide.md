@@ -88,6 +88,21 @@ Save as `sandbox.wsb` → double-click to launch with these settings.
 
 ---
 
+## If You Don't Have Windows Pro
+
+Sandbox isn't available on Windows Home. Alternatives:
+- **VirtualBox** — free VM, needs a separate Windows ISO
+- **Any.run** — online sandbox for file analysis (free tier available)
+- **VirusTotal** — scan a file with 70+ antivirus engines
+
+## Security Notes
+
+Clipboard sharing is enabled by default — be careful copying sensitive data between host and Sandbox.
+
+Malware could theoretically escape Sandbox via a VM escape exploit, but this is extremely rare and requires a sophisticated zero-day. For typical consumer malware, Sandbox is safe.
+
+---
+
 ## Troubleshooting
 
 ### Sandbox not in Start Menu

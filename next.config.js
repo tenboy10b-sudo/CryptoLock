@@ -144,6 +144,17 @@ const nextConfig = {
       { source: '/yak-perenestyy-windows-na-novyy-dysk-ssd', destination: '/yak-klonuvaty-dysk-windows', permanent: true },
       { source: '/yak-vstanovyty-ssd-windows', destination: '/yak-klonuvaty-dysk-windows', permanent: true },
 
+      // "Виключення Windows Defender" — 3 статті об'єднано в yak-nalashtuvaty-windows-defender-vyklyuchennya (2 опубліковані + 1 з черги)
+      { source: '/windows-defender-vyklyuchennya', destination: '/yak-nalashtuvaty-windows-defender-vyklyuchennya', permanent: true },
+
+      // "Windows Sandbox — базовий гайд" — 5 статей об'єднано в windows-sandbox-izolovane-seredovyshche (з черги; порівняння з Hyper-V і malware-аналіз лишились окремо)
+      { source: '/windows-sandbox-bezpechne-seredovyshe', destination: '/windows-sandbox-izolovane-seredovyshche', permanent: true },
+      { source: '/windows-sandbox-bezpechne-testuvannya', destination: '/windows-sandbox-izolovane-seredovyshche', permanent: true },
+      { source: '/yak-nalashtuvanty-windows-sandbox', destination: '/windows-sandbox-izolovane-seredovyshche', permanent: true },
+      { source: '/yak-nalashtuvatysy-windows-sandbox', destination: '/windows-sandbox-izolovane-seredovyshche', permanent: true },
+      { source: '/en/how-to-use-windows-sandbox-safely', destination: '/en/windows-sandbox-guide', permanent: true, locale: false },
+      { source: '/en/how-to-use-windows-sandbox', destination: '/en/windows-sandbox-guide', permanent: true, locale: false },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
