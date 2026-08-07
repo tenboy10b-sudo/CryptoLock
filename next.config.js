@@ -140,6 +140,10 @@ const nextConfig = {
       // "Швидкість інтернету" — 2 статті об'єднано в yak-zbilshyty-shvydkist-internetu-windows
       { source: '/yak-pryskoryt-internet-windows', destination: '/yak-zbilshyty-shvydkist-internetu-windows', permanent: true },
 
+      // "Перенесення Windows на SSD (клонування)" — 3 статті об'єднано в yak-klonuvaty-dysk-windows
+      { source: '/yak-perenestyy-windows-na-novyy-dysk-ssd', destination: '/yak-klonuvaty-dysk-windows', permanent: true },
+      { source: '/yak-vstanovyty-ssd-windows', destination: '/yak-klonuvaty-dysk-windows', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
