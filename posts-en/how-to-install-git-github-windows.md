@@ -1,7 +1,7 @@
 ---
 title: "How to Install and Use Git and GitHub on Windows 10 and 11"
 date: "2026-06-08"
-publishDate: "2026-08-14"
+publishDate: "2027-06-01"
 updated: "2026-06-08"
 description: "How to install Git on Windows 10 and 11, configure username and email, connect to GitHub via SSH or HTTPS. Essential Git commands for beginners. GitHub Desktop setup."
 tags: ["windows", "git", "github", "tools", "development"]

@@ -1,7 +1,7 @@
 ---
 title: "DDU (Display Driver Uninstaller): повне видалення драйверів відеокарти на Windows"
 date: "2026-06-18"
-publishDate: "2026-09-20"
+publishDate: "2027-06-01"
 updated: "2026-06-18"
 description: "Як використовувати DDU для повного видалення драйверів NVIDIA, AMD або Intel на Windows. Покрокова інструкція через Safe Mode, коли потрібен DDU і як встановити чисті драйвери після."
 tags: ["windows", "ddu", "драйвери", "nvidia", "amd", "інструменти"]

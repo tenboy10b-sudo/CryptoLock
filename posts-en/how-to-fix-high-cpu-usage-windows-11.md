@@ -1,7 +1,7 @@
 ---
 title: "How to Fix High CPU Usage in Windows 10 and 11 (2026)"
 date: "2027-02-01"
-publishDate: "2027-02-01"
+publishDate: "2027-06-01"
 description: "Fix 100% CPU usage in Windows 10 and 11. Find what process is consuming CPU, stop runaway processes, fix Windows Update, antivirus and WMI provider host issues."
 tags: ["windows", "cpu", "performance", "troubleshooting", "powershell"]
 readTime: 5

@@ -1,7 +1,7 @@
 ---
 title: "WinDirStat on Windows: Find What's Taking Up Disk Space"
 date: "2026-06-15"
-publishDate: "2026-09-14"
+publishDate: "2027-06-01"
 updated: "2026-06-15"
 description: "How to install WinDirStat and find large files and folders taking up disk space on Windows. Disk usage visualization, delete what's unnecessary and free alternatives."
 tags: ["windows", "windirstat", "disk", "optimization", "tools"]

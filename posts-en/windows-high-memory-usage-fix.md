@@ -1,7 +1,7 @@
 ---
 title: "Windows 10 and 11 High Memory Usage: Why RAM Is Full and How to Free It"
 date: "2026-06-18"
-publishDate: "2026-10-04"
+publishDate: "2027-06-01"
 updated: "2026-06-18"
 description: "Why Windows uses all your RAM and how to fix it. Find which process uses memory, disable unnecessary services, configure pagefile and speed up your PC."
 tags: ["windows", "ram", "memory", "performance", "optimization", "diagnostics"]

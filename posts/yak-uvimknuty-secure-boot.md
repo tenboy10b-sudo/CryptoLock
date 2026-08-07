@@ -1,7 +1,7 @@
 ---
 title: "Як увімкнути Secure Boot в BIOS для Windows 10 і 11"
 date: "2027-02-06"
-publishDate: "2027-02-06"
+publishDate: "2027-06-01"
 description: "Увімкнення Secure Boot в BIOS/UEFI для Windows 10 і 11. Перевірка статусу, перехід з Legacy на UEFI, конвертація MBR в GPT без втрати даних."
 tags: ["windows", "bios", "secure-boot", "uefi", "встановлення"]
 readTime: 4

@@ -1,7 +1,7 @@
 ---
 title: "Windows Server 2022 і 2019: що це таке, редакції і основні налаштування"
 date: "2026-06-10"
-publishDate: "2026-08-22"
+publishDate: "2027-06-01"
 updated: "2026-06-10"
 description: "Що таке Windows Server, чим відрізняється від Windows 10/11, редакції Standard і Datacenter. Початкове налаштування після встановлення, Active Directory, DNS, DHCP."
 tags: ["windows", "windows-server", "адміністрування", "active-directory", "мережа"]

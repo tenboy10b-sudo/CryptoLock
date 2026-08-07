@@ -1,7 +1,7 @@
 ---
 title: "Windows 10 and 11 High CPU Usage: Find the Cause and Fix It"
 date: "2026-06-18"
-publishDate: "2026-10-03"
+publishDate: "2027-06-01"
 updated: "2026-06-18"
 description: "Why CPU usage is at 100% in Windows 10 and 11 and how to fix it. Find which process is causing high CPU, fix WMI, disable SysMain and telemetry, update drivers."
 tags: ["windows", "cpu", "performance", "optimization", "diagnostics"]

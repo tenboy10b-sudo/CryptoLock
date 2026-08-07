@@ -1,7 +1,7 @@
 ---
 title: "TeamViewer і AnyDesk на Windows: встановлення, налаштування і безпечний віддалений доступ"
 date: "2026-06-10"
-publishDate: "2026-08-18"
+publishDate: "2027-06-01"
 updated: "2026-06-10"
 description: "Як встановити і налаштувати TeamViewer та AnyDesk на Windows 10 і 11 для віддаленого доступу. Порівняння програм, налаштування без нагляду, безпека з'єднання."
 tags: ["windows", "teamviewer", "anydesk", "віддалений-доступ", "інструменти"]

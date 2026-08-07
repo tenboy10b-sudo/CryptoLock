@@ -1,7 +1,7 @@
 ---
 title: "Taskbar Not Working in Windows 10 and 11: Fix Freezing and Missing Taskbar"
 date: "2026-06-20"
-publishDate: "2026-10-10"
+publishDate: "2027-06-01"
 updated: "2026-06-20"
 description: "What to do when the taskbar freezes, won't respond or disappears in Windows 10 and 11. Restart Explorer, fix via PowerShell, re-register system apps and repair system files."
 tags: ["windows", "taskbar", "explorer", "fix", "settings"]

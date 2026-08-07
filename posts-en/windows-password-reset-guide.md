@@ -1,7 +1,7 @@
 ---
 title: "Reset Windows 10 and 11 Password Without a Disk and Without Logging In"
 date: "2026-06-20"
-publishDate: "2026-10-09"
+publishDate: "2027-06-01"
 updated: "2026-06-20"
 description: "How to reset a forgotten Windows 10 and 11 password when you can't log in. Reset via Microsoft account, command line at boot, WinRE and local account methods."
 tags: ["windows", "password", "security", "accounts", "fix"]

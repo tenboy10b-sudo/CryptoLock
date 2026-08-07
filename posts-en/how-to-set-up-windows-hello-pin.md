@@ -1,7 +1,7 @@
 ---
 title: "How to Set Up Windows Hello PIN, Fingerprint and Face Recognition"
 date: "2027-02-03"
-publishDate: "2027-02-03"
+publishDate: "2027-06-01"
 description: "Set up Windows Hello PIN, fingerprint and face recognition in Windows 10 and 11. Configure sign-in options, manage Windows Hello for Business and troubleshoot."
 tags: ["windows", "windows-hello", "security", "authentication", "biometrics"]
 readTime: 5

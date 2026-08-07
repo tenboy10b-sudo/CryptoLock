@@ -1,7 +1,7 @@
 ---
 title: "WiFi Not Connecting in Windows 10 and 11: Step-by-Step Fix"
 date: "2026-06-18"
-publishDate: "2026-10-05"
+publishDate: "2027-06-01"
 updated: "2026-06-18"
 description: "What to do when WiFi won't connect or keeps disconnecting in Windows 10 and 11. Reset network settings, update WiFi drivers, fix limited connectivity and no internet errors."
 tags: ["windows", "wifi", "network", "internet", "fix"]

@@ -1,7 +1,7 @@
 ---
 title: "Як увімкнути і захистити Remote Desktop (RDP) в Windows 10 і 11"
 date: "2026-08-10"
-publishDate: "2026-08-10"
+publishDate: "2027-06-01"
 description: "Увімкнення Remote Desktop в Windows, налаштування NLA автентифікації, зміна порту RDP, обмеження доступу і вирішення проблем підключення."
 tags: ["windows", "rdp", "remote", "безпека", "адміністрування", "powershell"]
 readTime: 4

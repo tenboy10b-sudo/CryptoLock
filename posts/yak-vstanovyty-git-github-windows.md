@@ -1,7 +1,7 @@
 ---
 title: "Git і GitHub на Windows: встановлення, налаштування і основні команди"
 date: "2026-06-08"
-publishDate: "2026-08-14"
+publishDate: "2027-06-01"
 updated: "2026-06-08"
 description: "Як встановити Git на Windows 10 і 11, налаштувати ім'я і email, підключити GitHub через SSH або HTTPS. Основні команди Git для початківців і не тільки."
 tags: ["windows", "git", "github", "інструменти", "розробка"]

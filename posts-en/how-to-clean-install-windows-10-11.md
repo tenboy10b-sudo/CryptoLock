@@ -1,7 +1,7 @@
 ---
 title: "How to Clean Install Windows 10 and 11: Complete Step-by-Step Guide"
 date: "2026-06-08"
-publishDate: "2027-02-14"
+publishDate: "2027-06-01"
 updated: "2026-06-08"
 description: "How to clean install Windows 10 or 11 from a USB drive: backup, disk partitioning, bootable USB creation, and post-install setup. Everything you need to know."
 tags: ["windows", "installation", "usb", "settings"]

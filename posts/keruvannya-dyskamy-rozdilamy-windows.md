@@ -1,7 +1,7 @@
 ---
 title: "Управління дисками і розділами Windows через PowerShell і DiskPart"
 date: "2026-08-17"
-publishDate: "2026-08-17"
+publishDate: "2027-06-01"
 description: "Управління дисками і розділами Windows через Disk Management, PowerShell і DiskPart. Створення, зміна розміру, форматування і призначення букв дисків."
 tags: ["windows", "диск", "розділи", "diskpart", "powershell", "адміністрування"]
 readTime: 4

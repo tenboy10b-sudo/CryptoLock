@@ -1,7 +1,7 @@
 ---
 title: "VS Code на Windows: встановлення, налаштування і топ розширень для розробників"
 date: "2026-06-14"
-publishDate: "2026-09-07"
+publishDate: "2027-06-01"
 updated: "2026-06-14"
 description: "Як встановити Visual Studio Code на Windows 10 і 11. Налаштування теми, шрифту, автозбереження. Топ розширень для Python, JavaScript, PHP. Гарячі клавіші VS Code."
 tags: ["windows", "vscode", "розробка", "інструменти", "програмування"]

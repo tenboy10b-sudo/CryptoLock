@@ -1,7 +1,7 @@
 ---
 title: "How to Free Up Disk Space in Windows 10 and 11: Complete Guide"
 date: "2027-02-10"
-publishDate: "2027-02-10"
+publishDate: "2027-06-01"
 description: "Free up disk space in Windows 10 and 11. Delete temp files, Windows Update cache, WinSxS folder, old Windows installations, compress files and find large files."
 tags: ["windows", "disk", "storage", "optimization", "cleanup"]
 readTime: 5

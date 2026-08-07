@@ -1,7 +1,7 @@
 ---
 title: "Supermium: браузер на основі Chromium для старих версій Windows"
 date: "2026-06-13"
-publishDate: "2026-09-05"
+publishDate: "2027-06-01"
 updated: "2026-06-13"
 description: "Що таке Supermium і кому він потрібен. Сучасний браузер на Chromium для Windows XP, Vista, 7 і старих систем де Chrome і Edge вже не працюють. Встановлення і налаштування."
 tags: ["windows", "браузер", "supermium", "інструменти"]

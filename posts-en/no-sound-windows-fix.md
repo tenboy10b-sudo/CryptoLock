@@ -1,7 +1,7 @@
 ---
 title: "No Sound in Windows 10 and 11: Step-by-Step Fix"
 date: "2026-06-18"
-publishDate: "2026-10-06"
+publishDate: "2027-06-01"
 updated: "2026-06-18"
 description: "What to do when sound stops working in Windows 10 and 11. Check playback devices, restart audio services, update sound drivers and fix HDMI audio issues."
 tags: ["windows", "sound", "audio", "fix", "drivers"]

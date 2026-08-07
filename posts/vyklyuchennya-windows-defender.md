@@ -1,7 +1,7 @@
 ---
 title: "Як додати виключення Windows Defender не вимикаючи захист"
 date: "2026-08-08"
-publishDate: "2026-08-08"
+publishDate: "2027-06-01"
 description: "Додавання виключень Windows Defender для файлів, папок, процесів і розширень без відключення антивірусного захисту. Управління через PowerShell і GPO."
 tags: ["windows", "windows-defender", "безпека", "powershell", "адміністрування"]
 readTime: 3
