@@ -6,7 +6,7 @@ updated: "2026-06-18"
 description: "Що робити якщо WiFi не підключається або відключається в Windows 10 і 11. Скидання мережевих налаштувань, оновлення драйверів WiFi, виправлення помилок підключення."
 tags: ["windows", "wifi", "мережа", "інтернет", "виправлення"]
 readTime: 8
-translatesEn: "wifi-not-connecting-windows-fix"
+translatesEn: "how-to-troubleshoot-wifi-windows"
 ---
 
 WiFi не підключається — одна з найпоширеніших проблем Windows. Причини різні: від простого "забув пароль" до пошкодженого драйвера. Ось систематичне вирішення.
@@ -172,6 +172,33 @@ powercfg /setactive SCHEME_CURRENT
 netsh wlan show drivers | Select-String "Radio types"
 # Має бути: 802.11a/n/ac або 802.11ax
 ```
+
+### Помилка автентифікації / неправильний пароль, хоча пароль вірний
+
+```powershell
+# Видалити збережений профіль і облікові дані
+netsh wlan delete profile name="НазваМережі"
+cmdkey /delete:TERMSRV/НазваМережі
+```
+
+### VPN або проксі заважає підключенню
+
+```powershell
+netsh winhttp reset proxy
+Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name "ProxyEnable" -Value 0
+```
+
+---
+
+## Часті питання
+
+### WiFi показує підключено, але не працює лише на одному сайті?
+
+Це DNS чи блокування конкретного сайту, а не загальна проблема WiFi. Перевір через `nslookup site.com`.
+
+### Взагалі не бачить жодних мереж?
+
+Перевір чи адаптер увімкнений: `Get-NetAdapter`. Якщо статус "Disabled" — увімкни. Якщо адаптера взагалі немає в Диспетчері пристроїв — драйвер не встановлений або проблема з апаратним забезпеченням.
 
 ---
 

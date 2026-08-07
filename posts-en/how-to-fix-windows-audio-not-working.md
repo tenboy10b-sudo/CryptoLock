@@ -5,7 +5,7 @@ publishDate: "2027-06-01"
 description: "Fix no sound in Windows 10 and 11. Troubleshoot audio issues: no output device, sound stopped working after update, driver problems, service not running."
 tags: ["windows", "audio", "sound", "troubleshooting", "drivers"]
 readTime: 5
-translatesUk: "yak-vypravyty-zvuk-windows"
+translatesUk: "nemaie-zvuku-windows-vyrishennya"
 ---
 
 No sound in Windows is usually caused by a wrong output device, disabled audio service, or driver issue. Here's how to fix it systematically.

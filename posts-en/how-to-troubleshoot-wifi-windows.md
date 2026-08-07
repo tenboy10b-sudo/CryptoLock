@@ -5,7 +5,7 @@ publishDate: "2027-06-01"
 description: "Fix Wi-Fi not working in Windows 10 and 11. Diagnose connection issues, reset wireless adapter, update drivers, fix DNS and solve authentication errors."
 tags: ["windows", "wifi", "network", "troubleshooting", "drivers"]
 readTime: 5
-translatesUk: "yak-vypravyty-wifi-windows"
+translatesUk: "wifi-ne-pidklyuchaietsia-windows-vyrishennya"
 ---
 
 Wi-Fi issues in Windows range from adapter not found to connected but no internet. Here's a systematic approach that covers every scenario.

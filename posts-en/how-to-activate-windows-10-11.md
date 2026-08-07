@@ -99,6 +99,26 @@ wmic path SoftwareLicensingService get OA3xOriginalProductKey
 ### Error 0xC004C003 — blocked key
 The key is used on too many devices. Contact Microsoft Support.
 
+### Error 0xC004F074 — activation server unavailable
+```powershell
+Test-NetConnection -ComputerName activation.sls.microsoft.com -Port 443
+slmgr /ato
+```
+
+---
+
+## Corporate Activation (KMS)
+
+For Windows Pro/Enterprise on a domain:
+
+```powershell
+slmgr /skms kms-server.company.local
+slmgr /ato
+
+# Check KMS activation status
+slmgr /dlv | Select-String "KMS"
+```
+
 ---
 
 ## Summary

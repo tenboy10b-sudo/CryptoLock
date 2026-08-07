@@ -115,6 +115,34 @@ wmic path SoftwareLicensingService get OA3xOriginalProductKey
 ### Помилка 0x8007007B — невірний формат ключа
 Перевір що ввів ключ правильно — 25 символів, без пробілів зайвих.
 
+### Помилка 0xC004F074 — сервер активації недоступний
+```powershell
+# Перевірити підключення до серверів активації
+Test-NetConnection -ComputerName activation.sls.microsoft.com -Port 443
+
+# Активувати примусово
+slmgr /ato
+```
+
+### Помилка 0x803FA067 — потрібен вхід до Microsoft акаунту
+```
+Параметри → Активація → Увійдіть за допомогою облікового запису Microsoft
+```
+
+---
+
+## Корпоративна активація (KMS)
+
+Для Windows Pro/Enterprise в домені:
+
+```powershell
+slmgr /skms kms-server.company.local
+slmgr /ato
+
+# Статус KMS активації
+slmgr /dlv | Select-String "KMS"
+```
+
 ---
 
 ## Часті питання
