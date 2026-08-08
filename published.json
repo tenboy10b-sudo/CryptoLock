@@ -68,14 +68,15 @@
     "how-to-configure-windows-update-policies",
     "how-to-monitor-windows-security-events",
     "yak-nalashtuvanty-grayf-viddalkiv-windows",
-    "yak-stvoryt-nadiynyy-parol-windows"
+    "yak-stvoryt-nadiynyy-parol-windows",
+    "how-to-configure-windows-search-index"
   ],
-  "count": 69,
+  "count": 70,
   "promo_index": 50,
   "last_post": {
-    "slug": "yak-stvoryt-nadiynyy-parol-windows",
-    "title": "Як створити надійний пароль і де його зберігати",
-    "time": "2026-08-07T08:01:21.418Z"
+    "slug": "how-to-configure-windows-search-index",
+    "title": "How to Configure Windows Search Index for Faster File Searches",
+    "time": "2026-08-08T08:01:20.470Z"
   },
   "engage_index": 42,
   "extra_index": 45
