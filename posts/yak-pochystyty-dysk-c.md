@@ -4,6 +4,7 @@ date: "2026-04-17"
 description: "Покроковий гайд як звільнити місце на диску C за допомогою вбудованих інструментів Windows — без сторонніх програм."
 tags: ["диск", "очищення", "оптимізація", "windows"]
 readTime: 5
+translatesEn: "how-to-free-up-disk-space-windows"
 ---
 
 Диск C заповнюється з часом навіть якщо ти нічого не встановлюєш. Тимчасові файли, кеш оновлень, кошик — все це займає гігабайти. У цій статті розберемо як прибрати зайве швидко і безпечно.
@@ -83,3 +84,54 @@ del /q /f /s C:\Windows\Temp\*
 ## Скільки місця звільниться
 
 На середньостатистичному ПК після очищення звільняється від 5 до 30 ГБ. Якщо диск все одно повний — перевір що займає місце через **Параметри → Система → Пам'ять** і видали непотрібні програми або перенеси файли на інший диск.
+
+---
+
+## Просунуті способи через PowerShell
+
+### Тимчасові файли одразу через PowerShell
+
+```powershell
+Remove-Item "$env:TEMP\*" -Recurse -Force -EA 0
+Remove-Item "C:\Windows\Temp\*" -Recurse -Force -EA 0
+Remove-Item "C:\Windows\Prefetch\*" -Force -EA 0
+```
+
+### Перевірити розмір Windows.old
+
+```powershell
+(Get-ChildItem "C:\Windows.old" -Recurse -EA 0 | Measure-Object Length -Sum).Sum / 1GB
+```
+
+### Очистити кеш Windows Update
+
+```powershell
+Stop-Service wuauserv -Force
+Remove-Item "C:\Windows\SoftwareDistribution\Download\*" -Recurse -Force -EA 0
+Start-Service wuauserv
+```
+
+### Зменшити папку WinSxS
+
+```powershell
+Dism /Online /Cleanup-Image /AnalyzeComponentStore
+Dism /Online /Cleanup-Image /StartComponentCleanup /ResetBase
+```
+
+**Ніколи не видаляй WinSxS вручну** — тільки через DISM, який безпечно прибирає застарілі компоненти.
+
+### Знайти найбільші файли на диску
+
+```powershell
+Get-ChildItem C:\ -Recurse -File -EA 0 |
+  Sort-Object Length -Descending |
+  Select-Object -First 20 FullName, @{n='ГБ';e={[math]::Round($_.Length/1GB,2)}}
+```
+
+---
+
+## Часті питання
+
+### Скільки вільного місця потрібно для Windows 11?
+
+Мінімум 20 ГБ вільно для нормальної роботи. Windows 11 вимагає щонайменше 64 ГБ загального обсягу і рекомендує тримати 15-20 ГБ вільними для оновлень і файлу підкачки.

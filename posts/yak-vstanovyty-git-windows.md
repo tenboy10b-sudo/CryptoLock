@@ -5,6 +5,7 @@ publishDate: "2026-01-15"
 description: "Встановлення Git на Windows, базова конфігурація, робота з GitHub через SSH і HTTPS, основні команди і налаштування VS Code для роботи з Git."
 tags: ["windows", "інструменти", "налаштування", "cmd", "powershell"]
 readTime: 6
+translatesEn: "how-to-install-git-github-windows"
 ---
 
 Git — стандарт для версіонування коду. На Windows встановлюється просто, але є кілька налаштувань що зроблять роботу зручнішою.
@@ -173,7 +174,32 @@ VS Code має вбудовану інтеграцію з Git — Source Control
 
 ---
 
+## GitHub Desktop (графічний клієнт)
+
+Для тих хто не любить термінал:
+
+1. Завантаж з [desktop.github.com](https://desktop.github.com)
+2. Увійди в акаунт GitHub
+3. File → Clone repository → вибери репозиторій
+4. Всі операції через графічний інтерфейс
+
+---
+
 ## Типові проблеми
+
+### Git просить пароль при кожному push
+
+```cmd
+git config --global credential.helper manager-core
+```
+
+### Оновити Git
+
+```powershell
+winget upgrade Git.Git
+```
+
+Або завантаж новий інсталятор з git-scm.com.
 
 ### "git не розпізнається"
 

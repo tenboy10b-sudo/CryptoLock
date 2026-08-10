@@ -5,6 +5,7 @@ publishDate: "2025-12-15"
 description: "Як вибрати і налаштувати схему живлення в Windows 10 і 11: різниця між Збалансованою, Високою продуктивністю і Економією енергії. Кастомні налаштування через powercfg."
 tags: ["windows", "налаштування", "оптимізація", "обладнання"]
 readTime: 4
+translatesEn: "how-to-configure-windows-power-settings"
 ---
 
 Схема живлення визначає як Windows балансує між продуктивністю і споживанням енергії. Правильна схема може значно збільшити FPS в іграх або час роботи ноутбука.
@@ -104,6 +105,58 @@ powercfg /setactive SCHEME_CURRENT
 - **Найкраща продуктивність** — максимальна швидкість
 
 Простіший спосіб ніж схеми живлення для більшості користувачів.
+
+---
+
+## Таймери сну і монітора
+
+```powershell
+# Вимкнути монітор через 10 хв (від мережі)
+powercfg /change monitor-timeout-ac 10
+
+# Сон через 30 хв
+powercfg /change standby-timeout-ac 30
+
+# Вимкнути гібернацію (звільняє ~4 ГБ диску, для десктопів)
+powercfg /hibernate off
+```
+
+---
+
+## Звіт батареї та енергоефективності
+
+```powershell
+powercfg /batteryreport /output "C:\battery-report.html"
+Start-Process "C:\battery-report.html"
+
+powercfg /energy /output "C:\energy-report.html"
+```
+
+---
+
+## Швидкий запуск
+
+Якщо є проблеми з BitLocker або подвійним завантаженням — вимкни:
+
+```powershell
+Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power" `
+  -Name "HiberbootEnabled" -Value 0 -Type DWord
+```
+
+---
+
+## Часті питання
+
+### Чому Windows прокидається зі сну сама?
+
+```powershell
+powercfg /lastwake    # що останній раз збудило
+powercfg /waketimers  # активні таймери пробудження
+```
+
+### Тримати ноутбук постійно в мережі — добре чи погано?
+
+Сучасні ноутбуки мають захист від перезарядки. Але тривале утримання на 100% знижує ємність батареї з часом. Багато виробників (Dell, Lenovo) мають утиліти для обмеження заряду до 80%.
 
 ---
 

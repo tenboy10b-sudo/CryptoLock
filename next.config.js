@@ -162,6 +162,10 @@ const nextConfig = {
       // "Group Policy Editor" — EN дублікат-пара об'єднана (2 опубліковані статті), UK-версія з черги злита в опубліковану
       { source: '/en/how-to-configure-windows-group-policy', destination: '/en/how-to-configure-group-policy-windows', permanent: true, locale: false },
 
+      // "Скинути пароль Windows" — 2 статті об'єднано в skydannya-parolya-windows-bez-dyska (з черги, повніша)
+      { source: '/skynuti-parol-windows', destination: '/skydannya-parolya-windows-bez-dyska', permanent: true },
+      { source: '/en/how-to-recover-windows-10-password', destination: '/en/windows-password-reset-guide', permanent: true, locale: false },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

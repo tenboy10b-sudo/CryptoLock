@@ -5,7 +5,7 @@ publishDate: "2026-07-01"
 description: "Configure Windows power plans for maximum performance or battery life. Set sleep timers, hibernate, fast startup and manage power via PowerShell and Group Policy."
 tags: ["windows", "power", "performance", "laptop", "optimization", "powershell"]
 readTime: 5
-translatesUk: "nalashtuvannya-zhyvlennya-windows"
+translatesUk: "yak-nalashtuvaty-skhemu-zhyvlennya-windows"
 ---
 
 Power settings affect both performance and battery life. Here's how to configure them precisely for your use case.

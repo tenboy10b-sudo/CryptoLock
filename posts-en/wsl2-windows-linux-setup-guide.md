@@ -1,7 +1,7 @@
 ---
 title: "WSL 2 on Windows 10 and 11: Install Linux and Set Up Developer Environment"
 date: "2026-06-18"
-publishDate: "2027-06-01"
+publishDate: "2026-08-12"
 updated: "2026-06-18"
 description: "How to install WSL 2 and Linux on Windows 10 and 11. Configure Ubuntu, access Windows files from Linux, VS Code and Docker integration, performance optimization."
 tags: ["windows", "wsl", "linux", "development", "ubuntu", "tools"]

@@ -1,11 +1,11 @@
 ---
 title: "How to Free Up Disk Space in Windows 10 and 11: Complete Guide"
 date: "2027-02-10"
-publishDate: "2027-06-01"
+publishDate: "2026-08-13"
 description: "Free up disk space in Windows 10 and 11. Delete temp files, Windows Update cache, WinSxS folder, old Windows installations, compress files and find large files."
 tags: ["windows", "disk", "storage", "optimization", "cleanup"]
 readTime: 5
-translatesUk: "yak-zvilvyty-mistse-na-dysku-windows"
+translatesUk: "yak-pochystyty-dysk-c"
 ---
 
 Low disk space slows Windows and prevents updates. Here's how to recover gigabytes of space safely.

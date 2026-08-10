@@ -1,7 +1,7 @@
 ---
 title: "Reset Windows 10 and 11 Password Without a Disk and Without Logging In"
 date: "2026-06-20"
-publishDate: "2027-06-01"
+publishDate: "2026-08-15"
 updated: "2026-06-20"
 description: "How to reset a forgotten Windows 10 and 11 password when you can't log in. Reset via Microsoft account, command line at boot, WinRE and local account methods."
 tags: ["windows", "password", "security", "accounts", "fix"]
@@ -81,7 +81,20 @@ Copy-Item "C:\Windows\System32\utilman.exe.bak" "C:\Windows\System32\utilman.exe
 
 If there's another admin account on the PC:
 ```powershell
+Get-LocalUser | Select-Object Name, Enabled, PasswordRequired
 net user USERNAME NewPassword
+```
+
+---
+
+## Method 5 — Enable Hidden Administrator Account
+
+```cmd
+# Boot from USB, open CMD (Shift+F10)
+net user administrator /active:yes
+
+# Restart, log in as "Administrator" (no password)
+# Then reset other account passwords from there
 ```
 
 ---
@@ -99,6 +112,14 @@ Win + I → Accounts → Sign-in options → PIN → I forgot my PIN
 
 ---
 
+## Prevent Future Lockouts
+
+- Set up a password hint: Control Panel → User Accounts → Manage your account → Create a password hint
+- Add security questions (local account): Settings → Accounts → Sign-in options → Password → Add security questions
+- Create a password reset disk (USB): Control Panel → User Accounts → Create a password reset disk
+
+---
+
 ## Summary
 
 | Situation | Solution |
@@ -108,3 +129,17 @@ Win + I → Accounts → Sign-in options → PIN → I forgot my PIN
 | Local, no questions | WinRE → CMD → net user |
 | Another admin exists | Log in → net user |
 | Forgot PIN | Sign-in options → I forgot my PIN |
+
+## Frequently Asked Questions
+
+### Will resetting my password delete my files?
+
+No. Password reset never deletes files or applications. Only encrypted files (BitLocker, EFS) may become inaccessible without a recovery key.
+
+### My account is linked to Microsoft but I have no internet — what do I do?
+
+You need internet to reset a Microsoft account password. Try ethernet or a mobile hotspot. If truly impossible, the USB method only works for local accounts.
+
+### Can I reset a password without a USB drive?
+
+Only if you have another admin account on the PC, or can access account.live.com from another device.
