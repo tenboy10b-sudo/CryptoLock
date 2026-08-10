@@ -55,6 +55,8 @@ autorunsc.exe -a * -c -h -vt | Export-Csv "C:\autoruns.csv"
 **Корисна функція — Replace Task Manager:**
 Options → Replace Task Manager → тепер `Ctrl+Shift+Esc` відкриває Process Explorer.
 
+Детальніше про Process Explorer і його відкритий аналог System Informer: [Process Explorer і System Informer — розширений менеджер процесів](/process-explorer-system-informer-windows)
+
 ---
 
 ## TCPView — мережеві підключення з процесами

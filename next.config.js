@@ -170,6 +170,11 @@ const nextConfig = {
       { source: '/nalashtuvannya-remote-desktop-rdp', destination: '/yak-nalashtuvanty-rdp-windows', permanent: true },
       { source: '/en/how-to-set-up-remote-desktop', destination: '/en/how-to-configure-windows-remote-desktop', permanent: true, locale: false },
 
+      // "Process Explorer" — 2 UK + 3 EN об'єднано в найповнішу версію (охоплює й System Informer), з черги
+      { source: '/process-explorer-sysinternals', destination: '/process-explorer-system-informer-windows', permanent: true },
+      { source: '/en/how-to-use-process-explorer-sysinternals', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
+      { source: '/en/how-to-use-process-explorer-windows', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 
