@@ -68,15 +68,18 @@
     "how-to-configure-windows-update-policies",
     "how-to-monitor-windows-security-events",
     "yak-nalashtuvanty-grayf-viddalkiv-windows",
-    "yak-stvoryt-nadiynyy-parol-windows"
+    "yak-stvoryt-nadiynyy-parol-windows",
+    "how-to-configure-windows-search-index",
+    "how-to-use-windows-snap-layouts",
+    "how-to-use-task-scheduler-windows"
   ],
-  "count": 69,
-  "promo_index": 50,
+  "count": 72,
+  "promo_index": 51,
   "last_post": {
-    "slug": "yak-stvoryt-nadiynyy-parol-windows",
-    "title": "Як створити надійний пароль і де його зберігати",
-    "time": "2026-08-07T08:01:21.418Z"
+    "slug": "how-to-use-task-scheduler-windows",
+    "title": "How to Use Task Scheduler in Windows 10 and 11: Full Guide",
+    "time": "2026-08-10T08:01:19.389Z"
   },
-  "engage_index": 42,
-  "extra_index": 45
+  "engage_index": 44,
+  "extra_index": 47
 }
