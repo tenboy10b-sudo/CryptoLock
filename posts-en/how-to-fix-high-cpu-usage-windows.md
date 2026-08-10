@@ -5,6 +5,7 @@ publishDate: "2026-03-10"
 description: "CPU running at 100% for no reason? Find what's causing high CPU usage in Windows and fix common culprits: Windows Update, antivirus scans, WMI, and background services."
 tags: ["windows", "optimization", "performance", "diagnostics"]
 readTime: 6
+translatesUk: "100-zavantazhennya-cpu-windows-prychyny-vyrishennya"
 ---
 
 High CPU usage slows everything down — apps lag, the fan spins up, battery drains fast. Here's how to find the cause and fix it.
@@ -177,6 +178,39 @@ perfmon /report
 
 Wait 60 seconds — Windows generates a full system health report. Open it and check the **Software Configuration** and **CPU** sections for anomalies.
 
+**Repair system files (corruption can cause high CPU):**
+```powershell
+DISM /Online /Cleanup-Image /RestoreHealth
+sfc /scannow
+```
+
+**Check disk health (a failing disk causes CPU spikes too):**
+```powershell
+Get-PhysicalDisk | Select-Object FriendlyName, HealthStatus
+```
+
+**Check for a driver-related problem:**
+```powershell
+Get-WmiObject Win32_PnPEntity |
+  Where-Object {$_.ConfigManagerErrorCode -ne 0} |
+  Select-Object Name, ConfigManagerErrorCode
+```
+
+**Check CPU temperature (thermal throttling keeps usage pinned):**
+```powershell
+winget install REALiX.HWiNFO
+```
+Normal temps: under 80°C at load. Above 90°C — check cooling or replace thermal paste.
+
+**Disable a batch of background services at once:**
+```powershell
+$services = @("DiagTrack", "SysMain", "MapsBroker", "lfsvc", "WSearch")
+foreach ($s in $services) {
+  Stop-Service $s -Force -EA 0
+  Set-Service $s -StartupType Manual -EA 0
+}
+```
+
 ---
 
 
@@ -192,3 +226,17 @@ If Windows shows a code like `0x80070005`, `0x80070002` or `0xC000021A` — use 
 ## Summary
 
 Check Task Manager first — identify the exact process. For Windows Update: wait or restart the service. For Defender: reschedule scans. For System Interrupts: update drivers. For unknown processes: run a malware scan. For persistent high CPU with no obvious cause: run `perfmon /report`.
+
+## Frequently Asked Questions
+
+### Is 100% CPU usage always a problem?
+
+No — during updates, virus scans or large file operations, 100% CPU is normal and temporary. It becomes a problem when it's persistent for hours without an obvious cause.
+
+### System Interrupts at high CPU — what does that mean?
+
+System Interrupts represent hardware IRQ processing. High System Interrupts CPU usually means a driver or hardware issue — outdated drivers, failing hardware, or USB device conflicts.
+
+### Will disabling Windows Update fix high CPU permanently?
+
+Only temporarily. Windows Update runs in the background to patch security vulnerabilities. Better to schedule it for off-hours instead of disabling it.

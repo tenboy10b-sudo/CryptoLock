@@ -5,6 +5,7 @@ publishDate: "2026-03-12"
 description: "RAM constantly at 80-90% even when idle? Find what's consuming memory in Windows and free it up: disable memory-hungry services, clear standby memory, and fix memory leaks."
 tags: ["windows", "optimization", "performance", "ram"]
 readTime: 6
+translatesUk: "100-vykorystannya-ram-windows-zvilvyty-pamiat"
 ---
 
 High RAM usage slows down everything — apps take longer to open, the system stutters, and Windows starts using the pagefile heavily. Here's how to diagnose and fix it.
@@ -41,6 +42,27 @@ Get-Process | Sort-Object WorkingSet -Descending |
 - 6+ GB used with no apps open
 - RAM usage grows over hours without opening anything (memory leak)
 - System becomes unresponsive as RAM fills
+
+---
+
+## Fix Chrome Memory Usage
+
+Chrome is notorious for heavy RAM use:
+
+`chrome://settings` → **System** → **Memory Saver** → Enable
+
+**OneTab extension** — collapses all tabs into a list, frees roughly 80% of Chrome's memory.
+
+Also disable unused extensions: `chrome://extensions`
+
+---
+
+## Disable Telemetry Service
+
+```powershell
+Stop-Service DiagTrack -Force
+Set-Service DiagTrack -StartupType Disabled
+```
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "100% використання RAM в Windows 10 і 11: причини і як звільнити пам'ять"
 date: "2026-06-18"
-publishDate: "2027-06-01"
+publishDate: "2026-08-20"
 updated: "2026-06-18"
 description: "Чому Windows з'їдає всю оперативну пам'ять і як це виправити. Знайти який процес використовує RAM, вимкнути зайві служби, налаштувати підкачку і прискорити роботу."
 tags: ["windows", "ram", "пам'ять", "продуктивність", "оптимізація", "діагностика"]
@@ -177,6 +177,31 @@ Enable-MMAgent -MemoryCompression
 | **Available** | Вільна пам'ять |
 
 Справжня проблема — коли **Available** близько до 0 і система йде в підкачку.
+
+---
+
+## Чи можна додати RAM фізично
+
+```powershell
+# Детальна інформація про встановлену RAM і слоти
+Get-WmiObject Win32_PhysicalMemory |
+  Select-Object BankLabel, Capacity, Speed, Manufacturer |
+  ForEach-Object {
+    [PSCustomObject]@{
+      Слот = $_.BankLabel
+      "ГБ" = [math]::Round($_.Capacity/1GB)
+      "МГц" = $_.Speed
+      Виробник = $_.Manufacturer
+    }
+  } | Format-Table -AutoSize
+
+# Максимальний підтримуваний обсяг
+(Get-WmiObject Win32_PhysicalMemoryArray).MaxCapacity / 1MB
+```
+
+Або: `Ctrl + Shift + Esc` → Продуктивність → Пам'ять → **Слоти, що використовуються** покаже скільки зайнято і чи є вільні.
+
+**Що купувати:** тип DDR4/DDR5 (залежно від материнської плати), частота — відповідна підтримуваній платою, обсяг — краще 2×8 ГБ ніж 1×16 ГБ (dual channel швидший за single). Перевір сумісність на сайті виробника ноутбука або через CPU-Z.
 
 ---
 
