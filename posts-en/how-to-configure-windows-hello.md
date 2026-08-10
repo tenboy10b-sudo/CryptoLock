@@ -128,6 +128,23 @@ If `Enabled = 0` — an administrator has disabled Windows Hello via policy.
 
 ---
 
+## Windows Hello for Business (Domain)
+
+For corporate environments with Azure AD or Active Directory:
+
+```powershell
+# Check Windows Hello for Business provisioning status
+dsregcmd /status | Select-String "Hello"
+
+# Check if device is Azure AD joined (required for cloud deployment)
+dsregcmd /status | Select-String "AzureAdJoined"
+```
+
+Configure via Group Policy:
+`gpedit.msc` → `Computer Configuration` → `Administrative Templates` → `Windows Components` → `Windows Hello for Business`
+
+---
+
 ## Dynamic Lock
 
 Automatically locks your PC when you walk away with your paired phone.

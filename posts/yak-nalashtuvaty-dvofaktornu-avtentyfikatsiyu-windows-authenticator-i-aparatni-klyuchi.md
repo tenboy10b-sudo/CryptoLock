@@ -79,7 +79,7 @@ Windows Hello (PIN, відбиток, обличчя) в корпоративн�
 - Відбиток або обличчя — біометричний фактор
 - Разом з паролем домену — два фактори
 
-Детальніше: [Windows Hello налаштування](/yak-nalashtuvanty-windows-hello)
+Детальніше: [Windows Hello налаштування](/windows-hello-nalashtuvannya-ta-vypravlennya)
 
 ---
 
