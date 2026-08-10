@@ -178,6 +178,10 @@ const nextConfig = {
       // "Windows Server Core" — 2 статті об'єднано в windows-server-core-osnovy
       { source: '/keruvannya-windows-server-core', destination: '/windows-server-core-osnovy', permanent: true },
 
+      // "Встановлення драйверів" — 2 UK + 2 EN об'єднано в найповнішу версію (з черги)
+      { source: '/yak-vstanovyty-draiver', destination: '/vstanovlennya-drayveriv-windows-10-11', permanent: true },
+      { source: '/en/how-to-install-drivers-windows', destination: '/en/how-to-install-drivers-windows-10-11', permanent: true, locale: false },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

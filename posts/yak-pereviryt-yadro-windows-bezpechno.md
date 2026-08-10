@@ -16,7 +16,7 @@ Secured-core PC — рівень апаратного захисту що Micros
 ## Що входить в безпечне ядро
 
 - **TPM 2.0** — захист ключів шифрування
-- **Secure Boot** — блокує шкідливе ПЗ при завантаженні
+- **Secure Boot** — блокує шкідливе ПЗ при завантаженні (як увімкнути в BIOS — [окремий покроковий гайд](/yak-uvimknuty-secure-boot))
 - **VBS** (Virtualization-Based Security) — ізоляція критичних процесів
 - **HVCI** (Hypervisor-Protected Code Integrity) — захист від атак на драйвери
 - **Windows Defender Credential Guard** — захист облікових даних

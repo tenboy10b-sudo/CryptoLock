@@ -1,7 +1,7 @@
 ---
 title: "How to Install Drivers on Windows 10 and 11: Complete Guide for All Devices"
 date: "2026-06-08"
-publishDate: "2027-06-01"
+publishDate: "2026-08-22"
 updated: "2026-06-08"
 description: "How to install drivers on Windows 10 and 11 after a clean install. Automatic update, manual installation, finding drivers by device ID, fixing driver conflicts and BSOD."
 tags: ["windows", "drivers", "installation", "hardware", "settings"]
@@ -110,6 +110,40 @@ Get-WinEvent -LogName System |
 ### Roll back a driver
 
 `Device Manager → Properties → Driver → Roll Back Driver`
+
+If Roll Back is greyed out (no previous version saved), use **System Restore** to a point before the driver was installed.
+
+---
+
+## Clean Uninstall for GPU Drivers
+
+For a clean GPU driver switch (or when a normal reinstall doesn't fix issues):
+
+1. Download **DDU (Display Driver Uninstaller)** from [guru3d.com](https://www.guru3d.com/files-details/display-driver-uninstaller-download.html)
+2. Boot into Safe Mode
+3. Run DDU → **Clean and restart**
+4. Install the fresh driver after reboot
+
+---
+
+## Installing Unsigned Drivers
+
+Windows only installs signed drivers by default. To temporarily allow unsigned ones:
+
+```cmd
+bcdedit /set testsigning on
+```
+
+Restart — you'll see a watermark. Re-disable once done:
+```cmd
+bcdedit /set testsigning off
+```
+
+---
+
+## Avoid Sketchy "Driver Updater" Tools
+
+Many third-party "driver updater" apps are adware or install outdated versions. Stick to manufacturer websites, or if you want an automated option, **Snappy Driver Installer Origin** (free, offline) is a reputable choice.
 
 ---
 
