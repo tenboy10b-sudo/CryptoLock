@@ -106,6 +106,35 @@ Invoke-Command -ComputerName "RemotePC" -ScriptBlock {
 
 ---
 
+## Troubleshoot Connection Issues
+
+```powershell
+# Test if RDP port is open
+Test-NetConnection -ComputerName 192.168.1.100 -Port 3389
+
+# Check RDP service status
+Get-Service TermService
+
+# Check firewall rule
+Get-NetFirewallRule -DisplayGroup "Remote Desktop"
+```
+
+---
+
+## Improve Performance on Slow Connections
+
+In Remote Desktop Connection → **Experience** tab → select **Modem (56 Kbps)** or manually uncheck visual effects to reduce bandwidth usage.
+
+---
+
+## RDP Over the Internet
+
+**Option A: VPN** (recommended) — connect VPN, then RDP to the local IP.
+
+**Option B: Port forwarding** — forward port 3389 (or your custom port) on the router to the PC's local IP. Risky without NLA and a strong password.
+
+---
+
 ## Disable RDP When Not Needed
 
 ```powershell

@@ -164,7 +164,7 @@ New-NetFirewallRule `
   -Profile Domain,Private
 ```
 
-Детальніше: [Налаштування Remote Desktop](/nalashtuvannya-remote-desktop-rdp)
+Детальніше: [Налаштування Remote Desktop](/yak-nalashtuvanty-rdp-windows)
 
 ### Обмежити RDP тільки одним IP (наприклад офісом)
 

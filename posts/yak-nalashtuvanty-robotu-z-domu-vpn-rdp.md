@@ -39,7 +39,7 @@ Test-NetConnection localhost -Port 3389
 
 `Win + R` → `mstsc` → введи IP робочого ПК і ім'я користувача.
 
-Детальніше: [Налаштування Remote Desktop](/nalashtuvannya-remote-desktop-rdp)
+Детальніше: [Налаштування Remote Desktop](/yak-nalashtuvanty-rdp-windows)
 
 ---
 

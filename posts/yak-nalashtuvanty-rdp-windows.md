@@ -100,6 +100,33 @@ New-NetFirewallRule -DisplayName "RDP локальна мережа" `
 
 ---
 
+## Увімкнути через GPO
+
+`gpedit.msc` →
+
+```
+Computer Configuration → Administrative Templates →
+Windows Components → Remote Desktop Services →
+Remote Desktop Session Host → Connections
+```
+
+**Allow users to connect remotely by using Remote Desktop Services** → **Enabled**.
+
+---
+
+## Перевірити активні сеанси
+
+```cmd
+query session
+```
+
+Або:
+```powershell
+Get-Process | Where-Object {$_.Name -eq "mstsc"}
+```
+
+---
+
 ## Вимкнути RDP коли не потрібен
 
 ```powershell
@@ -123,6 +150,18 @@ Disable-NetFirewallRule -DisplayGroup "Remote Desktop"
 ### Скільки одночасних підключень підтримує Windows 11?
 
 Windows 10/11 Home і Pro — тільки 1 підключення одночасно. Для кількох підключень потрібен Windows Server.
+
+### RDP доступний на Windows Home?
+
+Ні, приймати підключення можна тільки на Pro/Enterprise/Education. На Home можна лише підключатись до інших ПК як клієнт.
+
+### "Your credentials did not work" — як виправити?
+
+Перевір формат імені (`COMPUTERNAME\Username`), чи не заблокований акаунт, чи не прострочений пароль, і чи є користувач у групі Remote Desktop Users.
+
+### Чи безпечно відкривати RDP напряму в інтернет?
+
+Ні, на порту 3389 постійні атаки брутфорсом. Безпечніше — VPN і підключення через тунель, або мінімум: зміна порту + NLA + сильний пароль + блокування акаунту після невдалих спроб.
 
 ---
 

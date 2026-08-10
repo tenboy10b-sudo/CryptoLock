@@ -27,7 +27,7 @@ Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 **Підключення з іншого ПК:**
 `Win + R` → `mstsc` → введи IP або ім'я комп'ютера → підключись.
 
-Детальніше: [Налаштування Remote Desktop](/nalashtuvannya-remote-desktop-rdp)
+Детальніше: [Налаштування Remote Desktop](/yak-nalashtuvanty-rdp-windows)
 
 ---
 

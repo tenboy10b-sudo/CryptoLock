@@ -107,7 +107,7 @@ Windows Defender вбудований і достатній для більшо�
 Детальніше: [Як налаштувати VPN в Windows](/yak-nalashtuvatv-vpn-windows)
 
 Якщо підключаєшся до корпоративної мережі — запитай у системного адміністратора налаштування RDP або VPN:
-[Налаштування RDP](/nalashtuvannya-remote-desktop-rdp)
+[Налаштування RDP](/yak-nalashtuvanty-rdp-windows)
 
 ---
 
