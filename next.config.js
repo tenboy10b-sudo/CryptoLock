@@ -182,6 +182,10 @@ const nextConfig = {
       { source: '/yak-vstanovyty-draiver', destination: '/vstanovlennya-drayveriv-windows-10-11', permanent: true },
       { source: '/en/how-to-install-drivers-windows', destination: '/en/how-to-install-drivers-windows-10-11', permanent: true, locale: false },
 
+      // "Чиста установка Windows з флешки" — 2 UK + 2 EN об'єднано в найповнішу версію (з черги)
+      { source: '/yak-vstanovyty-windows-11-z-fleshky', destination: '/chysta-ustanovka-windows-10-11-pokrokovyy-posibnyk', permanent: true },
+      { source: '/en/how-to-clean-install-windows-11', destination: '/en/how-to-clean-install-windows-10-11', permanent: true, locale: false },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

@@ -126,7 +126,7 @@ Get-ScheduledTask | Where-Object { $_.State -eq "Ready" } |
 - Антивіруси знаходять але не можуть видалити
 - Система поводиться нестабільно після лікування
 
-→ Зроби резервну копію даних і встанови Windows заново: [Як встановити Windows 11 з флешки](/yak-vstanovyty-windows-11-z-fleshky)
+→ Зроби резервну копію даних і встанови Windows заново: [Як встановити Windows 11 з флешки](/chysta-ustanovka-windows-10-11-pokrokovyy-posibnyk)
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "How to Clean Install Windows 10 and 11: Complete Step-by-Step Guide"
 date: "2026-06-08"
-publishDate: "2027-06-01"
+publishDate: "2026-08-26"
 updated: "2026-06-08"
 description: "How to clean install Windows 10 or 11 from a USB drive: backup, disk partitioning, bootable USB creation, and post-install setup. Everything you need to know."
 tags: ["windows", "installation", "usb", "settings"]
@@ -55,6 +55,13 @@ Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |
 
 ```
 Win + R → msinfo32 → BIOS Mode: UEFI → GPT | Legacy → MBR
+```
+
+To bypass TPM 2.0/Secure Boot requirements on older hardware, use Rufus's **Extended Windows 11 Installation** option when creating the USB.
+
+Optional — back up Wi-Fi passwords before wiping the drive:
+```powershell
+netsh wlan export profile folder=C:\WiFiBackup key=clear
 ```
 
 ---
@@ -117,7 +124,25 @@ Get-PnpDevice | Where-Object {$_.Status -eq 'Error'}
 1. **Activation** — Settings → System → Activation → Troubleshoot
 2. **Drivers** — Windows Update → Optional Updates → Driver Updates
 3. **Updates** — Win + I → Windows Update → Check for updates
-4. **Restore programs** from your saved list
+4. **Restore Wi-Fi**: `netsh wlan add profile filename="C:\WiFiBackup\ProfileName.xml"`
+5. **Restore programs** from your saved list
+
+Check activation status:
+```powershell
+(Get-WmiObject SoftwareLicensingProduct -Filter "Name like 'Windows%'" |
+  Where-Object {$_.PartialProductKey}).LicenseStatus
+```
+`1` = Licensed.
+
+---
+
+## Common Issues
+
+**"This PC can't run Windows 11"**: enable TPM and Secure Boot in BIOS, or reburn the USB in Rufus with TPM/Secure Boot requirements removed.
+
+**Setup doesn't show any drives**: SATA/NVMe drivers are missing from the installer — use **Load driver** on the partition screen with a second USB containing the driver.
+
+**Stuck at "Just a moment"**: wait up to 10 minutes. If it persists, it's usually a driver issue — restart and try again.
 
 ---
 

@@ -140,7 +140,7 @@ winget install Bitwarden.Bitwarden
 
 Якщо ноутбук сильно засмічений bloatware — чиста установка Windows дає найкращий результат:
 
-[Як встановити Windows 11 з флешки](/yak-vstanovyty-windows-11-z-fleshky)
+[Як встановити Windows 11 з флешки](/chysta-ustanovka-windows-10-11-pokrokovyy-posibnyk)
 
 ---
 

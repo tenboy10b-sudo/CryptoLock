@@ -95,7 +95,7 @@ vssadmin list shadows
 **Не відновлюй файли на зараженій системі** — вірус може досі активний.
 
 1. Завантажся з USB і просканTrace сканером (Kaspersky Rescue Disk — безкоштовний ISO)
-2. Або зроби чисте встановлення Windows: [Встановлення Windows 11 з флешки](/yak-vstanovyty-windows-11-z-fleshky)
+2. Або зроби чисте встановлення Windows: [Встановлення Windows 11 з флешки](/chysta-ustanovka-windows-10-11-pokrokovyy-posibnyk)
 3. Потім відновлюй файли з резервної копії або дешифратором
 
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Чиста установка Windows 10 і 11: покроковий посібник з нуля"
 date: "2026-06-08"
-publishDate: "2027-06-01"
+publishDate: "2026-08-26"
 updated: "2026-06-08"
 description: "Як зробити чисту установку Windows 10 або 11 з флешки: підготовка, резервна копія, форматування диску, вибір розділів. Що робити після встановлення."
 tags: ["windows", "встановлення", "флешка", "налаштування"]
@@ -82,6 +82,11 @@ slmgr /xpr
 Win + R → msinfo32 → BIOS Mode
 UEFI → GPT | Legacy → MBR
 ```
+
+**Обхід вимог TPM 2.0 / Secure Boot для старих ПК:** у Rufus після завантаження ISO постав галочки:
+- ✅ **Remove requirement for TPM 2.0**
+- ✅ **Remove requirement for Secure Boot**
+- ✅ **Create a local account** (без Microsoft акаунту)
 
 ---
 
@@ -182,6 +187,22 @@ Get-PnpDevice | Where-Object {$_.Status -eq 'Error'}
 
 ### Відновлення програм
 Встанови програми зі списку який зберіг перед інсталяцією.
+
+---
+
+## Якщо з'явилась помилка "Цей ПК не може запустити Windows 11"
+
+Пристрій не проходить перевірку TPM 2.0/CPU. Два варіанти:
+
+**Простіше** — переписати флешку через Rufus з галочкою "Remove requirement for TPM 2.0" (див. вище).
+
+**Через реєстр під час встановлення:**
+```cmd
+rem Shift+F10 на екрані встановлення відкриє командний рядок
+regedit
+rem HKEY_LOCAL_MACHINE\SYSTEM\Setup\MoSetup
+rem Створи DWORD: AllowUpgradesWithUnsupportedTPMOrCPU = 1
+```
 
 ---
 
