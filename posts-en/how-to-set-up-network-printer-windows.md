@@ -132,6 +132,10 @@ Get-PrintJob -PrinterName "Office Printer" | Remove-PrintJob
 
 ---
 
+For a deeper dive into fixing "printer not printing" (stuck queue, offline, driver issues), see the dedicated guide: [Printer Not Printing in Windows](/en/printer-not-printing-windows-fix)
+
+---
+
 ## Summary
 
 Add via Settings → Add device for automatic detection. For manual: use IP address method. Fix offline: restart Spooler + uncheck "Use Printer Offline". Clear stuck jobs by stopping Spooler, deleting spool files, restarting. Reinstall driver for persistent errors.

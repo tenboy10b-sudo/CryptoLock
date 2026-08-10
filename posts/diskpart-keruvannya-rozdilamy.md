@@ -5,11 +5,50 @@ publishDate: "2025-11-08"
 description: "Команди diskpart для роботи з дисками і розділами Windows: створення, видалення, форматування, розширення розділів, очищення диска і виправлення помилок."
 tags: ["cmd", "диск", "windows", "адміністрування", "інструменти"]
 readTime: 7
+translatesEn: "how-to-configure-windows-disk-management"
 ---
 
 Diskpart — потужна консольна утиліта Windows для управління дисками, розділами і томами. Дозволяє робити все те що є в графічному "Керуванні дисками" але швидше, точніше і через скрипти.
 
 > **Увага:** diskpart вносить незворотні зміни. Неправильна команда може знищити дані. Завжди перевіряй який диск або розділ вибрано перед виконанням деструктивних команд.
+
+---
+
+## Через PowerShell (альтернатива diskpart)
+
+Ті самі операції можна робити через PowerShell-командлети — зручніше для скриптів:
+
+```powershell
+# Переглянути диски і розділи
+Get-Disk | Select-Object Number, FriendlyName, Size, PartitionStyle, HealthStatus
+Get-Partition | Select-Object DiskNumber, DriveLetter, Size, Type
+Get-Volume | Select-Object DriveLetter, FileSystemLabel, Size, SizeRemaining
+
+# Ініціалізувати новий диск
+Initialize-Disk -Number 1 -PartitionStyle GPT
+
+# Створити і відформатувати розділ
+New-Partition -DiskNumber 1 -UseMaximumSize -AssignDriveLetter |
+  Format-Volume -FileSystem NTFS -NewFileSystemLabel "Data" -Confirm:$false
+
+# Розширити розділ до максимуму
+$maxSize = (Get-PartitionSupportedSize -DiskNumber 1 -PartitionNumber 2).SizeMax
+Resize-Partition -DiskNumber 1 -PartitionNumber 2 -Size $maxSize
+```
+
+### GPT vs MBR
+
+GPT підтримує диски більше 2 ТБ і необмежену кількість розділів, обов'язковий для UEFI-завантаження. Використовуй GPT для всіх сучасних систем.
+
+### Конвертувати MBR в GPT без втрати даних
+
+```powershell
+# Перевірити чи можлива конвертація
+MBR2GPT /validate /disk:1
+
+# Конвертувати (з Windows PE, або /allowFullOS для робочої системи)
+MBR2GPT /convert /disk:1 /allowFullOS
+```
 
 ---
 
@@ -225,6 +264,10 @@ diskpart /s setup-disk.txt
 ### "Diskpart encountered an error: Access is denied"
 
 Запусти CMD строго від адміністратора. Якщо диск використовується системою — перезавантажся і спробуй з середовища відновлення.
+
+### Випадково видалив не той розділ
+
+Не записуй нічого на диск. Одразу скористайся безкоштовним TestDisk: `winget install CGSecurity.TestDisk` — він може відновити видалену таблицю розділів.
 
 ### Не вдається видалити розділ
 

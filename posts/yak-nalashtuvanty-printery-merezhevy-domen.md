@@ -209,6 +209,10 @@ gpupdate /force
 
 ---
 
+Детальніше про виправлення "принтер не друкує" (застряглий друк, офлайн, драйвери) — окремий гайд: [Принтер не друкує в Windows](/prynter-ne-druukuie-windows-vyrishennya)
+
+---
+
 ## Підсумок
 
 **Вдома/невеликий офіс:** USB — найнадійніше, Wi-Fi через WPS — найзручніше, по IP — коли принтер один на кілька ПК. **Для домену:** Print Server + `Add-Printer` + розгортання через GPO Preferences з Item-Level Targeting по групах безпеки. **Зависла черга** (найчастіша проблема в обох випадках) — `net stop spooler` → очистити папку PRINTERS → `net start spooler`.
