@@ -1,7 +1,7 @@
 ---
 title: "Windows Server 2022 and 2019: Editions, Initial Setup, Active Directory and Key Roles"
 date: "2026-06-10"
-publishDate: "2027-06-01"
+publishDate: "2026-08-21"
 updated: "2026-06-10"
 description: "What is Windows Server, how it differs from Windows 10/11, Standard vs Datacenter editions. Initial setup after installation, Active Directory, DNS, DHCP, Hyper-V configuration."
 tags: ["windows", "windows-server", "administration", "active-directory", "network"]

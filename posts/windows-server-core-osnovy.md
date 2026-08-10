@@ -5,6 +5,7 @@ publishDate: "2026-01-14"
 description: "Основи роботи з Windows Server Core: базові команди, встановлення ролей, Remote Management і підключення через PowerShell Remoting і Windows Admin Center."
 tags: ["адміністрування", "windows", "powershell", "cmd", "мережа"]
 readTime: 7
+translatesEn: "how-to-configure-windows-server-core"
 ---
 
 Windows Server Core — версія без графічного інтерфейсу. Займає менше місця, споживає менше ресурсів і має меншу поверхню атаки. Управляється через командний рядок і PowerShell.
@@ -163,6 +164,30 @@ Install-WindowsFeature -Name Server-Gui-Shell -Restart
 # Прибрати GUI і повернутись до Core
 Uninstall-WindowsFeature -Name Server-Gui-Shell -Restart
 ```
+
+---
+
+## RSAT на Windows 11 (управління з робочого ПК)
+
+```powershell
+# Встановити всі інструменти RSAT одразу
+Get-WindowsCapability -Online | Where-Object {$_.Name -like "Rsat*"} |
+  Add-WindowsCapability -Online
+```
+
+Після встановлення Server Manager, DNS Manager і подібні консолі прозоро підключаються до віддалених серверів.
+
+---
+
+## Часті питання
+
+### Чи можна перейти з Core на Full GUI пізніше?
+
+Так, через `Install-WindowsFeature Server-Gui-Shell`. Але часте перемикання Core→GUI→Core не підтримується офіційно — обирай режим при розгортанні.
+
+### Які ролі не працюють на Server Core?
+
+Дуже мало. Більшість ролей (AD, DNS, DHCP, File Server, Hyper-V, IIS) працюють на Core без обмежень.
 
 ---
 

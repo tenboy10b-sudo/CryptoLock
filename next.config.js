@@ -175,6 +175,9 @@ const nextConfig = {
       { source: '/en/how-to-use-process-explorer-sysinternals', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
       { source: '/en/how-to-use-process-explorer-windows', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
 
+      // "Windows Server Core" — 2 статті об'єднано в windows-server-core-osnovy
+      { source: '/keruvannya-windows-server-core', destination: '/windows-server-core-osnovy', permanent: true },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

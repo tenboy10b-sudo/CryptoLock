@@ -1,13 +1,15 @@
 ---
 title: "Windows Server 2022 і 2019: що це таке, редакції і основні налаштування"
 date: "2026-06-10"
-publishDate: "2027-06-01"
+publishDate: "2026-08-21"
 updated: "2026-06-10"
 description: "Що таке Windows Server, чим відрізняється від Windows 10/11, редакції Standard і Datacenter. Початкове налаштування після встановлення, Active Directory, DNS, DHCP."
 tags: ["windows", "windows-server", "адміністрування", "active-directory", "мережа"]
 readTime: 9
 translatesEn: "windows-server-2022-2019-setup-guide"
 ---
+
+Потрібен покроковий чеклист одразу після встановлення (перейменування, IP, оновлення, безпека) — окремий гайд: [Windows Server 2022 — початкове налаштування](/yak-nalashtuvanty-windows-server-2022).
 
 Windows Server — серверна операційна система від Microsoft для корпоративних середовищ. Якщо Windows 10/11 — для робочого столу, то Windows Server — для керування мережею, зберігання даних і запуску корпоративних додатків.
 
