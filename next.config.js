@@ -155,6 +155,13 @@ const nextConfig = {
       { source: '/en/how-to-use-windows-sandbox-safely', destination: '/en/windows-sandbox-guide', permanent: true, locale: false },
       { source: '/en/how-to-use-windows-sandbox', destination: '/en/windows-sandbox-guide', permanent: true, locale: false },
 
+      // "WSL2" — 2 статті об'єднано в wsl2-windows-vstanovlennya-linux-rozrobnyk (з черги, повніша версія)
+      { source: '/yak-nalashtuvaty-pidsystemu-windows-dlya-linux-wsl', destination: '/wsl2-windows-vstanovlennya-linux-rozrobnyk', permanent: true },
+      { source: '/en/how-to-use-wsl-linux-windows', destination: '/en/wsl2-windows-linux-setup-guide', permanent: true, locale: false },
+
+      // "Group Policy Editor" — EN дублікат-пара об'єднана (2 опубліковані статті), UK-версія з черги злита в опубліковану
+      { source: '/en/how-to-configure-windows-group-policy', destination: '/en/how-to-configure-group-policy-windows', permanent: true, locale: false },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

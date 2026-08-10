@@ -131,6 +131,10 @@ wsl --shutdown             # Stop WSL
 wsl --terminate Ubuntu     # Stop specific distro
 wsl --set-default Ubuntu   # Set default
 wsl ls -la /home           # Run Linux command from PowerShell
+wsl --set-version Ubuntu 2 # Convert a WSL 1 distro to WSL 2
+wsl --export Ubuntu-24.04 "C:\Backup\ubuntu-backup.tar"   # Backup a distro
+wsl --import Ubuntu-Restored "C:\WSL\Ubuntu" "C:\Backup\ubuntu-backup.tar"  # Restore from backup
+wsl --unregister Ubuntu-24.04  # Remove a distro
 ```
 
 ---

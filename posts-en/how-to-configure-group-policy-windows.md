@@ -197,6 +197,72 @@ This resets all local group policy settings to Windows defaults.
 
 ---
 
+## More Useful Policies
+
+```
+Computer Configuration → Administrative Templates:
+
+Windows Components → Windows Update
+  → Configure Automatic Updates
+  → Specify intranet Microsoft update service (WSUS)
+
+Windows Components → BitLocker Drive Encryption
+  → Operating System Drives → Require additional authentication
+
+System → Logon
+  → Do not display last signed-in user → Enabled
+```
+
+---
+
+## Refresh Specific Policy Scope
+
+```cmd
+gpupdate /target:computer /force
+gpupdate /target:user /force
+gpupdate /force /logoff
+```
+
+---
+
+## Troubleshoot Group Policy Not Applying
+
+```powershell
+# Visual tool — what applied and from where
+rsop.msc
+
+# Group Policy processing events
+Get-WinEvent -FilterHashtable @{
+  LogName='System'
+  ProviderName='Microsoft-Windows-GroupPolicy'
+} -MaxEvents 20 | Select-Object TimeCreated, Id, Message | Format-List
+
+# Clear cached GPO data and reapply
+Remove-Item "C:\ProgramData\Microsoft\Group Policy\History" -Recurse -Force -EA 0
+gpupdate /force
+```
+
+---
+
+## Enable gpedit.msc on Windows Home
+
+```powershell
+# Run as Administrator
+$gpeditBat = @"
+@echo off
+pushd "%~dp0"
+dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt
+dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt
+for /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"%SystemRoot%\servicing\Packages\%%i"
+pause
+"@
+
+$gpeditBat | Out-File "C:\temp\install-gpedit.bat" -Encoding ASCII
+Write-Host "Run C:\temp\install-gpedit.bat as Administrator"
+```
+
+---
+
 ## Group Policy vs Registry
 
 Most Group Policy settings write to specific registry keys. You can apply the same settings via registry on Windows Home (which lacks gpedit.msc):
@@ -211,3 +277,16 @@ User Configuration policies → HKCU\SOFTWARE\Policies\Microsoft\Windows
 ## Summary
 
 Open with `gpedit.msc` → navigate to policy → Enabled/Disabled → `gpupdate /force`. For security: set account lockout, password complexity, screen saver timeout, and disable AutoRun. Use `gpresult /r` to verify which policies are active. Reset with the RD commands if something breaks.
+
+## Frequently Asked Questions
+
+### A Group Policy setting isn't applying — how to troubleshoot?
+
+1. Run `gpupdate /force` and restart
+2. Check `gpresult /r` to see if policy is in Applied or Denied GPOs
+3. Verify the policy path in gpedit matches what you configured
+4. Check Event Viewer → System for Group Policy errors (Event ID 1085, 1125)
+
+### Can users override Group Policy settings?
+
+No — Computer Configuration policies are enforced and users cannot change them through Settings or Registry. User Configuration policies can sometimes be overridden if the user has admin rights.

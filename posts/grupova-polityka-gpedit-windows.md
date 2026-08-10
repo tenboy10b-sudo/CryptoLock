@@ -84,6 +84,35 @@ gpupdate /force
 
 ---
 
+## Оновлення політик окремо
+
+```cmd
+gpupdate /target:computer /force
+gpupdate /target:user /force
+gpupdate /force /logoff
+```
+
+---
+
+## Діагностика — якщо політика не застосовується
+
+```powershell
+# Графічний інструмент — що саме застосувалось і звідки
+rsop.msc
+
+# Події застосування GPO
+Get-WinEvent -FilterHashtable @{
+  LogName='System'
+  ProviderName='Microsoft-Windows-GroupPolicy'
+} -MaxEvents 20 | Select-Object TimeCreated, Id, Message | Format-List
+
+# Скинути кеш GPO і застосувати заново
+Remove-Item "C:\ProgramData\Microsoft\Group Policy\History" -Recurse -Force -EA 0
+gpupdate /force
+```
+
+---
+
 ## Часті питання
 
 ### gpedit.msc є на Windows 11 Home?
@@ -93,6 +122,14 @@ gpupdate /force
 ### Як скасувати політику що зламала щось?
 
 Встанови її в "Не задано" (не "Вимкнено") і запусти `gpupdate /force`. Якщо gpedit недоступний — видали папку GroupPolicy.
+
+### Політика показана в редакторі, але не працює?
+
+Деякі політики вимагають щоб відповідний компонент був встановлений — наприклад, політики Windows Defender не діють, якщо активний сторонній антивірус. Перевір поле "Пояснення" (Explain) в самій політиці на вимоги.
+
+### Чи можуть користувачі скасувати GPO?
+
+Ні — Конфігурація комп'ютера примусова, користувачі не можуть змінити захищені реєстрові ключі через Параметри. Конфігурація користувача іноді можна обійти, якщо в користувача є права адміністратора.
 
 ---
 
