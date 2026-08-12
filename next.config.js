@@ -228,6 +228,16 @@ const nextConfig = {
       { source: '/yak-korystuvatysya-windows-terminal', destination: '/windows-terminal-povnyy-gaid', permanent: true },
       { source: '/windows-terminal-nalashtuvannya', destination: '/windows-terminal-povnyy-gaid', permanent: true },
 
+      // "Hyper-V" — VM-гайд (2 EN, поза чергою) і мережа Hyper-V (2 UK) об'єднано
+      { source: '/hyper-v-nalashtuvannya-merezhi', destination: '/nalashtuvannya-merezhi-hyper-v', permanent: true },
+
+      // "BSOD" (EN, сесія 12 прод. 34) — "after update" пара і загальний BSOD об'єднано в how-to-fix-bsod-windows
+      { source: '/en/how-to-fix-windows-11-bsod-after-update-2026', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
+      { source: '/en/how-to-fix-windows-11-blue-screen-after-update', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
+
+      // "Won't boot" (EN) — старіша загальна стаття об'єднана в how-to-fix-windows-11-wont-boot
+      { source: '/en/how-to-fix-windows-not-booting', destination: '/en/how-to-fix-windows-11-wont-boot', permanent: true, locale: false },
+
       // "Мережевий принтер" — 4 статті об'єднано в yak-nalashtuvanty-printery-merezhevy-domen
       { source: '/nalashtuvannya-merezhenoho-pryntera-windows', destination: '/yak-nalashtuvanty-printery-merezhevy-domen', permanent: true },
       { source: '/yak-nalashtuvanty-printer-ip-merezhi', destination: '/yak-nalashtuvanty-printery-merezhevy-domen', permanent: true },
@@ -515,8 +525,6 @@ const nextConfig = {
       { source: '/en/yak-nalashtuvatysy-windows-sandbox', destination: '/yak-nalashtuvatysy-windows-sandbox', permanent: true, locale: false },
 
       // ── Виправлення канібалізації контенту ─────────────────────
-      { source: '/en/how-to-enable-bitlocker', destination: '/en/how-to-enable-bitlocker-windows', permanent: true, locale: false },
-      { source: '/en/how-to-configure-static-ip-windows', destination: '/en/how-to-configure-static-ip-windows-11', permanent: true, locale: false },
       { source: '/en/how-to-enable-hyper-v-windows-11', destination: '/en/how-to-enable-hyper-v-windows', permanent: true, locale: false },
       { source: '/en/how-to-fix-windows-slow-boot', destination: '/en/how-to-fix-slow-boot-windows', permanent: true, locale: false },
       { source: '/en/how-to-fix-windows-11-slow-boot', destination: '/en/how-to-fix-slow-boot-windows', permanent: true, locale: false },

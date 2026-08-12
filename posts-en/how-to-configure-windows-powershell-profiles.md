@@ -95,6 +95,8 @@ Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
 ## Install Useful Modules
 
+Want to package your own reusable functions instead of just installing others'? See [how to create a PowerShell module](/en/how-to-configure-windows-powershell-scripts-advanced).
+
 ```powershell
 # PSReadLine — better history, autocomplete, syntax highlighting
 Install-Module PSReadLine -Force -AllowPrerelease

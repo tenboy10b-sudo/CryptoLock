@@ -82,7 +82,7 @@ Set-VMDvdDrive -VMName "TestUbuntu" -Path "C:\ISOs\ubuntu.iso"
 Start-VM -Name "TestUbuntu"
 ```
 
-Детальніше: [Hyper-V — налаштування мережі](/hyper-v-nalashtuvannya-merezhi)
+Детальніше: [Hyper-V — налаштування мережі](/nalashtuvannya-merezhi-hyper-v)
 
 ---
 

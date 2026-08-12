@@ -1,12 +1,12 @@
 ---
 title: "Windows 11 Won't Boot: Complete Fix Guide for 2025-2026"
 date: "2026-05-23"
-updated: "2026-05-23"
+updated: "2026-08-12"
 publishDate: "2026-05-23"
-description: "Windows 11 not starting, stuck on logo, black screen, or blue screen after update? Complete step-by-step fix from safe mode to bootloader repair and clean install."
+description: "Windows won't start, stuck on logo, black screen, or blue screen after update? Complete step-by-step fix from safe mode and driver rollback to bootloader repair and clean install."
 tags: ["windows", "troubleshooting", "bsod", "recovery", "boot"]
 translatesUk: "windows-11-ne-zapuskaetsya-yak-vypravyty"
-readTime: 8
+readTime: 10
 ---
 
 Windows 11 failing to boot after an update is one of the most common issues in 2025-2026, especially after the problematic 24H2 cumulative updates. Here's a systematic fix guide from quickest to most involved.
@@ -43,6 +43,10 @@ Before advanced steps:
 
 **Method 3:** Boot from Windows 11 USB → choose **Repair your computer** (not Install)
 
+**Black screen with a visible cursor?** Windows may have loaded but Explorer crashed:
+- Press `Ctrl + Alt + Del` — if Task Manager opens, it's a shell/explorer issue, not a boot failure
+- In Task Manager → **File** → **Run new task** → `explorer.exe`
+
 ---
 
 ## Step 3: Boot into Safe Mode
@@ -58,6 +62,8 @@ Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
 # Open MSConfig to disable third-party startup items
 msconfig
 ```
+
+**Recently installed an unsigned driver?** From the same Startup Settings menu, press **F7** (Disable driver signature enforcement) instead of F4. If Windows boots, remove the unsigned driver via Device Manager.
 
 ---
 
@@ -93,6 +99,23 @@ For UEFI systems specifically:
 bcdboot C:\Windows /s C: /f UEFI
 ```
 
+If `bootrec /fixboot` returns "Access is denied":
+```cmd
+bcdedit /export C:\BCD_Backup
+attrib C:\boot\bcd -h -r -s
+ren C:\boot\bcd bcd.old
+bootrec /rebuildbcd
+```
+
+Or roll back a driver offline via Command Prompt if a recently installed one is blocking boot:
+```cmd
+# List installed drivers
+dism /image:C:\ /get-drivers
+
+# Remove a specific driver
+dism /image:C:\ /remove-driver /driver:oem5.inf
+```
+
 ---
 
 ## Step 6: Check the Disk
@@ -105,6 +128,8 @@ wmic diskdrive get status,model
 ```
 
 If chkdsk finds and fixes errors — restart and test.
+
+**RAM issues:** remove one stick at a time and try booting with each individually. **Loose connections:** reseat RAM, GPU, and storage cables.
 
 ---
 

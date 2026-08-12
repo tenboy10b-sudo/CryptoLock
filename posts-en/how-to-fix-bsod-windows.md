@@ -1,16 +1,111 @@
 ---
 title: "How to Fix Blue Screen of Death (BSOD) in Windows 10 and 11"
 date: "2026-04-24"
+updated: "2026-08-12"
 publishDate: "2026-04-24"
-description: "Blue screen with a stop code? Here's how to read BSOD error codes, find the cause in Event Viewer, and fix the most common stop errors including MEMORY_MANAGEMENT, DRIVER_IRQL, and CRITICAL_PROCESS_DIED."
-tags: ["windows", "troubleshooting", "bsod", "diagnostics"]
-readTime: 8
+description: "Blue screen with a stop code? Fix the known Windows 11 24H2 update crash (0x18B) plus how to read any BSOD error code, find the cause in Event Viewer, and fix the most common stop errors."
+tags: ["windows", "troubleshooting", "bsod", "diagnostics", "windows-update"]
+readTime: 11
 translatesUk: "siniy-ekran-smerti-windows-11-24h2"
 ---
 
-A blue screen means Windows hit a critical error it couldn't recover from. The stop code tells you exactly what went wrong — if you know how to read it.
+A blue screen means Windows hit a critical error it couldn't recover from. The stop code tells you exactly what went wrong — if you know how to read it. In most cases it's fixed in 10-20 minutes.
 
 ---
+
+## First, Check: Is This the Known 24H2 Update Incident?
+
+Starting March 2026, Microsoft confirmed a series of BSOD crashes caused by Windows 11 24H2 cumulative updates. If your PC crashed immediately after a restart following a Windows Update, check this table first — it's a much faster fix than general diagnostics below.
+
+| Error Code | Name | Cause |
+|------------|------|-------|
+| `0x0000018B` | SECURE_KERNEL_ERROR | Conflict from KB5053656 / KB5055523 |
+| `0x000000C5` | DRIVER_CORRUPTED_EXPOOL | Corrupted driver post-update |
+| `0xC000021A` | SYSTEM_PROCESS_TERMINATED | Critical system process crashed |
+| `0x0000007E` | SYSTEM_THREAD_EXCEPTION | Incompatible driver |
+| `UNSUPPORTED_PROCESSOR` | — | MSI/Intel motherboard conflict |
+
+Most reports involve:
+- **KB5053656** (March 2026) — triggers `SECURE_KERNEL_ERROR` with stop code `0x18B`
+- **KB5055523** (April 2026) — expanded the issue to more devices
+- **KB5029351** (earlier) — `UNSUPPORTED_PROCESSOR` BSOD on MSI boards
+
+Microsoft deployed a **Known Issue Rollback (KIR)** — an automatic fix that rolls back the problematic changes. It can take up to 24 hours to reach your device and doesn't always trigger automatically.
+
+### Step 1: Check for the Microsoft KIR Fix
+
+```powershell
+(New-Object -ComObject Microsoft.Update.SystemInfo).RebootRequired
+```
+
+`Win + I` → **Windows Update** → **Check for updates** → install everything available and restart.
+
+### Step 2: Boot into Safe Mode if PC Won't Start
+
+Interrupt the boot 3 times with the power button → **Recovery Mode** → **Troubleshoot** → **Advanced options** → **Startup Settings** → **Restart** → **F4** (Safe Mode). All subsequent steps can be done from Safe Mode.
+
+### Step 3: Remove the Problematic Update
+
+```powershell
+# View recently installed updates
+Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 10
+
+# Remove specific update (replace KB number with yours)
+wusa /uninstall /kb:5053656 /quiet /norestart
+wusa /uninstall /kb:5055523 /quiet /norestart
+```
+
+Via GUI: `Win + I` → **Windows Update** → **Update history** → **Uninstall updates** → find KB and remove.
+
+### Step 4: Repair System Files and Check for Driver Conflicts
+
+```cmd
+DISM /Online /Cleanup-Image /RestoreHealth
+sfc /scannow
+```
+
+BSOD after an update is often caused by a conflict between the update and GPU or chipset drivers:
+
+```powershell
+Get-WinEvent -FilterHashtable @{LogName='System'; Id=7034,7023} -MaxEvents 10 |
+  Select-Object TimeCreated, Message
+
+Get-PnpDevice | Where-Object {$_.Status -ne 'OK'} | Select-Object Name, Status, Class
+```
+
+**NVIDIA/AMD GPU:** download the latest driver from the manufacturer's website — not through Windows Update.
+
+### Step 5: Update BIOS (MSI, ASUS, Gigabyte boards)
+
+Several BSODs are caused by incompatibility between the Windows update and old BIOS firmware.
+
+```powershell
+# Check current BIOS version
+(Get-WmiObject Win32_BIOS).SMBIOSBIOSVersion
+
+# Motherboard model
+(Get-WmiObject Win32_BaseBoard) | Select-Object Manufacturer, Product, Version
+```
+
+### Step 6: Pause Updates to Prevent Recurrence
+
+```powershell
+$pause = (Get-Date).AddDays(35).ToString("yyyy-MM-ddTHH:mm:ssZ")
+Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" `
+  -Name "PauseQualityUpdatesEndTime" -Value $pause
+Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings" `
+  -Name "PauseFeatureUpdatesEndTime" -Value $pause
+```
+
+Or via Settings: `Win + I` → **Windows Update** → **Pause for 1-4 weeks**.
+
+### Step 7: Reset Windows if Nothing Else Works
+
+Recovery → **Troubleshoot** → **Reset this PC** → **Remove everything** → **Cloud download**. Cloud download gets a fresh Windows image from Microsoft — guaranteed clean without the corrupted update.
+
+---
+
+## General BSOD Diagnostics (if the cause isn't a specific update)
 
 ## Read the Stop Code
 
@@ -160,6 +255,27 @@ If Safe Mode also crashes: boot from Windows installation USB → **Repair your 
 
 ---
 
+## Frequently Asked Questions
+
+### How do I tell if it's a driver or failing hardware?
+
+**Driver:** BSOD appears right after installing/updating software, always shows the same code, and stops after removing or rolling back the driver. **Hardware:** random BSODs with different codes that keep recurring even after a clean Windows reinstall.
+
+### The PC restarts too fast to read the stop code
+
+Disable automatic restart: `sysdm.cpl` → Advanced → Startup and Recovery → uncheck **Automatically restart**. The BSOD will then stay on screen until you restart manually.
+
+### The BSOD appeared right after a Windows update — where do I start?
+
+Check the "24H2 Update Incident" section above first — if your code matches the table, that fix is much faster than the general diagnostics below it.
+
+---
+
+## Summary
+
+**If the BSOD happened right after a Windows update:** check the known error code table above, remove the problematic update (`wusa /uninstall /kb:NUMBER`), or go through Recovery Mode.
+
+**For everything else:** note the stop code → undo the last change (driver/update/new software) → `DISM /RestoreHealth` + `sfc /scannow` → test RAM (`mdsched`) and disk (`chkdsk`) → check temperatures. The error code points you in a direction — it isn't a verdict.
 
 ---
 
@@ -168,13 +284,5 @@ If Safe Mode also crashes: boot from Windows installation USB → **Repair your 
 If Windows shows a code like `0x80070005`, `0x80070002` or `0xC000021A` — use this free tool:
 
 **[→ Windows Error Decoder](/tools/windows-error-decoder)** — enter the code and instantly find out what it means and how to fix it.
-
-
-## Summary
-
-1. Note the stop code
-2. Check minidumps with WhoCrashed
-3. Fix based on the specific error (use the table above)
-4. If unsure: run SFC + DISM, update drivers, test RAM
 
 Most BSODs are caused by three things: bad drivers, failing RAM, or corrupted system files.

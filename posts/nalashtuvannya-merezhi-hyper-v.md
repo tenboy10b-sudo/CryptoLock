@@ -66,6 +66,33 @@ New-NetNat -Name "NATNetwork" -InternalIPInterfaceAddressPrefix "192.168.100.0/2
 
 ---
 
+## VLAN для ізоляції трафіку
+
+```powershell
+# Встановити VLAN ID для мережевого адаптера VM
+Set-VMNetworkAdapterVlan -VMName "TestVM" -Access -VlanId 100
+
+# Переглянути VLAN налаштування
+Get-VMNetworkAdapterVlan -VMName "TestVM"
+
+# Вимкнути VLAN
+Set-VMNetworkAdapterVlan -VMName "TestVM" -Untagged
+```
+
+---
+
+## Обмеження пропускної здатності
+
+```powershell
+# Обмежити пропускну здатність до 100 Мбіт/с
+Set-VMNetworkAdapter -VMName "TestVM" -MaximumBandwidth 100000000
+
+# Встановити мінімально гарантовану пропускну здатність
+Set-VMNetworkAdapter -VMName "TestVM" -MinimumBandwidthWeight 10
+```
+
+---
+
 ## Часті питання
 
 ### VM немає інтернету — що перевірити?
@@ -78,8 +105,32 @@ New-NetNat -Name "NATNetwork" -InternalIPInterfaceAddressPrefix "192.168.100.0/2
 
 Деякі Wi-Fi адаптери не підтримують External через обмеження драйвера. Використовуй NAT метод — він працює з будь-яким типом підключення.
 
+### Хост втратив мережу після створення External switch
+
+External switch ділить фізичний адаптер між хостом і VM. Якщо при створенні `AllowManagementOS` не було встановлено в `$true` — хост залишається без мережі:
+
+```powershell
+Get-NetAdapter | Where-Object { $_.InterfaceDescription -like "*Hyper-V*" }
+```
+
+### VM не може пінгувати хост через Internal switch
+
+Перевір брандмауер на хості — можливо блокує ICMP для vEthernet адаптера:
+
+```powershell
+New-NetFirewallRule -DisplayName "Allow ICMP Hyper-V" -Protocol ICMPv4 `
+  -IcmpType 8 -Direction Inbound -Action Allow `
+  -InterfaceAlias "vEthernet (NATSwitch)"
+```
+
 ---
 
 ## Резюме
 
 External для інтернету. Internal для комунікації VM-хост. Private для ізольованих мереж. NAT коли External недоступний. `New-VMSwitch` і `Connect-VMNetworkAdapter` для налаштування.
+
+---
+
+## 🌐 Розрахувати параметри підмережі?
+
+**[→ IP/Subnet калькулятор](/tools/subnet-calculator)** — введи IP і CIDR, отримай маску, broadcast, діапазон хостів і бінарне представлення.

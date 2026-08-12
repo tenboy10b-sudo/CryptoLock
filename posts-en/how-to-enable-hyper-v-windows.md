@@ -95,6 +95,24 @@ sudo systemctl enable xrdp
 
 ---
 
+## Create a VM via PowerShell
+
+```powershell
+# Create a new VM
+New-VM -Name "TestVM" -MemoryStartupBytes 2GB -Generation 2 `
+  -NewVHDPath "C:\VMs\TestVM.vhdx" -NewVHDSizeBytes 60GB `
+  -SwitchName "Default Switch"
+
+# Attach an ISO and boot from it
+Add-VMDvdDrive -VMName "TestVM" -Path "C:\ISOs\windows11.iso"
+Set-VMFirmware -VMName "TestVM" -FirstBootDevice (Get-VMDvdDrive -VMName "TestVM")
+
+# Start it
+Start-VM -Name "TestVM"
+```
+
+---
+
 ## Useful PowerShell Commands
 
 ```powershell
@@ -122,6 +140,14 @@ Set-VMMemory -VMName "Ubuntu" -StartupBytes 4GB
 
 # Adjust CPU count
 Set-VMProcessor -VMName "Ubuntu" -Count 4
+
+# Create a virtual switch from PowerShell
+New-VMSwitch -Name "External" -NetAdapterName "Ethernet" -AllowManagementOS $true
+New-VMSwitch -Name "Internal" -SwitchType Internal
+
+# Delete a VM and its disk
+Remove-VM -Name "TestVM" -Force
+Remove-Item "C:\VMs\TestVM.vhdx"
 ```
 
 ---
@@ -157,6 +183,22 @@ Enter BIOS → enable **Intel VT-x** or **AMD-V** (sometimes labeled "SVM Mode")
 | Snapshots | Yes | Yes | Yes |
 
 Use Hyper-V if you're already on Windows Pro and don't need USB passthrough. Use VirtualBox if you need cross-platform or USB device access.
+
+---
+
+## Frequently Asked Questions
+
+### Can I run Hyper-V on Windows 11/10 Home?
+
+No. Hyper-V is only available on Pro, Enterprise, and Education editions. Home users can use VirtualBox or VMware Workstation Player as free alternatives.
+
+### Does Hyper-V slow down the host PC?
+
+Minimally when VMs are not running. When VMs are active, they use real CPU and RAM. Allocating more than 70% of host RAM to VMs will cause performance issues.
+
+### Can Hyper-V and VirtualBox/VMware run simultaneously?
+
+Not well. Hyper-V takes control of the CPU virtualization layer, which prevents VirtualBox and older VMware versions from running. VMware Workstation 15.5.5+ has experimental Hyper-V compatibility mode.
 
 ---
 

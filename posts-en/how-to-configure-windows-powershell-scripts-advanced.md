@@ -1,79 +1,14 @@
 ---
-title: "How to Use PowerShell Script Modules and Profiles"
+title: "How to Create PowerShell Modules for Reusable Functions"
 date: "2026-04-29"
+updated: "2026-08-12"
 publishDate: "2026-04-29"
-description: "Organize PowerShell beyond single scripts: create modules for reusable functions, set up profiles for persistent aliases and configuration, and manage script dependencies."
+description: "Package PowerShell functions into reusable modules: module structure, manifests, auto-importing, version management, and script signing."
 tags: ["windows", "powershell", "automation", "administration"]
-readTime: 6
+readTime: 5
 ---
 
-Once you have more than a handful of PowerShell scripts, it's time to organize them properly — modules for reusable functions and profiles for your environment setup.
-
----
-
-## PowerShell Profiles
-
-A profile is a script that runs automatically every time you open PowerShell. Use it for aliases, functions, and environment setup.
-
-```powershell
-# Find your profile location
-$PROFILE
-
-# Edit it
-notepad $PROFILE  # Or: code $PROFILE
-
-# Create if it doesn't exist
-if (!(Test-Path $PROFILE)) {
-  New-Item -ItemType File -Path $PROFILE -Force
-}
-```
-
-**Profile types:**
-```powershell
-# Current user, current host (most common)
-$PROFILE.CurrentUserCurrentHost
-
-# Current user, all hosts (applies to VS Code, ISE, etc.)
-$PROFILE.CurrentUserAllHosts
-
-# All users, current host (requires admin)
-$PROFILE.AllUsersCurrentHost
-```
-
----
-
-## Useful Profile Contents
-
-```powershell
-# Example $PROFILE content
-
-# Aliases
-Set-Alias -Name g -Value git
-Set-Alias -Name py -Value python
-Set-Alias -Name touch -Value New-Item
-
-# Functions
-function proj { Set-Location "C:\Projects" }
-function admin { Start-Process pwsh -Verb RunAs }
-function uptime { (Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime }
-
-# Prompt customization
-function prompt {
-  $location = (Get-Location).Path.Replace($env:USERPROFILE, "~")
-  $branch = git branch --show-current 2>$null
-  $gitInfo = if ($branch) { " [$branch]" } else { "" }
-  Write-Host "PS $location$gitInfo" -ForegroundColor Cyan -NoNewline
-  return "> "
-}
-
-# Auto-complete enhancement
-Set-PSReadLineOption -PredictionSource History
-Set-PSReadLineOption -HistorySearchCursorMovesToEnd
-Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-
-Write-Host "Profile loaded" -ForegroundColor DarkGray
-```
+Once you have more than a handful of PowerShell functions, it's time to organize them properly — modules package reusable functions for use across scripts and sessions. (For persistent aliases and environment setup that loads on every session, see [how to create a PowerShell profile](/en/how-to-configure-windows-powershell-profiles).)
 
 ---
 
