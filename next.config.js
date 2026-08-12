@@ -254,23 +254,25 @@ const nextConfig = {
 
 
       // ── Масові виправлення 404 (23.05.2026) ──────────────────────────
-      { source: '/how-to-check-disk-health-windows', destination: '/en/how-to-check-disk-health-windows', permanent: true, locale: false },
-      { source: '/how-to-check-disk-health-windows/', destination: '/en/how-to-check-disk-health-windows', permanent: true, locale: false },
-      { source: '/how-to-fix-bsod-windows', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
-      { source: '/how-to-fix-bsod-windows/', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
-      { source: '/how-to-remove-virus-windows', destination: '/en/how-to-remove-virus-windows', permanent: true, locale: false },
-      { source: '/how-to-remove-virus-windows/', destination: '/en/how-to-remove-virus-windows', permanent: true, locale: false },
-      { source: '/how-to-install-windows-11-without-tpm', destination: '/en/how-to-install-windows-11-without-tpm', permanent: true, locale: false },
-      { source: '/how-to-install-windows-11-without-tpm/', destination: '/en/how-to-install-windows-11-without-tpm', permanent: true, locale: false },
-      { source: '/how-to-fix-windows-update-errors', destination: '/en/how-to-fix-windows-update-errors', permanent: true, locale: false },
-      { source: '/how-to-fix-windows-update-errors/', destination: '/en/how-to-fix-windows-update-errors', permanent: true, locale: false },
-      { source: '/how-to-set-up-dns-windows', destination: '/en/how-to-set-up-dns-windows', permanent: true, locale: false },
-      { source: '/how-to-set-up-dns-windows/', destination: '/en/how-to-set-up-dns-windows', permanent: true, locale: false },
-      { source: '/tags/viruses', destination: '/tags/%D0%B2%D1%96%D1%80%D1%83%D1%81%D0%B8', permanent: true, locale: false },
-      { source: '/tags/bsod', destination: '/tags/bsod', permanent: true, locale: false },
-      { source: '/tags/performance', destination: '/tags/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
-      { source: '/tags/diagnostics', destination: '/tags/%D0%B4%D1%96%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0', permanent: true, locale: false },
-      { source: '/tags/privacy', destination: '/tags/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
+      { source: '/uk/how-to-check-disk-health-windows', destination: '/en/how-to-check-disk-health-windows', permanent: true, locale: false },
+      { source: '/uk/how-to-check-disk-health-windows/', destination: '/en/how-to-check-disk-health-windows', permanent: true, locale: false },
+      { source: '/uk/how-to-fix-bsod-windows', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
+      { source: '/uk/how-to-fix-bsod-windows/', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
+      { source: '/uk/how-to-remove-virus-windows', destination: '/en/how-to-remove-virus-windows', permanent: true, locale: false },
+      { source: '/uk/how-to-remove-virus-windows/', destination: '/en/how-to-remove-virus-windows', permanent: true, locale: false },
+      { source: '/uk/how-to-install-windows-11-without-tpm', destination: '/en/how-to-install-windows-11-without-tpm', permanent: true, locale: false },
+      { source: '/uk/how-to-install-windows-11-without-tpm/', destination: '/en/how-to-install-windows-11-without-tpm', permanent: true, locale: false },
+      { source: '/uk/how-to-fix-windows-update-errors', destination: '/en/how-to-fix-windows-update-errors', permanent: true, locale: false },
+      { source: '/uk/how-to-fix-windows-update-errors/', destination: '/en/how-to-fix-windows-update-errors', permanent: true, locale: false },
+      { source: '/uk/how-to-set-up-dns-windows', destination: '/en/how-to-set-up-dns-windows', permanent: true, locale: false },
+      { source: '/uk/how-to-set-up-dns-windows/', destination: '/en/how-to-set-up-dns-windows', permanent: true, locale: false },
+      { source: '/uk/tags/viruses', destination: '/tags/%D0%B2%D1%96%D1%80%D1%83%D1%81%D0%B8', permanent: true, locale: false },
+      // '/tags/bsod' видалено тут — source===destination буквально (тег "bsod" вже ASCII,
+      // не потребує транслітерації); з фіксом locale:false-матчингу (сесія 12 прод. 36) це
+      // перетворилось би на живий нескінченний редирект-цикл замість безпечного no-op.
+      { source: '/uk/tags/performance', destination: '/tags/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
+      { source: '/uk/tags/diagnostics', destination: '/tags/%D0%B4%D1%96%D0%B0%D0%B3%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D0%BA%D0%B0', permanent: true, locale: false },
+      { source: '/uk/tags/privacy', destination: '/tags/%D0%BF%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D0%BD%D1%96%D1%81%D1%82%D1%8C', permanent: true, locale: false },
       { source: '/en/perevirka-ram-na-pomylky', destination: '/perevirka-ram-na-pomylky', permanent: true, locale: false },
       { source: '/en/defragmentatsiya-dysku-windows', destination: '/defragmentatsiya-dysku-windows', permanent: true, locale: false },
       { source: '/en/skynuti-parol-windows-cmd', destination: '/skynuti-parol-windows-cmd', permanent: true, locale: false },
@@ -309,9 +311,10 @@ const nextConfig = {
       { source: '/en/vymknute-cortana-veb-poshuk', destination: '/vymknute-cortana-veb-poshuk', permanent: true, locale: false },
       { source: '/en/ochyschennya-dns-keshu-windows', destination: '/ochyschennya-dns-keshu-windows', permanent: true, locale: false },
       { source: '/en/bios-ne-bachyt-fleshku', destination: '/bios-ne-bachyt-fleshku', permanent: true, locale: false },
-      { source: '/README-AUTOPOST', destination: '/', permanent: true, locale: false },
+      { source: '/uk/README-AUTOPOST', destination: '/', permanent: true, locale: false },
       { source: '/en/README-AUTOPOST', destination: '/', permanent: true, locale: false },
-      { source: '/yak-zrobyty-screenshot-windows', destination: '/yak-zrobyty-screenshot-windows', permanent: true, locale: false },
+      // '/uk/yak-zrobyty-screenshot-windows' видалено тут — source===destination буквально,
+      // з фіксом locale:false-матчингу це стало б живим нескінченним циклом (сесія 12 прод. 36).
       // ── Опечатка в slug ───────────────────────────────────────────────
       {
         source: '/yak-nalashtuvatv-vpn-windows',
@@ -498,7 +501,11 @@ const nextConfig = {
       { source: '/en/yak-nalashtuvaty-nychnyy-rezhym-windows', destination: '/yak-nalashtuvaty-nychnyy-rezhym-windows', permanent: true, locale: false },
       { source: '/en/yak-nalashtuvanty-windows-dlya-shkoly', destination: '/yak-nalashtuvanty-windows-dlya-shkoly', permanent: true, locale: false },
       { source: '/en/yak-vypravyty-windows-update-zavisaye', destination: '/yak-vypravyty-windows-update-zavisaye', permanent: true, locale: false },
-      { source: '/yak-nalashtuvanty-dvokrokov', destination: '/', permanent: true, locale: false },
+      { source: '/uk/yak-nalashtuvanty-dvokrokov', destination: '/yak-nalashtuvaty-dvofaktornu-autentyfikatsiyu-windows', permanent: true, locale: false },
+      // Той самий старий файл, ім'я якого пошкодило кодування при створенні (сесія 12 прод. 36
+      // знайшла живі повторні 404-сканування Google саме на цей URL) — regex ловить будь-яке
+      // продовження після "dvokrokov", яким би не було биту-сміттям.
+      { source: '/uk/yak-nalashtuvanty-dvokrokov:junk(.*)', destination: '/yak-nalashtuvaty-dvofaktornu-autentyfikatsiyu-windows', permanent: true, locale: false },
 
       // ── Canonical duplicates: /en/uk-slug → /uk-slug ────────────
       { source: '/en/zaborona-cmd-dlya-korystuvachiv', destination: '/zaborona-cmd-dlya-korystuvachiv', permanent: true, locale: false },
@@ -533,16 +540,18 @@ const nextConfig = {
       { source: '/en/how-to-enable-hyper-v-windows-11', destination: '/en/how-to-enable-hyper-v-windows', permanent: true, locale: false },
       { source: '/en/how-to-fix-windows-slow-boot', destination: '/en/how-to-fix-slow-boot-windows', permanent: true, locale: false },
       { source: '/en/how-to-fix-windows-11-slow-boot', destination: '/en/how-to-fix-slow-boot-windows', permanent: true, locale: false },
-      { source: '/yak-nalashtuvaty-vkhid-bez-parolya-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
-      { source: '/yak-nalashtuvanty-avtomatychnyy-vkhid-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
-      { source: '/task-scheduler-avtomatyzatsiya', destination: '/yak-nalashtuvaty-task-scheduler-windows', permanent: true, locale: false },
-      { source: '/avtomatyzatsiya-zadach-powershell-task-scheduler', destination: '/yak-nalashtuvaty-task-scheduler-windows', permanent: true, locale: false },
-      { source: '/yak-korystuvatysya-windows-terminal', destination: '/yak-nalashtuvaty-windows-terminal', permanent: true, locale: false },
-      { source: '/yak-vstanovyty-wsl-windows', destination: '/yak-nalashtuvanty-pidsystemu-windows-dlya-linux-wsl', permanent: true, locale: false },
-      { source: '/sfc-dism-vidnovlennya-systemnykh-fayliv', destination: '/sfc-dism-povnyy-gaid', permanent: true, locale: false },
-      { source: '/yak-pereviryty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true, locale: false },
-      { source: '/yak-ochystyty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true, locale: false },
-      { source: '/yak-zashyfruvaty-dysk-bitlocker', destination: '/yak-uvimknuty-bitlocker-windows-11', permanent: true, locale: false },
+      { source: '/uk/yak-nalashtuvaty-vkhid-bez-parolya-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
+      { source: '/uk/yak-nalashtuvanty-avtomatychnyy-vkhid-windows', destination: '/avtomatychnyy-vkhid-windows', permanent: true, locale: false },
+      { source: '/uk/task-scheduler-avtomatyzatsiya', destination: '/yak-nalashtuvaty-task-scheduler-windows', permanent: true, locale: false },
+      { source: '/uk/avtomatyzatsiya-zadach-powershell-task-scheduler', destination: '/yak-nalashtuvaty-task-scheduler-windows', permanent: true, locale: false },
+      { source: '/uk/yak-korystuvatysya-windows-terminal', destination: '/windows-terminal-povnyy-gaid', permanent: true, locale: false },
+      // '/yak-vstanovyty-wsl-windows' видалено тут — редирект вів на давно неіснуючу сторінку,
+      // а реальна жива стаття існує саме на цьому слазі. З фіксом locale:false-матчингу цей
+      // редирект уперше почав би реально спрацьовувати і зламав би живу статтю (сесія 12 прод. 36).
+      { source: '/uk/sfc-dism-vidnovlennya-systemnykh-fayliv', destination: '/sfc-dism-povnyy-gaid', permanent: true, locale: false },
+      { source: '/uk/yak-pereviryty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true, locale: false },
+      { source: '/uk/yak-ochystyty-zhurnaly-podiy-windows', destination: '/yak-korystuvatys-zhurnalom-podiy-windows', permanent: true, locale: false },
+      { source: '/uk/yak-zashyfruvaty-dysk-bitlocker', destination: '/yak-uvimknuty-bitlocker-windows-11', permanent: true, locale: false },
       { source: '/en/gpo-nalashtuvannya-polityky-paroliv', destination: '/gpo-nalashtuvannya-polityky-paroliv', permanent: true, locale: false },
     ]
   },
