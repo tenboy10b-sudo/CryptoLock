@@ -40,6 +40,9 @@ Before setting a static IP, understand the subnet your network uses.
 ## Via PowerShell
 
 ```powershell
+# Find adapter name
+Get-NetAdapter | Select-Object Name, InterfaceDescription, Status
+
 # View current IP configuration
 Get-NetIPAddress -AddressFamily IPv4 | Where-Object {$_.PrefixOrigin -ne 'WellKnown'}
 
@@ -107,6 +110,26 @@ Resolve-DnsName google.com
 # Full network info
 ipconfig /all
 ```
+
+---
+
+## Choosing a Static IP Address
+
+- Use addresses outside your router's DHCP range to avoid conflicts
+- Common DHCP range: `.100` to `.200` → use `.2` to `.99` for static
+- Check your router's admin panel for the actual DHCP range
+
+---
+
+## Frequently Asked Questions
+
+### Does a static IP slow down my connection?
+
+No. Static vs DHCP only affects how the IP is assigned — not connection speed or latency.
+
+### My static IP stopped working after a router reset — why?
+
+Router resets often change the gateway IP (back to the default, usually 192.168.0.1 or 192.168.1.1). Update the gateway in your static IP settings to match the new router IP.
 
 ---
 

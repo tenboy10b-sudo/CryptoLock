@@ -174,6 +174,12 @@ const nextConfig = {
       { source: '/process-explorer-sysinternals', destination: '/process-explorer-system-informer-windows', permanent: true },
       { source: '/en/how-to-use-process-explorer-sysinternals', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
       { source: '/en/how-to-use-process-explorer-windows', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
+      { source: '/en/how-to-fix-no-sound-windows', destination: '/en/how-to-fix-windows-audio-not-working', permanent: true, locale: false },
+      { source: '/en/how-to-configure-ntfs-permissions', destination: '/en/how-to-configure-ntfs-permissions-windows', permanent: true, locale: false },
+
+      // "Статичний IP" — 2 UK + 2 EN об'єднано
+      { source: '/yak-vstanovyty-statychnyy-ip-windows', destination: '/yak-rozrakhuvaty-pidsystemu-windows', permanent: true },
+      { source: '/en/how-to-configure-static-ip-windows-11', destination: '/en/how-to-configure-static-ip-windows', permanent: true, locale: false },
 
       // "Перевірити версію Windows" — 2 статті об'єднано в yak-pereviryty-versiyu-windows
       { source: '/yak-pereviryty-versiy-windows', destination: '/yak-pereviryty-versiyu-windows', permanent: true },

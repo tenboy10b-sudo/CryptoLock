@@ -141,6 +141,18 @@ Set-Acl "C:\SecureFolder" $acl
 
 ---
 
+## Fix Broken Permissions (Reset to Default)
+
+```cmd
+REM Reset permissions on a folder to inherited defaults
+icacls "C:\Folder" /reset /t /c /l
+
+REM Reset all permissions on a drive (careful!)
+icacls C:\ /reset /t /c /l
+```
+
+---
+
 ## Audit File Access
 
 Log who accesses a file (requires audit policy to be enabled):
@@ -165,3 +177,17 @@ Access events appear in Security log as Event ID 4663.
 ## Summary
 
 View permissions: right-click → Properties → Security. Modify via GUI for simple changes, `icacls` for scripting, PowerShell for complex automation. Always prefer **Modify** over **Full Control** for regular users — they don't need to change permissions. Use **Deny** sparingly — it overrides Allow from any group membership.
+
+## Frequently Asked Questions
+
+### What's the difference between NTFS permissions and Share permissions?
+
+NTFS permissions apply to local and network access. Share permissions only apply when accessing via network. When both are set, the more restrictive one wins. Best practice: set Share to Full Control for Everyone, control access only via NTFS.
+
+### Why do I get Access Denied when logged in as Administrator?
+
+Built-in Administrator is blocked from some protected system folders even with admin rights. Use `takeown` to take ownership first, then grant permissions.
+
+### Do NTFS permissions apply inside ZIP files?
+
+No. NTFS permissions are stored in the NTFS filesystem metadata. ZIP files don't preserve them — if you ZIP and extract a folder, permissions reset to defaults.

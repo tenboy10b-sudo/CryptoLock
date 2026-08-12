@@ -122,6 +122,22 @@ Right-click speaker → Sounds → Playback → right-click HDMI device → **En
 
 ---
 
+## Check Default Format
+
+Sometimes Windows picks an audio format the device doesn't support.
+
+Right-click speaker icon → **Sound settings** → **More sound settings** → **Playback** tab → right-click your device → **Properties** → **Advanced** tab → change **Default Format** to **16 bit, 44100 Hz (CD Quality)** → **Test**
+
+---
+
+## Disable Audio Enhancements
+
+Enhancements can cause no-sound issues on some hardware.
+
+Right-click speaker → **Sound settings** → **More sound settings** → **Playback** → right-click device → **Properties** → **Enhancements** tab → check **Disable all enhancements** (Windows 11: **Advanced** tab → **Audio enhancements** → **Off**)
+
+---
+
 ## Repair System Files
 
 ```powershell
