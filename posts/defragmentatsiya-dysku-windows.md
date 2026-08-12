@@ -1,9 +1,10 @@
 ---
 title: "Як дефрагментувати диск в Windows і чи потрібно це для SSD"
 date: "2026-04-05"
-description: "Дефрагментація HDD через вбудований інструмент і CMD. Чому SSD не потрібно дефрагментувати і що таке TRIM."
+updated: "2026-08-13"
+description: "Дефрагментація HDD через вбудований інструмент і CMD. Чому SSD не потрібно дефрагментувати і що таке TRIM, як перевірити що TRIM увімкнений."
 tags: ["диск", "оптимізація", "очищення", "windows"]
-readTime: 4
+readTime: 5
 ---
 
 Дефрагментація — часто нерозуміють навіщо і коли її робити. Розберемо конкретно для HDD і SSD.
@@ -84,11 +85,28 @@ Get-PhysicalDisk | Select FriendlyName, MediaType
 
 ---
 
+## Перевірити чи увімкнений TRIM
+
+```powershell
+# 0 = TRIM увімкнений (добре), 1 = вимкнений
+fsutil behavior query DisableDeleteNotify
+
+# Увімкнути TRIM якщо вимкнено
+fsutil behavior set DisableDeleteNotify 0
+```
+
+---
+
 ## Автоматична дефрагментація за розкладом
 
 За замовчуванням Windows дефрагментує HDD щотижня. Щоб перевірити або змінити:
 
 `Defragment and Optimize Drives` → **Change settings** → вибери частоту і диски.
+
+```powershell
+# Перевірити розклад оптимізації через PowerShell
+Get-ScheduledTask -TaskPath "\Microsoft\Windows\Defrag\" | Select-Object TaskName, State
+```
 
 Для HDD рекомендую: **Weekly**.
 Для SSD: залиш як є — Windows сама керує TRIM.

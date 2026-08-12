@@ -231,6 +231,10 @@ const nextConfig = {
       // "Hyper-V" — VM-гайд (2 EN, поза чергою) і мережа Hyper-V (2 UK) об'єднано
       { source: '/hyper-v-nalashtuvannya-merezhi', destination: '/nalashtuvannya-merezhi-hyper-v', permanent: true },
 
+      // "Дефрагментація/TRIM" — yak-pratsyuvaty-z-dyskamy-ta-rozdilamy мав вміст про
+      // дефрагментацію (не розділи, як обіцяв слаг) і виявився дублікатом defragmentatsiya-dysku-windows
+      { source: '/yak-pratsyuvaty-z-dyskamy-ta-rozdilamy', destination: '/defragmentatsiya-dysku-windows', permanent: true },
+
       // Прогалини редиректів, знайдені аудитом сесії 12 прод. 36 (файли видалені раніше без редиректу — живі 404)
       { source: '/yak-nalashtuvanty-windows-hello', destination: '/windows-hello-nalashtuvannya-ta-vypravlennya', permanent: true },
       { source: '/yak-nalashtuvatysy-windows-hello', destination: '/windows-hello-nalashtuvannya-ta-vypravlennya', permanent: true },
