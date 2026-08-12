@@ -40,6 +40,20 @@ fsutil behavior set DisableDeleteNotify 0
 
 ---
 
+## Verify AHCI Mode (Not IDE)
+
+AHCI enables native command queuing and other SSD features. IDE mode significantly limits SSD performance.
+
+```powershell
+Get-WmiObject Win32_IDEController | Select-Object Name
+```
+
+Or: `Win + R` → `msinfo32` → **Components** → **Storage** → **Disks** — look for "AHCI" in the description.
+
+If in IDE mode: change in BIOS → **SATA Mode** → **AHCI** (requires a registry tweak first on an existing install to avoid a boot BSOD).
+
+---
+
 ## Disable Defragmentation for SSD
 
 Windows automatically disables traditional defragmentation for SSDs, but verify:
@@ -117,6 +131,30 @@ $disk = Get-WmiObject -Class Win32_DiskDrive | Select-Object -First 1
 ```
 
 `Device Manager` → **Disk drives** → right-click SSD → **Properties** → **Policies** → **Better performance** → OK
+
+---
+
+## Power Settings for SSD
+
+Aggressive power saving can cause SSD latency spikes:
+
+```powershell
+powercfg /setacvalueindex SCHEME_CURRENT 0012ee47-9041-4b5d-9b77-535fba8b1442 0b2d69d7-a2a1-449c-9680-f91c70521c60 0
+powercfg /setactive SCHEME_CURRENT
+```
+
+Or: Power Options → Advanced settings → **Hard disk** → **Turn off hard disk after** → **Never** (when plugged in).
+
+**NVMe-specific:** Device Manager → **Disk drives** → right-click the NVMe drive → **Properties** → **Power Management** → uncheck **Allow the computer to turn off this device to save power** — NVMe drives can otherwise enter low-power states that cause latency spikes.
+
+---
+
+## What NOT to Do with SSDs
+
+- **Don't disable the pagefile** — Windows needs it even with lots of RAM
+- **Don't manually run TRIM** — Windows handles it automatically
+- **Don't fill the drive above 90%**
+- **Don't defragment** — pointless and adds unnecessary writes
 
 ---
 

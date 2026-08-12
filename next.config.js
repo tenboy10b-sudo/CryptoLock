@@ -180,6 +180,12 @@ const nextConfig = {
       // "Статичний IP" — 2 UK + 2 EN об'єднано
       { source: '/yak-vstanovyty-statychnyy-ip-windows', destination: '/yak-rozrakhuvaty-pidsystemu-windows', permanent: true },
       { source: '/en/how-to-configure-static-ip-windows-11', destination: '/en/how-to-configure-static-ip-windows', permanent: true, locale: false },
+      { source: '/en/how-to-enable-bitlocker-windows', destination: '/en/how-to-enable-bitlocker', permanent: true, locale: false },
+
+      // "Windows Services management" — 3 EN статті об'єднано в how-to-manage-windows-services-powershell (уже правильно пов'язана з UK)
+      { source: '/en/how-to-configure-windows-services', destination: '/en/how-to-manage-windows-services-powershell', permanent: true, locale: false },
+      { source: '/en/how-to-manage-windows-services', destination: '/en/how-to-manage-windows-services-powershell', permanent: true, locale: false },
+      { source: '/en/how-to-optimize-windows-for-ssd', destination: '/en/how-to-optimize-ssd-windows', permanent: true, locale: false },
 
       // "Перевірити версію Windows" — 2 статті об'єднано в yak-pereviryty-versiyu-windows
       { source: '/yak-pereviryty-versiy-windows', destination: '/yak-pereviryty-versiyu-windows', permanent: true },

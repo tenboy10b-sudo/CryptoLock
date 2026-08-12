@@ -129,6 +129,62 @@ Get-WmiObject Win32_Service | Where-Object {$_.StartName -like "*LocalSystem*"} 
 
 ---
 
+## Services Safe to Disable on a Home PC
+
+```powershell
+$toDisable = @(
+  "Fax", "RemoteRegistry", "XblGameSave", "XblAuthManager",
+  "XboxNetApiSvc", "lfsvc", "MapsBroker", "WbioSrvc"
+)
+foreach ($svc in $toDisable) {
+  Stop-Service $svc -Force -EA 0
+  Set-Service $svc -StartupType Disabled -EA 0
+}
+```
+
+## Services You Should NOT Disable
+
+| Service | Why it's needed |
+|---------|----------------|
+| Windows Defender Antivirus | Core security |
+| Windows Update | Security patches |
+| Windows Firewall | Network security |
+| Cryptographic Services | SSL, Windows Update |
+| DCOM Server Process Launcher | Core Windows functionality |
+| RPC (Remote Procedure Call) | Required by most Windows features |
+| Windows Management Instrumentation | Required by many management tools |
+| Task Scheduler | Scheduled maintenance tasks |
+
+---
+
+## Fix "Service Failed to Start" Errors
+
+```powershell
+# Check Event Log for service errors
+Get-WinEvent -FilterHashtable @{LogName='System'; Level=2,1} -MaxEvents 20 |
+  Where-Object {$_.Message -like "*service*"} |
+  Select-Object TimeCreated, Message | Format-List
+
+# Check service dependencies
+(Get-Service -Name "wuauserv").DependentServices
+(Get-Service -Name "wuauserv").ServicesDependedOn
+```
+
+Common fixes: `sfc /scannow` (repairs corrupted service files), `DISM /Online /Cleanup-Image /RestoreHealth` (fixes the Windows image).
+
+---
+
+## Security Audit
+
+```powershell
+# Services running as SYSTEM (highest privilege)
+Get-WmiObject Win32_Service |
+  Where-Object {$_.StartName -eq 'LocalSystem' -and $_.State -eq 'Running'} |
+  Select-Object Name, DisplayName, PathName
+```
+
+---
+
 ## Bulk Operations
 
 ```powershell
