@@ -28,7 +28,7 @@ export default function TagPage({ tag, posts }) {
   }
 
   return (
-    <Layout title={title} description={desc} canonical={tagUrl}>
+    <Layout title={title} description={desc} canonical={tagUrl} noindex>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <div style={{ padding: '2.5rem 0 3rem' }}>

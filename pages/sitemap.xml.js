@@ -1,4 +1,4 @@
-import { getAllPosts, getAllTags } from '../lib/posts'
+import { getAllPosts } from '../lib/posts'
 import siteConfig from '../site.config'
 
 
@@ -27,7 +27,7 @@ function getPublishedPosts() {
   })
 }
 
-function generateSitemap(posts, enPosts, tags) {
+function generateSitemap(posts, enPosts) {
   const SITE = siteConfig.url
   const today = new Date().toISOString()
 
@@ -46,12 +46,8 @@ function generateSitemap(posts, enPosts, tags) {
     { url: '/privacy',                    priority: '0.3', changefreq: 'monthly' },
   ]
 
-  const tagPages = tags.map(({ tag }) => ({
-    url: `/tags/${encodeURIComponent(tag)}`,
-    priority: '0.6',
-    changefreq: 'weekly',
-    lastmod: today,
-  }))
+  // Сторінки тегів (/tags/*) навмисно НЕ в sitemap — вони noindex (тонкі автогенеровані
+  // списки), включати noindex-сторінки в sitemap суперечливо для Google і витрачає crawl budget.
 
   // Хелпер для запису URL з hreflang.
   // enSlug === undefined -> статична/тег сторінка, EN версія завжди реальна (/en{ukUrl})
@@ -76,7 +72,6 @@ function generateSitemap(posts, enPosts, tags) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${staticPages.map(p => urlEntry(p.url, today, p.priority, p.changefreq)).join('\n')}
-${tagPages.map(p => urlEntry(p.url, p.lastmod, p.priority, p.changefreq)).join('\n')}
 ${posts.map(post => urlEntry(
   `/${post.slug}`,
   post.date || today,
@@ -108,8 +103,7 @@ export async function getServerSideProps({ res }) {
     if (!pd) return true
     return new Date(pd) <= new Date()
   })
-  const tags = getAllTags()
-  const sitemap = generateSitemap(posts, enPosts, tags)
+  const sitemap = generateSitemap(posts, enPosts)
 
   res.setHeader('Content-Type', 'text/xml')
   res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=86400')
