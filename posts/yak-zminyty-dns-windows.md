@@ -4,6 +4,7 @@ date: "2026-04-04"
 description: "Як змінити DNS-сервер на Google, Cloudflare або кастомний через Settings, CMD і PowerShell. Який DNS обрати для швидкості і приватності."
 tags: ["dns", "мережа", "налаштування", "приватність"]
 readTime: 5
+translatesEn: "how-to-set-up-dns-windows"
 ---
 
 DNS-сервер за замовчуванням від провайдера часто повільний і може логувати запити. Зміна на Google або Cloudflare прискорює завантаження сайтів і підвищує приватність.

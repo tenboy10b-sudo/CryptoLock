@@ -175,6 +175,15 @@ const nextConfig = {
       { source: '/en/how-to-use-process-explorer-sysinternals', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
       { source: '/en/how-to-use-process-explorer-windows', destination: '/en/process-explorer-system-informer-windows-guide', permanent: true, locale: false },
 
+      // "Перевірити версію Windows" — 2 статті об'єднано в yak-pereviryty-versiyu-windows
+      { source: '/yak-pereviryty-versiy-windows', destination: '/yak-pereviryty-versiyu-windows', permanent: true },
+
+      // "Winget" — 2 статті об'єднано в yak-korystuvatys-winget-windows
+      { source: '/winget-ustranovlennya-prohram-windows', destination: '/yak-korystuvatys-winget-windows', permanent: true },
+
+      // "Відкриті порти" — 2 статті об'єднано в yak-pereviryt-port-vidkrytyy-windows
+      { source: '/yak-nalashtuvaty-windows-zaplyh-portiv', destination: '/yak-pereviryt-port-vidkrytyy-windows', permanent: true },
+
       // "Windows Server Core" — 2 статті об'єднано в windows-server-core-osnovy
       { source: '/keruvannya-windows-server-core', destination: '/windows-server-core-osnovy', permanent: true },
 

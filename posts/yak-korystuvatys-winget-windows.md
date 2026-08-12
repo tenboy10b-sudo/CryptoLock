@@ -37,6 +37,9 @@ winget install VideoLAN.VLC
 
 # Без питань (тихе встановлення)
 winget install Mozilla.Firefox --silent
+
+# Конкретна версія
+winget install Python.Python.3 --version 3.11.0
 ```
 
 ---
@@ -137,6 +140,20 @@ foreach ($app in $apps) {
 ```
 
 Зберегти як `setup.ps1` і запустити на будь-якому новому ПК — всі програми встановляться автоматично.
+
+---
+
+## Корпоративне розгортання на багатьох ПК
+
+```powershell
+# Встановити набір програм на всіх комп'ютерах домену через WinRM
+Invoke-Command -ComputerName (Get-ADComputer -Filter *).Name -ScriptBlock {
+    winget install 7zip.7zip --silent --accept-package-agreements
+    winget install Notepad++.Notepad++ --silent --accept-package-agreements
+} -ErrorAction SilentlyContinue
+```
+
+Для регулярного розгортання зручніше налаштувати через GPO Startup Script або Intune Win32 App замість ручного `Invoke-Command`.
 
 ---
 

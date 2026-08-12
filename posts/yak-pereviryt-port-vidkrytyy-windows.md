@@ -105,6 +105,62 @@ Get-NetFirewallRule -DisplayName "Open Port 8080"
 
 ---
 
+## Закрити порт (заблокувати вхідний трафік)
+
+```powershell
+# Заблокувати вхідний трафік на конкретний порт
+New-NetFirewallRule -DisplayName "Block port 3389" `
+  -Direction Inbound -Protocol TCP -LocalPort 3389 -Action Block
+```
+
+Або вимкни саму службу, що відкриває порт:
+
+```powershell
+# RDP (порт 3389)
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" `
+  -Name "fDenyTSConnections" -Value 1
+
+# WinRM (порти 5985/5986)
+Disable-PSRemoting -Force
+Stop-Service WinRM
+Set-Service WinRM -StartupType Disabled
+```
+
+---
+
+## Стандартні порти Windows
+
+| Порт | Протокол | Для чого |
+|------|---------|---------|
+| 135 | TCP | RPC Endpoint Mapper |
+| 139, 445 | TCP | SMB (спільні папки) |
+| 3389 | TCP | RDP (Remote Desktop) |
+| 5985 | TCP | WinRM HTTP |
+| 5986 | TCP | WinRM HTTPS |
+| 7680 | TCP | Delivery Optimization |
+
+Ці порти нормальні для Windows. Усе, що не впізнаєш серед відкритих — перевір окремо.
+
+---
+
+## Мінімізувати атакову поверхню (домашній ПК)
+
+```powershell
+# Порти, що зазвичай не потрібні домашньому ПК
+$portsToBlock = @(135, 139, 445, 5985)
+
+foreach ($port in $portsToBlock) {
+  New-NetFirewallRule -DisplayName "Block port $port inbound" `
+    -Direction Inbound -Protocol TCP -LocalPort $port `
+    -Action Block -ErrorAction SilentlyContinue
+  Write-Host "Blocked port $port"
+}
+```
+
+**Обережно:** порт 445 потрібен для спільного доступу до файлів — блокуй тільки якщо не використовуєш мережевий обмін файлами.
+
+---
+
 ## Онлайн перевірка портів (ззовні)
 
 Щоб перевірити чи порт доступний з інтернету:

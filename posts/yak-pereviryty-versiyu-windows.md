@@ -61,6 +61,16 @@ systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 
 ---
 
+## Перевірити архітектуру (32 чи 64 біт)
+
+```powershell
+(Get-WmiObject Win32_OperatingSystem).OSArchitecture
+```
+
+Виводить `64-bit` або `32-bit`. Більшість сучасних систем — 64-біт.
+
+---
+
 ## Розшифровка версій Windows 11
 
 | Версія | Назва | Дата виходу |

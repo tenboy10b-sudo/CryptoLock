@@ -6,6 +6,7 @@ updated: "2026-05-23"
 description: "Change DNS server in Windows 10 and 11 via Settings, PowerShell, CMD, and network adapter. Use Cloudflare 1.1.1.1 or Google 8.8.8.8 for faster, more private browsing."
 tags: ["windows", "network", "settings", "privacy"]
 readTime: 5
+translatesUk: "yak-zminyty-dns-windows"
 ---
 
 Changing your DNS server can improve browsing speed, bypass some restrictions, and increase privacy. Here are all methods for Windows 10 and 11.
