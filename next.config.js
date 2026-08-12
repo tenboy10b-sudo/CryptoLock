@@ -231,6 +231,11 @@ const nextConfig = {
       // "Hyper-V" — VM-гайд (2 EN, поза чергою) і мережа Hyper-V (2 UK) об'єднано
       { source: '/hyper-v-nalashtuvannya-merezhi', destination: '/nalashtuvannya-merezhi-hyper-v', permanent: true },
 
+      // Прогалини редиректів, знайдені аудитом сесії 12 прод. 36 (файли видалені раніше без редиректу — живі 404)
+      { source: '/yak-nalashtuvanty-windows-hello', destination: '/windows-hello-nalashtuvannya-ta-vypravlennya', permanent: true },
+      { source: '/yak-nalashtuvatysy-windows-hello', destination: '/windows-hello-nalashtuvannya-ta-vypravlennya', permanent: true },
+      { source: '/yak-zbilshyty-obsyah-ram-windows', destination: '/100-vykorystannya-ram-windows-zvilvyty-pamiat', permanent: true },
+
       // "BSOD" (EN, сесія 12 прод. 34) — "after update" пара і загальний BSOD об'єднано в how-to-fix-bsod-windows
       { source: '/en/how-to-fix-windows-11-bsod-after-update-2026', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
       { source: '/en/how-to-fix-windows-11-blue-screen-after-update', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
