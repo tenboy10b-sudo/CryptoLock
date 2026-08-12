@@ -1,7 +1,7 @@
 ---
 title: "MSI Afterburner on Windows: GPU Monitoring, Overclocking and Fan Control"
 date: "2026-06-18"
-publishDate: "2027-06-01"
+publishDate: "2026-09-15"
 updated: "2026-06-18"
 description: "How to install MSI Afterburner and set up GPU monitoring on Windows. In-game temperature overlay, GPU overclocking, custom fan curve and video recording setup."
 tags: ["windows", "msi-afterburner", "gpu", "gaming", "monitoring", "tools"]

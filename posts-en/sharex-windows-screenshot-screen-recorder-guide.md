@@ -1,7 +1,7 @@
 ---
 title: "ShareX on Windows: The Most Powerful Free Screenshot and Screen Recorder"
 date: "2026-06-14"
-publishDate: "2027-06-01"
+publishDate: "2026-09-21"
 updated: "2026-06-14"
 description: "How to install and use ShareX on Windows. Screenshots with annotations, screen recording, OCR, cloud upload, automation workflows. Compare with Lightshot and OBS."
 tags: ["windows", "sharex", "screenshot", "screen-recording", "tools"]

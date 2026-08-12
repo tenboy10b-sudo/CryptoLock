@@ -1,7 +1,7 @@
 ---
 title: "VS Code on Windows: Installation, Setup and Top Extensions for Developers"
 date: "2026-06-14"
-publishDate: "2027-06-01"
+publishDate: "2026-09-29"
 updated: "2026-06-14"
 description: "How to install Visual Studio Code on Windows 10 and 11. Theme, font, autosave settings. Top extensions for Python, JavaScript, PHP. Essential VS Code keyboard shortcuts."
 tags: ["windows", "vscode", "development", "tools", "programming"]

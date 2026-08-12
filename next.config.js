@@ -186,6 +186,11 @@ const nextConfig = {
       { source: '/yak-vstanovyty-windows-11-z-fleshky', destination: '/chysta-ustanovka-windows-10-11-pokrokovyy-posibnyk', permanent: true },
       { source: '/en/how-to-clean-install-windows-11', destination: '/en/how-to-clean-install-windows-10-11', permanent: true, locale: false },
 
+      // "Windows Terminal" — залишок незавершеної консолідації сесії 7: ще 1 UK + 2 EN дублікати об'єднано в windows-terminal-povnyy-gaid
+      { source: '/yak-korystuvatys-windows-terminal', destination: '/windows-terminal-povnyy-gaid', permanent: true },
+      { source: '/en/how-to-configure-windows-terminal', destination: '/en/windows-terminal-setup-guide', permanent: true, locale: false },
+      { source: '/en/how-to-use-windows-terminal', destination: '/en/windows-terminal-setup-guide', permanent: true, locale: false },
+
       // "Віртуальні робочі столи" — 2 статті об'єднано в yak-nalashtuvanty-virtualnyi-stol-windows
       { source: '/yak-nalashtuvaty-virtualni-robochi-stoly-windows', destination: '/yak-nalashtuvanty-virtualnyi-stol-windows', permanent: true },
 

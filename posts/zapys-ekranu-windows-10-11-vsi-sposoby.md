@@ -1,7 +1,7 @@
 ---
 title: "Запис екрану Windows 10 і 11: всі способи — вбудовані і безкоштовні програми"
 date: "2026-06-08"
-publishDate: "2027-06-01"
+publishDate: "2026-10-06"
 updated: "2026-06-08"
 description: "Як записати екран на Windows 10 і 11 без програм: Xbox Game Bar, Snipping Tool, PowerPoint. Безкоштовні програми для запису: OBS Studio, ShareX. Запис зі звуком."
 tags: ["windows", "запис-екрану", "інструменти", "налаштування"]

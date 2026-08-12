@@ -1,7 +1,7 @@
 ---
 title: "Bulk Rename Utility on Windows: Mass File Renaming Guide"
 date: "2026-06-18"
-publishDate: "2027-06-01"
+publishDate: "2026-09-01"
 updated: "2026-06-18"
 description: "How to install Bulk Rename Utility and mass rename files on Windows. Add numbers, change extensions, remove characters, regex replacements and PowerShell alternatives."
 tags: ["windows", "bulk-rename", "files", "tools", "automation"]

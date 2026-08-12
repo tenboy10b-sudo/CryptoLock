@@ -1,7 +1,7 @@
 ---
 title: "How to Run PowerShell as Administrator in Windows 10 and 11"
 date: "2027-02-08"
-publishDate: "2027-06-01"
+publishDate: "2026-08-27"
 description: "Run PowerShell as Administrator in Windows 10 and 11. All methods: keyboard shortcuts, right-click, Task Manager, scheduled tasks and auto-elevate scripts."
 tags: ["windows", "powershell", "administration", "security", "automation"]
 readTime: 4

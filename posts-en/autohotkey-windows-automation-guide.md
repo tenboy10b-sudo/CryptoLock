@@ -1,7 +1,7 @@
 ---
 title: "AutoHotkey on Windows: Automation, Hotkeys and Macros Guide"
 date: "2026-06-15"
-publishDate: "2027-06-01"
+publishDate: "2026-08-31"
 updated: "2026-06-15"
 description: "How to install AutoHotkey and write your first scripts for Windows automation. Custom hotkeys, text macros, window management, mouse control and auto-startup."
 tags: ["windows", "autohotkey", "automation", "tools", "scripting"]

@@ -1,7 +1,7 @@
 ---
 title: "How to Install Python on Windows 10 and 11: Setup, pip and Virtual Environments"
 date: "2026-06-10"
-publishDate: "2027-06-01"
+publishDate: "2026-09-30"
 updated: "2026-06-10"
 description: "How to install Python on Windows 10 and 11, fix PATH issues, install pip packages and create virtual environments. VS Code setup for Python. Fix 'python is not recognized' error."
 tags: ["windows", "python", "development", "tools", "programming"]

@@ -1,7 +1,7 @@
 ---
 title: "Telegram Desktop on Windows: Installation, Setup and Useful Features"
 date: "2026-06-10"
-publishDate: "2027-06-01"
+publishDate: "2026-09-25"
 updated: "2026-06-10"
 description: "How to install and configure Telegram Desktop on Windows 10 and 11. Themes, chat folders, notifications, file saving, keyboard shortcuts and hidden features."
 tags: ["windows", "telegram", "messenger", "settings", "tools"]

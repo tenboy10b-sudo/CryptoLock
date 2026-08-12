@@ -1,7 +1,7 @@
 ---
 title: "Notepad++ on Windows: Installation, Setup and Useful Features"
 date: "2026-06-15"
-publishDate: "2027-06-01"
+publishDate: "2026-09-16"
 updated: "2026-06-15"
 description: "How to install Notepad++ and configure it for code and text editing. Themes, plugins, syntax highlighting, macros, file comparison and regex find and replace."
 tags: ["windows", "notepad++", "editor", "tools", "programming"]
