@@ -53,7 +53,7 @@ Windows Defender вбудований і достатній для більшо�
 
 **OneDrive:** значок в треї → Параметри → Резервне копіювання → увімкни Документи, Зображення, Робочий стіл.
 
-Детальніше: [OneDrive налаштування резервного копіювання](/yak-nalashtuvanty-rezervne-kopiyuvannya-onedrive)
+Детальніше: [OneDrive налаштування резервного копіювання](/yak-nalashtuvaty-rezervne-kopiyuvannya-onedrive)
 
 ---
 

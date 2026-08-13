@@ -1,10 +1,11 @@
 ---
 title: "Редактор реєстру Windows: що це і як безпечно з ним працювати"
 date: "2025-12-20"
+updated: "2026-08-13"
 publishDate: "2025-12-20"
-description: "Основи роботи з реєстром Windows: структура, пошук і редагування ключів, резервне копіювання і відновлення, типові налаштування через regedit."
+description: "Основи роботи з реєстром Windows: структура, пошук і редагування ключів, резервне копіювання і відновлення, типові налаштування через regedit, reg.exe і PowerShell."
 tags: ["windows", "реєстр", "налаштування", "адміністрування", "інструменти"]
-readTime: 6
+readTime: 7
 ---
 
 Реєстр Windows — центральна база даних налаштувань системи і програм. Зміна реєстру дозволяє тонко налаштувати Windows, але неправильні зміни можуть зламати систему. Ось як працювати безпечно.
@@ -152,6 +153,26 @@ reg import C:\backup.reg
 
 rem Порівняти два ключі
 reg compare "HKCU\SOFTWARE\MyApp" "HKLM\SOFTWARE\MyApp"
+```
+
+---
+
+## Редагування через PowerShell
+
+```powershell
+# Прочитати значення
+Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden"
+
+# Змінити значення
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Value 1 -Type DWord
+
+# Створити новий ключ і значення
+New-Item -Path "HKCU:\Software\MyApp" -Force
+New-ItemProperty -Path "HKCU:\Software\MyApp" -Name "Setting" -Value "enabled" -PropertyType String
+
+# Видалити значення або ключ
+Remove-ItemProperty -Path "HKCU:\Software\MyApp" -Name "Setting"
+Remove-Item -Path "HKCU:\Software\MyApp" -Recurse
 ```
 
 ---

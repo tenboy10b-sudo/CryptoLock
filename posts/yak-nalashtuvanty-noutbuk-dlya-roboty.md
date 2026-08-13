@@ -76,7 +76,7 @@ readTime: 6
 
 `Параметри` → `Оновлення та безпека` → `Резервне копіювання` → підключи зовнішній диск або OneDrive.
 
-Детальніше: [Резервне копіювання Windows](/rezervne-kopiyuvannya-windows)
+Детальніше: [Резервне копіювання Windows](/yak-nalashtuvaty-rezervne-kopiyuvannya-windows)
 
 ---
 
@@ -86,7 +86,7 @@ Windows Defender вбудований і достатній для більшо�
 
 `Параметри` → `Windows Security` → всі пункти мають бути зеленими.
 
-Детальніше: [Налаштування Windows Defender](/windows-defender-nalashtuvannya-povnyy-gaid)
+Детальніше: [Налаштування Windows Defender](/yak-nalashtuvanty-windows-defender-povnyy-gaid)
 
 ---
 

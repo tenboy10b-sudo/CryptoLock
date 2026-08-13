@@ -109,7 +109,7 @@ winfr C: D: /n \Users\ІМ'Я\Pictures\
 
 Налаштуй автоматичне резервне копіювання щоб більше не потрапляти в таку ситуацію:
 
-[Резервне копіювання Windows](/rezervne-kopiyuvannya-windows)
+[Резервне копіювання Windows](/yak-nalashtuvaty-rezervne-kopiyuvannya-windows)
 
 ---
 

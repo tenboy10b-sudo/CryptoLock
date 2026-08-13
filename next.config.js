@@ -240,6 +240,15 @@ const nextConfig = {
       { source: '/yak-nalashtuvatysy-windows-hello', destination: '/windows-hello-nalashtuvannya-ta-vypravlennya', permanent: true },
       { source: '/yak-zbilshyty-obsyah-ram-windows', destination: '/100-vykorystannya-ram-windows-zvilvyty-pamiat', permanent: true },
 
+      // Свіжий UK-скан (сесія 12 прод. 39) — майже ідентичні слаги, справжні дублікати
+      { source: '/yak-nalashtuvanty-rezervne-kopiyuvannya-onedrive', destination: '/yak-nalashtuvaty-rezervne-kopiyuvannya-onedrive', permanent: true },
+      { source: '/windows-defender-nalashtuvannya-povnyy-gaid', destination: '/yak-nalashtuvanty-windows-defender-povnyy-gaid', permanent: true },
+      { source: '/rezervne-kopiyuvannya-windows', destination: '/yak-nalashtuvaty-rezervne-kopiyuvannya-windows', permanent: true },
+      { source: '/yak-nalashtuvaty-dhcp-server-windows', destination: '/nalashtuvannya-dhcp-servera-windows', permanent: true },
+      { source: '/yak-vykorystovuvaty-robocopy-windows', destination: '/robocopy-synkhronizatsiya-papok-windows', permanent: true },
+      { source: '/yak-pratsyuvaty-z-reestrom-windows', destination: '/yak-pratsyuvaty-z-reiestratorom-windows', permanent: true },
+      { source: '/windows-update-pomylky-yak-vypravyty', destination: '/windows-update-yak-onovyty-vymknuty-vypravyty-pomylky', permanent: true },
+
       // "Windows Firewall" (EN, сесія 12 прод. 38) — базова + advanced об'єднані в -rules (мала translatesUk-конфлікт з базовою), GPO лишена окремо (інший намір)
       { source: '/en/how-to-configure-windows-firewall', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },
       { source: '/en/how-to-configure-windows-firewall-advanced', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },

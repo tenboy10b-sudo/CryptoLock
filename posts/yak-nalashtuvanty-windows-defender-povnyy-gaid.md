@@ -1,10 +1,11 @@
 ---
 title: "Windows Defender: повне налаштування захисту від вірусів"
 date: "2025-12-14"
+updated: "2026-08-13"
 publishDate: "2025-12-14"
-description: "Повне налаштування Windows Defender в Windows 10 і 11: захист у реальному часі, виключення, планове сканування, захист від програм-вимагачів і налаштування через PowerShell."
+description: "Повне налаштування Windows Defender в Windows 10 і 11: захист у реальному часі, виключення, планове сканування, захист від програм-вимагачів, командний рядок і PowerShell."
 tags: ["безпека", "windows", "захист", "налаштування", "powershell"]
-readTime: 7
+readTime: 8
 ---
 
 Windows Defender — безкоштовний антивірус що йде з Windows. При правильному налаштуванні він забезпечує надійний захист без витрат на сторонні рішення.
@@ -158,6 +159,33 @@ Get-MpPreference | Select-Object ScanScheduleDay, ScanScheduleTime, ScanSchedule
 
 ---
 
+## Командний рядок (MpCmdRun) — якщо PowerShell недоступний
+
+```cmd
+:: Перевірка стану
+"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -GetFiles
+
+:: Швидке сканування
+"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -Scan -ScanType 1
+
+:: Повне сканування
+"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -Scan -ScanType 2
+
+:: Сканування конкретної папки
+"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -Scan -ScanType 3 -File "C:\Users\User\Downloads"
+
+:: Оновити бази сигнатур
+"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -SignatureUpdate
+```
+
+---
+
+## Планове сканування через Планувальник завдань (GUI-альтернатива)
+
+`Win + R` → `taskschd.msc` → **Бібліотека планувальника завдань** → **Microsoft** → **Windows** → **Windows Defender** → **Windows Defender Scheduled Scan** → правою кнопкою → **Властивості** → вкладка **Тригери** → **Створити**.
+
+---
+
 ## Defender через GPO для домену
 
 `gpedit.msc` → **Конфігурація комп'ютера** → **Адміністративні шаблони** → **Компоненти Windows** → **Microsoft Defender Antivirus**:
@@ -166,6 +194,8 @@ Get-MpPreference | Select-Object ScanScheduleDay, ScanScheduleTime, ScanSchedule
 - **Захист у реальному часі** → Enable all
 - **MAPS** → Advanced MAPS
 - **Quarantine** → Configure removal of items → 30 days
+
+Детальніше про розгортання на весь домен: [Як налаштувати Windows Defender через GPO](/windows-defender-cherez-gpo)
 
 ---
 
@@ -182,6 +212,14 @@ Remove-MpThreat
 Get-MpThreat | Where-Object { $_.ThreatName -like "*FalsePositive*" } |
   Restore-MpThreat
 ```
+
+---
+
+## Чи потрібен додатковий антивірус?
+
+Для більшості домашніх користувачів — **ні**. Defender з правильними налаштуваннями (особливо захист від ransomware) забезпечує достатній захист. Незалежні тести AV-TEST і AV-Comparatives регулярно дають йому оцінку 6/6.
+
+Додатковий антивірус має сенс якщо ти: регулярно відкриваєш файли з невідомих джерел, працюєш з чужими USB-носіями, або обслуговуєш чужі комп'ютери.
 
 ---
 

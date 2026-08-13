@@ -68,7 +68,7 @@ Windows 10 втратила підтримку у жовтні 2025 року. О
 
 Мінімум: скопіюй папки Документи, Фото, Робочий стіл на зовнішній диск або USB-флешку.
 
-Детальніше: [Резервне копіювання Windows](/rezervne-kopiyuvannya-windows)
+Детальніше: [Резервне копіювання Windows](/yak-nalashtuvaty-rezervne-kopiyuvannya-windows)
 
 ---
 

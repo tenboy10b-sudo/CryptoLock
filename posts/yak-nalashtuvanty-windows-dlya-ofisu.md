@@ -122,7 +122,7 @@ Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\USBSTOR" `
 
 Якщо є корпоративний SharePoint або OneDrive — синхронізація автоматична.
 
-Для локального бекапу: [Резервне копіювання Windows](/rezervne-kopiyuvannya-windows)
+Для локального бекапу: [Резервне копіювання Windows](/yak-nalashtuvaty-rezervne-kopiyuvannya-windows)
 
 ---
 

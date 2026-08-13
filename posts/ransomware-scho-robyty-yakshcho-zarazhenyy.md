@@ -107,7 +107,7 @@ vssadmin list shadows
 - **2** різних носії (диск + хмара)
 - **1** копія офлайн (відключений диск)
 
-Детальніше: [Резервне копіювання Windows](/rezervne-kopiyuvannya-windows)
+Детальніше: [Резервне копіювання Windows](/yak-nalashtuvaty-rezervne-kopiyuvannya-windows)
 
 ### Контрольований доступ до папок (Windows Defender)
 

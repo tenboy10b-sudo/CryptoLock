@@ -2,10 +2,10 @@
 title: "Windows Update: як оновити, вимкнути або виправити помилки оновлення"
 date: "2026-08-04"
 publishDate: "2026-08-04"
-updated: "2026-08-04"
-description: "Як оновити Windows 10 і 11, відкласти або повністю вимкнути автоматичні оновлення. Вирішення помилок Windows Update: 0x80070422, 0x8024402C, зависання на 0%."
-tags: ["windows", "оновлення", "windows-update", "налаштування"]
-readTime: 7
+updated: "2026-08-13"
+description: "Як оновити Windows 10 і 11, відкласти або повністю вимкнути автоматичні оновлення. Повний довідник кодів помилок Windows Update і покрокові рішення для кожного."
+tags: ["windows", "оновлення", "windows-update", "налаштування", "діагностика"]
+readTime: 10
 translatesEn: "windows-update-how-to-update-disable-fix-errors"
 ---
 
@@ -94,6 +94,27 @@ Win + I → Мережа та Інтернет → Wi-Fi → [назва мер�
 
 ## Вирішення помилок Windows Update
 
+### Універсальне рішення для більшості помилок
+
+Цей набір команд вирішує ~70% проблем з Update — спробуй першим. Відкрий **CMD від адміністратора**:
+
+```cmd
+net stop wuauserv
+net stop cryptSvc
+net stop bits
+net stop msiserver
+
+ren C:\Windows\SoftwareDistribution SoftwareDistribution.old
+ren C:\Windows\System32\catroot2 catroot2.old
+
+net start wuauserv
+net start cryptSvc
+net start bits
+net start msiserver
+```
+
+Перезавантаж і спробуй знову.
+
 ### Помилка 0x80070422 — служба не запущена
 
 ```powershell
@@ -147,6 +168,64 @@ msdt.exe /id WindowsUpdateDiagnostic
 ```cmd
 DISM /Online /Cleanup-Image /RestoreHealth
 sfc /scannow
+```
+
+### Помилка 0x80070005 — відмовлено в доступі
+
+```cmd
+icacls C:\Windows\SoftwareDistribution /reset /T /C
+icacls C:\Windows\System32\catroot2 /reset /T /C
+```
+
+Також перевір що Windows Defender або сторонній антивірус не блокує оновлення.
+
+### Помилка 0x800705b4 — час очікування минув
+
+```cmd
+sc stop wuauserv
+sc stop bits
+sc stop dosvc
+sc start dosvc
+sc start bits
+sc start wuauserv
+```
+
+### Помилка 0x80240034 — оновлення не знайдено або пошкоджене
+
+```powershell
+Stop-Service wuauserv, bits, cryptsvc, msiserver -Force
+Remove-Item C:\Windows\SoftwareDistribution -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item C:\Windows\System32\catroot2 -Recurse -Force -ErrorAction SilentlyContinue
+Start-Service wuauserv, bits, cryptsvc, msiserver
+```
+
+### Помилка 0xc1900223 — помилка завантаження
+
+Проблема з CDN Microsoft: перезавантаж роутер, тимчасово вимкни VPN якщо є, зміни DNS на `8.8.8.8` ([як змінити DNS](/yak-zminyty-dns-windows)), або спробуй через кілька годин — проблема може бути на боці Microsoft.
+
+### Якщо оновлення завантажується, але не встановлюється
+
+Перевір місце на диску — потрібно мінімум 10–20 ГБ вільного: [як почистити диск C](/yak-pochystyty-dysk-c)
+
+```cmd
+DISM /Online /Cleanup-Image /CheckHealth
+DISM /Online /Cleanup-Image /ScanHealth
+DISM /Online /Cleanup-Image /RestoreHealth
+```
+
+### Встановити оновлення вручну
+
+Якщо конкретне оновлення не встановлюється автоматично: запиши номер (наприклад `KB5034441`) → **catalog.update.microsoft.com** → знайди за номером KB → завантаж і встанови вручну.
+
+### Перевірка журналу помилок Update
+
+```powershell
+Get-WinEvent -FilterHashtable @{
+  LogName = 'System'
+  ProviderName = 'Microsoft-Windows-WindowsUpdateClient'
+  Level = 2
+  StartTime = (Get-Date).AddDays(-7)
+} | Select-Object TimeCreated, Message | Format-List
 ```
 
 ---
@@ -222,3 +301,11 @@ Get-EventLog -LogName Application -EntryType Error -Newest 20 |
 | Помилка 0x80070422 | Запустити служби wuauserv, bits |
 | Оновлення зависло | Очистити SoftwareDistribution |
 | Відкотити оновлення | Журнал оновлень → Видалити |
+
+---
+
+## 🔍 Не знаєш що означає код помилки Windows?
+
+Якщо Windows показує код на кшталт `0x80070005`, `0x80070002` або `0xC000021A` — скористайся безкоштовним інструментом:
+
+**[→ Декодер помилок Windows](/tools/windows-error-decoder)** — введи код і одразу дізнайся що він означає та як виправити.
