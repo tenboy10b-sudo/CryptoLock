@@ -1,14 +1,40 @@
 ---
-title: "How to Create Advanced Windows Firewall Rules in Windows 10 and 11"
+title: "How to Configure Windows Firewall: Rules, Profiles, and Advanced Security"
 date: "2026-05-06"
+updated: "2026-08-13"
 publishDate: "2026-05-06"
-description: "Create advanced Windows Firewall rules to block or allow specific apps, ports and IP ranges. Export configuration, monitor connections and troubleshoot blocked traffic."
+description: "Configure Windows Firewall via GUI and PowerShell: check status, allow/block apps and ports, create inbound/outbound rules, understand profiles, export config, monitor connections and troubleshoot blocked traffic."
 tags: ["windows", "firewall", "network", "security", "powershell"]
-readTime: 5
+readTime: 8
 translatesUk: "windows-firewall-nalashtuvannya-pravyl"
 ---
 
 Windows Defender Firewall with Advanced Security gives you granular control over every network connection. Here's how to use it effectively.
+
+---
+
+## Check Firewall Status
+
+```powershell
+Get-NetFirewallProfile | Select-Object Name, Enabled
+```
+
+All three profiles (Domain, Private, Public) should show `Enabled: True`. If any is disabled:
+
+```powershell
+Set-NetFirewallProfile -All -Enabled True
+```
+
+---
+
+## Understanding Firewall Profiles
+
+Rules apply to one or more profiles:
+- **Domain** — PC joined to a corporate domain
+- **Private** — home/office network (trusted)
+- **Public** — untrusted network (coffee shop, airport)
+
+A rule can apply to all three or be restricted to specific ones — that's what the `-Profile` parameter controls in the examples below.
 
 ---
 
@@ -21,6 +47,19 @@ wf.msc
 # Or via PowerShell
 Show-NetFirewallRule | Out-GridView
 ```
+
+---
+
+## Create a Rule via the GUI Wizard
+
+Prefer clicking over scripting? `wf.msc` → right-click **Inbound Rules** (or **Outbound Rules**) → **New Rule**:
+
+- **Port** — specify TCP/UDP and port number(s), then Allow or Block
+- **Program** — browse to the executable, Allow or Block all its connections
+- **Predefined** — pick from built-in Windows services (RDP, FTP, etc.)
+- **Custom** — combine program + port + IP + protocol in one rule
+
+**GUI shortcut for allowing an app:** `Win + R` → `firewall.cpl` → **Allow an app or feature through Windows Defender Firewall** → **Change settings** → **Allow another app**.
 
 ---
 
@@ -159,6 +198,18 @@ Get-NetTCPConnection -State Established | ForEach-Object {
   }
 } | Sort-Object Process | Format-Table -AutoSize
 ```
+
+---
+
+## Common Scenarios
+
+| Need | Direction | What to specify |
+|------|-----------|-----------------|
+| Run a local web server | Inbound | TCP port 80/443 |
+| Allow RDP | Inbound | TCP port 3389 |
+| Block app from internet | Outbound | Program path |
+| Block a suspicious IP | Inbound | Remote IP address |
+| Allow VPN traffic | Inbound/Outbound | Protocol + port |
 
 ---
 

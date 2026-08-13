@@ -240,6 +240,20 @@ const nextConfig = {
       { source: '/yak-nalashtuvatysy-windows-hello', destination: '/windows-hello-nalashtuvannya-ta-vypravlennya', permanent: true },
       { source: '/yak-zbilshyty-obsyah-ram-windows', destination: '/100-vykorystannya-ram-windows-zvilvyty-pamiat', permanent: true },
 
+      // "Windows Firewall" (EN, сесія 12 прод. 38) — базова + advanced об'єднані в -rules (мала translatesUk-конфлікт з базовою), GPO лишена окремо (інший намір)
+      { source: '/en/how-to-configure-windows-firewall', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },
+      { source: '/en/how-to-configure-windows-firewall-advanced', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },
+
+      // "Event Viewer" (EN) — однакова назва статті двічі, об'єднано в how-to-use-windows-event-viewer
+      // (краще названий слаг), how-to-monitor-windows-security-events лишена окремо (вужчий намір: security-моніторинг)
+      { source: '/en/how-to-configure-windows-event-log', destination: '/en/how-to-use-windows-event-viewer', permanent: true, locale: false },
+
+      // "IIS" (EN) — 2 статті об'єднано в how-to-configure-windows-iis (має translatesUk)
+      { source: '/en/how-to-configure-iis-windows', destination: '/en/how-to-configure-windows-iis', permanent: true, locale: false },
+
+      // "Manage user accounts" (EN) — 2 статті об'єднано в how-to-manage-local-users-windows (має translatesUk)
+      { source: '/en/how-to-manage-windows-users-accounts', destination: '/en/how-to-manage-local-users-windows', permanent: true, locale: false },
+
       // "BSOD" (EN, сесія 12 прод. 34) — "after update" пара і загальний BSOD об'єднано в how-to-fix-bsod-windows
       { source: '/en/how-to-fix-windows-11-bsod-after-update-2026', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },
       { source: '/en/how-to-fix-windows-11-blue-screen-after-update', destination: '/en/how-to-fix-bsod-windows', permanent: true, locale: false },

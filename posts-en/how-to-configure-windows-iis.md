@@ -1,10 +1,11 @@
 ---
 title: "How to Install and Configure IIS Web Server on Windows"
 date: "2026-06-15"
+updated: "2026-08-13"
 publishDate: "2026-06-15"
-description: "Install and configure IIS (Internet Information Services) on Windows 10 and Server. Set up websites, SSL certificates, virtual directories and manage via PowerShell."
+description: "Install and configure IIS (Internet Information Services) on Windows 10 and Server. Set up websites, SSL certificates, PHP, virtual directories and manage via PowerShell or GUI."
 tags: ["windows", "iis", "web-server", "ssl", "administration", "powershell"]
-readTime: 6
+readTime: 8
 translatesUk: "nalashtuvannya-iis-web-server-windows"
 ---
 
@@ -13,6 +14,10 @@ IIS is Windows' built-in web server — included in Windows 10/11 Pro and all Se
 ---
 
 ## Install IIS
+
+**Via Windows Features (GUI):** `Win + R` → `optionalfeatures` → expand **Internet Information Services** → check **Web Management Tools** and the **World Wide Web Services** features you need → OK. No restart needed.
+
+**Via PowerShell:**
 
 ```powershell
 # Windows 10/11 — basic IIS
@@ -129,6 +134,31 @@ Set-WebConfigurationProperty -Filter "system.webServer/security/authentication/w
 # Disable Anonymous Authentication
 Set-WebConfigurationProperty -Filter "system.webServer/security/authentication/anonymousAuthentication" `
   -PSPath "IIS:\Sites\MyWebsite" -Name "enabled" -Value $false
+```
+
+---
+
+## Enable PHP (Optional)
+
+Download PHP from [windows.php.net](https://windows.php.net) → Non-Thread Safe x64 .zip
+
+```powershell
+Expand-Archive "php-8.2.zip" -DestinationPath "C:\PHP"
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\PHP", "Machine")
+
+# Then in IIS Manager: Handler Mappings → Add Module Mapping
+# Request path: *.php, Module: FastCgiModule, Executable: C:\PHP\php-cgi.exe
+```
+
+---
+
+## Open Ports for Remote Access
+
+To allow access from other PCs on your network:
+
+```powershell
+New-NetFirewallRule -DisplayName "IIS HTTP" -Direction Inbound -Protocol TCP -LocalPort 80 -Action Allow
+New-NetFirewallRule -DisplayName "IIS HTTPS" -Direction Inbound -Protocol TCP -LocalPort 443 -Action Allow
 ```
 
 ---

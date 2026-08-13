@@ -1,10 +1,12 @@
 ---
 title: "How to Use Windows Event Viewer to Diagnose Problems"
 date: "2026-05-25"
+updated: "2026-08-13"
 publishDate: "2026-05-25"
-description: "Event Viewer records everything that happens on your Windows PC. Learn how to find errors, diagnose crashes, track login attempts, and filter events to solve real problems."
+description: "Event Viewer records everything that happens on your Windows PC. Learn how to find errors, diagnose crashes, track login attempts, search and clear logs, and filter events to solve real problems."
 tags: ["windows", "diagnostics", "tools", "troubleshooting"]
-readTime: 6
+translatesUk: "yak-korystuvatys-zhurnalom-podiy-windows"
+readTime: 8
 ---
 
 Event Viewer logs every significant action on your PC — crashes, failed logins, driver errors, service failures. Most people ignore it. Those who know how to use it can diagnose problems in minutes.
@@ -133,6 +135,39 @@ Event ID 19 = update downloaded, 20 = installed, 43 = installation started.
 
 ---
 
+## Search for Specific Events
+
+```powershell
+# Find all events related to a specific driver
+Get-WinEvent -FilterHashtable @{LogName='System'} |
+  Where-Object {$_.Message -like "*nvlddmkm*"}  # NVIDIA driver
+
+# Find events from a specific provider
+Get-WinEvent -ProviderName "Microsoft-Windows-WindowsUpdateClient" -MaxEvents 10
+
+# Search by keyword across all logs
+Get-WinEvent -ListLog * | Where-Object {$_.RecordCount -gt 0} |
+  ForEach-Object {
+    Get-WinEvent -LogName $_.LogName -MaxEvents 100 -EA 0 |
+    Where-Object {$_.Message -like "*YourKeyword*"}
+  }
+```
+
+---
+
+## Clear Old Logs
+
+```powershell
+# Clear a specific log (requires Admin)
+Clear-EventLog -LogName "Application"
+wevtutil cl System
+
+# Set max log size to prevent disk fill
+wevtutil sl System /ms:52428800  # 50 MB max
+```
+
+---
+
 ## Create a Custom View
 
 For recurring investigations, save filter settings as a custom view:
@@ -183,3 +218,17 @@ Or in GUI: right-click any log → **Save All Events As** → `.evtx` format can
 ## Summary
 
 For crash diagnosis: **System** log → filter **Critical + Error** → check times around the incident. For security: **Security** log → Event IDs 4624/4625. For boot issues: **Diagnostics-Performance** → Event ID 100. Learn to filter — raw event logs are too noisy to read unfiltered.
+
+## Frequently Asked Questions
+
+### Event Viewer shows thousands of errors — is that normal?
+
+Yes. Warnings and informational events are very common. Focus on Level 1 (Critical) and Level 2 (Error) events, and correlate their timestamps with when you noticed the problem.
+
+### How far back does Event Viewer keep logs?
+
+By default System and Application logs keep up to 20 MB of events — typically 1-4 weeks depending on activity. Increase with `wevtutil sl System /ms:104857600` (100 MB).
+
+### Can I monitor events in real time?
+
+Yes — in Event Viewer: right panel → **Attach Task To This Event** to get notified when specific events occur. Or use PowerShell: `Register-WmiEvent` for scripted real-time monitoring.

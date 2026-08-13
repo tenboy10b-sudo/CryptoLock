@@ -1,10 +1,11 @@
 ---
 title: "How to Manage Local User Accounts in Windows 10 and 11"
 date: "2026-05-10"
+updated: "2026-08-13"
 publishDate: "2026-05-10"
-description: "Create, modify and delete local user accounts in Windows 10 and 11. Set passwords, manage groups, configure account types and control access via PowerShell."
+description: "Create, modify and delete local and Microsoft user accounts in Windows 10 and 11. Set passwords, manage groups, switch account types, view login history and control access via PowerShell."
 tags: ["windows", "accounts", "security", "administration", "powershell"]
-readTime: 5
+readTime: 7
 translatesUk: "keruvannya-lokalnymy-korystuvachamy-windows"
 ---
 
@@ -79,6 +80,36 @@ Remove-LocalUser -Name "Username"
 $profile = Get-WmiObject Win32_UserProfile | Where-Object {$_.LocalPath -like "*Username*"}
 $profile.Delete()
 ```
+
+---
+
+## Create a Microsoft Account User
+
+`Win + I` → **Accounts** → **Family & other users** → **Add other user** → enter their Microsoft account email → **Finish**. The user signs in with their Microsoft account credentials.
+
+---
+
+## Switch Between Local and Microsoft Account
+
+**Convert Microsoft account to local:** `Win + I` → **Accounts** → **Your info** → **Sign in with a local account instead** → follow the prompts.
+
+**Convert local to Microsoft account:** `Win + I` → **Accounts** → **Your info** → **Sign in with a Microsoft account instead**
+
+---
+
+## View Login History
+
+```powershell
+# Successful logins
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4624} -MaxEvents 20 |
+  Select-Object TimeCreated, @{n='User';e={$_.Properties[5].Value}}, @{n='LogonType';e={$_.Properties[8].Value}}
+
+# Failed login attempts
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625} -MaxEvents 20 |
+  Select-Object TimeCreated, @{n='User';e={$_.Properties[5].Value}}
+```
+
+Logon type 2 = interactive (local), type 3 = network, type 10 = remote.
 
 ---
 
