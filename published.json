@@ -73,14 +73,15 @@
     "how-to-use-windows-snap-layouts",
     "how-to-use-task-scheduler-windows",
     "how-to-install-windows-11-without-tpm",
-    "windows-11-nalashtuvannya-pislya-vstanovlennya"
+    "windows-11-nalashtuvannya-pislya-vstanovlennya",
+    "gpo-nalashtuvannya-polityky-paroliv"
   ],
-  "count": 74,
+  "count": 75,
   "promo_index": 52,
   "last_post": {
-    "slug": "windows-11-nalashtuvannya-pislya-vstanovlennya",
-    "title": "Windows 11 після встановлення: 15 налаштувань які варто зробити одразу",
-    "time": "2026-08-12T08:01:23.296Z"
+    "slug": "gpo-nalashtuvannya-polityky-paroliv",
+    "title": "Політика паролів в Windows і домені: налаштування через GPO і secpol",
+    "time": "2026-08-13T08:01:18.832Z"
   },
   "engage_index": 45,
   "extra_index": 50
