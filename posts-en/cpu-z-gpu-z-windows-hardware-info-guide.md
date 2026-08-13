@@ -1,8 +1,8 @@
 ---
 title: "CPU-Z and GPU-Z on Windows: Detailed Hardware Information Guide"
-date: "2026-06-18"
+date: "2026-09-04"
 publishDate: "2026-09-04"
-updated: "2026-06-18"
+updated: "2026-09-04"
 description: "How to use CPU-Z and GPU-Z to view detailed CPU, GPU and RAM information on Windows. Check RAM timings, verify GPU specs, enable XMP profile and understand readings."
 tags: ["windows", "cpu-z", "gpu-z", "hardware", "diagnostics", "tools"]
 readTime: 6

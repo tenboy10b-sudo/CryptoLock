@@ -1,8 +1,8 @@
 ---
 title: "VirtualBox on Windows: Installation, Setup and Creating a Virtual Machine"
-date: "2026-06-10"
+date: "2026-09-27"
 publishDate: "2026-09-27"
-updated: "2026-06-10"
+updated: "2026-09-27"
 description: "How to install VirtualBox on Windows 10 and 11, create a virtual machine with Windows or Linux, configure networking and shared folders. Fix common VirtualBox errors."
 tags: ["windows", "virtualbox", "virtualization", "linux", "tools"]
 readTime: 8

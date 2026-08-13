@@ -1,8 +1,8 @@
 ---
 title: "PuTTY on Windows: SSH Connection to Servers and Terminal Setup"
-date: "2026-06-15"
+date: "2026-09-18"
 publishDate: "2026-09-18"
-updated: "2026-06-15"
+updated: "2026-09-18"
 description: "How to install PuTTY and connect to a Linux server via SSH from Windows. Configure SSH keys, save sessions, port tunneling and PuTTY alternatives in 2026."
 tags: ["windows", "putty", "ssh", "terminal", "administration", "tools"]
 readTime: 7

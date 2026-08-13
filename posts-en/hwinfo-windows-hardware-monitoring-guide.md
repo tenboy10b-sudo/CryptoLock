@@ -1,8 +1,8 @@
 ---
 title: "HWiNFO on Windows: Monitor CPU and GPU Temperatures, Voltage and Load"
-date: "2026-06-15"
+date: "2026-09-11"
 publishDate: "2026-09-11"
-updated: "2026-06-15"
+updated: "2026-09-11"
 description: "How to install HWiNFO and monitor CPU and GPU temperatures, voltage, clock speeds and load on Windows. Configure sensors, log data and integrate with RTSS overlay."
 tags: ["windows", "hwinfo", "monitoring", "temperature", "hardware", "tools"]
 readTime: 6

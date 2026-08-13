@@ -1,8 +1,8 @@
 ---
 title: "Windows Sandbox: Isolated Environment for Safe Program Testing"
-date: "2026-06-18"
+date: "2026-08-11"
 publishDate: "2026-08-11"
-updated: "2026-06-18"
+updated: "2026-08-11"
 description: "How to enable and use Windows Sandbox on Windows 10 and 11 Pro. Run suspicious programs safely in isolation, configure .wsb files and understand sandbox limitations."
 tags: ["windows", "sandbox", "security", "virtualization", "tools"]
 readTime: 6

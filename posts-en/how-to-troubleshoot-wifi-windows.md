@@ -1,6 +1,6 @@
 ---
 title: "How to Fix Wi-Fi Not Working in Windows 10 and 11"
-date: "2027-02-09"
+date: "2026-08-09"
 publishDate: "2026-08-09"
 description: "Fix Wi-Fi not working in Windows 10 and 11. Diagnose connection issues, reset wireless adapter, update drivers, fix DNS and solve authentication errors."
 tags: ["windows", "wifi", "network", "troubleshooting", "drivers"]

@@ -1,8 +1,8 @@
 ---
 title: "How to Record Screen on Windows 10 and 11: Built-in Tools and Free Software"
-date: "2026-06-08"
+date: "2026-10-06"
 publishDate: "2026-10-06"
-updated: "2026-06-08"
+updated: "2026-10-06"
 description: "How to record your screen on Windows 10 and 11 without extra software: Xbox Game Bar, Snipping Tool, PowerPoint. Free screen recorders: OBS Studio, ShareX. Record with audio."
 tags: ["windows", "screen-recording", "tools", "settings"]
 readTime: 7

@@ -1,8 +1,8 @@
 ---
 title: "Windows 10 LTSC і Windows 11 LTSC: що це, чим відрізняється і кому підходить"
-date: "2026-06-10"
+date: "2026-10-03"
 publishDate: "2026-10-03"
-updated: "2026-06-10"
+updated: "2026-10-03"
 description: "Що таке Windows LTSC (Long-Term Servicing Channel), чим відрізняється від звичайної Windows. Переваги і недоліки, хто може використовувати, де завантажити офіційно."
 tags: ["windows", "windows-ltsc", "ліцензія", "встановлення", "налаштування"]
 readTime: 6

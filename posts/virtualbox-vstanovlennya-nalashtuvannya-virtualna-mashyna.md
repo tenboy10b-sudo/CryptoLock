@@ -1,8 +1,8 @@
 ---
 title: "VirtualBox на Windows: встановлення, налаштування і створення віртуальної машини"
-date: "2026-06-10"
+date: "2026-09-27"
 publishDate: "2026-09-27"
-updated: "2026-06-10"
+updated: "2026-09-27"
 description: "Як встановити VirtualBox на Windows 10 і 11, створити віртуальну машину з Windows або Linux, налаштувати мережу і спільні папки. Вирішення помилок VirtualBox."
 tags: ["windows", "virtualbox", "віртуалізація", "linux", "інструменти"]
 readTime: 8

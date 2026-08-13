@@ -1,8 +1,8 @@
 ---
 title: "Ventoy: How to Create a Multiboot USB Drive with Multiple ISO Files"
-date: "2026-06-10"
+date: "2026-09-26"
 publishDate: "2026-09-26"
-updated: "2026-06-10"
+updated: "2026-09-26"
 description: "How to install Ventoy on a USB drive and boot multiple ISO images — Windows, Linux, recovery tools — from one flash drive. No need to reformat, just copy ISO files."
 tags: ["windows", "usb", "installation", "ventoy", "bios"]
 readTime: 6

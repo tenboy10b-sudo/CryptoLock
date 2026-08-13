@@ -1,8 +1,8 @@
 ---
 title: "DS4Windows: How to Use PS4 and PS5 Controller on Windows 10 and 11"
-date: "2026-06-10"
+date: "2026-09-07"
 publishDate: "2026-09-07"
-updated: "2026-06-10"
+updated: "2026-09-07"
 description: "How to set up DS4Windows for DualShock 4 and DualSense on Windows. Connect via USB and Bluetooth, configure buttons, fix detection issues, Steam conflict resolution."
 tags: ["windows", "gamepad", "gaming", "ds4windows", "bluetooth"]
 readTime: 6

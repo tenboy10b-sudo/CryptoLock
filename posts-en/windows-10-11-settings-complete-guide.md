@@ -1,8 +1,8 @@
 ---
 title: "Windows 10 and 11 Settings: Complete Guide to System Configuration"
-date: "2026-06-08"
+date: "2026-08-06"
 publishDate: "2026-08-06"
-updated: "2026-06-08"
+updated: "2026-08-06"
 description: "Most important Windows 10 and 11 settings: performance, security, network, privacy, startup programs. Hidden settings and registry tweaks for power users."
 tags: ["windows", "settings", "optimization", "performance"]
 readTime: 9

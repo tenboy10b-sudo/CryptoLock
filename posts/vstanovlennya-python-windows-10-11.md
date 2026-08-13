@@ -1,8 +1,8 @@
 ---
 title: "Python на Windows 10 і 11: встановлення, налаштування і перші кроки"
-date: "2026-06-10"
+date: "2026-09-30"
 publishDate: "2026-09-30"
-updated: "2026-06-10"
+updated: "2026-09-30"
 description: "Як встановити Python на Windows 10 і 11, налаштувати PATH, встановити pip пакети і virtual environment. VS Code для Python. Вирішення помилок 'python is not recognized'."
 tags: ["windows", "python", "розробка", "інструменти", "програмування"]
 readTime: 8

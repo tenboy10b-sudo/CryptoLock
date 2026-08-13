@@ -1,8 +1,8 @@
 ---
 title: "Chocolatey: Windows Package Manager — Install Any Program with One Command"
-date: "2026-06-14"
+date: "2026-09-03"
 publishDate: "2026-09-03"
-updated: "2026-06-14"
+updated: "2026-09-03"
 description: "How to install Chocolatey on Windows 10 and 11 and manage software from the command line. Install, update and remove programs, automate new PC setup with a single script."
 tags: ["windows", "chocolatey", "automation", "tools", "powershell"]
 readTime: 7

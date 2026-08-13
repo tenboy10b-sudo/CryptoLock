@@ -1,8 +1,8 @@
 ---
 title: "Printer Not Printing in Windows 10 and 11: Step-by-Step Fix"
-date: "2026-06-18"
+date: "2026-08-18"
 publishDate: "2026-08-18"
-updated: "2026-06-18"
+updated: "2026-08-18"
 description: "What to do when your printer won't print in Windows 10 and 11. Clear print queue, restart Print Spooler service, update drivers and fix offline printer errors."
 tags: ["windows", "printer", "printing", "fix", "drivers"]
 readTime: 7

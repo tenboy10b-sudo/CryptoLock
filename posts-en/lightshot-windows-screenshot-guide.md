@@ -1,8 +1,8 @@
 ---
 title: "Lightshot on Windows: How to Take and Edit Screenshots in One Click"
-date: "2026-06-10"
+date: "2026-09-13"
 publishDate: "2026-09-13"
-updated: "2026-06-10"
+updated: "2026-09-13"
 description: "How to install and use Lightshot for screenshots on Windows 10 and 11. Select screen areas, annotate, upload to server, keyboard shortcuts and alternatives."
 tags: ["windows", "lightshot", "screenshot", "tools"]
 readTime: 5

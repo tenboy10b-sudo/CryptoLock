@@ -1,8 +1,8 @@
 ---
 title: "Windows Update: How to Update, Disable, or Fix Update Errors"
-date: "2026-06-08"
+date: "2026-08-04"
 publishDate: "2026-08-04"
-updated: "2026-06-08"
+updated: "2026-08-04"
 description: "How to update Windows 10 and 11, pause or disable automatic updates. Fix Windows Update errors: 0x80070422, 0x8024402C, stuck at 0%. Roll back problematic updates."
 tags: ["windows", "updates", "windows-update", "settings"]
 readTime: 7

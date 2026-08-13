@@ -1,8 +1,8 @@
 ---
 title: "DDU (Display Driver Uninstaller): Completely Remove GPU Drivers on Windows"
-date: "2026-06-18"
+date: "2026-09-06"
 publishDate: "2026-09-06"
-updated: "2026-06-18"
+updated: "2026-09-06"
 description: "How to use DDU to completely remove NVIDIA, AMD or Intel GPU drivers on Windows. Step-by-step guide through Safe Mode, when you need DDU and how to install clean drivers after."
 tags: ["windows", "ddu", "drivers", "nvidia", "amd", "tools"]
 readTime: 6

@@ -1,8 +1,8 @@
 ---
 title: "Everything Search on Windows: Find Any File Instantly"
-date: "2026-06-18"
+date: "2026-09-08"
 publishDate: "2026-09-08"
-updated: "2026-06-18"
+updated: "2026-09-08"
 description: "How to install Everything by voidtools for instant file search on Windows 10 and 11. Search by name, size, date, regex, HTTP server and integration with other tools."
 tags: ["windows", "everything", "search", "files", "tools"]
 readTime: 6

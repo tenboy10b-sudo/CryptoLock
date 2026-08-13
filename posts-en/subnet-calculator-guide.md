@@ -1,8 +1,8 @@
 ---
 title: "Subnet Calculator: How to Calculate Subnet Mask, CIDR and IP Range"
-date: "2026-06-18"
+date: "2026-09-22"
 publishDate: "2026-09-22"
-updated: "2026-06-18"
+updated: "2026-09-22"
 description: "How to calculate subnets, subnet masks and IP ranges. CIDR notation explained, subnet mask to CIDR conversion table, PowerShell subnet calculator and our free online tool."
 tags: ["windows", "network", "ip", "subnet", "administration"]
 readTime: 7

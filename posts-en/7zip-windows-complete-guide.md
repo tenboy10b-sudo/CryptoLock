@@ -1,8 +1,8 @@
 ---
 title: "7-Zip on Windows: Installation, Usage and All Features of the Best Free Archiver"
-date: "2026-06-10"
+date: "2026-08-30"
 publishDate: "2026-08-30"
-updated: "2026-06-10"
+updated: "2026-08-30"
 description: "How to install 7-Zip on Windows and use it: extract archives, create compressed files, encrypt with password, command line usage. Compare with WinRAR and WinZip."
 tags: ["windows", "7zip", "archiver", "tools", "files"]
 readTime: 6

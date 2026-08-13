@@ -1,8 +1,8 @@
 ---
 title: "Windhawk: Safe Windows 11 and 10 Customization Without System File Patching"
-date: "2026-06-13"
+date: "2026-10-01"
 publishDate: "2026-10-01"
-updated: "2026-06-13"
+updated: "2026-10-01"
 description: "How to install and use Windhawk to customize Windows 11 and 10. Mod catalog, restore compact taskbar, taskbar labels, Start menu customization and more."
 tags: ["windows", "windhawk", "customization", "personalization", "tools"]
 readTime: 7

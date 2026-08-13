@@ -1,6 +1,6 @@
 ---
 title: "How to Fix No Internet After Windows Update in Windows 10 and 11"
-date: "2027-02-02"
+date: "2026-08-24"
 publishDate: "2026-08-24"
 description: "Fix internet connection lost after Windows 10 or 11 update. Reset TCP/IP stack, reinstall network adapter, restore driver, fix WINSOCK and DNS issues."
 tags: ["windows", "network", "windows-update", "troubleshooting", "errors"]

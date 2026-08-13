@@ -1,8 +1,8 @@
 ---
 title: "Rufus: How to Create a Bootable USB Drive for Windows 10 and 11"
-date: "2026-06-08"
+date: "2026-09-20"
 publishDate: "2026-09-20"
-updated: "2026-06-08"
+updated: "2026-09-20"
 description: "Step-by-step guide to creating a bootable Windows USB drive with Rufus. GPT vs MBR partition scheme, UEFI vs Legacy BIOS settings, and fixing common errors."
 tags: ["windows", "installation", "usb", "rufus", "bios"]
 readTime: 7

@@ -1,8 +1,8 @@
 ---
 title: "KeePass and Bitwarden on Windows: Password Manager Setup and Comparison"
-date: "2026-06-18"
+date: "2026-08-17"
 publishDate: "2026-08-17"
-updated: "2026-06-18"
+updated: "2026-08-17"
 description: "How to install KeePass or Bitwarden on Windows and start managing passwords securely. Compare local vs cloud password managers, password generator and browser autofill setup."
 tags: ["windows", "keepass", "bitwarden", "passwords", "security", "tools"]
 readTime: 7

@@ -1,8 +1,8 @@
 ---
 title: "How to Install Drivers on Windows 10 and 11: Complete Guide for All Devices"
-date: "2026-06-08"
+date: "2026-08-22"
 publishDate: "2026-08-22"
-updated: "2026-06-08"
+updated: "2026-08-22"
 description: "How to install drivers on Windows 10 and 11 after a clean install. Automatic update, manual installation, finding drivers by device ID, fixing driver conflicts and BSOD."
 tags: ["windows", "drivers", "installation", "hardware", "settings"]
 readTime: 7

@@ -1,8 +1,8 @@
 ---
 title: "Process Explorer і System Informer: розширений менеджер процесів для Windows"
-date: "2026-06-18"
+date: "2026-08-16"
 publishDate: "2026-08-16"
-updated: "2026-06-18"
+updated: "2026-08-16"
 description: "Як використовувати Process Explorer від Sysinternals і System Informer для аналізу процесів Windows. Знайти який процес використовує файл, перевірити підозрілі процеси і замінити стандартний диспетчер."
 tags: ["windows", "process-explorer", "sysinternals", "діагностика", "безпека", "інструменти"]
 readTime: 7

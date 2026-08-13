@@ -1,8 +1,8 @@
 ---
 title: "How to Restore Windows 10 and 11 Without Reinstalling: All Methods"
-date: "2026-06-08"
+date: "2026-08-01"
 publishDate: "2026-08-01"
-updated: "2026-06-08"
+updated: "2026-08-01"
 description: "How to restore Windows 10 and 11 without reinstalling: System Restore, Reset This PC, SFC and DISM commands, bootloader recovery. Step-by-step for every scenario."
 tags: ["windows", "recovery", "settings", "troubleshooting"]
 readTime: 8

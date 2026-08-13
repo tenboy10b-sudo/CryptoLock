@@ -1,8 +1,8 @@
 ---
 title: "WSL 2 на Windows 10 і 11: встановлення Linux і налаштування середовища розробника"
-date: "2026-06-18"
+date: "2026-08-12"
 publishDate: "2026-08-12"
-updated: "2026-06-18"
+updated: "2026-08-12"
 description: "Як встановити WSL 2 і Linux на Windows 10 і 11. Налаштування Ubuntu, доступ до файлів Windows з Linux, інтеграція з VS Code і Docker, оптимізація продуктивності."
 tags: ["windows", "wsl", "linux", "розробка", "ubuntu", "інструменти"]
 readTime: 9

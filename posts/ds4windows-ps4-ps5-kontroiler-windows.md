@@ -1,8 +1,8 @@
 ---
 title: "DS4Windows: як підключити геймпад PS4 і PS5 до Windows 10 і 11"
-date: "2026-06-10"
+date: "2026-09-07"
 publishDate: "2026-09-07"
-updated: "2026-06-10"
+updated: "2026-09-07"
 description: "Як налаштувати DS4Windows для геймпада DualShock 4 і DualSense на Windows. Підключення через USB і Bluetooth, налаштування кнопок, вирішення проблем з розпізнаванням."
 tags: ["windows", "геймпад", "ігри", "ds4windows", "bluetooth"]
 readTime: 6

@@ -1,6 +1,6 @@
 ---
 title: "How to Fix No Sound in Windows 10 and 11: Audio Troubleshooting Guide"
-date: "2027-02-04"
+date: "2026-08-08"
 publishDate: "2026-08-08"
 description: "Fix no sound in Windows 10 and 11. Troubleshoot audio issues: no output device, sound stopped working after update, driver problems, service not running."
 tags: ["windows", "audio", "sound", "troubleshooting", "drivers"]

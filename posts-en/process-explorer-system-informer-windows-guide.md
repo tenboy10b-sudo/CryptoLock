@@ -1,8 +1,8 @@
 ---
 title: "Process Explorer and System Informer: Advanced Task Manager for Windows"
-date: "2026-06-18"
+date: "2026-08-16"
 publishDate: "2026-08-16"
-updated: "2026-06-18"
+updated: "2026-08-16"
 description: "How to use Process Explorer from Sysinternals and System Informer to analyze Windows processes. Find which process locks a file, check suspicious processes and replace Task Manager."
 tags: ["windows", "process-explorer", "sysinternals", "diagnostics", "security", "tools"]
 readTime: 7

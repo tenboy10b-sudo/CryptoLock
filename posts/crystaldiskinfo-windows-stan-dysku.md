@@ -1,8 +1,8 @@
 ---
 title: "CrystalDiskInfo: перевірка стану HDD і SSD на Windows"
-date: "2026-06-15"
+date: "2026-09-05"
 publishDate: "2026-09-05"
-updated: "2026-06-15"
+updated: "2026-09-05"
 description: "Як використовувати CrystalDiskInfo для перевірки стану жорсткого диску і SSD через SMART. Розуміння показників здоров'я, температури і попередження про відмову диску."
 tags: ["windows", "crystaldiskinfo", "диск", "діагностика", "інструменти", "ssd"]
 readTime: 6

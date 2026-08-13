@@ -1,8 +1,8 @@
 ---
 title: "GIMP on Windows: Installation, Basics and How It Compares to Photoshop"
-date: "2026-06-10"
+date: "2026-09-09"
 publishDate: "2026-09-09"
-updated: "2026-06-10"
+updated: "2026-09-09"
 description: "How to install GIMP on Windows 10 and 11 and start editing photos. Key tools, layers, color correction. How GIMP differs from Photoshop and where to get plugins."
 tags: ["windows", "gimp", "photo", "graphics", "tools"]
 readTime: 7

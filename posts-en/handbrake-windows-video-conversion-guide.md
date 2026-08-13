@@ -1,8 +1,8 @@
 ---
 title: "HandBrake on Windows: Convert Video to MP4, MKV and Compress Without Quality Loss"
-date: "2026-06-15"
+date: "2026-09-10"
 publishDate: "2026-09-10"
-updated: "2026-06-15"
+updated: "2026-09-10"
 description: "How to install HandBrake and convert video on Windows. Best settings for MP4 and MKV, compress large files, batch conversion, subtitles and audio tracks."
 tags: ["windows", "handbrake", "video", "conversion", "tools"]
 readTime: 7
