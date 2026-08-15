@@ -74,14 +74,15 @@
     "how-to-use-task-scheduler-windows",
     "how-to-install-windows-11-without-tpm",
     "windows-11-nalashtuvannya-pislya-vstanovlennya",
-    "gpo-nalashtuvannya-polityky-paroliv"
+    "gpo-nalashtuvannya-polityky-paroliv",
+    "how-to-fix-high-cpu-usage-windows"
   ],
-  "count": 75,
+  "count": 76,
   "promo_index": 53,
   "last_post": {
-    "slug": "gpo-nalashtuvannya-polityky-paroliv",
-    "title": "Політика паролів в Windows і домені: налаштування через GPO і secpol",
-    "time": "2026-08-13T08:01:18.832Z"
+    "slug": "how-to-fix-high-cpu-usage-windows",
+    "title": "How to Fix High CPU Usage in Windows 10 and 11",
+    "time": "2026-08-15T08:01:27.860Z"
   },
   "engage_index": 46,
   "extra_index": 52
