@@ -248,6 +248,10 @@ const nextConfig = {
       { source: '/yak-vykorystovuvaty-robocopy-windows', destination: '/robocopy-synkhronizatsiya-papok-windows', permanent: true },
       { source: '/yak-pratsyuvaty-z-reestrom-windows', destination: '/yak-pratsyuvaty-z-reiestratorom-windows', permanent: true },
       { source: '/windows-update-pomylky-yak-vypravyty', destination: '/windows-update-yak-onovyty-vymknuty-vypravyty-pomylky', permanent: true },
+      { source: '/windows-storage-spaces-nalashtuvannya', destination: '/nalashtuvannya-storage-spaces-windows', permanent: true },
+      { source: '/yak-nalashtuvaty-dvofaktornu-avtentyfikatsiyu-windows-authenticator-i-aparatni-klyuchi', destination: '/yak-nalashtuvaty-dvofaktornu-autentyfikatsiyu-windows', permanent: true },
+      { source: '/cmd-komandy-merezha-diahnostyka', destination: '/cmd-komandy-dlya-merezhi', permanent: true },
+      { source: '/yak-nalashtuvaty-monitorynh-merezhi-windows', destination: '/monitorynh-merezhi-windows-netstat-wireshark', permanent: true },
 
       // "Windows Firewall" (EN, сесія 12 прод. 38) — базова + advanced об'єднані в -rules (мала translatesUk-конфлікт з базовою), GPO лишена окремо (інший намір)
       { source: '/en/how-to-configure-windows-firewall', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },

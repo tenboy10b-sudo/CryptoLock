@@ -106,7 +106,7 @@ New-VirtualDisk -StoragePoolFriendlyName "DataPool" `
   -ResiliencySettingName Mirror
 ```
 
-Детальніше: [Windows Storage Spaces](/windows-storage-spaces-nalashtuvannya)
+Детальніше: [Windows Storage Spaces](/nalashtuvannya-storage-spaces-windows)
 
 ---
 

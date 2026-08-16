@@ -1,10 +1,11 @@
 ---
 title: "CMD команди для мережі Windows: діагностика і налаштування"
 date: "2026-05-17"
+updated: "2026-08-13"
 publishDate: "2026-05-17"
-description: "Найкорисніші команди CMD і PowerShell для мережевої діагностики Windows: ping, tracert, ipconfig, netstat, nslookup, netsh — з прикладами."
+description: "Найкорисніші команди CMD і PowerShell для мережевої діагностики Windows: ping, tracert, pathping, ipconfig, netstat, nslookup, netsh — з прикладами."
 tags: ["cmd", "мережа", "інструменти", "адміністрування", "dns"]
-readTime: 7
+readTime: 8
 ---
 
 Коли інтернет не працює або є проблеми з мережею — командний рядок дає точні відповіді швидше ніж будь-який GUI. Ось повний набір команд для діагностики.
@@ -97,9 +98,30 @@ nslookup google.com 1.1.1.1
 nslookup
 > set type=MX
 > gmail.com
+
+:: Перевірити MX запис (пошта) напряму
+nslookup -type=MX gmail.com
+
+:: Перевірити TXT запис (SPF, DKIM)
+nslookup -type=TXT google.com
 ```
 
 Детальніше про зміну DNS: [Як налаштувати DNS в Windows](/yak-zminyty-dns-windows)
+
+---
+
+## pathping — комбінація ping і tracert
+
+Краще за tracert для виявлення втрати пакетів на конкретному вузлі (займає ~5 хвилин):
+
+```cmd
+pathping google.com
+
+:: Швидший варіант
+pathping -n -q 10 google.com
+```
+
+Показує % втрати пакетів на кожному вузлі — одразу видно де є проблема.
 
 ---
 

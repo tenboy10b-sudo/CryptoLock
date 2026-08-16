@@ -1,10 +1,11 @@
 ---
 title: "Моніторинг мережі в Windows: netstat, Resource Monitor і Wireshark"
 date: "2025-11-11"
+updated: "2026-08-13"
 publishDate: "2025-11-11"
-description: "Як переглянути мережеві підключення Windows, знайти підозрілі процеси що передають дані, використовувати netstat, Resource Monitor і Wireshark для аналізу трафіку."
+description: "Як переглянути мережеві підключення Windows, знайти підозрілі процеси що передають дані, заблокувати їх через брандмауер, використовувати netstat, Resource Monitor і Wireshark для аналізу трафіку."
 tags: ["мережа", "безпека", "windows", "cmd", "powershell", "моніторинг"]
-readTime: 7
+readTime: 8
 ---
 
 Комп'ютер відправляє дані кудись у фоні? Програма з'єднується з невідомими серверами? Ось як це перевірити.
@@ -101,6 +102,26 @@ Get-NetTCPConnection | Where-Object { $_.OwningProcess -eq $pid }
 Перевір IP-адресу:
 - **ipinfo.io/8.8.8.8** — хто власник IP
 - **virustotal.com** — перевір підозрілий файл процесу
+
+---
+
+## Заблокувати небажані підключення
+
+```powershell
+# Заблокувати вихідні для конкретної програми
+New-NetFirewallRule -DisplayName "Block App" `
+  -Direction Outbound `
+  -Program "C:\Path\To\App.exe" `
+  -Action Block
+
+# Заблокувати підключення до конкретного IP
+New-NetFirewallRule -DisplayName "Block IP" `
+  -Direction Outbound `
+  -RemoteAddress "1.2.3.4" `
+  -Action Block
+```
+
+Простіший спосіб побачити накопичений трафік по програмах: **Task Manager** → вкладка **App history** → колонка **Network**.
 
 ---
 
