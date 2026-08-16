@@ -75,14 +75,15 @@
     "how-to-install-windows-11-without-tpm",
     "windows-11-nalashtuvannya-pislya-vstanovlennya",
     "gpo-nalashtuvannya-polityky-paroliv",
-    "how-to-fix-high-cpu-usage-windows"
+    "how-to-fix-high-cpu-usage-windows",
+    "applocker-gpo-nalashtuvannya"
   ],
-  "count": 76,
+  "count": 77,
   "promo_index": 54,
   "last_post": {
-    "slug": "how-to-fix-high-cpu-usage-windows",
-    "title": "How to Fix High CPU Usage in Windows 10 and 11",
-    "time": "2026-08-15T08:01:27.860Z"
+    "slug": "applocker-gpo-nalashtuvannya",
+    "title": "AppLocker в Windows 10 і 11: налаштування через GPO і PowerShell",
+    "time": "2026-08-16T08:01:17.208Z"
   },
   "engage_index": 46,
   "extra_index": 53
