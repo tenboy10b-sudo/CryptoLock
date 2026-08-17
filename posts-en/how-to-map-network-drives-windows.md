@@ -8,7 +8,7 @@ readTime: 5
 translatesUk: "yak-pidklyuchyty-merezhevyy-dysk-windows"
 ---
 
-Mapped network drives let you access shared folders as if they were local drives. Here's how to set them up reliably.
+Mapped network drives let you access shared folders as if they were local drives. Here's how to set them up reliably. (Setting up the share on the hosting PC instead? See [how to create and manage network shares](/en/how-to-configure-windows-network-shares).)
 
 ---
 

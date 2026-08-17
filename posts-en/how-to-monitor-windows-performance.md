@@ -80,6 +80,8 @@ For advanced monitoring and logging:
 - `PhysicalDisk(_Total)\Disk Transfers/sec`
 - `Network Interface\Bytes Total/sec`
 
+For a deeper dive into Data Collector Sets, automated reports and alert thresholds, see [how to monitor performance with Performance Monitor and counters](/en/how-to-monitor-windows-performance-counters).
+
 ---
 
 ## Check Disk Read/Write Speed

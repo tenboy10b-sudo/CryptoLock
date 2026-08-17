@@ -8,7 +8,7 @@ readTime: 5
 translatesUk: "nalashtuvannya-merezhevoho-adaptera-windows"
 ---
 
-Network adapter settings control how your PC communicates on the network. Here's how to configure everything — from IP addresses to advanced NIC settings.
+Network adapter settings control how your PC communicates on the network. Here's how to configure everything — from IP addresses to advanced NIC settings. (For gaming/throughput tuning — RSS, interrupt moderation, jumbo frames — see [network adapter performance settings](/en/how-to-configure-network-adapter-settings).)
 
 ---
 

@@ -8,7 +8,7 @@ readTime: 5
 translatesUk: "vypravlennya-spuler-druku-windows"
 ---
 
-Print Spooler manages all print jobs in Windows. When it crashes or gets stuck, nothing prints. Here's how to fix every variant.
+Print Spooler manages all print jobs in Windows. When it crashes or gets stuck, nothing prints. Here's how to fix every variant. (Not sure the Spooler is your issue? Start with the broader [printer not printing checklist](/en/printer-not-printing-windows-fix), which also covers offline status and driver problems.)
 
 ---
 

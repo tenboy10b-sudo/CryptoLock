@@ -8,7 +8,7 @@ readTime: 5
 translatesUk: "yak-nalashtuvanty-spilnyy-dostup-do-papky"
 ---
 
-Network shares let you access folders from other PCs on the network. Here's how to manage them properly with PowerShell.
+Network shares let you access folders from other PCs on the network. Here's how to manage them properly with PowerShell. (Connecting to an existing share as a drive letter instead of hosting one? See [how to map network drives](/en/how-to-map-network-drives-windows).)
 
 ---
 

@@ -7,7 +7,7 @@ tags: ["windows", "diagnostics", "monitoring", "administration"]
 readTime: 6
 ---
 
-Performance Monitor goes far deeper than Task Manager — it lets you track hundreds of specific counters, record data over time, and generate reports. Here's how to use it effectively.
+Performance Monitor goes far deeper than Task Manager — it lets you track hundreds of specific counters, record data over time, and generate reports. Here's how to use it effectively. (For a quicker tour across Task Manager, Resource Monitor and PowerShell too, see [how to monitor Windows performance](/en/how-to-monitor-windows-performance).)
 
 ---
 

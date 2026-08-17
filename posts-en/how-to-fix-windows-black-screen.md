@@ -15,7 +15,7 @@ A black screen in Windows usually means one of three things: the display isn't g
 
 - **Black screen before Windows logo** — BIOS/hardware or bootloader issue
 - **Black screen after Windows logo, then desktop appears** — normal, ignore if brief
-- **Black screen after login with cursor** — Explorer crashed or GPU driver issue
+- **Black screen after login with cursor** — Explorer crashed or GPU driver issue (see the [dedicated after-login guide](/en/how-to-fix-windows-black-screen-login) for a deeper walkthrough)
 - **Black screen with no cursor** — display driver completely failed
 - **Black screen after update** — driver incompatibility
 

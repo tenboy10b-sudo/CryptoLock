@@ -9,7 +9,7 @@ readTime: 7
 translatesUk: "prynter-ne-druukuie-windows-vyrishennya"
 ---
 
-Printer shows in Windows but won't print — the most common cause is a stuck print queue or Print Spooler service issue.
+Printer shows in Windows but won't print — the most common cause is a stuck print queue or Print Spooler service issue. (For a deeper dive into Spooler crashes, permissions and registry cleanup, see [how to fix Print Spooler errors](/en/how-to-fix-windows-print-spooler).)
 
 ---
 

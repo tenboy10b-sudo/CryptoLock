@@ -7,7 +7,7 @@ tags: ["windows", "network", "optimization", "hardware"]
 readTime: 5
 ---
 
-The default Windows network adapter settings are conservative. Tweaking them can improve throughput on fast networks and reduce latency for real-time applications.
+The default Windows network adapter settings are conservative. Tweaking them can improve throughput on fast networks and reduce latency for real-time applications. (Looking to set a static IP, DNS or disable an adapter instead? See [general network adapter configuration](/en/how-to-configure-windows-network-adapter).)
 
 ---
 

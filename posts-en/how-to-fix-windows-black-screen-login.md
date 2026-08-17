@@ -8,7 +8,7 @@ readTime: 5
 translatesUk: "chornyy-ekran-pislya-vkhodu-windows"
 ---
 
-Black screen after login — Windows loads but the desktop never appears. Here's how to diagnose and fix every variant.
+Black screen after login — Windows loads but the desktop never appears. Here's how to diagnose and fix every variant. (Screen is black before you even reach login, or has no cursor at all? See the [general black screen triage guide](/en/how-to-fix-windows-black-screen) for other scenarios.)
 
 ---
 
