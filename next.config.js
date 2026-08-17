@@ -256,6 +256,9 @@ const nextConfig = {
       { source: '/en/how-to-configure-wake-on-lan-windows', destination: '/en/how-to-use-windows-wake-on-lan', permanent: true, locale: false },
       { source: '/minimalna-dovzhyna-parolyu', destination: '/gpo-nalashtuvannya-polityky-paroliv', permanent: true },
 
+      // Слаг/вміст розсинхронізація (сесія 12 прод. 42) — слаг казав "для школи", вміст про батьківський контроль
+      { source: '/yak-nalashtuvanty-windows-dlya-shkoly', destination: '/yak-nalashtuvaty-batkivskyy-kontrol-windows', permanent: true },
+
       // "Windows Firewall" (EN, сесія 12 прод. 38) — базова + advanced об'єднані в -rules (мала translatesUk-конфлікт з базовою), GPO лишена окремо (інший намір)
       { source: '/en/how-to-configure-windows-firewall', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },
       { source: '/en/how-to-configure-windows-firewall-advanced', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },
