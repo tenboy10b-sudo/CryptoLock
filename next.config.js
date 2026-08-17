@@ -259,6 +259,11 @@ const nextConfig = {
       // Слаг/вміст розсинхронізація (сесія 12 прод. 42) — слаг казав "для школи", вміст про батьківський контроль
       { source: '/yak-nalashtuvanty-windows-dlya-shkoly', destination: '/yak-nalashtuvaty-batkivskyy-kontrol-windows', permanent: true },
 
+      // Знайдено через реальні пости Telegram-каналу (сесія 12 прод. 44) — третя стаття про реєстр
+      // яку тайтл/опис-скан пропустив, і слаг/вміст розсинхронізація на EN-боці ("remote-registry" замість загального редагування)
+      { source: '/redahuvannya-reyestru-windows', destination: '/yak-pratsyuvaty-z-reiestratorom-windows', permanent: true },
+      { source: '/en/how-to-configure-remote-registry-windows', destination: '/en/how-to-edit-windows-registry', permanent: true, locale: false },
+
       // "Windows Firewall" (EN, сесія 12 прод. 38) — базова + advanced об'єднані в -rules (мала translatesUk-конфлікт з базовою), GPO лишена окремо (інший намір)
       { source: '/en/how-to-configure-windows-firewall', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },
       { source: '/en/how-to-configure-windows-firewall-advanced', destination: '/en/how-to-configure-windows-firewall-rules', permanent: true, locale: false },

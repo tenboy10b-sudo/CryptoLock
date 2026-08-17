@@ -5,7 +5,7 @@ publishDate: "2026-05-23"
 description: "Edit Windows Registry safely using regedit and PowerShell. Create, modify and delete keys, export backups before changes, and restore if something breaks."
 tags: ["windows", "registry", "administration", "powershell", "security"]
 readTime: 5
-translatesUk: "redahuvannya-reyestru-windows"
+translatesUk: "yak-pratsyuvaty-z-reiestratorom-windows"
 ---
 
 The Windows Registry stores system settings, hardware configuration and application data. Editing it incorrectly can break Windows — always back up first.
