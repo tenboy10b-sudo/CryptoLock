@@ -1,10 +1,11 @@
 ---
 title: "Windows Task Manager: Complete Guide to Processes, Performance and Startup"
 date: "2026-05-05"
+updated: "2026-08-16"
 publishDate: "2026-05-05"
-description: "Master Windows Task Manager in Windows 10 and 11. Monitor CPU, RAM, disk usage, manage startup programs, end tasks, find resource hogs and analyze performance."
+description: "Master Windows Task Manager in Windows 10 and 11. Monitor CPU, RAM, disk usage, manage startup programs, set process priority/affinity, end tasks, find resource hogs and analyze performance."
 tags: ["windows", "task-manager", "performance", "diagnostics", "optimization"]
-readTime: 5
+readTime: 7
 translatesUk: "dispecher-zavdan-windows-povnyy-gaid"
 ---
 
@@ -42,6 +43,8 @@ Get-Process | Sort-Object CPU -Descending | Select-Object -First 10 `
 - **Open file location** — find the executable
 - **Search online** — look up unknown process
 - **Go to details** — see full process info
+
+**Process tree:** click the arrow next to a process to see its child processes. Chrome and Edge show each tab as a separate entry.
 
 ---
 
@@ -83,6 +86,12 @@ Right-click → **Disable** to prevent startup. This doesn't uninstall — just 
 
 ---
 
+## Users Tab
+
+Shows all logged-in users and their resource usage — useful on shared PCs. Right-click a user → **Disconnect** or **Sign off** to free up their resources.
+
+---
+
 ## Details Tab
 
 Shows all processes with PID, CPU, Memory and User. More technical than Processes tab.
@@ -93,6 +102,15 @@ Shows all processes with PID, CPU, Memory and User. More technical than Processe
 
 # Kill process by PID
 Stop-Process -Id 1234 -Force
+```
+
+**Set process priority** (right-click → **Set priority**): increase to **Above normal** for a game or rendering task, decrease for background tasks.
+
+**Set CPU affinity** (which cores a process uses): right-click → **Set affinity** — useful for isolating a process to specific cores.
+
+```powershell
+$proc = Get-Process -Name "myapp"
+$proc.PriorityClass = "AboveNormal"
 ```
 
 ---
@@ -113,6 +131,29 @@ Get-Service | Sort-Object Status -Descending | Format-Table Name, Status, StartT
 File menu → **Run new task** → check **Create this task with administrative privileges**
 
 Useful when Start Menu isn't working.
+
+---
+
+## Useful Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl + Shift + Esc` | Open Task Manager |
+| `Alt + F4` | Close focused window (not Task Manager) |
+| `Delete` | End selected task |
+| `Ctrl + N` | Open new Task Manager window |
+
+---
+
+## Task Manager vs Resource Monitor vs Process Explorer
+
+| Tool | Best for |
+|------|----------|
+| Task Manager | Quick overview, killing apps, startup management |
+| Resource Monitor | Detailed per-process disk and network activity |
+| Process Explorer (Sysinternals) | Deep investigation, DLL inspection, malware analysis |
+
+Download **Process Explorer** from [learn.microsoft.com/sysinternals](https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer) for the most powerful process inspection tool available for Windows.
 
 ---
 

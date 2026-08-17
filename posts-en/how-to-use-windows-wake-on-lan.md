@@ -1,10 +1,11 @@
 ---
 title: "How to Configure Wake-on-LAN in Windows 10 and 11"
 date: "2026-06-17"
+updated: "2026-08-16"
 publishDate: "2026-06-17"
-description: "Configure Wake-on-LAN (WoL) in Windows to remotely power on PCs over the network. Enable in BIOS and Windows, send magic packets and troubleshoot WoL issues."
+description: "Configure Wake-on-LAN (WoL) in Windows to remotely power on PCs over the network. Enable in BIOS and Windows, send magic packets, wake a PC over the internet and troubleshoot WoL issues."
 tags: ["windows", "wake-on-lan", "network", "remote", "administration"]
-readTime: 5
+readTime: 6
 translatesUk: "nalashtuvannya-wake-on-lan-windows"
 ---
 
@@ -103,6 +104,19 @@ function Send-WakeOnLan {
 Send-WakeOnLan -MacAddress "AA-BB-CC-DD-EE-FF"
 Send-WakeOnLan -MacAddress "AA:BB:CC:DD:EE:FF" -BroadcastAddress "192.168.1.255"
 ```
+
+**Free GUI/CLI tools:** **WakeMeOnLan** (nirsoft.net) scans the network for devices, **wolcmd** is a lightweight command-line sender — useful if you don't want to run a PowerShell script.
+
+---
+
+## WoL Over the Internet
+
+To wake a PC from outside your home network:
+
+1. Assign a **static local IP** to the target PC (via router DHCP reservation)
+2. Set up **port forwarding** on your router: UDP port 9 → local PC IP
+3. Know your router's public IP, or use a DDNS service like DuckDNS if it changes
+4. Send the magic packet to your public IP on port 9
 
 ---
 
