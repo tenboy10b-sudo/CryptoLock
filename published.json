@@ -77,14 +77,15 @@
     "gpo-nalashtuvannya-polityky-paroliv",
     "how-to-fix-high-cpu-usage-windows",
     "applocker-gpo-nalashtuvannya",
-    "how-to-use-windows-clipboard-history"
+    "how-to-use-windows-clipboard-history",
+    "how-to-fix-dns-not-resolving-windows"
   ],
-  "count": 78,
+  "count": 79,
   "promo_index": 55,
   "last_post": {
-    "slug": "how-to-use-windows-clipboard-history",
-    "title": "How to Use Windows Clipboard History and Cloud Clipboard",
-    "time": "2026-08-17T08:01:20.926Z"
+    "slug": "how-to-fix-dns-not-resolving-windows",
+    "title": "How to Fix DNS Not Resolving in Windows 10 and 11",
+    "time": "2026-08-18T08:01:17.005Z"
   },
   "engage_index": 47,
   "extra_index": 55
