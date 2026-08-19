@@ -1,7 +1,7 @@
 ---
 title: "How to Enable Secure Boot in BIOS for Windows 10 and 11"
-date: "2026-08-23"
-publishDate: "2026-08-23"
+date: "2026-09-01"
+publishDate: "2026-09-01"
 description: "Enable Secure Boot in BIOS/UEFI for Windows 10 and 11. Check current status, switch from Legacy to UEFI mode, convert MBR to GPT without data loss."
 tags: ["windows", "bios", "secure-boot", "uefi", "installation"]
 readTime: 5

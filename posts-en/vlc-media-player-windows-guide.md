@@ -1,7 +1,7 @@
 ---
 title: "VLC Media Player on Windows: Installation, Setup and Hidden Features"
-date: "2026-09-28"
-publishDate: "2026-09-28"
+date: "2027-01-05"
+publishDate: "2027-01-05"
 updated: "2026-09-28"
 description: "How to install and configure VLC on Windows 10 and 11. Keyboard shortcuts, subtitle sync, video conversion, streaming from URL, playback speed and hidden VLC features."
 tags: ["windows", "vlc", "video", "media", "tools"]

@@ -1,7 +1,7 @@
 ---
 title: "OBS Studio on Windows: Installation, Setup for Recording and Streaming"
-date: "2026-09-17"
-publishDate: "2026-09-17"
+date: "2026-11-27"
+publishDate: "2026-11-27"
 updated: "2026-09-17"
 description: "How to install and configure OBS Studio on Windows for screen recording or streaming to Twitch and YouTube. Scenes, sources, output settings, fix low FPS issues."
 tags: ["windows", "obs", "screen-recording", "streaming", "tools"]

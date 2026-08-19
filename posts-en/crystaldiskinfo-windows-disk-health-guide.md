@@ -1,7 +1,7 @@
 ---
 title: "CrystalDiskInfo on Windows: Check HDD and SSD Health via SMART"
-date: "2026-09-05"
-publishDate: "2026-09-05"
+date: "2026-10-16"
+publishDate: "2026-10-16"
 updated: "2026-09-05"
 description: "How to use CrystalDiskInfo to check hard drive and SSD health via SMART data on Windows. Understand health ratings, temperature, warning signs and what to do when status is Caution or Bad."
 tags: ["windows", "crystaldiskinfo", "disk", "diagnostics", "tools", "ssd"]

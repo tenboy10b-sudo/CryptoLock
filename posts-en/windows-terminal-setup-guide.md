@@ -1,7 +1,7 @@
 ---
 title: "Windows Terminal: Modern Terminal for PowerShell, CMD and WSL on Windows"
-date: "2026-08-29"
-publishDate: "2026-08-29"
+date: "2026-09-22"
+publishDate: "2026-09-22"
 updated: "2026-08-29"
 description: "How to install and configure Windows Terminal on Windows 10 and 11. Tabs, profiles, themes, fonts, keyboard shortcuts and settings.json configuration."
 tags: ["windows", "windows-terminal", "terminal", "powershell", "tools", "development"]

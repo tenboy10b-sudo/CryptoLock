@@ -1,7 +1,7 @@
 ---
 title: "qBittorrent на Windows: встановлення, налаштування і безпечне використання"
-date: "2026-09-19"
-publishDate: "2026-09-19"
+date: "2026-12-04"
+publishDate: "2026-12-04"
 updated: "2026-09-19"
 description: "Як встановити і налаштувати qBittorrent на Windows 10 і 11. Налаштування швидкості, портів, VPN і RSS. Порівняння з uTorrent. Без реклами і без вірусів."
 tags: ["windows", "qbittorrent", "торрент", "мережа", "інструменти"]

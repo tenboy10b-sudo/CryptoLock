@@ -1,7 +1,7 @@
 ---
 title: "Bulk Rename Utility: масове перейменування файлів на Windows"
-date: "2026-09-01"
-publishDate: "2026-09-01"
+date: "2026-10-02"
+publishDate: "2026-10-02"
 updated: "2026-09-01"
 description: "Як встановити Bulk Rename Utility і масово перейменовувати файли на Windows. Додавання номерів, зміна розширень, видалення символів, регулярні вирази і PowerShell альтернативи."
 tags: ["windows", "bulk-rename", "файли", "інструменти", "автоматизація"]

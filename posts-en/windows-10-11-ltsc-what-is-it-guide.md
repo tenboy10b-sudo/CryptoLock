@@ -1,7 +1,7 @@
 ---
 title: "Windows 10 and 11 LTSC: What Is It, Who Should Use It and Where to Download"
-date: "2026-10-03"
-publishDate: "2026-10-03"
+date: "2027-01-22"
+publishDate: "2027-01-22"
 updated: "2026-10-03"
 description: "What is Windows LTSC (Long-Term Servicing Channel), how it differs from regular Windows. Pros and cons, who can use it, where to download officially, and free alternatives."
 tags: ["windows", "windows-ltsc", "license", "installation", "settings"]

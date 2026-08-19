@@ -1,7 +1,7 @@
 ---
 title: "WinRAR on Windows: How to Use It and Whether You Need to Pay for a License"
-date: "2026-10-04"
-publishDate: "2026-10-04"
+date: "2027-01-26"
+publishDate: "2027-01-26"
 updated: "2026-10-04"
 description: "How to use WinRAR on Windows 10 and 11: extract, create RAR and ZIP archives, encrypt with password, split into parts. Is WinRAR free? Compare with 7-Zip."
 tags: ["windows", "winrar", "archiver", "files", "tools"]

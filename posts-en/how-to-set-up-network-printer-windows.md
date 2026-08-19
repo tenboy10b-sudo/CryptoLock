@@ -1,7 +1,7 @@
 ---
 title: "How to Add and Troubleshoot Network Printers in Windows 10 and 11"
-date: "2026-08-28"
-publishDate: "2026-08-28"
+date: "2026-09-18"
+publishDate: "2026-09-18"
 description: "Add network and wireless printers in Windows 10 and 11. Connect via IP, share printer over network, fix printer offline errors and troubleshoot print queue."
 tags: ["windows", "printer", "network", "administration", "troubleshooting"]
 readTime: 5

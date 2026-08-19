@@ -1,7 +1,7 @@
 ---
 title: "Supermium: Modern Chromium Browser for Windows XP, Vista, 7 and 8.1"
-date: "2026-09-23"
-publishDate: "2026-09-23"
+date: "2026-12-18"
+publishDate: "2026-12-18"
 updated: "2026-09-23"
 description: "What is Supermium and who needs it. A modern Chromium-based browser for Windows XP, Vista, 7 and 8.1 where Chrome and Edge no longer work. Download and setup guide."
 tags: ["windows", "browser", "supermium", "tools"]

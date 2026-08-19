@@ -1,7 +1,7 @@
 ---
 title: "WinSCP on Windows: FTP and SFTP Client for Server File Transfer"
-date: "2026-10-05"
-publishDate: "2026-10-05"
+date: "2027-01-29"
+publishDate: "2027-01-29"
 updated: "2026-10-05"
 description: "How to install and use WinSCP to connect to FTP and SFTP servers. Transfer files, configure connections, sync folders, SSH key auth and WinSCP scripting."
 tags: ["windows", "winscp", "ftp", "sftp", "tools", "administration"]

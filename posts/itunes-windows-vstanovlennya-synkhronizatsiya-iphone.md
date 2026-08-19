@@ -1,7 +1,7 @@
 ---
 title: "iTunes на Windows 10 і 11: встановлення, синхронізація iPhone і вирішення помилок"
-date: "2026-09-12"
-publishDate: "2026-09-12"
+date: "2026-11-10"
+publishDate: "2026-11-10"
 updated: "2026-09-12"
 description: "Як встановити iTunes на Windows 10 і 11 для синхронізації iPhone і iPad. Резервне копіювання, перенесення музики і фото, вирішення помилок підключення."
 tags: ["windows", "itunes", "iphone", "apple", "інструменти"]
