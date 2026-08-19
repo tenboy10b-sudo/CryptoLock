@@ -77,15 +77,17 @@
     "gpo-nalashtuvannya-polityky-paroliv",
     "how-to-fix-high-cpu-usage-windows",
     "applocker-gpo-nalashtuvannya",
-    "how-to-use-windows-clipboard-history"
+    "how-to-use-windows-clipboard-history",
+    "how-to-fix-dns-not-resolving-windows",
+    "windows-powertoys-povnyy-posibnyk"
   ],
-  "count": 78,
-  "promo_index": 55,
+  "count": 80,
+  "promo_index": 56,
   "last_post": {
-    "slug": "how-to-use-windows-clipboard-history",
-    "title": "How to Use Windows Clipboard History and Cloud Clipboard",
-    "time": "2026-08-17T08:01:20.926Z"
+    "slug": "windows-powertoys-povnyy-posibnyk",
+    "title": "Windows PowerToys: повний гайд по всіх інструментах 2026",
+    "time": "2026-08-19T08:01:21.921Z"
   },
-  "engage_index": 47,
-  "extra_index": 54
+  "engage_index": 48,
+  "extra_index": 56
 }
