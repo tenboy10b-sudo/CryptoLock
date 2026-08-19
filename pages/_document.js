@@ -8,11 +8,12 @@ export default function Document() {
   return (
     <Html lang="uk" suppressHydrationWarning>
       <Head>
-        {/* Fonts — preconnect + display=swap для усунення CLS */}
+        {/* Fonts — preconnect + display=optional: без перемальовування тексту при
+            довантаженні шрифту (swap спричиняв CLS 0.4-0.5+ на статтях з великим блоком тексту) */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@600;700&display=optional"
         />
 
         {/* GA4 — defer щоб не блокував main thread */}
