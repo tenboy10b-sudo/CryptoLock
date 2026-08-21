@@ -80,14 +80,15 @@
     "how-to-use-windows-clipboard-history",
     "how-to-fix-dns-not-resolving-windows",
     "windows-powertoys-povnyy-posibnyk",
-    "yak-shvydko-vidkryty-potribnu-program-windows"
+    "yak-shvydko-vidkryty-potribnu-program-windows",
+    "yak-nalashtuvaty-windows-defender-vyklyuchennya"
   ],
-  "count": 81,
+  "count": 82,
   "promo_index": 56,
   "last_post": {
-    "slug": "yak-shvydko-vidkryty-potribnu-program-windows",
-    "title": "Гарячі клавіші Windows які реально економлять час",
-    "time": "2026-08-20T08:01:17.441Z"
+    "slug": "yak-nalashtuvaty-windows-defender-vyklyuchennya",
+    "title": "Виключення Windows Defender: як додати без вимкнення захисту",
+    "time": "2026-08-21T08:01:25.089Z"
   },
   "engage_index": 49,
   "extra_index": 58
