@@ -81,14 +81,15 @@
     "how-to-fix-dns-not-resolving-windows",
     "windows-powertoys-povnyy-posibnyk",
     "yak-shvydko-vidkryty-potribnu-program-windows",
-    "yak-nalashtuvaty-windows-defender-vyklyuchennya"
+    "yak-nalashtuvaty-windows-defender-vyklyuchennya",
+    "cmd-komandy-dlya-merezhi"
   ],
-  "count": 82,
+  "count": 83,
   "promo_index": 57,
   "last_post": {
-    "slug": "yak-nalashtuvaty-windows-defender-vyklyuchennya",
-    "title": "Виключення Windows Defender: як додати без вимкнення захисту",
-    "time": "2026-08-21T08:01:25.089Z"
+    "slug": "cmd-komandy-dlya-merezhi",
+    "title": "CMD команди для мережі Windows: діагностика і налаштування",
+    "time": "2026-08-22T08:01:15.142Z"
   },
   "engage_index": 49,
   "extra_index": 59
