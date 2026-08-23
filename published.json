@@ -82,14 +82,15 @@
     "windows-powertoys-povnyy-posibnyk",
     "yak-shvydko-vidkryty-potribnu-program-windows",
     "yak-nalashtuvaty-windows-defender-vyklyuchennya",
-    "cmd-komandy-dlya-merezhi"
+    "cmd-komandy-dlya-merezhi",
+    "dns-over-https-windows"
   ],
-  "count": 83,
+  "count": 84,
   "promo_index": 57,
   "last_post": {
-    "slug": "cmd-komandy-dlya-merezhi",
-    "title": "CMD команди для мережі Windows: діагностика і налаштування",
-    "time": "2026-08-22T08:01:15.142Z"
+    "slug": "dns-over-https-windows",
+    "title": "Як увімкнути DNS over HTTPS (DoH) в Windows 11 і 10",
+    "time": "2026-08-23T08:01:23.668Z"
   },
   "engage_index": 50,
   "extra_index": 60
