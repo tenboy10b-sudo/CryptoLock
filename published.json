@@ -83,14 +83,15 @@
     "yak-shvydko-vidkryty-potribnu-program-windows",
     "yak-nalashtuvaty-windows-defender-vyklyuchennya",
     "cmd-komandy-dlya-merezhi",
-    "dns-over-https-windows"
+    "dns-over-https-windows",
+    "yak-nalashtuvaty-skhemu-zhyvlennya-windows"
   ],
-  "count": 84,
+  "count": 85,
   "promo_index": 58,
   "last_post": {
-    "slug": "dns-over-https-windows",
-    "title": "Як увімкнути DNS over HTTPS (DoH) в Windows 11 і 10",
-    "time": "2026-08-23T08:01:23.668Z"
+    "slug": "yak-nalashtuvaty-skhemu-zhyvlennya-windows",
+    "title": "Схеми живлення Windows: як налаштувати для продуктивності або економії заряду",
+    "time": "2026-08-24T08:01:26.304Z"
   },
   "engage_index": 50,
   "extra_index": 61
