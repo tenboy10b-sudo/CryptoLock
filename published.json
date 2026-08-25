@@ -84,14 +84,15 @@
     "yak-nalashtuvaty-windows-defender-vyklyuchennya",
     "cmd-komandy-dlya-merezhi",
     "dns-over-https-windows",
-    "yak-nalashtuvaty-skhemu-zhyvlennya-windows"
+    "yak-nalashtuvaty-skhemu-zhyvlennya-windows",
+    "yak-nalashtuvanty-robochyy-stil-windows"
   ],
-  "count": 85,
+  "count": 86,
   "promo_index": 58,
   "last_post": {
-    "slug": "yak-nalashtuvaty-skhemu-zhyvlennya-windows",
-    "title": "Схеми живлення Windows: як налаштувати для продуктивності або економії заряду",
-    "time": "2026-08-24T08:01:26.304Z"
+    "slug": "yak-nalashtuvanty-robochyy-stil-windows",
+    "title": "Як налаштувати робочий стіл Windows під себе: практичний гайд",
+    "time": "2026-08-25T08:01:25.239Z"
   },
   "engage_index": 51,
   "extra_index": 61
