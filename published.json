@@ -85,14 +85,15 @@
     "cmd-komandy-dlya-merezhi",
     "dns-over-https-windows",
     "yak-nalashtuvaty-skhemu-zhyvlennya-windows",
-    "yak-nalashtuvanty-robochyy-stil-windows"
+    "yak-nalashtuvanty-robochyy-stil-windows",
+    "how-to-monitor-windows-performance"
   ],
-  "count": 86,
+  "count": 87,
   "promo_index": 59,
   "last_post": {
-    "slug": "yak-nalashtuvanty-robochyy-stil-windows",
-    "title": "Як налаштувати робочий стіл Windows під себе: практичний гайд",
-    "time": "2026-08-25T08:01:25.239Z"
+    "slug": "how-to-monitor-windows-performance",
+    "title": "How to Monitor Windows Performance: CPU, RAM, Disk and Network",
+    "time": "2026-08-26T08:01:25.047Z"
   },
   "engage_index": 51,
   "extra_index": 62
