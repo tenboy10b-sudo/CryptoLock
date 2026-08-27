@@ -86,14 +86,15 @@
     "dns-over-https-windows",
     "yak-nalashtuvaty-skhemu-zhyvlennya-windows",
     "yak-nalashtuvanty-robochyy-stil-windows",
-    "how-to-monitor-windows-performance"
+    "how-to-monitor-windows-performance",
+    "nemaie-zvuku-windows-vyrishennya"
   ],
-  "count": 87,
+  "count": 88,
   "promo_index": 59,
   "last_post": {
-    "slug": "how-to-monitor-windows-performance",
-    "title": "How to Monitor Windows Performance: CPU, RAM, Disk and Network",
-    "time": "2026-08-26T08:01:25.047Z"
+    "slug": "nemaie-zvuku-windows-vyrishennya",
+    "title": "Немає звуку в Windows 10 і 11: причини і покрокове виправлення",
+    "time": "2026-08-27T08:01:33.548Z"
   },
   "engage_index": 52,
   "extra_index": 63
