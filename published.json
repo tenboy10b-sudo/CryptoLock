@@ -87,14 +87,15 @@
     "yak-nalashtuvaty-skhemu-zhyvlennya-windows",
     "yak-nalashtuvanty-robochyy-stil-windows",
     "how-to-monitor-windows-performance",
-    "nemaie-zvuku-windows-vyrishennya"
+    "nemaie-zvuku-windows-vyrishennya",
+    "how-to-use-windows-event-viewer"
   ],
-  "count": 88,
+  "count": 89,
   "promo_index": 60,
   "last_post": {
-    "slug": "nemaie-zvuku-windows-vyrishennya",
-    "title": "Немає звуку в Windows 10 і 11: причини і покрокове виправлення",
-    "time": "2026-08-27T08:01:33.548Z"
+    "slug": "how-to-use-windows-event-viewer",
+    "title": "How to Use Windows Event Viewer to Diagnose Problems",
+    "time": "2026-08-28T08:01:28.490Z"
   },
   "engage_index": 52,
   "extra_index": 64
