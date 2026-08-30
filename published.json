@@ -89,15 +89,17 @@
     "how-to-monitor-windows-performance",
     "nemaie-zvuku-windows-vyrishennya",
     "how-to-use-windows-event-viewer",
-    "obmezhennya-kilkosti-sprob-parolyu"
+    "obmezhennya-kilkosti-sprob-parolyu",
+    "windows-defender-for-endpoint-nalashtuvannya"
   ],
-  "count": 90,
+  "count": 91,
   "promo_index": 61,
   "last_post": {
-    "slug": "obmezhennya-kilkosti-sprob-parolyu",
-    "title": "Обмеження спроб пароля Windows через GPO і реєстр — захист за 3 хв",
-    "time": "2026-08-29T08:01:27.571Z"
+    "slug": "windows-defender-for-endpoint-nalashtuvannya",
+    "title": "Microsoft Defender for Endpoint (ATP): налаштування і підключення пристроїв",
+    "time": "2026-08-30T08:01:34.087Z"
   },
   "engage_index": 53,
-  "extra_index": 66
+  "extra_index": 66,
+  "extra_recent_topics": []
 }
