@@ -92,14 +92,15 @@
     "obmezhennya-kilkosti-sprob-parolyu",
     "windows-defender-for-endpoint-nalashtuvannya",
     "nalashtuvannya-iis-web-server-windows",
-    "ransomware-scho-robyty-yakshcho-zarazhenyy"
+    "ransomware-scho-robyty-yakshcho-zarazhenyy",
+    "how-to-use-windows-sandbox-for-malware"
   ],
-  "count": 93,
+  "count": 94,
   "promo_index": 63,
   "last_post": {
-    "slug": "ransomware-scho-robyty-yakshcho-zarazhenyy",
-    "title": "Ransomware: що робити якщо файли зашифровані вірусом-здирником",
-    "time": "2026-09-01T08:01:30.829Z"
+    "slug": "how-to-use-windows-sandbox-for-malware",
+    "title": "How to Analyze Suspicious Files Safely with Windows Sandbox",
+    "time": "2026-09-02T08:01:28.609Z"
   },
   "engage_index": 54,
   "extra_index": 69,
