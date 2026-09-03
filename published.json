@@ -93,14 +93,15 @@
     "windows-defender-for-endpoint-nalashtuvannya",
     "nalashtuvannya-iis-web-server-windows",
     "ransomware-scho-robyty-yakshcho-zarazhenyy",
-    "how-to-use-windows-sandbox-for-malware"
+    "how-to-use-windows-sandbox-for-malware",
+    "performance-monitor-windows"
   ],
-  "count": 94,
+  "count": 95,
   "promo_index": 63,
   "last_post": {
-    "slug": "how-to-use-windows-sandbox-for-malware",
-    "title": "How to Analyze Suspicious Files Safely with Windows Sandbox",
-    "time": "2026-09-02T08:01:28.609Z"
+    "slug": "performance-monitor-windows",
+    "title": "Performance Monitor в Windows: моніторинг і аналіз продуктивності",
+    "time": "2026-09-03T08:01:26.427Z"
   },
   "engage_index": 55,
   "extra_index": 70,
