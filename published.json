@@ -95,14 +95,15 @@
     "ransomware-scho-robyty-yakshcho-zarazhenyy",
     "how-to-use-windows-sandbox-for-malware",
     "performance-monitor-windows",
-    "yak-nalashtuvanty-grup-prav-windows"
+    "yak-nalashtuvanty-grup-prav-windows",
+    "sysinternals-autoruns-procexp"
   ],
-  "count": 96,
+  "count": 97,
   "promo_index": 64,
   "last_post": {
-    "slug": "yak-nalashtuvanty-grup-prav-windows",
-    "title": "Управління правами користувачів в Windows: локальні групи і дозволи",
-    "time": "2026-09-04T08:01:22.466Z"
+    "slug": "sysinternals-autoruns-procexp",
+    "title": "Sysinternals: Autoruns, Process Explorer і інші незамінні утиліти",
+    "time": "2026-09-05T08:01:24.479Z"
   },
   "engage_index": 56,
   "extra_index": 72,
