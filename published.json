@@ -96,14 +96,15 @@
     "how-to-use-windows-sandbox-for-malware",
     "performance-monitor-windows",
     "yak-nalashtuvanty-grup-prav-windows",
-    "sysinternals-autoruns-procexp"
+    "sysinternals-autoruns-procexp",
+    "how-to-configure-windows-defender-network-protection"
   ],
-  "count": 97,
+  "count": 98,
   "promo_index": 65,
   "last_post": {
-    "slug": "sysinternals-autoruns-procexp",
-    "title": "Sysinternals: Autoruns, Process Explorer і інші незамінні утиліти",
-    "time": "2026-09-05T08:01:24.479Z"
+    "slug": "how-to-configure-windows-defender-network-protection",
+    "title": "How to Enable Windows Defender Network Protection",
+    "time": "2026-09-06T08:01:22.149Z"
   },
   "engage_index": 56,
   "extra_index": 73,
