@@ -97,14 +97,15 @@
     "performance-monitor-windows",
     "yak-nalashtuvanty-grup-prav-windows",
     "sysinternals-autoruns-procexp",
-    "how-to-configure-windows-defender-network-protection"
+    "how-to-configure-windows-defender-network-protection",
+    "yak-nalashtuvaty-windows-zvedennya-zahroz"
   ],
-  "count": 98,
+  "count": 99,
   "promo_index": 65,
   "last_post": {
-    "slug": "how-to-configure-windows-defender-network-protection",
-    "title": "How to Enable Windows Defender Network Protection",
-    "time": "2026-09-06T08:01:22.149Z"
+    "slug": "yak-nalashtuvaty-windows-zvedennya-zahroz",
+    "title": "Що робити якщо Windows заражений вірусом: покрокова інструкція",
+    "time": "2026-09-07T08:01:28.567Z"
   },
   "engage_index": 57,
   "extra_index": 74,
