@@ -98,14 +98,15 @@
     "yak-nalashtuvanty-grup-prav-windows",
     "sysinternals-autoruns-procexp",
     "how-to-configure-windows-defender-network-protection",
-    "yak-nalashtuvaty-windows-zvedennya-zahroz"
+    "yak-nalashtuvaty-windows-zvedennya-zahroz",
+    "yak-nalashtuvaty-windows-restr-dlya-security"
   ],
-  "count": 99,
+  "count": 100,
   "promo_index": 66,
   "last_post": {
-    "slug": "yak-nalashtuvaty-windows-zvedennya-zahroz",
-    "title": "Що робити якщо Windows заражений вірусом: покрокова інструкція",
-    "time": "2026-09-07T08:01:28.567Z"
+    "slug": "yak-nalashtuvaty-windows-restr-dlya-security",
+    "title": "Корисні ключі реєстру Windows для безпеки і налаштування",
+    "time": "2026-09-08T08:01:27.267Z"
   },
   "engage_index": 57,
   "extra_index": 75,
