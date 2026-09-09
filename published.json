@@ -99,14 +99,15 @@
     "sysinternals-autoruns-procexp",
     "how-to-configure-windows-defender-network-protection",
     "yak-nalashtuvaty-windows-zvedennya-zahroz",
-    "yak-nalashtuvaty-windows-restr-dlya-security"
+    "yak-nalashtuvaty-windows-restr-dlya-security",
+    "yak-pereviryt-lysty-pomilyok-windows"
   ],
-  "count": 100,
+  "count": 101,
   "promo_index": 66,
   "last_post": {
-    "slug": "yak-nalashtuvaty-windows-restr-dlya-security",
-    "title": "Корисні ключі реєстру Windows для безпеки і налаштування",
-    "time": "2026-09-08T08:01:27.267Z"
+    "slug": "yak-pereviryt-lysty-pomilyok-windows",
+    "title": "Як переглянути і зрозуміти журнали помилок Windows",
+    "time": "2026-09-09T08:01:31.222Z"
   },
   "engage_index": 58,
   "extra_index": 76,
