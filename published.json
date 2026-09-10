@@ -100,14 +100,15 @@
     "how-to-configure-windows-defender-network-protection",
     "yak-nalashtuvaty-windows-zvedennya-zahroz",
     "yak-nalashtuvaty-windows-restr-dlya-security",
-    "yak-pereviryt-lysty-pomilyok-windows"
+    "yak-pereviryt-lysty-pomilyok-windows",
+    "how-to-configure-windows-event-forwarding"
   ],
-  "count": 101,
+  "count": 102,
   "promo_index": 67,
   "last_post": {
-    "slug": "yak-pereviryt-lysty-pomilyok-windows",
-    "title": "Як переглянути і зрозуміти журнали помилок Windows",
-    "time": "2026-09-09T08:01:31.222Z"
+    "slug": "how-to-configure-windows-event-forwarding",
+    "title": "How to Collect Windows Event Logs from Multiple PCs Centrally",
+    "time": "2026-09-10T08:01:33.213Z"
   },
   "engage_index": 58,
   "extra_index": 77,
