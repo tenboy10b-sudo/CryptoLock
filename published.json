@@ -101,14 +101,15 @@
     "yak-nalashtuvaty-windows-zvedennya-zahroz",
     "yak-nalashtuvaty-windows-restr-dlya-security",
     "yak-pereviryt-lysty-pomilyok-windows",
-    "how-to-configure-windows-event-forwarding"
+    "how-to-configure-windows-event-forwarding",
+    "yak-nalashtuvaty-komp-dlya-studentiv"
   ],
-  "count": 102,
+  "count": 103,
   "promo_index": 67,
   "last_post": {
-    "slug": "how-to-configure-windows-event-forwarding",
-    "title": "How to Collect Windows Event Logs from Multiple PCs Centrally",
-    "time": "2026-09-10T08:01:33.213Z"
+    "slug": "yak-nalashtuvaty-komp-dlya-studentiv",
+    "title": "Як налаштувати ПК для навчання: корисні програми і налаштування Windows",
+    "time": "2026-09-11T08:01:32.399Z"
   },
   "engage_index": 59,
   "extra_index": 78,
