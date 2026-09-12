@@ -102,14 +102,15 @@
     "yak-nalashtuvaty-windows-restr-dlya-security",
     "yak-pereviryt-lysty-pomilyok-windows",
     "how-to-configure-windows-event-forwarding",
-    "yak-nalashtuvaty-komp-dlya-studentiv"
+    "yak-nalashtuvaty-komp-dlya-studentiv",
+    "how-to-edit-windows-registry"
   ],
-  "count": 103,
+  "count": 104,
   "promo_index": 68,
   "last_post": {
-    "slug": "yak-nalashtuvaty-komp-dlya-studentiv",
-    "title": "Як налаштувати ПК для навчання: корисні програми і налаштування Windows",
-    "time": "2026-09-11T08:01:32.399Z"
+    "slug": "how-to-edit-windows-registry",
+    "title": "Windows Registry: How to Edit, Backup and Restore Registry Keys",
+    "time": "2026-09-12T08:01:25.455Z"
   },
   "engage_index": 59,
   "extra_index": 79,
