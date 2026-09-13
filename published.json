@@ -103,14 +103,15 @@
     "yak-pereviryt-lysty-pomilyok-windows",
     "how-to-configure-windows-event-forwarding",
     "yak-nalashtuvaty-komp-dlya-studentiv",
-    "how-to-edit-windows-registry"
+    "how-to-edit-windows-registry",
+    "zaborona-zminy-wifi-gpo"
   ],
-  "count": 104,
+  "count": 105,
   "promo_index": 68,
   "last_post": {
-    "slug": "how-to-edit-windows-registry",
-    "title": "Windows Registry: How to Edit, Backup and Restore Registry Keys",
-    "time": "2026-09-12T08:01:25.455Z"
+    "slug": "zaborona-zminy-wifi-gpo",
+    "title": "Як заборонити користувачу змінювати налаштування Wi-Fi через групову політику",
+    "time": "2026-09-13T08:01:27.950Z"
   },
   "engage_index": 60,
   "extra_index": 80,
