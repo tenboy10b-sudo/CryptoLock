@@ -104,14 +104,15 @@
     "how-to-configure-windows-event-forwarding",
     "yak-nalashtuvaty-komp-dlya-studentiv",
     "how-to-edit-windows-registry",
-    "zaborona-zminy-wifi-gpo"
+    "zaborona-zminy-wifi-gpo",
+    "how-to-automate-windows-with-powershell-scripts"
   ],
-  "count": 105,
+  "count": 106,
   "promo_index": 69,
   "last_post": {
-    "slug": "zaborona-zminy-wifi-gpo",
-    "title": "Як заборонити користувачу змінювати налаштування Wi-Fi через групову політику",
-    "time": "2026-09-13T08:01:27.950Z"
+    "slug": "how-to-automate-windows-with-powershell-scripts",
+    "title": "How to Write and Run PowerShell Scripts to Automate Windows Tasks",
+    "time": "2026-09-14T08:01:29.456Z"
   },
   "engage_index": 60,
   "extra_index": 81,
