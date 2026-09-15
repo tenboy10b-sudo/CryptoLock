@@ -105,14 +105,15 @@
     "yak-nalashtuvaty-komp-dlya-studentiv",
     "how-to-edit-windows-registry",
     "zaborona-zminy-wifi-gpo",
-    "how-to-automate-windows-with-powershell-scripts"
+    "how-to-automate-windows-with-powershell-scripts",
+    "ip-marshrutyzatsiya-windows"
   ],
-  "count": 106,
+  "count": 107,
   "promo_index": 69,
   "last_post": {
-    "slug": "how-to-automate-windows-with-powershell-scripts",
-    "title": "How to Write and Run PowerShell Scripts to Automate Windows Tasks",
-    "time": "2026-09-14T08:01:29.456Z"
+    "slug": "ip-marshrutyzatsiya-windows",
+    "title": "Налаштування IP маршрутизації в Windows: статичні маршрути і роутер",
+    "time": "2026-09-15T08:01:22.921Z"
   },
   "engage_index": 61,
   "extra_index": 82,
