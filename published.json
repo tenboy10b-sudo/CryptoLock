@@ -106,14 +106,15 @@
     "how-to-edit-windows-registry",
     "zaborona-zminy-wifi-gpo",
     "how-to-automate-windows-with-powershell-scripts",
-    "ip-marshrutyzatsiya-windows"
+    "ip-marshrutyzatsiya-windows",
+    "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v"
   ],
-  "count": 107,
+  "count": 108,
   "promo_index": 70,
   "last_post": {
-    "slug": "ip-marshrutyzatsiya-windows",
-    "title": "Налаштування IP маршрутизації в Windows: статичні маршрути і роутер",
-    "time": "2026-09-15T08:01:22.921Z"
+    "slug": "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v",
+    "title": "Hyper-V: знімки, клонування і управління віртуальними машинами",
+    "time": "2026-09-16T08:01:28.941Z"
   },
   "engage_index": 61,
   "extra_index": 83,
