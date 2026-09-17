@@ -107,14 +107,15 @@
     "zaborona-zminy-wifi-gpo",
     "how-to-automate-windows-with-powershell-scripts",
     "ip-marshrutyzatsiya-windows",
-    "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v"
+    "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v",
+    "how-to-configure-windows-power-settings"
   ],
-  "count": 108,
+  "count": 109,
   "promo_index": 70,
   "last_post": {
-    "slug": "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v",
-    "title": "Hyper-V: знімки, клонування і управління віртуальними машинами",
-    "time": "2026-09-16T08:01:28.941Z"
+    "slug": "how-to-configure-windows-power-settings",
+    "title": "How to Configure Windows Power Settings for Performance and Battery Life",
+    "time": "2026-09-17T08:01:26.718Z"
   },
   "engage_index": 62,
   "extra_index": 84,
