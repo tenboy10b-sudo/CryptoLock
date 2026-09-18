@@ -108,14 +108,15 @@
     "how-to-automate-windows-with-powershell-scripts",
     "ip-marshrutyzatsiya-windows",
     "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v",
-    "how-to-configure-windows-power-settings"
+    "how-to-configure-windows-power-settings",
+    "how-to-configure-windows-hello"
   ],
-  "count": 109,
+  "count": 110,
   "promo_index": 71,
   "last_post": {
-    "slug": "how-to-configure-windows-power-settings",
-    "title": "How to Configure Windows Power Settings for Performance and Battery Life",
-    "time": "2026-09-17T08:01:26.718Z"
+    "slug": "how-to-configure-windows-hello",
+    "title": "How to Set Up Windows Hello: Fingerprint, Face, and PIN Login",
+    "time": "2026-09-18T08:01:27.020Z"
   },
   "engage_index": 62,
   "extra_index": 85,
