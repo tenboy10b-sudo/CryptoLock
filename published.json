@@ -109,14 +109,15 @@
     "ip-marshrutyzatsiya-windows",
     "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v",
     "how-to-configure-windows-power-settings",
-    "how-to-configure-windows-hello"
+    "how-to-configure-windows-hello",
+    "yak-uvimknuty-secure-boot"
   ],
-  "count": 110,
+  "count": 111,
   "promo_index": 71,
   "last_post": {
-    "slug": "how-to-configure-windows-hello",
-    "title": "How to Set Up Windows Hello: Fingerprint, Face, and PIN Login",
-    "time": "2026-09-18T08:01:27.020Z"
+    "slug": "yak-uvimknuty-secure-boot",
+    "title": "Як увімкнути Secure Boot в BIOS для Windows 10 і 11",
+    "time": "2026-09-19T08:01:25.250Z"
   },
   "engage_index": 63,
   "extra_index": 86,
