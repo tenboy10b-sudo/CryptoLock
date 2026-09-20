@@ -110,14 +110,15 @@
     "yak-pratsyuvaty-z-virtualnymy-mashynamy-hyper-v",
     "how-to-configure-windows-power-settings",
     "how-to-configure-windows-hello",
-    "yak-uvimknuty-secure-boot"
+    "yak-uvimknuty-secure-boot",
+    "perevirka-dysku-na-pomylky-chkdsk"
   ],
-  "count": 111,
+  "count": 112,
   "promo_index": 72,
   "last_post": {
-    "slug": "yak-uvimknuty-secure-boot",
-    "title": "Як увімкнути Secure Boot в BIOS для Windows 10 і 11",
-    "time": "2026-09-19T08:01:25.250Z"
+    "slug": "perevirka-dysku-na-pomylky-chkdsk",
+    "title": "Як перевірити диск C на помилки в Windows",
+    "time": "2026-09-20T08:01:30.037Z"
   },
   "engage_index": 63,
   "extra_index": 87,
