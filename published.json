@@ -111,14 +111,15 @@
     "how-to-configure-windows-power-settings",
     "how-to-configure-windows-hello",
     "yak-uvimknuty-secure-boot",
-    "perevirka-dysku-na-pomylky-chkdsk"
+    "perevirka-dysku-na-pomylky-chkdsk",
+    "how-to-configure-windows-vpn-server"
   ],
-  "count": 112,
+  "count": 113,
   "promo_index": 72,
   "last_post": {
-    "slug": "perevirka-dysku-na-pomylky-chkdsk",
-    "title": "Як перевірити диск C на помилки в Windows",
-    "time": "2026-09-20T08:01:30.037Z"
+    "slug": "how-to-configure-windows-vpn-server",
+    "title": "How to Set Up a Windows VPN Server Using PPTP and SSTP",
+    "time": "2026-09-21T08:01:33.245Z"
   },
   "engage_index": 64,
   "extra_index": 88,
