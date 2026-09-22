@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-22
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-CURRENT ORIGIN MAIN SHA: d9833ec8d4af68868d498e2b0be561bf10ab48a6
+CURRENT ORIGIN MAIN SHA: fa0aa01a3306e3356ef3ff1174b5aa3d946b84b1
 
 ## PROJECT
 
@@ -115,6 +115,8 @@ No verified technical facts available in this repository. Business goal (continu
 **P2:**
 - `@next/third-parties ^16.2.4` listed in `package.json` alongside `next@14.2.3` but never imported anywhere in the codebase (dead dependency, no runtime effect)
 - `/tags` page label "N статей" is actually a sum of per-tag article counts (an article with 6 tags counts 6 times), not a deduplicated article count — not a bug, but a misleading label
+
+**Security note (local hygiene, not a production issue):** the local `.claude/settings.local.json` permission cache has held a plaintext secret (`AUTOPOST_SECRET`) in a cached command string. It was never committed to git and is now git-ignored (see `.gitignore`). No rotation performed as part of documenting this — that remains a separate decision for whoever owns the secret.
 
 ## INVALIDATED FINDINGS
 

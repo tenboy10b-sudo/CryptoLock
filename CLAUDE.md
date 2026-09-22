@@ -236,7 +236,7 @@ Adapt message to platform — never copy the same post everywhere. Consider audi
 
 Build content around search intent, customer problems, product value, expertise, buying journey, topical authority. Content clusters: pillar topic → supporting topics → internal links → conversion pages. Prioritize by business value, search demand, competition, relevance, ability to convert.
 
-For detailed content rules, follow `CONTENT.md`.
+CryptoLock-specific content rules (topic registry / dedup discipline, article structure, UK/EN independence) live in `DOCUMENTATION.md`'s accumulated session history — check there before writing new articles, not a separate content-rules file.
 
 ## 22. ANALYTICS
 
@@ -340,7 +340,7 @@ The objective is not to produce the most code — it's the best practical result
 
 ## 46. CONTENT SYSTEM
 
-For content/copywriting/SEO content/social media/SMM/email marketing/video scripts/editorial work/content strategy/planning/brand voice/repurposing: read and follow `CONTENT.md`. Don't apply the entire content system to unrelated coding tasks.
+For content/copywriting/SEO content/social media/SMM/email marketing/video scripts/editorial work/content strategy/planning/brand voice/repurposing: apply sections 19-21 above plus the CryptoLock-specific content discipline documented in `DOCUMENTATION.md` (duplicate-topic prevention, article structure, UK/EN independent research). Don't apply the entire content system to unrelated coding tasks.
 
 ## 47. FINAL PRINCIPLE
 

@@ -74,7 +74,6 @@ This ordering (Telegram send before the GitHub state write) is a confirmed, unfi
 | `site.config.js` | Site name, description, social links, nav, GA id |
 | `bot.py` | Legacy Telegram bot script — not the live path, kept for reference |
 | `DOCUMENTATION.md` | Full chronological session history (see below) |
-| `SETUP.md` | Clean current-state technical reference (stack, deploy, replication guide) |
 
 ## Content architecture
 

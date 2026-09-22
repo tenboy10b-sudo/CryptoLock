@@ -11,3 +11,8 @@ token.json
 client_secret*.json 
 .vercel
 .env*
+
+# Local Claude Code tool state (permission cache, dev-server launch config).
+# Spans multiple unrelated projects on this machine and has previously held a
+# plaintext secret in its permission-cache history — must stay machine-local.
+.claude/
