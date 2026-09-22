@@ -112,14 +112,15 @@
     "how-to-configure-windows-hello",
     "yak-uvimknuty-secure-boot",
     "perevirka-dysku-na-pomylky-chkdsk",
-    "how-to-configure-windows-vpn-server"
+    "how-to-configure-windows-vpn-server",
+    "nalashtuvannya-faylovoho-servera-windows"
   ],
-  "count": 113,
+  "count": 114,
   "promo_index": 73,
   "last_post": {
-    "slug": "how-to-configure-windows-vpn-server",
-    "title": "How to Set Up a Windows VPN Server Using PPTP and SSTP",
-    "time": "2026-09-21T08:01:33.245Z"
+    "slug": "nalashtuvannya-faylovoho-servera-windows",
+    "title": "Як налаштувати файловий сервер Windows з квотами і контролем доступу",
+    "time": "2026-09-22T08:01:29.494Z"
   },
   "engage_index": 64,
   "extra_index": 89,
