@@ -406,6 +406,18 @@ export async function getStaticProps({ params, locale }) {
       return { notFound: true }
     }
 
+    // /en/{slug} без реального EN-перекладу ніколи не повинен віддавати
+    // український контент як 200 (дублікат-сигнал для Google) — редиректимо
+    // на UK-оригінал. locale:false обов'язковий, інакше Next.js домальовує
+    // /en/ назад до відносного destination (та сама пастка, що й у
+    // редиректах next.config.js).
+    if (locale === 'en' && post.isFallback) {
+      return {
+        redirect: { destination: `/${post.slug}`, permanent: true, locale: false },
+        revalidate: 3600,
+      }
+    }
+
     const all = getAllPosts(locale)
     const related = all
       .filter(p => p.slug !== post.slug && p.tags && post.tags && p.tags.some(t => post.tags.includes(t)))
