@@ -9,9 +9,6 @@ export async function getServerSideProps({ res }) {
 Allow: /
 Disallow: /api/
 
-# Заблокувати індексацію службових папок Next.js
-Disallow: /_next/
-
 Sitemap: ${siteConfig.url}/sitemap.xml`
 
   res.setHeader('Content-Type', 'text/plain')
