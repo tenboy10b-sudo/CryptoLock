@@ -3555,3 +3555,37 @@ UK-канонічна стаття (`siniy-ekran-smerti-windows-11-24h2`) вже
 **Відкату не знадобилось** — жодних регресій не виявлено.
 
 ---
+
+### Сесія 12 (продовження 51) — Stage 2I: розблокування ресурсів Next.js для Googlebot
+
+**DATE:** 2026-09-23
+
+**PROBLEM:** GSC URL Inspection Live Test показав, що Googlebot не зміг завантажити 10 із 14 ресурсів сторінки (JS/CSS) через правило `robots.txt`:
+```
+Disallow: /_next/
+```
+Це правило існувало з коміту `a0c979f` (24.04.2026, "fix vercel config") і блокувало critical rendering-ресурси Next.js — усі статичні JS/CSS-файли з `/_next/static/`.
+
+**EVIDENCE:** GSC Live Test (наданий користувачем у Stage 2I), підтверджує факт блокування прямо зараз — не історичний, не гіпотетичний.
+
+**DECISION:** видалити `Disallow: /_next/` з `pages/robots.txt.js`. Це виправляє лише підтверджену поточну проблему рендерингу. **Явно НЕ стверджується**, що це правило спричинило колапс трафіку 13.06.2026 — той інцидент лишається окремим, ще не закритим питанням (Stage 2C, продовження 49 вище); часовий проміжок появи цього правила (24.04) значно передує колапсу (13.06) і вже раніше був виключений як пряма причина за часовим критерієм.
+
+**EXACT CHANGE:** `pages/robots.txt.js` — видалено рядок `Disallow: /_next/` і пов'язаний з ним коментар. Без інших змін (rule `/api/`, `Sitemap:` — без змін).
+
+**BUILD:** `npm run build` — успішно, 818 сторінок, без помилок.
+
+**Локальна перевірка (`next start`):** `/robots.txt` віддає очікуваний вміст (`/api/` заблокований, `/_next/` — ні, `Sitemap:`-рядок не змінився), `/sitemap.xml` — 200.
+
+**COMMIT:** `bc1ecb6` — "fix: allow Googlebot to load Next.js resources"
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_3hPjQVojRbLu9As1ZVcQFLwMzNKd`, статус Ready, `cryptolockua.com` коректно заалайожено.
+
+**PRODUCTION VALIDATION:** `https://cryptolockua.com/robots.txt` — підтверджено без `Disallow: /_next/`, `/api/` та `Sitemap:` без змін; головна сторінка — 200; `/sitemap.xml` — 200; зразковий ресурс `/_next/static/chunks/polyfills-*.js` — 200.
+
+**NEXT VALIDATION (не зроблено цієї сесії):** повторити GSC URL Inspection Live Test для `/yak-vstanovyty-python-windows` (або іншої репрезентативної UK-статті), щоб підтвердити, що всі 14 ресурсів тепер завантажуються Googlebot-ом.
+
+**ROLLBACK:** відкат одного коміту (`bc1ecb6`) + попередній Vercel-деплой (`dpl_FhkpQPEJjsA5pkxxTHYMgJL7tKmB`) у разі регресії.
+
+**Регресій не виявлено.**
+
+---

@@ -1,8 +1,8 @@
 # CryptoLock Project State
 
-LAST UPDATED: 2026-09-22
+LAST UPDATED: 2026-09-23
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-CURRENT ORIGIN MAIN SHA: fa0aa01a3306e3356ef3ff1174b5aa3d946b84b1
+CURRENT ORIGIN MAIN SHA: bc1ecb6
 
 ## PROJECT
 
@@ -55,8 +55,8 @@ STATUS: no verified data in this repository's documentation.
 
 ## SITE STATUS
 
-- Production responds 200 OK (verified 2026-09-22)
-- `robots.txt` includes `Disallow: /_next/` (present since commit `a0c979f`, 2026-04-24) — confirmed live in production
+- Production responds 200 OK (verified 2026-09-23)
+- `robots.txt` no longer blocks `/_next/` (fixed 2026-09-23, commit `bc1ecb6`, deployment `dpl_3hPjQVojRbLu9As1ZVcQFLwMzNKd` — see KNOWN BUGS/COMPLETED WORK below). `Disallow: /_next/` had been present since commit `a0c979f`, 2026-04-24, and was confirmed via GSC URL Inspection Live Test to block Googlebot from loading 10 of 14 page resources (JS/CSS) during rendering. This fix addresses only that confirmed current rendering restriction — it is NOT claimed to be the cause of the 2026-06-13 traffic collapse (see Stage 2C forensic reconstruction in DOCUMENTATION.md for that separate, still-open question).
 - `sitemap.xml` returns 480 URLs, confirmed 0 `/tags/*` entries (noindex + sitemap-exclusion fix from an earlier session is holding)
 - Individual ISR article pages generate correctly on demand even without a fresh full deploy (confirmed by testing several September-dated articles: 200 OK)
 
@@ -120,7 +120,6 @@ No verified technical facts available in this repository. Business goal (continu
 
 **P1:**
 - Race condition in `pages/api/autopost.js`: Telegram send precedes GitHub state write, no idempotency key, no lock
-- `robots.txt` blocks `/_next/` (present since 2026-04-24), against Google's own guidance on not blocking rendering-critical resources
 
 **P2:**
 - `@next/third-parties ^16.2.4` listed in `package.json` alongside `next@14.2.3` but never imported anywhere in the codebase (dead dependency, no runtime effect)
@@ -158,6 +157,8 @@ No verified technical facts available in this repository. Business goal (continu
 - `/tags/*` pages set to noindex and removed from sitemap
 - Publish queue re-spaced from ~1 pair/day to 2 pairs/week
 - This governance/documentation baseline (PROJECT_STATE.md, HANDOFF.md, CLAUDE.md, DOCUMENTATION.md entry) — 2026-09-22
+- Fixed cross-locale `/en/{uk-slug}` fake-200-fallback (`pages/[slug].js`, commit `0943b87`, deployed 2026-09-23)
+- Removed `Disallow: /_next/` from robots.txt so Googlebot can load Next.js JS/CSS resources (`pages/robots.txt.js`, commit `bc1ecb6`, deployed 2026-09-23)
 
 ## BACKLOG
 
@@ -166,7 +167,6 @@ No verified technical facts available in this repository. Business goal (continu
 
 **P1:**
 - Fix the autopost.js race condition (reorder state write before Telegram send, or add an idempotency key)
-- Remove `Disallow: /_next/` from robots.txt
 
 **P2:**
 - Remove unused `@next/third-parties` dependency
@@ -174,4 +174,4 @@ No verified technical facts available in this repository. Business goal (continu
 
 ## NEXT ACTION
 
-Fresh Google Search Console analysis before any further SEO changes.
+Repeat GSC URL Inspection Live Test for `/yak-vstanovyty-python-windows` (or another representative UK article) to confirm the `/_next/` robots.txt fix actually resolves the "10 of 14 resources blocked" result now that it's live in production. Do not expect this to move the June-13 traffic-collapse question — that stays a separate, still-open investigation (see Stage 2C in DOCUMENTATION.md).
