@@ -113,14 +113,15 @@
     "yak-uvimknuty-secure-boot",
     "perevirka-dysku-na-pomylky-chkdsk",
     "how-to-configure-windows-vpn-server",
-    "nalashtuvannya-faylovoho-servera-windows"
+    "nalashtuvannya-faylovoho-servera-windows",
+    "yak-nalashtuvaty-diahnostiku-pamiati-windows"
   ],
-  "count": 114,
+  "count": 115,
   "promo_index": 73,
   "last_post": {
-    "slug": "nalashtuvannya-faylovoho-servera-windows",
-    "title": "Як налаштувати файловий сервер Windows з квотами і контролем доступу",
-    "time": "2026-09-22T08:01:29.494Z"
+    "slug": "yak-nalashtuvaty-diahnostiku-pamiati-windows",
+    "title": "Діагностика пам'яті Windows: перевірка RAM на помилки",
+    "time": "2026-09-23T08:01:27.161Z"
   },
   "engage_index": 65,
   "extra_index": 90,
