@@ -255,7 +255,7 @@ export default function Post({ post, related, locale }) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Головна', item: SITE },
       ...(post.tags && post.tags[0]
-        ? [{ '@type': 'ListItem', position: 2, name: post.tags[0], item: `${SITE}/tags/${post.tags[0]}` }]
+        ? [{ '@type': 'ListItem', position: 2, name: post.tags[0], item: `${SITE}${isEn ? '/en' : ''}/tags/${post.tags[0]}` }]
         : []),
       { '@type': 'ListItem', position: post.tags && post.tags[0] ? 3 : 2, name: post.title, item: postUrl },
     ],
@@ -305,7 +305,7 @@ export default function Post({ post, related, locale }) {
             <span style={s.bcSep} aria-hidden="true">/</span>
             {post.tags && post.tags[0] && (
               <>
-                <Link href={`/tags/${post.tags[0]}`} locale={false} style={s.bcLink}>{post.tags[0]}</Link>
+                <Link href={`/tags/${post.tags[0]}`} style={s.bcLink}>{post.tags[0]}</Link>
                 <span style={s.bcSep} aria-hidden="true">/</span>
               </>
             )}
@@ -317,7 +317,7 @@ export default function Post({ post, related, locale }) {
               {post.tags && (
                 <div style={s.tagRow}>
                   {post.tags.map(tag => (
-                    <Link key={tag} href={`/tags/${tag}`} locale={false} className="tag-chip">{tag}</Link>
+                    <Link key={tag} href={`/tags/${tag}`} className="tag-chip">{tag}</Link>
                   ))}
                 </div>
               )}
