@@ -139,7 +139,12 @@
     "🔇 **Звук пропав після оновлення Windows — як повернути?**",
     "🔋 **Команда дня: powercfg /batteryreport**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "5fe44741-1030-48da-b83f-b96bc5686944",
+    "type": "content",
+    "started_at": "2026-09-24T08:01:18.807Z",
+    "expires_at": "2026-09-24T08:16:18.807Z"
+  },
   "pending": null,
   "last_message_id": null
 }
