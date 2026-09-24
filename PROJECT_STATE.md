@@ -132,7 +132,11 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 **Now confirmed working:** CSRF/state flow, Vercel Sandbox credentials, token exchange, `user.info.basic`, `video.list` — CryptoLock can read its own TikTok public video metrics via the Sandbox app. Not yet confirmed available via this API/scope set: retention, completion rate, profile visits, follows — do not assume these are accessible until specifically checked.
 
-**NEXT ACTION:** design and implement the persistent TikTok analytics collector: `TikTok API → server-side collector → persistent analytics history → GPT/Claude analysis`. This is a new, not-yet-scoped implementation task — distinct from the smoke test above.
+**INFRASTRUCTURE — Upstash Redis (VERIFIED, connected 2026-09-24, продовження 59):** Upstash for Redis created via Vercel Marketplace and connected to the `crypto-lock` Vercel project, for TikTok server-side runtime state (`access_token`, `refresh_token`, token expiration metadata, future collector lock/idempotency state). Vercel Production env var **NAMES only** (values never written here): `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. **Redis currently contains no intentionally persisted TikTok token bundle yet** — the store exists and is connected, but no application code writes to it yet. Analytics-history storage remains a **separate, still-pending decision** (see this session's collector storage design discussion — not yet committed to code or docs as a final decision); Redis is scoped to tokens/runtime state only, not analytics history.
+
+**NEXT ACTION (immediate):** modify the verified TikTok OAuth callback (`pages/api/tiktok/callback.js`) so a successful OAuth authorization securely persists the token bundle server-side into Redis — currently the callback still discards tokens at the end of the request, per its original smoke-test design.
+
+**NEXT ACTION (follow-on, still not scoped):** design and implement the persistent TikTok analytics collector: `TikTok API → server-side collector → persistent analytics history → GPT/Claude analysis`, including a final decision on analytics-history storage.
 
 ## MONETIZATION
 

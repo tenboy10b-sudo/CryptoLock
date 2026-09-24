@@ -120,9 +120,14 @@ User (via /tiktok-connect, temporary internal test route, noindex/nofollow)
   → /api/tiktok/login (random CSRF state → Secure/HttpOnly/SameSite=Lax cookie, redirects to TikTok)
   → TikTok OAuth (Sandbox app, scopes: user.info.basic, video.list)
   → /api/tiktok/callback (server-side token exchange, calls user/info + video/list, renders a throwaway result page)
+  → Upstash Redis (durable runtime-state store for the eventual token/collector architecture — connected 2026-09-24, not yet written to by any application code)
 ```
 
-Tokens are **never persisted** — no DB, no GitHub write, no file. The intended eventual architecture (not yet built) is: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login** (CSRF, credentials, token exchange, `user.info.basic`, `video.list` all confirmed working) — see `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-58) for the full implementation/incident history. The persistent analytics collector itself is the next not-yet-scoped implementation task.
+Tokens are **currently never persisted** by the live callback code — no DB write, no GitHub write, no file. As of 2026-09-24, an **Upstash for Redis** store has been created via the Vercel Marketplace and connected to the `crypto-lock` Vercel project specifically to hold TikTok server-side runtime state (`access_token`, `refresh_token`, token expiration metadata, future collector lock/idempotency state) — this is durable, secret-capable, server-side-only storage, deliberately **not** the GitHub repo (TikTok tokens must never be committed to Git). The Redis store exists and is connected, but the OAuth callback has not yet been modified to write to it — that is the next implementation step. Analytics-history storage (as opposed to token/runtime-state storage) is a separate, still-pending decision, not yet built or finalized.
+
+Vercel Production env var **names** for the Redis store (values never documented): `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. Application code should prefer `KV_REST_API_URL` + `KV_REST_API_TOKEN` for write-capable REST access, unless implementation evidence shows another binding (e.g. `REDIS_URL` for a TCP client) is actually required.
+
+The intended eventual architecture (not yet built) is: `TikTok API → server-side collector → Redis (tokens/state) + persistent analytics history (storage TBD) → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login** (CSRF, credentials, token exchange, `user.info.basic`, `video.list` all confirmed working) — see `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-59) for the full implementation/incident history.
 
 ## Tools
 
@@ -146,6 +151,11 @@ Names only, no values:
 | `TIKTOK_CLIENT_KEY` | `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js` |
 | `TIKTOK_CLIENT_SECRET` | `pages/api/tiktok/callback.js` only — never sent to the client |
 | `TIKTOK_REDIRECT_URI` | `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js` |
+| `KV_REST_API_URL` | Upstash Redis, connected 2026-09-24 — not yet used by any application code; preferred binding for write-capable REST access once the TikTok token-persistence work is implemented |
+| `KV_REST_API_TOKEN` | Upstash Redis — see above; preferred binding alongside `KV_REST_API_URL` |
+| `KV_REST_API_READ_ONLY_TOKEN` | Upstash Redis — read-only variant, auto-provisioned, not yet used |
+| `KV_URL` | Upstash Redis — auto-provisioned, not yet used |
+| `REDIS_URL` | Upstash Redis — auto-provisioned TCP connection string, not yet used |
 
 ## Local setup
 

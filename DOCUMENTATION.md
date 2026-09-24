@@ -3778,3 +3778,23 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** спроєктувати і реалізувати постійний TikTok-collector аналітики: `TikTok API → server-side collector → persistent analytics history → GPT/Claude analysis`. Це нова, ще не оскоупована задача реалізації — окрема від цього smoke test.
 
 ---
+
+### Сесія 12 (продовження 59) — Підключено Upstash Redis (інфраструктура)
+
+**DATE:** 2026-09-24
+
+**CHANGE:** через Vercel Marketplace створено і підключено до Vercel-проєкту `crypto-lock` сховище Upstash for Redis. Призначення — server-side runtime-стан для TikTok: `access_token`, `refresh_token`, метадані терміну дії токена, майбутній lock/idempotency-стан для collector'а. Це відповідає рекомендованій архітектурі з попереднього design-аудиту цієї сесії (продовження до токенів — Redis/KV, не GitHub).
+
+**EVIDENCE:** підтверджено напряму (read-only) командою `vercel env ls production` — 5 нових імен змінних середовища з'явились у Vercel Production ~2 хвилини тому: `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. Значення НЕ переглядались, не друкувались, не логувались.
+
+**DECISION:** токени/секретний runtime-стан → Upstash Redis. Історія аналітики (analytics history) → рішення про сховище ще НЕ прийняте остаточно (окреме питання, розглянуте в design-аудиті цієї сесії, але не закомічене як фінальне рішення). Поточний публічний репозиторій CryptoLock НЕ повинен і надалі не міститиме TikTok-токенів.
+
+**SECURITY:** жодне значення credential/токена не записано в жоден файл цього репозиторію, включно з цим документом. Записані лише НАЗВИ змінних середовища (без значень) — той самий стандарт, що застосовувався до `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET`/`TIKTOK_REDIRECT_URI` раніше в цій же сесії.
+
+**RESULT:** Redis-сховище існує і підключене до продакшн-оточення Vercel, але **жодного коду застосунку, який би щось туди записував, ще не існує** — сховище порожнє з точки зору навмисно збереженого TikTok token bundle. Жодних змін коду, OAuth-роутів, TikTok-конфігурації, Telegram, SEO, sitemap чи статей не торкались.
+
+**COMMIT SHA:** немає (лише документаційний запис про інфраструктурну зміну, без змін коду).
+
+**FOLLOW-UP:** модифікувати верифікований TikTok OAuth callback (`pages/api/tiktok/callback.js`) так, щоб успішна авторизація безпечно зберігала token bundle server-side у Redis (наразі callback і далі відкидає токени в кінці запиту, за первісним дизайном smoke test). Рішення про сховище для analytics history залишається окремим, ще не прийнятим питанням.
+
+---
