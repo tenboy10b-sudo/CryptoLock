@@ -134,9 +134,18 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 **INFRASTRUCTURE — Upstash Redis (connected 2026-09-24, продовження 59):** Upstash for Redis created via Vercel Marketplace and connected to the `crypto-lock` Vercel project, for TikTok server-side runtime state (`access_token`, `refresh_token`, token expiration metadata, future collector lock/idempotency state). Vercel Production env var **NAMES only** (values never written here): `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. Analytics-history storage remains a **separate, still-pending decision** — Redis is scoped to tokens/runtime state only, not analytics history.
 
-**TOKEN PERSISTENCE — STATUS: IMPLEMENTED — awaiting one real OAuth persistence validation (продовження 60, commit `b8193db`, deployed 2026-09-24).** `pages/api/tiktok/callback.js` now persists the token bundle to Redis under the fixed key **`cryptolock:tiktok:token_bundle:v1`** via a single Redis SET, using `KV_REST_API_URL`/`KV_REST_API_TOKEN` only (never the read-only token or `KV_URL`/`REDIS_URL`). Pipeline order: token exchange → structural validation (`access_token`/`refresh_token`/`expires_in`/`refresh_expires_in` all required) → required-scope check → persist to Redis → `user.info.basic` → `video.list` → success page. Any validation or Redis failure fails closed with a generic 502 page and `user.info`/`video.list` are never called. 65/65 local tests passed (new persistence scenarios + full regression of the existing CSRF/token-exchange diagnostics). `npm run build` passed. Deployed and safely verified in production (`/tiktok-connect` 200, login redirect unchanged, existing diagnostics still function on a synthetic fake/expired code) — **no real OAuth login was performed, and no fake token bundle was written to the real production Redis database.**
+**TOKEN PERSISTENCE — STATUS: VERIFIED (продовження 60-61, commit `b8193db`, deployed 2026-09-24).** `pages/api/tiktok/callback.js` persists the token bundle to Redis under the fixed key **`cryptolock:tiktok:token_bundle:v1`** via a single Redis SET, using `KV_REST_API_URL`/`KV_REST_API_TOKEN` only (never the read-only token or `KV_URL`/`REDIS_URL`). Pipeline order: token exchange → structural validation (`access_token`/`refresh_token`/`expires_in`/`refresh_expires_in` all required) → required-scope check → persist to Redis → `user.info.basic` → `video.list` → success page. Any validation or Redis failure fails closed with a generic 502 page and `user.info`/`video.list` are never called. 65/65 local tests passed. `npm run build` passed.
 
-**NEXT ACTION:** account owner performs one real authorization through `/tiktok-connect`. Expected safe success result: `TikTok connected: YES`, `Secure token persistence: YES`, 20 videos (or the current valid video count). Only after that real write should Redis persistence be considered VERIFIED (not just implemented).
+**REAL PRODUCTION VALIDATION (2026-09-24, via `/tiktok-connect`, real browser login by the account owner):**
+- TikTok connected: YES
+- Display name: `cryptolockua`
+- Scopes granted: `user.info.basic`, `video.list`
+- Videos returned: 20
+- Secure token persistence: YES
+
+This confirms a real TikTok OAuth token bundle was successfully written to Upstash Redis under `cryptolock:tiktok:token_bundle:v1` — token persistence is no longer just implemented, it is **VERIFIED by a live write**. No token values are recorded here or anywhere in this repo's documentation.
+
+**NEXT ACTION:** design/implement the token-refresh flow + a read-only collector that reads the persisted Redis token bundle (refreshing `access_token` via `refresh_token` when expired). Do **not** yet implement analytics-history storage — that remains a separate, still-pending decision.
 
 **NEXT ACTION (follow-on, still not scoped):** design and implement the persistent TikTok analytics collector: `TikTok API → server-side collector → persistent analytics history → GPT/Claude analysis`, including a final decision on analytics-history storage.
 

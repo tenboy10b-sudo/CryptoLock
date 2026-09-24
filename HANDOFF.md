@@ -130,7 +130,7 @@ As of 2026-09-24 (commit `b8193db`), a successful, fully-scoped OAuth login **pe
 
 Vercel Production env var **names** for the Redis store (values never documented): `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. Application code uses `KV_REST_API_URL` + `KV_REST_API_TOKEN` for write-capable REST access (never the read-only token, `KV_URL`, or `REDIS_URL`).
 
-The intended eventual architecture (not yet built) is: `TikTok API → server-side collector → Redis (tokens/state, now implemented) + persistent analytics history (storage TBD) → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login** (CSRF, credentials, token exchange, `user.info.basic`, `video.list` all confirmed working); token persistence is **implemented and safely deployed, but not yet confirmed by a real write** — see `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-60) for the full implementation/incident history.
+The intended eventual architecture (not yet built) is: `TikTok API → server-side collector (not yet built) → Redis (tokens/state, implemented and verified) + persistent analytics history (storage TBD) → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login**, and **token persistence to Redis is also VERIFIED by a real write** (CSRF, credentials, token exchange, `user.info.basic`, `video.list`, and Redis persistence all confirmed working) — see `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-61) for the full implementation/incident history.
 
 ## Tools
 

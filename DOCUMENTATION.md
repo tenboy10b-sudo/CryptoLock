@@ -3827,3 +3827,28 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** одна реальна авторизація користувача через `/tiktok-connect`. Очікуваний безпечний результат: `TikTok connected: YES`, `Secure token persistence: YES`, коректна кількість відео. Лише після цього персистенцію в Redis можна вважати ПІДТВЕРДЖЕНОЮ (VERIFIED), а не лише реалізованою.
 
 ---
+
+### Сесія 12 (продовження 61) — Підтверджено реальним записом: персистенція TikTok токенів в Redis
+
+**DATE:** 2026-09-24
+
+**OBJECTIVE:** зафіксувати успішну реальну продакшн-валідацію персистенції TikTok OAuth token bundle в Upstash Redis (реалізовано в продовженні 60).
+
+**EVIDENCE:** власник акаунту виконав одну реальну TikTok Sandbox OAuth авторизацію через `https://cryptolockua.com/tiktok-connect`, повідомлено напряму. Жива сторінка результату показала:
+- TikTok connected: YES
+- Display name: `cryptolockua`
+- Scopes granted: `user.info.basic`, `video.list`
+- Videos returned: 20
+- Secure token persistence: YES
+
+**RESULT:** це підтверджує, що реальний TikTok OAuth token bundle був успішно записаний server-side в Upstash Redis під ключем `cryptolock:tiktok:token_bundle:v1`. Тепер підтверджено (не лише реалізовано код, а й перевірено живим записом): TikTok OAuth end-to-end, CSRF/state-механізм, обмін токена, `user.info.basic`, `video.list`, підключення Upstash Redis, реальна персистенція token bundle.
+
+**STATUS:** TikTok token persistence — **VERIFIED** (раніше: IMPLEMENTED — awaiting validation, продовження 60). Постійний collector аналітики (daily analytics collector) і далі НЕ реалізований.
+
+**SECURITY:** жодне значення `access_token`, `refresh_token`, `open_id`, `client_key`, `client_secret`, Redis credential, коду авторизації чи state/cookie не записано в цей запис чи будь-де в документації — зафіксовано лише безпечні факти результату (статус підключення, ім'я акаунту, назви scopes, кількість відео, булевий факт успішної персистенції).
+
+**COMMIT SHA:** немає (документаційний запис про подію верифікації, без змін коду — та сама продакшн-версія `b8193db`/`dpl_5ZZ6c6g6TZiDupNbgqBdoxKLvHXp`).
+
+**FOLLOW-UP:** спроєктувати і реалізувати token-refresh потік + read-only collector, що читає збережений в Redis token bundle (оновлює `access_token` через `refresh_token`, коли термін дії спливає). Постійне сховище для analytics history і далі залишається окремим, ще не прийнятим питанням — НЕ реалізовувати цієї сесії.
+
+---
