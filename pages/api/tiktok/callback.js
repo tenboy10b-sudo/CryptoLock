@@ -9,6 +9,7 @@ import {
   escapeHtml,
   renderErrorPage,
   renderResultPage,
+  renderStateDiagnosticPage,
 } from '../../../lib/tiktokAuth'
 
 const REQUIRED_SCOPES = ['user.info.basic', 'video.list']
@@ -49,8 +50,28 @@ export default async function handler(req, res) {
   }
 
   const cookieState = parseCookie(req.headers.cookie, STATE_COOKIE_NAME)
-  if (!state || !cookieState || state !== cookieState) {
-    return fail(res, 403, 'Invalid or missing CSRF state.', 'state_mismatch')
+  const statePresent = Boolean(state)
+  const cookieHeaderPresent = Boolean(req.headers.cookie)
+  const stateCookiePresent = Boolean(cookieState)
+  const stateMatchesCookie = statePresent && stateCookiePresent && state === cookieState
+
+  if (!stateMatchesCookie) {
+    // TEMPORARY diagnostic (see TIKTOK OAUTH — DIAGNOSE CSRF STATE FAILURE task):
+    // booleans only, never the actual state/cookie values.
+    log('state_mismatch', {
+      state_present: statePresent,
+      cookie_header_present: cookieHeaderPresent,
+      state_cookie_present: stateCookiePresent,
+      state_matches_cookie: stateMatchesCookie,
+      request_method: req.method,
+      request_host: req.headers.host || null,
+    })
+    res.status(403).setHeader('Content-Type', 'text/html; charset=utf-8')
+    return res.end(renderStateDiagnosticPage({
+      statePresent,
+      stateCookiePresent,
+      stateMatchesCookie,
+    }))
   }
 
   if (!code) {
