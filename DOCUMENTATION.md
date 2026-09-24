@@ -3852,3 +3852,34 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** спроєктувати і реалізувати token-refresh потік + read-only collector, що читає збережений в Redis token bundle (оновлює `access_token` через `refresh_token`, коли термін дії спливає). Постійне сховище для analytics history і далі залишається окремим, ще не прийнятим питанням — НЕ реалізовувати цієї сесії.
 
 ---
+
+### Сесія 12 (продовження 62) — Автономний TikTok token refresh + read-only collector
+
+**DATE:** 2026-09-24
+
+**OBJECTIVE:** побудувати перший автономний TikTok collector endpoint, що доводить: CryptoLock може читати TikTok video metrics без браузерної OAuth-сесії, використовуючи вже персистований в Redis token bundle (продовження 60-61). Аналітичну історію ще НЕ зберігати.
+
+**BASELINE:** підтверджений production-стан на старт задачі: TikTok OAuth VERIFIED, `user.info.basic` VERIFIED, `video.list` VERIFIED, Upstash Redis token persistence VERIFIED (реальний запис в `cryptolock:tiktok:token_bundle:v1`). Власник акаунту додав новий Production env var `TIKTOK_COLLECT_SECRET`.
+
+**IMPLEMENTATION:**
+- `lib/tiktokTokenStore.js` (розширено): `loadTokenBundle()` — читає bundle з Redis, обробляє і вже-декодований об'єкт, і сирий JSON-рядок (захисно, оскільки це не гарантована поведінка SDK), валідує обов'язкові поля (`schema_version===1`, `access_token`, `refresh_token`, числові `*_expires_at`, `scope`, `token_type`, `open_id`), НІКОЛИ не видаляє пошкоджений bundle автоматично. `acquireCollectorLock()`/`releaseCollectorLock()` — Redis `SET NX EX 120` під ключем `cryptolock:tiktok:collector_lock:v1`, звільнення виключно через атомарний Lua compare-and-delete (перевірка, що значення в Redis і далі дорівнює ID цього виконання, перед видаленням) — жодного "сліпого" DEL.
+- `lib/tiktokCollector.js` (новий): `decideTokenAction()` — чиста функція вибору дії (reauthorization_required / use_existing / refresh) на основі `access_token_expires_at`/`refresh_token_expires_at`, поріг проактивного оновлення — 20 хвилин до закінчення `access_token`. `refreshAccessToken()` — виклик TikTok `grant_type=refresh_token` (без `redirect_uri`), витягує ті самі 4 безпечні поля діагностики при помилці, що й існуюча діагностика обміну токена. `validateRefreshedBundle()` — додає до базової структурної валідації (переюзаної з `validateTokenBundle`) перевірку обов'язкових scopes і збігу `open_id` зі старим bundle (розбіжність — fail closed, НЕ перезаписувати). `collectVideos()` — пагінація `video.list` з жорстким лімітом 10 сторінок/200 відео, `truncated: true` якщо ліміт досягнуто, поки TikTok ще звітує `has_more`.
+- `pages/api/tiktok/collect.js` (новий): лише `POST` (`405` інакше), Bearer-автентифікація з константним часом порівняння (`crypto.timingSafeEqual` з обробкою різної довжини буферів), секрет НІКОЛИ не приймається через query/body, fail-closed 500 якщо сам `TIKTOK_COLLECT_SECRET` не налаштований на сервері. Lock отримується перед будь-якою роботою (409 при паралельному запуску), звільняється в `finally`. Порядок: завантажити bundle з Redis → визначити дію → за потреби refresh + валідація + персистенція в Redis (атомарно, ДО виклику `video.list`) → `video.list` з пагінацією → безпечна JSON-відповідь. Якщо персистенція після refresh падає — виконання переривається БЕЗ виклику `video.list` (оскільки TikTok міг уже ротувати refresh_token server-side, і продовження на неоновленому стані ризиковане).
+
+**TOKEN REFRESH LOGIC:** проактивний refresh за 20 хвилин до `access_token_expires_at`; якщо `refresh_token_expires_at` вже минув — жодного звернення до TikTok, одразу `reauthorization_required: true`. Новий `refresh_token` (яким би він не був — тим самим чи іншим) завжди персистується повністю. Жодного припущення про ротацію в той чи інший бік.
+
+**CONCURRENCY:** Redis-lock з TTL 120с, атомарне звільнення лише власником (Lua compare-and-delete), гарантує що паралельні запуски collector'а ніколи одночасно не рефрешать токен.
+
+**SECURITY:** жодне значення `access_token`, `refresh_token`, `client_secret`, `TIKTOK_COLLECT_SECRET`, Redis credential чи заголовок `Authorization` не логується і не повертається в JSON-відповіді — підтверджено автоматизованим скануванням відповіді й захоплених логів у тестах. Секрет collector'а приймається виключно через заголовок `Authorization: Bearer`, підтримки через query string немає.
+
+**TESTS:** 55/55 локальних асертів, покрито усі 40 обов'язкових сценаріїв: автентифікація (GET→405, відсутній/невірний Bearer→401, відсутній env→fail closed), Redis/lock (відсутній Redis env, відсутній/пошкоджений bundle, успішне отримання/блокування/звільнення lock), повний token lifecycle (>20хв без refresh, ≤20хв/протермінований access token → refresh, протермінований refresh token → reauthorization_required, точно один Redis SET при успішному refresh, збереження нового/того ж самого refresh_token, усі 5 сценаріїв "no overwrite" — відсутній access/refresh_token, невалідні expiry, відсутній scope, розбіжність open_id, збій персистенції Redis → `video.list` НЕ викликається, безпечна обробка TikTok-помилки й malformed-відповіді), video.list (одна сторінка, пагінація за курсором, зупинка на `has_more=false`, жорсткий ліміт 10 сторінок, `truncated=true` при досягненні ліміту, malformed/TikTok-помилка), відсутність витоку секретів. Підтверджено (через `git diff --stat`), що `pages/api/tiktok/callback.js`, `lib/tiktokAuth.js`, `pages/api/tiktok/login.js` НЕ змінювались цієї сесії — тому їхній попередній результат 65/65 (продовження 60) лишається чинним без повторного прогону. `npm run build` — успішно.
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_4zTD5Le861UDTuG5iWqrJpirjaSv`, `cryptolockua.com`.
+
+**RESULT:** задеплоєно і безпечно перевірено в продакшн: `GET /api/tiktok/collect` → 405, `POST` без `Authorization` → 401, `POST` з явно невірним Bearer → 401, `/tiktok-connect` і далі 200. **Жодного автентифікованого виклику collector'а НЕ виконувалось, і жодні фейкові токени НЕ використовувались проти реальної продакшн-бази Redis.** Реальна валідація повного refresh+collect потоку ще НЕ виконана.
+
+**COMMIT SHA:** `5b0b073`
+
+**FOLLOW-UP:** власник акаунту виконує один автентифікований `POST /api/tiktok/collect` (з реальним `TIKTOK_COLLECT_SECRET`) для підтвердження повного refresh+collect потоку живим викликом. Analytics history і далі НЕ зберігається — окреме, ще не прийняте рішення.
+
+---

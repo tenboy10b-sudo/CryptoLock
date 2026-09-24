@@ -123,14 +123,30 @@ User (via /tiktok-connect, temporary internal test route, noindex/nofollow)
       → persist token bundle to Redis → user.info.basic + video.list → throwaway result page)
   → Upstash Redis (durable token/runtime-state store — connected 2026-09-24, written to on
       every successful OAuth login as of commit b8193db, deployed 2026-09-24)
-  → future collector (not yet built)
+
+cron/future trigger (not yet scheduled)
+  → POST /api/tiktok/collect (Bearer TIKTOK_COLLECT_SECRET, constant-time compare)
+  → Redis lock (cryptolock:tiktok:collector_lock:v1, SET NX EX 120, atomic
+      compare-and-delete release — implemented and deployed, commit 5b0b073, 2026-09-24)
+  → Redis token bundle (cryptolock:tiktok:token_bundle:v1)
+  → refresh via TikTok if access_token_expires_at <= now + 20 minutes
+  → persist refreshed bundle to Redis (before video.list — a persist failure here
+      aborts the run rather than risk continuing on a token TikTok may have rotated)
+  → TikTok video.list, paginated (hard cap 10 pages / 200 videos, truncated: true if hit)
+  → secret-gated JSON response (no token/secret values)
+
+analytics snapshots are NOT persisted yet (separate, still-pending storage decision)
 ```
 
 As of 2026-09-24 (commit `b8193db`), a successful, fully-scoped OAuth login **persists the token bundle server-side to Upstash Redis** under one fixed key: **`cryptolock:tiktok:token_bundle:v1`** (`lib/tiktokTokenStore.js`). This is durable, secret-capable, server-side-only storage, deliberately **not** the GitHub repo (TikTok tokens must never be committed to Git). The stored bundle: `access_token`, `refresh_token`, `access_token_expires_at`, `refresh_token_expires_at` (both computed server-side at receipt as unix seconds), `scope`, `token_type`, `open_id`, `updated_at`. Never stored: `client_key`, `client_secret`, the authorization code, CSRF state, or cookies. Persistence happens after token-response validation and the required-scope check but *before* `user.info.basic`/`video.list` are called — any validation or Redis failure fails closed (generic 502, no internal details exposed) and those calls are never reached. **Recovery:** if the token bundle is absent or corrupt, perform a fresh manual authorization through `/tiktok-connect` — there is no other recovery path, and none is needed (this is a smoke-test route, not a production login users depend on). Analytics-history storage (as opposed to token/runtime-state storage) remains a separate, still-pending decision, not yet built or finalized.
 
 Vercel Production env var **names** for the Redis store (values never documented): `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. Application code uses `KV_REST_API_URL` + `KV_REST_API_TOKEN` for write-capable REST access (never the read-only token, `KV_URL`, or `REDIS_URL`).
 
-The intended eventual architecture (not yet built) is: `TikTok API → server-side collector (not yet built) → Redis (tokens/state, implemented and verified) + persistent analytics history (storage TBD) → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login**, and **token persistence to Redis is also VERIFIED by a real write** (CSRF, credentials, token exchange, `user.info.basic`, `video.list`, and Redis persistence all confirmed working) — see `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-61) for the full implementation/incident history.
+As of 2026-09-24 (commit `5b0b073`), a secret-gated **`POST /api/tiktok/collect`** endpoint proves the token bundle in Redis can be used autonomously, without any browser OAuth session: `Authorization: Bearer TIKTOK_COLLECT_SECRET` (new Vercel Production env var **name only**, values never documented), constant-time compared, never accepted via query string or body. It reads `cryptolock:tiktok:token_bundle:v1`, proactively refreshes the access token via TikTok's `refresh_token` grant when within 20 minutes of expiry (persisting the refreshed bundle back to Redis *before* calling `video.list`), and paginates `video.list` up to a hard cap of 10 pages / 200 videos. A Redis lock (`cryptolock:tiktok:collector_lock:v1`) prevents overlapping runs from both refreshing at once. **This endpoint does not persist analytics history** — it returns a JSON summary for verification only; a real analytics collector (with history storage) is a separate, not-yet-built follow-on.
+
+Redis keys in use: `cryptolock:tiktok:token_bundle:v1` (token bundle) and `cryptolock:tiktok:collector_lock:v1` (collector concurrency lock). **Recovery:** if the token bundle is absent or corrupt, perform a fresh manual authorization through `/tiktok-connect` — there is no other recovery path, and none is needed (this is a smoke-test route, not a production login users depend on).
+
+The intended eventual architecture (not yet built) is: `TikTok API → server-side collector (token refresh implemented and deployed) → Redis (tokens/state, implemented and verified) + persistent analytics history (storage TBD) → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login**, **token persistence to Redis is also VERIFIED by a real write**, and the **autonomous token-refresh/collector endpoint is implemented and safely deployed, awaiting its first real authenticated validation** — see `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-62) for the full implementation/incident history.
 
 ## Tools
 
@@ -151,14 +167,15 @@ Names only, no values:
 | `GITHUB_OWNER` | `pages/api/autopost.js` (defaults to `tenboy10b-sudo` if unset) |
 | `GITHUB_REPO` | `pages/api/autopost.js` (defaults to `CryptoLock` if unset) |
 | `AUTOPOST_SECRET` | `pages/api/autopost.js` (query-param auth gate) |
-| `TIKTOK_CLIENT_KEY` | `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js` |
-| `TIKTOK_CLIENT_SECRET` | `pages/api/tiktok/callback.js` only — never sent to the client |
+| `TIKTOK_CLIENT_KEY` | `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js`, `lib/tiktokCollector.js` (token refresh) |
+| `TIKTOK_CLIENT_SECRET` | `pages/api/tiktok/callback.js`, `lib/tiktokCollector.js` (token refresh) — never sent to the client |
 | `TIKTOK_REDIRECT_URI` | `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js` |
-| `KV_REST_API_URL` | Upstash Redis, connected 2026-09-24 — not yet used by any application code; preferred binding for write-capable REST access once the TikTok token-persistence work is implemented |
-| `KV_REST_API_TOKEN` | Upstash Redis — see above; preferred binding alongside `KV_REST_API_URL` |
-| `KV_REST_API_READ_ONLY_TOKEN` | Upstash Redis — read-only variant, auto-provisioned, not yet used |
-| `KV_URL` | Upstash Redis — auto-provisioned, not yet used |
-| `REDIS_URL` | Upstash Redis — auto-provisioned TCP connection string, not yet used |
+| `TIKTOK_COLLECT_SECRET` | `pages/api/tiktok/collect.js` — Bearer auth for the autonomous collector endpoint, added 2026-09-24 |
+| `KV_REST_API_URL` | `lib/tiktokTokenStore.js` — write-capable REST binding, used for all TikTok token bundle/lock reads and writes |
+| `KV_REST_API_TOKEN` | `lib/tiktokTokenStore.js` — used alongside `KV_REST_API_URL` |
+| `KV_REST_API_READ_ONLY_TOKEN` | Upstash Redis — read-only variant, auto-provisioned, not used (application code always uses the write-capable pair above) |
+| `KV_URL` | Upstash Redis — auto-provisioned, not used |
+| `REDIS_URL` | Upstash Redis — auto-provisioned TCP connection string, not used |
 
 ## Local setup
 

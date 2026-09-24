@@ -145,9 +145,17 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 This confirms a real TikTok OAuth token bundle was successfully written to Upstash Redis under `cryptolock:tiktok:token_bundle:v1` — token persistence is no longer just implemented, it is **VERIFIED by a live write**. No token values are recorded here or anywhere in this repo's documentation.
 
-**NEXT ACTION:** design/implement the token-refresh flow + a read-only collector that reads the persisted Redis token bundle (refreshing `access_token` via `refresh_token` when expired). Do **not** yet implement analytics-history storage — that remains a separate, still-pending decision.
+**AUTONOMOUS COLLECTOR — STATUS: IMPLEMENTED — awaiting first real authenticated collector validation (продовження 62, commit `5b0b073`, deployed 2026-09-24).** New secret-gated endpoint **`POST /api/tiktok/collect`** proves CryptoLock can read TikTok video metrics without a browser OAuth session:
+- **Authentication:** `Authorization: Bearer <TIKTOK_COLLECT_SECRET>` (constant-time comparison; never accepted via query string or body; missing secret env var fails closed with 500). New Vercel Production env var **name only**: `TIKTOK_COLLECT_SECRET`.
+- **Token source:** the Redis bundle persisted by `/api/tiktok/callback` (`cryptolock:tiktok:token_bundle:v1`) — read via `lib/tiktokTokenStore.js`'s new `loadTokenBundle()`.
+- **Proactive refresh:** if `access_token_expires_at` is within **20 minutes**, refreshes via TikTok's `refresh_token` grant before calling `video.list`; if `refresh_token_expires_at` has already passed, fails safely with `reauthorization_required: true` and makes no TikTok call at all. A successful refresh is validated (required scopes still present, `open_id` continuity checked against the previous bundle) and persisted to Redis **before** `video.list` is ever called — if that persist fails, the run aborts rather than risk continuing on a token TikTok may have already rotated away from.
+- **Concurrency:** a Redis lock (`cryptolock:tiktok:collector_lock:v1`, `SET NX EX 120`) prevents overlapping runs; released only via an atomic Lua compare-and-delete so a run can never clear a lock it doesn't own, always in a `finally` block.
+- **Video collection:** paginates `video.list` up to a hard cap of **10 pages / 200 videos**; reports `truncated: true` rather than silently claiming completeness if the cap is hit while TikTok still has more.
+- **Response:** secret-gated JSON only (`ok`, `token_refreshed`, `videos_returned`, `pages_fetched`, `truncated`, `collected_at`, `videos[]`) — never `open_id`/`access_token`/`refresh_token`/expiry values/any secret.
+- **Analytics history is NOT persisted yet** — this stage only proves the token lifecycle and API collection; `pages/api/tiktok/login.js` and `pages/api/tiktok/callback.js` are untouched.
+- 55/55 local tests passed (auth, lock ownership/release, all refresh-validation-reject paths, Redis-persist-failure-blocks-video-list, pagination cap/truncation, no-secret-leakage). `npm run build` passed. Safely verified in production: `GET` → 405, `POST` without/with-wrong `Authorization` → 401, `/tiktok-connect` still 200 — **no authenticated collector call was made, and no fake tokens were used against production Redis.**
 
-**NEXT ACTION (follow-on, still not scoped):** design and implement the persistent TikTok analytics collector: `TikTok API → server-side collector → persistent analytics history → GPT/Claude analysis`, including a final decision on analytics-history storage.
+**NEXT ACTION:** account owner performs one authenticated `POST /api/tiktok/collect` (with the real `TIKTOK_COLLECT_SECRET`) to validate the full refresh+collect flow end-to-end. Analytics-history storage remains a separate, still-pending decision — not yet implemented.
 
 ## MONETIZATION
 
