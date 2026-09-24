@@ -1,11 +1,13 @@
 // Автопостинг в Telegram — заміна content.yml/middle.yml/extra.yml/engage_*.yml/promo.yml
 // Викликається зовнішнім cron (cron-job.org) замість GitHub Actions (заблоковано).
 // GET /api/autopost?type=content|middle|extra|engage|promo&secret=...
+import { randomUUID } from 'crypto'
 import { getAllPosts } from '../../lib/posts'
 
 export const config = { maxDuration: 60 }
 
 const SITE_URL = 'https://cryptolockua.com'
+const LOCK_TTL_MS = 15 * 60 * 1000 // 15 хвилин — після цього лок вважається "мертвим" і може бути перезахоплений
 
 const PRODUCT_BASE = {
   name: 'AuditShield — Windows Security Audit Tool',
@@ -243,6 +245,8 @@ async function generateText(apiKey, prompt, maxTokens) {
   return json.content[0].text
 }
 
+// Повертає { ok, messageId } замість простого boolean — message_id потрібен для
+// фіналізації стану (крок 3 надійності), щоб знати що саме пішло в канал.
 async function sendTelegram(token, channelId, text) {
   const url = `https://api.telegram.org/bot${token}/sendMessage`
   let res = await fetch(url, {
@@ -250,7 +254,10 @@ async function sendTelegram(token, channelId, text) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ chat_id: channelId, text, parse_mode: 'Markdown' }),
   })
-  if (res.ok) return true
+  if (res.ok) {
+    const json = await res.json()
+    return { ok: true, messageId: json.result?.message_id ?? null }
+  }
   const errText = await res.text()
   if (errText.toLowerCase().includes("can't parse")) {
     res = await fetch(url, {
@@ -258,10 +265,14 @@ async function sendTelegram(token, channelId, text) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ chat_id: channelId, text }),
     })
-    return res.ok
+    if (res.ok) {
+      const json = await res.json()
+      return { ok: true, messageId: json.result?.message_id ?? null }
+    }
+    return { ok: false, messageId: null }
   }
   console.error('Telegram error', res.status, errText)
-  return false
+  return { ok: false, messageId: null }
 }
 
 // Справжнє інтерактивне опитування Telegram (тап-щоб-проголосувати, Telegram сам рахує голоси)
@@ -283,9 +294,36 @@ async function sendTelegramPoll(token, channelId, poll) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body),
   })
-  if (res.ok) return true
+  if (res.ok) {
+    const json = await res.json()
+    return { ok: true, messageId: json.result?.message_id ?? null }
+  }
   console.error('Telegram sendPoll error', res.status, await res.text())
-  return false
+  return { ok: false, messageId: null }
+}
+
+// ── Логування — ніколи не передавати сюди token/secret/повний payload ──
+function log(event, fields = {}) {
+  console.log(JSON.stringify({ event, ts: new Date().toISOString(), ...fields }))
+}
+
+// ── Lock + pending-outbox helpers (надійність проти паралельного виконання) ──
+function isExpired(isoString) {
+  return !isoString || new Date(isoString).getTime() < Date.now()
+}
+
+// Best-effort звільнення локу цим виконанням (після помилки генерації/pending-запису).
+// Не кидає — якщо не вдалось, TTL все одно підхопить прострочений лок пізніше.
+async function safeReleaseLock(owner, repo, token, executionId) {
+  try {
+    const { data: fresh, sha: freshSha } = await ghGetJson(owner, repo, 'published.json', token)
+    if (fresh.lock && fresh.lock.execution_id === executionId) {
+      await ghPutJson(owner, repo, 'published.json', token, { ...fresh, lock: null }, freshSha, `bot: release lock ${executionId}`)
+      log('lock_released', { execution_id: executionId })
+    }
+  } catch (e) {
+    log('lock_release_failed', { execution_id: executionId, error: String(e.message || e) })
+  }
 }
 
 // Стилі ENGAGE, які структурно підходять під формат опитування (явний вибір з 2+ варіантів)
@@ -431,8 +469,128 @@ function pickNextArticle(articles, publishedSlugs) {
   return { article, resetHappened }
 }
 
+function withDefaults(published) {
+  return {
+    ...published,
+    published: published.published || [],
+    count: published.count || 0,
+    promo_index: published.promo_index || 0,
+    engage_index: published.engage_index || 0,
+    extra_index: published.extra_index || 0,
+    extra_recent_topics: published.extra_recent_topics || [],
+    lock: published.lock || null,
+    pending: published.pending || null,
+  }
+}
+
+// Engage-контент: якщо стиль структурно є вибором з варіантів — реальне опитування Telegram,
+// інакше — звичайний текстовий пост (як і раніше). Незмінна логіка стилів/промптів.
+async function generateEngageContent(anthropicKey, idx) {
+  const styleIdx = idx % ENGAGE_STYLES.length
+  const style = ENGAGE_STYLES[styleIdx]
+  if (styleIdx === QUIZ_STYLE_INDEX) {
+    return { poll: await generatePollData(anthropicKey, style, true), styleIdx }
+  }
+  if (POLL_STYLE_INDICES.has(styleIdx)) {
+    return { poll: await generatePollData(anthropicKey, style, false), styleIdx }
+  }
+  return { text: await generateText(anthropicKey, promptEngage(style), 400), styleIdx }
+}
+
+// Консолідує усі 5 гілок генерації контенту (незмінні промпти/стилі/вибір статті) в один
+// уніфікований результат: { text, poll, identifier, finalizeFields, commitMsg }.
+// finalizeFields — це саме той диф лічильників/дедуп-стану, який раніше писався одразу
+// після відправки в Telegram; тепер він лише ОБЧИСЛЮЄТЬСЯ тут і застосовується окремим
+// кроком фіналізації після підтвердженої відправки.
+async function generateForType(type, published, anthropicKey) {
+  if (type === 'middle') {
+    const dayOfMonth = new Date().getUTCDate()
+    if (dayOfMonth % 2 === 0) {
+      const idx = published.engage_index
+      const content = await generateEngageContent(anthropicKey, idx)
+      return {
+        text: content.text, poll: content.poll,
+        identifier: `engage-style-${content.styleIdx}`,
+        finalizeFields: { engage_index: idx + 1 },
+        commitMsg: 'bot: update published.json [middle-engage]',
+      }
+    }
+    const idx = published.promo_index
+    const module = PROMO_MODULES[idx % PROMO_MODULES.length]
+    return {
+      text: await generateText(anthropicKey, promptPromo(module), 700), poll: undefined,
+      identifier: `promo-module:${module.module}`,
+      finalizeFields: { promo_index: idx + 1 },
+      commitMsg: 'bot: update published.json [middle-promo]',
+    }
+  }
+
+  if (type === 'extra') {
+    const idx = published.extra_index
+    const recentTopics = published.extra_recent_topics || []
+    const text = await generateText(anthropicKey, promptExtra(EXTRA_STYLES[idx % EXTRA_STYLES.length], recentTopics), 500)
+    const topicLine = (text.split('\n')[0] || '').replace(/^[#*\s]+/, '').trim()
+    return {
+      text, poll: undefined,
+      identifier: `extra-style-${idx % EXTRA_STYLES.length}`,
+      finalizeFields: {
+        extra_index: idx + 1,
+        // Тримаємо останні 12 (2 повних цикли по 6 стилях) — коротший список Claude реально
+        // врахує, довший ризикує загубитись у промпті без явної користі.
+        extra_recent_topics: [...recentTopics, topicLine].filter(Boolean).slice(-12),
+      },
+      commitMsg: 'bot: update published.json [extra]',
+    }
+  }
+
+  if (type === 'engage') {
+    const idx = published.engage_index
+    const content = await generateEngageContent(anthropicKey, idx)
+    return {
+      text: content.text, poll: content.poll,
+      identifier: `engage-style-${content.styleIdx}`,
+      finalizeFields: { engage_index: idx + 1 },
+      commitMsg: 'bot: update published.json [engage]',
+    }
+  }
+
+  if (type === 'promo') {
+    const idx = published.promo_index
+    const module = PROMO_MODULES[idx % PROMO_MODULES.length]
+    return {
+      text: await generateText(anthropicKey, promptPromo(module), 700), poll: undefined,
+      identifier: `promo-module:${module.module}`,
+      finalizeFields: { promo_index: idx + 1 },
+      commitMsg: 'bot: update published.json [promo]',
+    }
+  }
+
+  // type === 'content' (default)
+  const ukPosts = getAllPosts('uk').map(p => ({ slug: p.slug, title: p.title || '', description: p.description || '', lang: 'uk' }))
+  const enPosts = getAllPosts('en').map(p => ({ slug: p.slug, title: p.title || '', description: p.description || '', lang: 'en' }))
+  const articles = [...ukPosts, ...enPosts].filter(a => a.title)
+  if (!articles.length) throw new Error('no articles found')
+
+  const { article, resetHappened } = pickNextArticle(articles, published.published)
+  const basePublished = resetHappened ? [] : published.published
+  const count = published.count
+  const includeLink = count % 4 === 3
+  const text = await generateText(anthropicKey, promptContent(article, includeLink), 600)
+  return {
+    text, poll: undefined,
+    identifier: article.slug,
+    finalizeFields: {
+      published: [...basePublished, article.slug],
+      count: count + 1,
+      last_post: { slug: article.slug, title: article.title, time: new Date().toISOString() },
+    },
+    commitMsg: 'bot: update published.json [content]',
+  }
+}
+
 export default async function handler(req, res) {
   const { type = 'content', secret, dry } = req.query
+  const executionId = randomUUID()
 
   if (!process.env.AUTOPOST_SECRET || secret !== process.env.AUTOPOST_SECRET) {
     return res.status(401).json({ error: 'unauthorized' })
@@ -451,100 +609,145 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: `missing env vars: ${missing.join(', ')}` })
   }
 
+  log('start', { execution_id: executionId, type, dry: !!dry })
+
+  // ── dry-run: незмінна поведінка — чистий preview, без локу/pending/запису стану ──
+  if (dry) {
+    try {
+      const { data: published } = await ghGetJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN)
+      const generated = await generateForType(type, withDefaults(published), ANTHROPIC_KEY)
+      return res.status(200).json({ ok: true, dry: true, type, text: generated.text || null, poll: generated.poll || null })
+    } catch (err) {
+      log('generation_failed', { execution_id: executionId, type, dry: true, error: String(err.message || err) })
+      return res.status(500).json({ error: String(err.message || err) })
+    }
+  }
+
   try {
-    const { data: published, sha } = await ghGetJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN)
-    published.published = published.published || []
-    published.count = published.count || 0
-    published.promo_index = published.promo_index || 0
-    published.engage_index = published.engage_index || 0
-    published.extra_index = published.extra_index || 0
-    published.extra_recent_topics = published.extra_recent_topics || []
+    let { data: rawState, sha } = await ghGetJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN)
+    let state = withDefaults(rawState)
 
-    let text, poll, commitMsg, updated = { ...published }
-
-    // Engage-контент: якщо стиль структурно є вибором з варіантів — реальне опитування Telegram,
-    // інакше — звичайний текстовий пост (як і раніше).
-    async function generateEngageContent(idx) {
-      const styleIdx = idx % ENGAGE_STYLES.length
-      const style = ENGAGE_STYLES[styleIdx]
-      if (styleIdx === QUIZ_STYLE_INDEX) {
-        return { poll: await generatePollData(ANTHROPIC_KEY, style, true) }
-      }
-      if (POLL_STYLE_INDICES.has(styleIdx)) {
-        return { poll: await generatePollData(ANTHROPIC_KEY, style, false) }
-      }
-      return { text: await generateText(ANTHROPIC_KEY, promptEngage(style), 400) }
+    // 1) Активний лок — не постимо, безпечний skip.
+    if (state.lock && !isExpired(state.lock.expires_at)) {
+      log('lock_active_skip', { execution_id: executionId, type, locked_by: state.lock.execution_id, locked_type: state.lock.type })
+      return res.status(200).json({ ok: true, skipped: true, reason: 'locked', locked_execution_id: state.lock.execution_id })
+    }
+    if (state.lock) {
+      log('stale_lock_detected', { execution_id: executionId, type, previous_execution_id: state.lock.execution_id })
     }
 
-    if (type === 'middle') {
-      const dayOfMonth = new Date().getUTCDate()
-      if (dayOfMonth % 2 === 0) {
-        const idx = published.engage_index
-        const content = await generateEngageContent(idx)
-        text = content.text
-        poll = content.poll
-        updated.engage_index = idx + 1
-        commitMsg = 'bot: update published.json [middle-engage]'
-      } else {
-        const idx = published.promo_index
-        text = await generateText(ANTHROPIC_KEY, promptPromo(PROMO_MODULES[idx % PROMO_MODULES.length]), 700)
-        updated.promo_index = idx + 1
-        commitMsg = 'bot: update published.json [middle-promo]'
+    // 2) Лишок pending для ЦЬОГО Ж типу без активного локу = попереднє виконання не
+    // завершилось чисто. Ми НЕ можемо надійно знати, чи Telegram вже відправив
+    // повідомлення (можливо це саме крок 4 "GitHub finalization failure after
+    // Telegram success") — тож НІКОЛИ не повторюємо відправку автоматично. Просто
+    // чисто прибираємо застряглий запис і пропускаємо цей цикл; наступний плановий
+    // запуск того ж типу піде штатно.
+    if (state.pending && state.pending.type === type) {
+      log('orphaned_pending_recovered', {
+        execution_id: executionId, type,
+        orphaned_execution_id: state.pending.execution_id,
+        orphaned_identifier: state.pending.identifier,
+      })
+      try {
+        await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN,
+          { ...state, lock: null, pending: null }, sha,
+          `bot: recover orphaned pending [${type}] ${state.pending.execution_id}`)
+      } catch (e) {
+        log('orphaned_pending_clear_failed', { execution_id: executionId, type, error: String(e.message || e) })
       }
-    } else if (type === 'extra') {
-      const idx = published.extra_index
-      const recentTopics = published.extra_recent_topics || []
-      text = await generateText(ANTHROPIC_KEY, promptExtra(EXTRA_STYLES[idx % EXTRA_STYLES.length], recentTopics), 500)
-      const topicLine = (text.split('\n')[0] || '').replace(/^[#*\s]+/, '').trim()
-      updated.extra_index = idx + 1
-      // Тримаємо останні 12 (2 повних цикли по 6 стилях) — коротший список Claude реально врахує,
-      // довший ризикує загубитись у промпті без явної користі.
-      updated.extra_recent_topics = [...recentTopics, topicLine].filter(Boolean).slice(-12)
-      commitMsg = 'bot: update published.json [extra]'
-    } else if (type === 'engage') {
-      const idx = published.engage_index
-      const content = await generateEngageContent(idx)
-      text = content.text
-      poll = content.poll
-      updated.engage_index = idx + 1
-      commitMsg = 'bot: update published.json [engage]'
-    } else if (type === 'promo') {
-      const idx = published.promo_index
-      text = await generateText(ANTHROPIC_KEY, promptPromo(PROMO_MODULES[idx % PROMO_MODULES.length]), 700)
-      updated.promo_index = idx + 1
-      commitMsg = 'bot: update published.json [promo]'
-    } else {
-      const ukPosts = getAllPosts('uk').map(p => ({ slug: p.slug, title: p.title || '', description: p.description || '', lang: 'uk' }))
-      const enPosts = getAllPosts('en').map(p => ({ slug: p.slug, title: p.title || '', description: p.description || '', lang: 'en' }))
-      const articles = [...ukPosts, ...enPosts].filter(a => a.title)
-      if (!articles.length) return res.status(500).json({ error: 'no articles found' })
-
-      const { article, resetHappened } = pickNextArticle(articles, published.published)
-      if (resetHappened) updated.published = []
-
-      const count = published.count
-      const includeLink = count % 4 === 3
-      text = await generateText(ANTHROPIC_KEY, promptContent(article, includeLink), 600)
-      updated.published = [...updated.published, article.slug]
-      updated.count = count + 1
-      updated.last_post = { slug: article.slug, title: article.title, time: new Date().toISOString() }
-      commitMsg = 'bot: update published.json [content]'
+      return res.status(200).json({ ok: true, skipped: true, reason: 'recovered_orphaned_pending', orphaned_execution_id: state.pending.execution_id })
     }
 
-    if (dry) {
-      return res.status(200).json({ ok: true, dry: true, type, text: text || null, poll: poll || null })
+    // 3) Атомарне захоплення глобального локу через CAS (SHA) на published.json.
+    // Якщо хтось паралельно вже записав стан — цей PUT впаде на конфлікті SHA,
+    // і ми програли гонку: безпечний skip, нічого не постимо.
+    const lockedState = {
+      ...state,
+      lock: { execution_id: executionId, type, started_at: new Date().toISOString(), expires_at: new Date(Date.now() + LOCK_TTL_MS).toISOString() },
+    }
+    try {
+      const putResult = await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN, lockedState, sha, `bot: acquire lock [${type}] ${executionId}`)
+      sha = putResult.content.sha
+      state = lockedState
+    } catch (e) {
+      log('lock_acquire_failed', { execution_id: executionId, type, error: String(e.message || e) })
+      return res.status(200).json({ ok: true, skipped: true, reason: 'lock_acquire_failed' })
+    }
+    log('lock_acquired', { execution_id: executionId, type })
+
+    // 4) Генерація контенту (Anthropic). Помилка тут = ще нічого не обіцяно нікому —
+    // просто звільняємо лок і повертаємо помилку, жодного посту.
+    let generated
+    try {
+      generated = await generateForType(type, state, ANTHROPIC_KEY)
+    } catch (e) {
+      log('generation_failed', { execution_id: executionId, type, error: String(e.message || e) })
+      await safeReleaseLock(GITHUB_OWNER, GITHUB_REPO, GITHUB_TOKEN, executionId)
+      return res.status(500).json({ error: String(e.message || e) })
     }
 
-    const sent = poll
-      ? await sendTelegramPoll(TELEGRAM_TOKEN, CHANNEL_ID, poll)
-      : await sendTelegram(TELEGRAM_TOKEN, CHANNEL_ID, text)
-    if (!sent) return res.status(502).json({ error: 'telegram send failed' })
+    // 5) Persist pending BEFORE Telegram send — це і є "обіцянка" що саме буде відправлено.
+    const pendingRecord = {
+      execution_id: executionId,
+      type,
+      identifier: generated.identifier,
+      payload: generated.poll ? { poll: generated.poll } : { text: generated.text },
+      created_at: new Date().toISOString(),
+    }
+    const withPending = { ...state, pending: pendingRecord }
+    try {
+      const putResult = await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN, withPending, sha, `bot: persist pending [${type}] ${executionId}`)
+      sha = putResult.content.sha
+      state = withPending
+    } catch (e) {
+      // GitHub failure before send: fail closed — жодного посту.
+      log('pending_persist_failed', { execution_id: executionId, type, error: String(e.message || e) })
+      await safeReleaseLock(GITHUB_OWNER, GITHUB_REPO, GITHUB_TOKEN, executionId)
+      return res.status(500).json({ error: 'failed to persist pending state, no post sent' })
+    }
+    log('pending_persisted', { execution_id: executionId, type, identifier: generated.identifier })
 
-    await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN, updated, sha, commitMsg)
+    // 6) Telegram send — тільки тепер, коли намір безпечно записано.
+    const sendResult = generated.poll
+      ? await sendTelegramPoll(TELEGRAM_TOKEN, CHANNEL_ID, generated.poll)
+      : await sendTelegram(TELEGRAM_TOKEN, CHANNEL_ID, generated.text)
 
-    return res.status(200).json({ ok: true, type, poll: !!poll, length: text ? text.length : undefined })
+    if (!sendResult.ok) {
+      // Telegram definite failure: лічильники НЕ просуваємо. Pending+lock лишаємо як є —
+      // це і є контрольований retry-слід для наступного запуску того ж типу (крок 2 вище).
+      log('telegram_failed', { execution_id: executionId, type })
+      return res.status(502).json({ error: 'telegram send failed', pending_execution_id: executionId })
+    }
+    log('telegram_success', { execution_id: executionId, type, message_id: sendResult.messageId })
+
+    // 7) Фіналізація: застосувати реальні лічильники/дедуп, зберегти message_id, очистити pending+lock.
+    const finalState = {
+      ...state,
+      ...generated.finalizeFields,
+      last_message_id: sendResult.messageId,
+      pending: null,
+      lock: null,
+    }
+    try {
+      await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN, finalState, sha, generated.commitMsg)
+    } catch (e) {
+      // Final GitHub write failure after Telegram success: повідомлення вже пішло в канал,
+      // і ми НЕ відправляємо його повторно "про всяк випадок". Pending лишається записаним —
+      // наступний запуск ЦЬОГО Ж типу побачить його як orphaned (крок 2) і чисто прибере,
+      // з явним логом. Це системна межа Telegram+GitHub-only дизайну: неможливо гарантувати
+      // exact-once, коли відправка і фіксація стану — дві окремі, незалежно відмовостійкі дії.
+      log('finalize_failed_after_telegram_success', { execution_id: executionId, type, error: String(e.message || e) })
+      return res.status(207).json({
+        ok: false,
+        warning: 'telegram message was sent but finalize write failed — pending left for next-cycle recovery, no automatic resend',
+        execution_id: executionId,
+      })
+    }
+    log('finalize_success', { execution_id: executionId, type })
+
+    return res.status(200).json({ ok: true, type, poll: !!generated.poll, execution_id: executionId })
   } catch (err) {
-    console.error('autopost error:', err)
+    log('unhandled_error', { execution_id: executionId, type, error: String(err.message || err) })
     return res.status(500).json({ error: String(err.message || err) })
   }
 }

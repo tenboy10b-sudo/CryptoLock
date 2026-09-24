@@ -138,5 +138,8 @@
     "✅ Чеклист: Базова безпека нового ПК",
     "🔇 **Звук пропав після оновлення Windows — як повернути?**",
     "🔋 **Команда дня: powercfg /batteryreport**"
-  ]
+  ],
+  "lock": null,
+  "pending": null,
+  "last_message_id": null
 }
