@@ -3798,3 +3798,32 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** модифікувати верифікований TikTok OAuth callback (`pages/api/tiktok/callback.js`) так, щоб успішна авторизація безпечно зберігала token bundle server-side у Redis (наразі callback і далі відкидає токени в кінці запиту, за первісним дизайном smoke test). Рішення про сховище для analytics history залишається окремим, ще не прийнятим питанням.
 
 ---
+
+### Сесія 12 (продовження 60) — Реалізовано персистенцію TikTok OAuth токенів в Upstash Redis
+
+**DATE:** 2026-09-24
+
+**PROBLEM:** верифікований end-to-end TikTok OAuth smoke test (продовження 58) досі відкидав `access_token`/`refresh_token` в кінці кожного запиту. Підключений Upstash Redis (продовження 59) існував, але жоден код застосунку ще нічого туди не писав — майбутній щоденний collector аналітики не мав би що читати.
+
+**EVIDENCE:** прямий технічний запит користувача з детальною специфікацією (структура token bundle, порядок валідації/персистенції, fail-closed поведінка, заборонені для збереження поля, перелік із 19 обов'язкових тестових сценаріїв).
+
+**DECISION:** реалізувати рівно 1 новий файл (`lib/tiktokTokenStore.js`) + мінімальні зміни у 2 існуючих (`pages/api/tiktok/callback.js`, `lib/tiktokAuth.js`) + офіційну залежність `@upstash/redis`. Жодних змін до `pages/api/tiktok/login.js`, CSRF-механізму, scopes, video.list/user.info поведінки, Telegram, SEO, sitemap чи статей.
+
+**IMPLEMENTATION:**
+- `lib/tiktokTokenStore.js` (новий): `validateTokenBundle(tokenJson)` — чиста функція без I/O, вимагає `access_token`, `refresh_token`, числові `expires_in`/`refresh_expires_in` (>0), обчислює `access_token_expires_at`/`refresh_token_expires_at` як unix-секунди (now + expires_in). `persistTokenBundle(bundle)` — перевіряє наявність `KV_REST_API_URL`+`KV_REST_API_TOKEN` (без них — safe failure, Redis-клієнт навіть не створюється), інакше виконує рівно один Redis `SET` під фіксованим ключем `cryptolock:tiktok:token_bundle:v1` зі значенням — JSON-рядком bundle. `Redis`-клієнт ініціалізується явно з `KV_REST_API_URL`/`KV_REST_API_TOKEN` (ніколи read-only токен, `KV_URL` чи `REDIS_URL`), з `enableAutoPipelining: false` для прямої, передбачуваної поведінки "один SET на один виклик" (за замовчуванням SDK автоматично батчить команди в `/pipeline`-запит, що ускладнює і розмиває гарантію "рівно один SET"). НЕ зберігається: `client_key`, `client_secret`, код авторизації, CSRF state, cookies.
+- `pages/api/tiktok/callback.js`: порядок кроків після успішного обміну токена тепер: валідація структури відповіді → перевірка обов'язкових scopes → персистенція в Redis → `user.info.basic` → `video.list` → сторінка успіху. Будь-яка помилка валідації чи Redis — fail-closed, generic 502-сторінка ("TikTok authorization succeeded, but secure token persistence failed."), `user.info`/`video.list` НЕ викликаються. Існуюча CSRF-перевірка і діагностика обміну токена (продовження 55-56) не змінені.
+- `lib/tiktokAuth.js`: нова `renderTokenPersistFailedPage()` — той самий безпечний шаблон, без деталей причини збою. Застаріла фраза "Access/refresh tokens were used for this request only and were not stored anywhere" на сторінці успіху замінена на "Secure token persistence: YES" (показується лише коли персистенція дійсно відбулась).
+
+**SECURITY:** жодне значення `access_token`/`refresh_token`/`client_secret`/коду авторизації/CSRF state/cookie/Redis credential ніколи не логується, не рендериться в HTML і не потрапляє в документацію — підтверджено автоматизованим скануванням HTML і захоплених логів у тестах (жоден з 6 secret-подібних значень не знайдено в жодному з success/failure сценаріїв).
+
+**TESTS:** 65/65 локальних асертів (мокнутий `fetch`, оскільки REST-клієнт `@upstash/redis` сам використовує `fetch` — той самий підхід тестування, що й для TikTok API). Покрито: усі 19 обов'язкових сценаріїв (відсутні `KV_REST_API_URL`/`KV_REST_API_TOKEN`, коректна персистенція рівно одним SET, правильний ключ, правильно обчислені `*_expires_at`, відсутні/некоректні access_token/refresh_token/expires_in/refresh_expires_in — жодного запису в Redis, відсутній обов'язковий scope — жодного запису, збій Redis — safe 502 і user.info/video.list НЕ викликаються, успішна персистенція — user.info/video.list і далі працюють, сторінка успіху показує "Secure token persistence: YES", відсутність будь-яких секретних значень в HTML/логах) + повна регресія існуючих CSRF- і token-exchange-діагностик (продовження 55-56) — усі й далі PASS. `npm run build` — успішно.
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_5ZZ6c6g6TZiDupNbgqBdoxKLvHXp`, `cryptolockua.com`.
+
+**RESULT:** задеплоєно і безпечно перевірено в продакшн: `/tiktok-connect` повертає 200, `/api/tiktok/login` і далі коректно редіректить на TikTok, існуюча діагностика обміну токена перевірена синтетичним фейковим/простроченим кодом (отримано реальний `invalid_grant` від TikTok — підтверджує, що потік і далі коректно доходить до обміну токена і зупиняється там, НЕ доходячи до нового коду персистенції). **Реальний логін НЕ виконувався, і жоден фейковий token bundle НЕ записувався у реальну продакшн-базу Redis.** Тому реальна персистенція в Redis ще НЕ підтверджена живим записом — лише код реалізований і безпечно задеплоєний.
+
+**COMMIT SHA:** `b8193db`
+
+**FOLLOW-UP:** одна реальна авторизація користувача через `/tiktok-connect`. Очікуваний безпечний результат: `TikTok connected: YES`, `Secure token persistence: YES`, коректна кількість відео. Лише після цього персистенцію в Redis можна вважати ПІДТВЕРДЖЕНОЮ (VERIFIED), а не лише реалізованою.
+
+---
