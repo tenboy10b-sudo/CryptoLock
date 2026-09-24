@@ -3750,3 +3750,31 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** одна реальна спроба TikTok Sandbox OAuth через `/tiktok-connect` для підтвердження, що виправлена пара credentials усуває `invalid_client` і весь потік (обмін токена → `user.info.basic` → `video.list` → сторінка результату) завершується успішно.
 
 ---
+
+### Сесія 12 (продовження 58) — Успішна реальна перевірка TikTok Sandbox OAuth end-to-end
+
+**DATE:** 2026-09-24
+
+**PROBLEM:** після виправлення пари credentials (продовження 57) потрібне було підтвердження реальним логіном, що весь OAuth-потік дійсно працює end-to-end — а не лише що деплой пройшов.
+
+**EVIDENCE:** реальний браузерний логін користувача через `https://cryptolockua.com/tiktok-connect`, повідомлений напряму. Сторінка результату показала:
+- TikTok connected: YES
+- Display name: `cryptolockua`
+- Scopes granted: `user.info.basic`, `video.list`
+- Videos returned: 20
+
+**DECISION:** зафіксувати це як підтверджений робочий стан. Обидва попередні блокери тепер ЗАКРИТІ:
+1. CSRF cookie/state збій (продовження 54) — закрито (наступна реальна спроба пройшла CSRF без змін коду; корінна причина першого збою лишається непоясненою, але більше не відтворюється).
+2. `invalid_client` — розбіжність пари credentials (продовження 56-57) — закрито (виправлено заміною пари в Vercel + редеплой).
+
+**RESULT:** підтверджено реальним запуском, що працюють: CSRF/state-механізм, Vercel Sandbox credentials, обмін токена, `user.info.basic`, `video.list`. CryptoLock технічно може читати власні публічні відео-метрики TikTok через Sandbox-застосунок. **НЕ підтверджено і не варто вважати доступним** через цей API/scope без окремої перевірки: retention, completion rate, відвідування профілю, підписки (follows).
+
+**STATUS:** TikTok Sandbox OAuth smoke test — VERIFIED, end-to-end робочий. `/tiktok-connect` і всі TikTok-файли лишаються тимчасовими smoke-test артефактами (жодної персистенції токенів, жодного постійного збирача аналітики ще не існує).
+
+**COMMIT SHA:** немає (документаційний запис про подію верифікації, без змін коду).
+
+**DEPLOYMENT:** без змін (та сама продакшн-версія, задеплоєна в продовженні 57, `dpl_ABgvGF19NLxenryeQEA48GpgbX8V`).
+
+**FOLLOW-UP:** спроєктувати і реалізувати постійний TikTok-collector аналітики: `TikTok API → server-side collector → persistent analytics history → GPT/Claude analysis`. Це нова, ще не оскоупована задача реалізації — окрема від цього smoke test.
+
+---

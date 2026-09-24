@@ -122,7 +122,7 @@ User (via /tiktok-connect, temporary internal test route, noindex/nofollow)
   → /api/tiktok/callback (server-side token exchange, calls user/info + video/list, renders a throwaway result page)
 ```
 
-Tokens are **never persisted** — no DB, no GitHub write, no file. The intended eventual architecture (not yet built) is: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`. See `PROJECT_STATE.md` → TIKTOK STATUS for current live status (as of 2026-09-24: CSRF now passes on the latest real attempt; blocker has moved to token exchange, root cause unknown — see `DOCUMENTATION.md` for the incident record) and `DOCUMENTATION.md` (продовження 52-56) for the full implementation history.
+Tokens are **never persisted** — no DB, no GitHub write, no file. The intended eventual architecture (not yet built) is: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login** (CSRF, credentials, token exchange, `user.info.basic`, `video.list` all confirmed working) — see `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-58) for the full implementation/incident history. The persistent analytics collector itself is the next not-yet-scoped implementation task.
 
 ## Tools
 

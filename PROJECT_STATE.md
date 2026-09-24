@@ -105,7 +105,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 ## TIKTOK STATUS
 
-**CURRENT STATUS: CREDENTIALS CORRECTED, AWAITING RETRY VERIFICATION**
+**CURRENT STATUS: VERIFIED — Sandbox API connection works end-to-end.**
 
 **Configuration (as stated by the account owner, not independently re-verified against the TikTok dashboard this session):**
 - TikTok Sandbox app configured
@@ -116,25 +116,23 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 **What exists in this repo (implemented and deployed 2026-09-24, commits `7cfd17c` + `f2e12e4` + `a0110c3`):**
 - `/terms` — public Terms of Service page, live, required alongside `/privacy` for TikTok Developer app review (see COMPLETED WORK, commit `9acd92f`)
-- `/tiktok-connect` — temporary internal test route (`noindex,nofollow`, not in nav/footer/sitemap)
-- `/api/tiktok/login` — OAuth start: random CSRF state → Secure/HttpOnly/SameSite=Lax cookie → redirect to TikTok's real authorize screen (confirmed live, redirects with the genuine production `client_key`)
+- `/tiktok-connect` — temporary internal test route (`noindex,nofollow`, not in nav/footer/sitemap) — **still exists, still temporary**, has NOT been promoted to a permanent feature
+- `/api/tiktok/login` — OAuth start: random CSRF state → Secure/HttpOnly/SameSite=Lax cookie → redirect to TikTok's real authorize screen
 - `/api/tiktok/callback` — OAuth completion: server-side token exchange, `user.info.basic` + `video.list` calls, renders a throwaway result page
-- **Tokens are NOT persisted anywhere** (no DB, no GitHub write, no file) — this is a smoke test only
+- **Tokens are still NOT persisted anywhere** (no DB, no GitHub write, no file) — this remains a smoke test only
 - **The permanent analytics collector does NOT exist yet.** Ultimate integration goal, not yet built: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`
 
-**Live status (superseded — see below for the current blocker):** the *first* real authorization attempt reached `/api/tiktok/callback` but failed CSRF state validation *before* token exchange (`Invalid or missing CSRF state`). Commit `f2e12e4` deployed safe boolean-only CSRF diagnostics.
+**Verification history (see DOCUMENTATION.md продовження 54-58 for the full incident-by-incident record):** first real attempt failed CSRF (продовження 54) → safe CSRF diagnostics added (55) → later real attempt passed CSRF but failed token exchange (56) → diagnostics revealed `invalid_client` (credential mismatch) → account owner corrected the Vercel `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET` pair and production was redeployed (57) → **a real end-to-end OAuth login now succeeds** (58).
 
-**CURRENT BLOCKER (as of a later real attempt, same day):** a subsequent real browser attempt **passed CSRF validation** (state matched cookie correctly — the earlier CSRF failure did not recur and its root cause remains unexplained but is no longer blocking). The flow now fails one step later, at server-side token exchange (`POST https://open.tiktokapis.com/v2/oauth/token/`), with `Token exchange with TikTok failed.` **Root cause: still UNKNOWN.**
+**VERIFIED REAL RESULT (2026-09-24, via `/tiktok-connect`, real browser login):**
+- TikTok connected: YES
+- Display name: `cryptolockua`
+- Scopes granted: `user.info.basic`, `video.list`
+- Videos returned: 20
 
-Commit `a0110c3` deployed safe token-exchange diagnostics: on failure, `/api/tiktok/callback` now extracts and displays/logs only the 4 fields TikTok's token endpoint itself returns — HTTP status, `error`, `error_description`, `log_id` — never `client_key`/`client_secret`/the authorization code/`access_token`/`refresh_token`/the CSRF state or cookie value/any full request or response body. A malformed/non-JSON response is distinguished from a well-formed JSON error and shows only "Unexpected TikTok token response" + HTTP status (no fabricated fields). 26/26 local tests passed (invalid_client/invalid_grant/invalid_request/malformed/success-path-unchanged/no-secret-leakage/network-error). Production-verified same day via a safe synthetic request (real TikTok token endpoint, deliberately expired/fake code, **not a real login**): TikTok returned HTTP 200 with `error=invalid_grant`, `error_description="Authorization code is expired."`, and a real `log_id` — confirming the new diagnostic path is live and correctly parses TikTok's actual response shape (flat JSON, not nested under `data`, and note TikTok can return HTTP 200 with an error body rather than a 4xx/5xx).
+**Now confirmed working:** CSRF/state flow, Vercel Sandbox credentials, token exchange, `user.info.basic`, `video.list` — CryptoLock can read its own TikTok public video metrics via the Sandbox app. Not yet confirmed available via this API/scope set: retention, completion rate, profile visits, follows — do not assume these are accessible until specifically checked.
 
-**RESOLVED DIAGNOSIS (real attempt, same day, after продовження 56):** a genuine (non-expired, non-fabricated) OAuth retry hit the new token-exchange diagnostics and revealed the real failure: `error=invalid_client`, `error_description="Client key or secret is incorrect."` — i.e. the `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET` pair in Vercel Production did not match a single TikTok Sandbox app.
-
-**DECISION/FIX:** the account owner manually re-copied a matching Client Key + Client Secret pair from the same TikTok Sandbox app into Vercel Production env vars (`TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`). `TIKTOK_REDIRECT_URI` was not changed. No credential values were viewed, printed, or stored in Git at any point — this was a Vercel dashboard-only change. No application code changed.
-
-**REDEPLOY:** production redeployed via `vercel --prod --yes` (deployment `dpl_ABgvGF19NLxenryeQEA48GpgbX8V`, READY, aliased to `cryptolockua.com`) so the corrected env vars are loaded into serverless functions. `/tiktok-connect` verified 200 after redeploy (no real TikTok login performed).
-
-**NEXT ACTION:** one real TikTok Sandbox OAuth retry via `/tiktok-connect` to confirm the corrected credentials resolve the `invalid_client` error and the flow completes end-to-end (token exchange → `user.info.basic` → `video.list` → result page).
+**NEXT ACTION:** design and implement the persistent TikTok analytics collector: `TikTok API → server-side collector → persistent analytics history → GPT/Claude analysis`. This is a new, not-yet-scoped implementation task — distinct from the smoke test above.
 
 ## MONETIZATION
 
