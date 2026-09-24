@@ -10,6 +10,8 @@ translatesUk: "winrm-powershell-viddalene-keruvanya"
 
 WinRM (Windows Remote Management) is the service that enables PowerShell Remoting, remote management via Server Manager, and CIM/WMI over the network. Here's how to set it up securely.
 
+If you're setting this up right after a fresh install, our [Windows Server 2022/2019 setup guide](/en/windows-server-2022-2019-setup-guide) covers the steps that typically come before enabling remote management.
+
 ---
 
 ## Enable WinRM

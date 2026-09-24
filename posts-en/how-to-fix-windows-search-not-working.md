@@ -9,6 +9,8 @@ readTime: 5
 
 Windows Search stops working for several common reasons — a crashed service, corrupted index, or a pending update. Here's how to fix it step by step.
 
+If it's not just search but the whole [taskbar that's frozen or unresponsive](/en/taskbar-not-working-windows-fix), that points to a separate `explorer.exe` issue rather than the Search service itself.
+
 ---
 
 ## Quick Fix: Restart Windows Search

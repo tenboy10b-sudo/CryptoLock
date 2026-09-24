@@ -132,6 +132,8 @@ Get-MpThreatDetection | Select-Object ActionSuccess, DetectionID, DomainUser, Pr
 
 Or in the UI: `Virus & threat protection` → **Protection history**
 
+If Defender's history doesn't tell you enough about what a process actually did, [Process Explorer and System Informer](/en/process-explorer-system-informer-windows-guide) let you inspect running processes in far more detail.
+
 ---
 
 ## Restore a Quarantined File

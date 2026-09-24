@@ -62,6 +62,8 @@ winget install KeePassXCTeam.KeePassXC
 
 Потрібно запам'ятати тільки один майстер-пароль — решта зберігається зашифрованою.
 
+Детальніше про налаштування обох варіантів — у [гайді по KeePass і Bitwarden](/keepass-bitwarden-windows-menedzher-paroliv).
+
 ---
 
 ## Правило 4: Двофакторна аутентифікація (2FA)

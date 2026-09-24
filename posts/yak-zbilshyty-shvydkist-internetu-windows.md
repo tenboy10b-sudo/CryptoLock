@@ -56,6 +56,8 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Netwo
   -Name "Default" -Value 2 -Type DWord
 ```
 
+Якщо ж інтернет не просто повільний, а зник повністю одразу після оновлення Windows — це вже інша проблема, [дивись окремий гайд з вирішення](/nemaye-internetu-pislya-onovlennya-windows).
+
 ---
 
 ## Крок 4: Перевірити паразитний трафік
