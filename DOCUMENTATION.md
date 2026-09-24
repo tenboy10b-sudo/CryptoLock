@@ -3911,3 +3911,29 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** перед увімкненням запланованого (scheduled) збору чи персистенції аналітики — провести невеликий review/hardening edge-кейсів валідації token lifecycle, потім переходити до архітектури зберігання аналітичної історії. Реальний token refresh буде підтверджено лише коли майбутній запуск collector'а природно потрапить у 20-хвилинне вікно оновлення (або цілеспрямований тест форсує це).
 
 ---
+
+### Сесія 12 (продовження 64) — Посилення валідації TikTok token lifecycle
+
+**DATE:** 2026-09-24
+
+**PROBLEM:** перед увімкненням запланованого (cron) збору чи персистенції аналітики потрібно було переконатись, що пошкоджений Redis-стан або неочікувана відповідь TikTok на refresh не може бути прийнята як придатний token bundle. Аудит виявив: (1) `access_token_expires_at`/`refresh_token_expires_at` приймались лише за `typeof === "number"`, без перевірки на `NaN`/`Infinity`/`<=0`; (2) `token_type` міг бути будь-яким рядком (мовчки приймався або підмінявся на "Bearer" за замовчуванням, а не відхилявся); (3) `open_id` при некоректному типі (об'єкт/число/порожній рядок) мовчки замінювався на `null`, замість явної відмови; (4) `scope` не перевірявся при читанні збереженого bundle взагалі. Також виявлено РЕАЛЬНИЙ баг: перевірка неперервності `open_id` при refresh (`previousOpenId && base.bundle.open_id && previousOpenId !== base.bundle.open_id`) мовчки пропускала перевірку, якщо новий `open_id` був відсутній/null — тобто refresh, що "загубив" `open_id`, приймався б без помітки.
+
+**EVIDENCE:** прямий технічний запит користувача з точним переліком 4 категорій edge-кейсів і 34 обов'язкових тестових сценаріїв.
+
+**DECISION:** зробити мінімальний, локалізований security/reliability-патч у 2 файлах (`lib/tiktokTokenStore.js`, `lib/tiktokCollector.js`), без зміни порогу refresh, автентифікації collector'а, поведінки Redis-lock, пагінації чи ключа персистенції токена. `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js`, `pages/api/tiktok/collect.js` НЕ чіпати (жодного продемонстрованого бага, що вимагав би змін саме там).
+
+**IMPLEMENTATION:**
+- `lib/tiktokTokenStore.js`: новий спільний `REQUIRED_SCOPES`/`hasRequiredScopes()` (замінює дві окремі ad-hoc реалізації перевірки scope). `loadTokenBundle()` тепер відхиляє `access_token_expires_at`/`refresh_token_expires_at`, які не є скінченним додатним числом (`NaN`, `Infinity`, `0`, від'ємні), перевіряє наявність обох обов'язкових scopes у збереженому bundle, вимагає `token_type` регістронезалежно рівний "bearer", і `open_id` — `null` або непорожній рядок (більше не просто перевірка наявності поля, а перевірка коректності значення). `validateTokenBundle()` (спільна функція, яку використовують і `callback.js` при OAuth, і refresh-потік) отримала ті самі перевірки `token_type`/`open_id`, і тепер нормалізує збережене значення `token_type` до канонічного "Bearer".
+- `lib/tiktokCollector.js`: `validateRefreshedBundle()` перевикористовує спільний `hasRequiredScopes()` замість власної дубльованої логіки. Виправлено реальний баг continuity-перевірки `open_id`: стара умова `previousOpenId && base.bundle.open_id && previousOpenId !== base.bundle.open_id` мовчки пропускала перевірку, коли новий `open_id` був falsy (відсутній/null) — тепер: якщо попередній `open_id` існував (не null/undefined), новий ОБОВ'ЯЗКОВО має точно збігатися (включно з явною відмовою, якщо новий став null/відсутній); якщо попередній був null — приймається будь-яке значення, вже підтверджене `validateTokenBundle()` (null або валідний непорожній рядок).
+
+**TESTS:** 27 нових юніт-тестів напряму проти `validateTokenBundle`/`loadTokenBundle`/`validateRefreshedBundle`, що покривають усі 26 обов'язкових edge-кейсів (NaN/Infinity/нуль/від'ємні значення expiry, некоректний/відсутній scope, некоректний/відсутній token_type, некоректні типи open_id, і виправлення continuity-бага). Повторно прогнано повний набір з 36 регресійних тестів collector'а (auth, lock, повний token lifecycle, пагінація, відсутність витоку секретів, існуючі CSRF/callback-регресії) — жодного попереднього покриття не втрачено. `npm run build` — успішно.
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_6hyCkuqZC68DDusjyeRxXVp93mJz`, `cryptolockua.com`.
+
+**RESULT:** задеплоєно і безпечно перевірено в продакшн: `GET /api/tiktok/collect` → 405, `POST` без Bearer → 401, `POST` з явно невірним Bearer → 401, `/tiktok-connect` і далі 200. **Жодного автентифікованого виклику collector'а НЕ виконувалось, Redis НЕ змінювався.** Autonomous collector залишається VERIFIED (продовження 63). Реальний token refresh лишається IMPLEMENTED, ще НЕ підтвердженим живим запуском. Analytics history і далі НЕ реалізована.
+
+**COMMIT SHA:** `474acba`
+
+**FOLLOW-UP:** перейти до архітектури/реалізації постійного сховища analytics history, паралельно очікуючи природний production-запуск collector'а, що потрапить у 20-хвилинне вікно оновлення (це підтвердить реальний token refresh).
+
+---

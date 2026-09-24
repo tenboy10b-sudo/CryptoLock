@@ -165,9 +165,17 @@ This confirms a real TikTok OAuth token bundle was successfully written to Upsta
 
 This confirms, by a real run: Bearer authentication works, the collector runs without any new TikTok browser login, the persisted Redis token bundle reads successfully, the existing `access_token` works outside the OAuth callback, and `video.list` pagination works correctly across multiple pages (6 pages, 110 videos, no truncation). **Autonomous collector = VERIFIED. Pagination = VERIFIED.**
 
-**Token refresh: IMPLEMENTED, NOT YET VERIFIED by a real run.** `token_refreshed: false` means the access token was still fresh enough that the refresh branch was never exercised — the refresh code path itself (55/55 local tests) has not yet been triggered by a real production run. This remains a distinct, separate status from the collector/pagination verification above — do not conflate the two.
+**Token refresh: IMPLEMENTED, NOT YET VERIFIED by a real run.** `token_refreshed: false` means the access token was still fresh enough that the refresh branch was never exercised — the refresh code path itself has not yet been triggered by a real production run. This remains a distinct, separate status from the collector/pagination verification above — do not conflate the two.
 
-**NEXT ACTION:** before enabling scheduled collection or analytics persistence, perform a small token-lifecycle hardening review/fix for validation edge cases, then proceed to analytics-history architecture. Real token refresh will only be verified once a future collector run naturally lands within the 20-minute refresh window (or a deliberate test forces it) — analytics history remains **NOT IMPLEMENTED**.
+**TOKEN LIFECYCLE HARDENING — deployed 2026-09-24 (продовження 64, commit `474acba`), ahead of enabling scheduled collection or analytics persistence.** Tightened validation for both the persisted and refreshed token bundle:
+- `access_token_expires_at`/`refresh_token_expires_at`: now rejected if `NaN`/`Infinity`/`<= 0`, not just non-numeric as before.
+- `scope`: stored/refreshed bundles must still contain both `user.info.basic` and `video.list` (new shared `REQUIRED_SCOPES`/`hasRequiredScopes()` in `lib/tiktokTokenStore.js`, replacing two separate ad-hoc scope checks).
+- `token_type`: must be `"bearer"` case-insensitively — previously any string (or none at all) was silently accepted/defaulted; stored value is now normalized to canonical `"Bearer"`.
+- `open_id`: must be `null` or a non-empty string — previously an object/number/empty-string `open_id` was silently coerced away instead of rejected.
+- **Real bug fixed:** the refresh `open_id`-continuity check (`lib/tiktokCollector.js`) used `previousOpenId && base.bundle.open_id && previousOpenId !== base.bundle.open_id`, which silently skipped the check entirely whenever a refresh response came back with `open_id` missing/null — meaning a refresh that silently dropped `open_id` would have been accepted and persisted. Now correctly rejects any refresh where a previously-known non-null `open_id` goes missing, becomes `null`, or changes to a different value.
+- 27 new unit tests (all 26 stored-bundle/refresh-response edge cases) + full 36-test collector regression suite re-run with zero prior coverage lost. `npm run build` passed. No change to refresh threshold, collector auth, Redis lock behavior, pagination, or the token persistence key — `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js`, `pages/api/tiktok/collect.js` all untouched (confirmed via `git diff`). Deployed and safely verified in production (405/401/401/200 checks only — no authenticated collector call made, no Redis writes).
+
+**NEXT ACTION:** proceed to analytics-history storage architecture/implementation, while waiting for a natural token-refresh production run (or a deliberate test) to verify the refresh path itself. Analytics history remains **NOT IMPLEMENTED**.
 
 ## MONETIZATION
 
