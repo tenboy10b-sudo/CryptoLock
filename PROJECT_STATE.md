@@ -105,7 +105,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 ## TIKTOK STATUS
 
-**CURRENT STATUS: DIAGNOSING**
+**CURRENT STATUS: CREDENTIALS CORRECTED, AWAITING RETRY VERIFICATION**
 
 **Configuration (as stated by the account owner, not independently re-verified against the TikTok dashboard this session):**
 - TikTok Sandbox app configured
@@ -128,7 +128,13 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 Commit `a0110c3` deployed safe token-exchange diagnostics: on failure, `/api/tiktok/callback` now extracts and displays/logs only the 4 fields TikTok's token endpoint itself returns — HTTP status, `error`, `error_description`, `log_id` — never `client_key`/`client_secret`/the authorization code/`access_token`/`refresh_token`/the CSRF state or cookie value/any full request or response body. A malformed/non-JSON response is distinguished from a well-formed JSON error and shows only "Unexpected TikTok token response" + HTTP status (no fabricated fields). 26/26 local tests passed (invalid_client/invalid_grant/invalid_request/malformed/success-path-unchanged/no-secret-leakage/network-error). Production-verified same day via a safe synthetic request (real TikTok token endpoint, deliberately expired/fake code, **not a real login**): TikTok returned HTTP 200 with `error=invalid_grant`, `error_description="Authorization code is expired."`, and a real `log_id` — confirming the new diagnostic path is live and correctly parses TikTok's actual response shape (flat JSON, not nested under `data`, and note TikTok can return HTTP 200 with an error body rather than a 4xx/5xx).
 
-**NEXT ACTION:** one more real TikTok Sandbox OAuth login attempt via `/tiktok-connect`, capturing the 4 safe diagnostic fields now shown on failure (HTTP status / `error` / `error_description` / `log_id`) — this is required before any root-cause fix can be attempted, since the actual failure reason from a genuine (non-expired, non-fabricated) authorization code is still unknown.
+**RESOLVED DIAGNOSIS (real attempt, same day, after продовження 56):** a genuine (non-expired, non-fabricated) OAuth retry hit the new token-exchange diagnostics and revealed the real failure: `error=invalid_client`, `error_description="Client key or secret is incorrect."` — i.e. the `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET` pair in Vercel Production did not match a single TikTok Sandbox app.
+
+**DECISION/FIX:** the account owner manually re-copied a matching Client Key + Client Secret pair from the same TikTok Sandbox app into Vercel Production env vars (`TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`). `TIKTOK_REDIRECT_URI` was not changed. No credential values were viewed, printed, or stored in Git at any point — this was a Vercel dashboard-only change. No application code changed.
+
+**REDEPLOY:** production redeployed via `vercel --prod --yes` (deployment `dpl_ABgvGF19NLxenryeQEA48GpgbX8V`, READY, aliased to `cryptolockua.com`) so the corrected env vars are loaded into serverless functions. `/tiktok-connect` verified 200 after redeploy (no real TikTok login performed).
+
+**NEXT ACTION:** one real TikTok Sandbox OAuth retry via `/tiktok-connect` to confirm the corrected credentials resolve the `invalid_client` error and the flow completes end-to-end (token exchange → `user.info.basic` → `video.list` → result page).
 
 ## MONETIZATION
 

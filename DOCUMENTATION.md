@@ -3721,3 +3721,32 @@ Invalid or missing CSRF state.
 **FOLLOW-UP (не зроблено цієї сесії):** одна нова реальна спроба TikTok-логіну користувача, з фіксацією 4 безпечних полів (HTTP статус / `error` / `error_description` / `log_id`), показаних новою сторінкою — тільки після цього можна приймати рішення про виправлення. `/tiktok-connect` і всі TikTok-файли лишаються тимчасовими smoke-test артефактами.
 
 ---
+
+### Сесія 12 (продовження 57) — Виправлено: невірна пара TikTok Sandbox credentials, редеплой
+
+**DATE:** 2026-09-24
+
+**PROBLEM/EVENT:** нова реальна спроба TikTok-логіну користувача (діагностика з продовження 56 вже жива) дійшла до обміну токена і показала конкретну причину збою:
+```
+error: invalid_client
+error_description: Client key or secret is incorrect.
+```
+Тобто пара `TIKTOK_CLIENT_KEY` / `TIKTOK_CLIENT_SECRET` у Vercel Production не відповідала одному й тому ж TikTok Sandbox застосунку.
+
+**EVIDENCE:** повідомлено користувачем напряму (безпечні поля, показані сторінкою діагностики з продовження 56).
+
+**DECISION:** користувач вручну повторно скопіював відповідну пару Client Key + Client Secret з того самого TikTok Sandbox застосунку у змінні середовища Vercel Production (`TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`). `TIKTOK_REDIRECT_URI` не змінювався. Жодне значення credential НЕ переглядалося, не друкувалося і не зберігалося в Git — зміна виключно через Vercel dashboard. Жодного коду не змінено.
+
+**IMPLEMENTATION:** немає змін коду. Production передеплоєно (`vercel --prod --yes`), щоб serverless-функції підхопили виправлені env vars з нового білда (Vercel не перечитує env vars у вже запущених functions без нового деплою).
+
+**TESTS:** не застосовується (не зміна коду) — перевірено лише що `/tiktok-connect` повертає 200 після деплою.
+
+**RESULT:** деплой `READY`, аліас `cryptolockua.com` оновлено. `/tiktok-connect` підтверджено 200. Реальний TikTok-логін для підтвердження виправлення користувач ще НЕ виконував у рамках цього запису.
+
+**COMMIT SHA:** немає (без змін коду — тільки конфігурація середовища + редеплой).
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_ABgvGF19NLxenryeQEA48GpgbX8V`, `cryptolockua.com`.
+
+**FOLLOW-UP:** одна реальна спроба TikTok Sandbox OAuth через `/tiktok-connect` для підтвердження, що виправлена пара credentials усуває `invalid_client` і весь потік (обмін токена → `user.info.basic` → `video.list` → сторінка результату) завершується успішно.
+
+---
