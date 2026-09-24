@@ -1,7 +1,8 @@
 // TikTok Sandbox OAuth smoke test — step 2: verify CSRF state, exchange the code
-// server-side, call user.info.basic + video.list, render a throwaway result page.
-// No access_token/refresh_token is ever persisted (no DB/GitHub/file write) — both
-// fall out of scope when this request finishes. Never log secret/code/token values.
+// server-side, persist the validated token bundle to Upstash Redis (never to
+// GitHub/Git — see lib/tiktokTokenStore.js), call user.info.basic + video.list,
+// render a throwaway result page. Never log secret/code/token/Redis-credential
+// values — only status booleans and fixed reason strings.
 import {
   STATE_COOKIE_NAME,
   clearStateCookie,
@@ -11,7 +12,9 @@ import {
   renderResultPage,
   renderStateDiagnosticPage,
   renderTokenDiagnosticPage,
+  renderTokenPersistFailedPage,
 } from '../../../lib/tiktokAuth'
+import { validateTokenBundle, persistTokenBundle } from '../../../lib/tiktokTokenStore'
 
 const REQUIRED_SCOPES = ['user.info.basic', 'video.list']
 
@@ -88,7 +91,7 @@ export default async function handler(req, res) {
   }
 
   // ---- server-side token exchange ----
-  let accessToken, grantedScopesRaw
+  let accessToken, grantedScopesRaw, tokenJson
   try {
     const params = new URLSearchParams({
       client_key: TIKTOK_CLIENT_KEY,
@@ -106,7 +109,6 @@ export default async function handler(req, res) {
     // Parse separately from the ok/access_token check so a malformed/non-JSON
     // body (TikTok outage, proxy error page, etc.) is distinguishable from a
     // well-formed JSON error response.
-    let tokenJson = null
     try {
       tokenJson = await tokenRes.json()
     } catch (parseErr) {
@@ -146,6 +148,13 @@ export default async function handler(req, res) {
     return fail(res, 502, 'Token exchange with TikTok failed.', null)
   }
 
+  // ---- validate token response is structurally complete before persisting ----
+  const validation = validateTokenBundle(tokenJson)
+  if (!validation.ok) {
+    log('token_response_invalid', { reason: validation.reason })
+    return fail(res, 502, 'TikTok authorization succeeded, but the token response was incomplete.', null)
+  }
+
   const grantedScopes = grantedScopesRaw.split(',').map(s => s.trim()).filter(Boolean)
   const hasAllScopes = REQUIRED_SCOPES.every(s => grantedScopes.includes(s))
   if (!hasAllScopes) {
@@ -155,6 +164,16 @@ export default async function handler(req, res) {
       'insufficient_scope'
     )
   }
+
+  // ---- persist token bundle to Redis (must succeed before the connection is
+  // reported as complete; user.info.basic/video.list are never called on failure) ----
+  const persistResult = await persistTokenBundle(validation.bundle)
+  if (!persistResult.ok) {
+    log('tiktok_token_persist_failed', { success: false, reason: persistResult.reason })
+    res.status(502).setHeader('Content-Type', 'text/html; charset=utf-8')
+    return res.end(renderTokenPersistFailedPage())
+  }
+  log('tiktok_token_persist_succeeded', { success: true })
 
   // ---- user.info.basic ----
   let displayName = null
@@ -196,7 +215,8 @@ export default async function handler(req, res) {
 
   log('success', { videoCount: videos.length })
 
-  // accessToken/tokenJson intentionally go out of scope here — nothing persisted.
+  // The token bundle was already persisted to Redis above; accessToken/tokenJson
+  // themselves are not written anywhere else and go out of scope here.
   res.status(200).setHeader('Content-Type', 'text/html; charset=utf-8')
   res.end(renderResultPage({ displayName, grantedScopes, videos }))
 }
