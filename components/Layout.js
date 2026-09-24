@@ -350,6 +350,7 @@ export default function Layout({ children, title, description, canonical, isArti
             <Link href="/about" style={s.footerLink} suppressHydrationWarning>{effectiveLocale === "en" ? "About" : "Про нас"}</Link>
             <Link href="/tags" style={s.footerLink} suppressHydrationWarning>{effectiveLocale === "en" ? "Tags" : "Теги"}</Link>
             <Link href="/privacy" style={s.footerLink} suppressHydrationWarning>{effectiveLocale === "en" ? "Privacy" : "Конфіденційність"}</Link>
+            <Link href="/terms" style={s.footerLink} suppressHydrationWarning>{effectiveLocale === "en" ? "Terms" : "Умови використання"}</Link>
           </nav>
           <div style={s.footerSocial}>
             {socialLinks.map(({ key, icon, label }) => (

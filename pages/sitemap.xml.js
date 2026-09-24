@@ -44,6 +44,7 @@ function generateSitemap(posts, enPosts) {
     { url: '/about',                       priority: '0.4', changefreq: 'monthly' },
     { url: '/bookmarks',                   priority: '0.3', changefreq: 'monthly' },
     { url: '/privacy',                    priority: '0.3', changefreq: 'monthly' },
+    { url: '/terms',                      priority: '0.3', changefreq: 'monthly' },
   ]
 
   // Сторінки тегів (/tags/*) навмисно НЕ в sitemap — вони noindex (тонкі автогенеровані
