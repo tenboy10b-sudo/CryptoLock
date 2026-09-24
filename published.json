@@ -114,14 +114,15 @@
     "perevirka-dysku-na-pomylky-chkdsk",
     "how-to-configure-windows-vpn-server",
     "nalashtuvannya-faylovoho-servera-windows",
-    "yak-nalashtuvaty-diahnostiku-pamiati-windows"
+    "yak-nalashtuvaty-diahnostiku-pamiati-windows",
+    "how-to-configure-windows-server-core"
   ],
-  "count": 115,
+  "count": 116,
   "promo_index": 74,
   "last_post": {
-    "slug": "yak-nalashtuvaty-diahnostiku-pamiati-windows",
-    "title": "Діагностика пам'яті Windows: перевірка RAM на помилки",
-    "time": "2026-09-23T08:01:27.161Z"
+    "slug": "how-to-configure-windows-server-core",
+    "title": "How to Manage Windows Server Core Without a GUI",
+    "time": "2026-09-24T08:01:29.780Z"
   },
   "engage_index": 65,
   "extra_index": 91,
@@ -139,20 +140,7 @@
     "🔇 **Звук пропав після оновлення Windows — як повернути?**",
     "🔋 **Команда дня: powercfg /batteryreport**"
   ],
-  "lock": {
-    "execution_id": "5fe44741-1030-48da-b83f-b96bc5686944",
-    "type": "content",
-    "started_at": "2026-09-24T08:01:18.807Z",
-    "expires_at": "2026-09-24T08:16:18.807Z"
-  },
-  "pending": {
-    "execution_id": "5fe44741-1030-48da-b83f-b96bc5686944",
-    "type": "content",
-    "identifier": "how-to-configure-windows-server-core",
-    "payload": {
-      "text": "🖥️ **Керування Windows Server Core без графічного інтерфейсу**\n\nServer Core — це мінімалістична версія Windows Server без GUI, яка споживає менше ресурсів і має меншу поверхню атак. Ось як нею керувати:\n\n**1. Початкове налаштування через sconfig**\nПісля входу запустіть `sconfig` — інтерактивне меню для базової конфігурації (ім'я комп'ютера, мережа, оновлення, Remote Desktop).\n\n**2. Налаштування мережі через PowerShell**\n```powershell\nGet-NetAdapter\nNew-NetIPAddress -InterfaceIndex 4 -IPAddress 192.168.1.10 -PrefixLength 24\nSet-DnsClientServerAddress -InterfaceIndex 4 -ServerAddresses 8.8.8.8\n```\n\n**3. Встановлення ролей і компонентів**\n```powershell\nInstall-WindowsFeature -Name Web-Server\n```\n\n**4. Віддалене керування через RSAT**\nУвімкніть RemotePowerShell на сервері:\n```powershell\nEnable-PSRemoting -Force\n```\nЗ робочої станції підключайтеся через Server Manager або PowerShell Remoting.\n\n**5. Моніторинг через CLI**\nВикористовуйте `Task Manager` (taskmgr), `Performance Monitor` або PowerShell для перевірки стану системи.\n\nServer Core — ідеальний вибір для продакшн-середовищ, де важливі безпека та продуктивність! 💪\n\n#WindowsServer #ServerCore #PowerShell #безпека\n\n🔗 https://cryptolockua.com/en/how-to-configure-windows-server-core"
-    },
-    "created_at": "2026-09-24T08:01:29.780Z"
-  },
-  "last_message_id": null
+  "lock": null,
+  "pending": null,
+  "last_message_id": 509
 }
