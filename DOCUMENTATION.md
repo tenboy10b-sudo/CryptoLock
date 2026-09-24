@@ -3883,3 +3883,31 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** власник акаунту виконує один автентифікований `POST /api/tiktok/collect` (з реальним `TIKTOK_COLLECT_SECRET`) для підтвердження повного refresh+collect потоку живим викликом. Analytics history і далі НЕ зберігається — окреме, ще не прийняте рішення.
 
 ---
+
+### Сесія 12 (продовження 63) — Підтверджено реальним запуском: автономний TikTok collector
+
+**DATE:** 2026-09-24
+
+**OBJECTIVE:** зафіксувати успішний перший реальний автентифікований production-запуск автономного TikTok collector'а (реалізовано в продовженні 62).
+
+**EVIDENCE:** власник акаунту виконав `POST https://cryptolockua.com/api/tiktok/collect` з реальним `TIKTOK_COLLECT_SECRET` у заголовку `Authorization: Bearer`, повідомлено напряму. Результат:
+- `ok`: true
+- `token_refreshed`: false
+- `videos_returned`: 110
+- `pages_fetched`: 6
+- `truncated`: false
+- `collected_at`: `2026-09-24T13:07:32.306Z`
+
+**RESULT:** цей реальний production-запуск підтверджує: Bearer-автентифікація працює, collector працює без нового TikTok-логіну в браузері, збережений в Redis token bundle успішно читається, поточний `access_token` працює поза OAuth callback'ом, пагінація `video.list` коректно працює через декілька сторінок (6 сторінок, 110 відео, без truncation).
+
+**VERIFIED COMPONENTS:** автономний collector (Bearer-автентифікація, читання token bundle з Redis, виклик `video.list` без нового логіну), пагінація `video.list` (множинні сторінки, коректна зупинка без truncation).
+
+**NOT-YET-VERIFIED COMPONENTS:** реальний token refresh. `token_refreshed: false` означає, що `access_token` був ще достатньо свіжим і гілка refresh НЕ виконувалась цього разу — сам код оновлення токена (55/55 локальних тестів) ще не був вправлений живим production-запуском. Це окремий, не змішуваний з попереднім статус.
+
+**STATUS:** Autonomous TikTok collector — **VERIFIED**. Token refresh implementation — **IMPLEMENTED, awaiting first natural production refresh validation**. Analytics history — **NOT IMPLEMENTED**.
+
+**COMMIT SHA:** немає (документаційний запис про подію верифікації, без змін коду — та сама продакшн-версія `5b0b073`/`dpl_4zTD5Le861UDTuG5iWqrJpirjaSv`).
+
+**FOLLOW-UP:** перед увімкненням запланованого (scheduled) збору чи персистенції аналітики — провести невеликий review/hardening edge-кейсів валідації token lifecycle, потім переходити до архітектури зберігання аналітичної історії. Реальний token refresh буде підтверджено лише коли майбутній запуск collector'а природно потрапить у 20-хвилинне вікно оновлення (або цілеспрямований тест форсує це).
+
+---

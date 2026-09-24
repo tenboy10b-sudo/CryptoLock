@@ -145,7 +145,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 This confirms a real TikTok OAuth token bundle was successfully written to Upstash Redis under `cryptolock:tiktok:token_bundle:v1` — token persistence is no longer just implemented, it is **VERIFIED by a live write**. No token values are recorded here or anywhere in this repo's documentation.
 
-**AUTONOMOUS COLLECTOR — STATUS: IMPLEMENTED — awaiting first real authenticated collector validation (продовження 62, commit `5b0b073`, deployed 2026-09-24).** New secret-gated endpoint **`POST /api/tiktok/collect`** proves CryptoLock can read TikTok video metrics without a browser OAuth session:
+**AUTONOMOUS COLLECTOR — STATUS: VERIFIED (продовження 62-63, commit `5b0b073`, deployed 2026-09-24).** Secret-gated endpoint **`POST /api/tiktok/collect`** proves CryptoLock can read TikTok video metrics without a browser OAuth session:
 - **Authentication:** `Authorization: Bearer <TIKTOK_COLLECT_SECRET>` (constant-time comparison; never accepted via query string or body; missing secret env var fails closed with 500). New Vercel Production env var **name only**: `TIKTOK_COLLECT_SECRET`.
 - **Token source:** the Redis bundle persisted by `/api/tiktok/callback` (`cryptolock:tiktok:token_bundle:v1`) — read via `lib/tiktokTokenStore.js`'s new `loadTokenBundle()`.
 - **Proactive refresh:** if `access_token_expires_at` is within **20 minutes**, refreshes via TikTok's `refresh_token` grant before calling `video.list`; if `refresh_token_expires_at` has already passed, fails safely with `reauthorization_required: true` and makes no TikTok call at all. A successful refresh is validated (required scopes still present, `open_id` continuity checked against the previous bundle) and persisted to Redis **before** `video.list` is ever called — if that persist fails, the run aborts rather than risk continuing on a token TikTok may have already rotated away from.
@@ -153,9 +153,21 @@ This confirms a real TikTok OAuth token bundle was successfully written to Upsta
 - **Video collection:** paginates `video.list` up to a hard cap of **10 pages / 200 videos**; reports `truncated: true` rather than silently claiming completeness if the cap is hit while TikTok still has more.
 - **Response:** secret-gated JSON only (`ok`, `token_refreshed`, `videos_returned`, `pages_fetched`, `truncated`, `collected_at`, `videos[]`) — never `open_id`/`access_token`/`refresh_token`/expiry values/any secret.
 - **Analytics history is NOT persisted yet** — this stage only proves the token lifecycle and API collection; `pages/api/tiktok/login.js` and `pages/api/tiktok/callback.js` are untouched.
-- 55/55 local tests passed (auth, lock ownership/release, all refresh-validation-reject paths, Redis-persist-failure-blocks-video-list, pagination cap/truncation, no-secret-leakage). `npm run build` passed. Safely verified in production: `GET` → 405, `POST` without/with-wrong `Authorization` → 401, `/tiktok-connect` still 200 — **no authenticated collector call was made, and no fake tokens were used against production Redis.**
+- 55/55 local tests passed (auth, lock ownership/release, all refresh-validation-reject paths, Redis-persist-failure-blocks-video-list, pagination cap/truncation, no-secret-leakage). `npm run build` passed.
 
-**NEXT ACTION:** account owner performs one authenticated `POST /api/tiktok/collect` (with the real `TIKTOK_COLLECT_SECRET`) to validate the full refresh+collect flow end-to-end. Analytics-history storage remains a separate, still-pending decision — not yet implemented.
+**REAL PRODUCTION VALIDATION (2026-09-24, account owner's first authenticated call to `POST /api/tiktok/collect`, real `TIKTOK_COLLECT_SECRET`):**
+- `ok`: true
+- `token_refreshed`: false
+- `videos_returned`: 110
+- `pages_fetched`: 6
+- `truncated`: false
+- `collected_at`: `2026-09-24T13:07:32.306Z`
+
+This confirms, by a real run: Bearer authentication works, the collector runs without any new TikTok browser login, the persisted Redis token bundle reads successfully, the existing `access_token` works outside the OAuth callback, and `video.list` pagination works correctly across multiple pages (6 pages, 110 videos, no truncation). **Autonomous collector = VERIFIED. Pagination = VERIFIED.**
+
+**Token refresh: IMPLEMENTED, NOT YET VERIFIED by a real run.** `token_refreshed: false` means the access token was still fresh enough that the refresh branch was never exercised — the refresh code path itself (55/55 local tests) has not yet been triggered by a real production run. This remains a distinct, separate status from the collector/pagination verification above — do not conflate the two.
+
+**NEXT ACTION:** before enabling scheduled collection or analytics persistence, perform a small token-lifecycle hardening review/fix for validation edge cases, then proceed to analytics-history architecture. Real token refresh will only be verified once a future collector run naturally lands within the 20-minute refresh window (or a deliberate test forces it) — analytics history remains **NOT IMPLEMENTED**.
 
 ## MONETIZATION
 
