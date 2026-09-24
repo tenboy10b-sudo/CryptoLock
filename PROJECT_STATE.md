@@ -1,8 +1,8 @@
 # CryptoLock Project State
 
-LAST UPDATED: 2026-09-23
+LAST UPDATED: 2026-09-24
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-CURRENT ORIGIN MAIN SHA: 44d20ae
+CURRENT ORIGIN MAIN SHA: f9678a2
 
 ## PROJECT
 
@@ -144,6 +144,25 @@ No verified technical facts available in this repository. Business goal (continu
 ## ACTIVE EXPERIMENTS
 
 - First subscriber-growth giveaway on @cryptolock888 (started 30.08.2026, goal: 150 subscribers, prize: AuditShield licenses) — outcome not yet recorded in this repo.
+
+- **NAME:** Crawl Priority Internal-Link Experiment
+  **START DATE:** 2026-09-24 (commit `f9678a2`, deployment `dpl_zLokNezWsra59zdGsQ7SBVgsAMBe`)
+  **5 TEST URLs** (received exactly 1 new contextual inbound link each):
+  - `/en/process-explorer-system-informer-windows-guide`
+  - `/keepass-bitwarden-windows-menedzher-paroliv`
+  - `/en/windows-server-2022-2019-setup-guide`
+  - `/nemaye-internetu-pislya-onovlennya-windows`
+  - `/en/taskbar-not-working-windows-fix`
+  **5 CONTROL URLs** (topic/publish-date-matched to each TEST URL, untouched):
+  - `/process-explorer-system-informer-windows`
+  - `/en/keepass-bitwarden-windows-password-manager-guide`
+  - `/windows-server-2022-2019-nalashtuvannya`
+  - `/en/how-to-fix-no-internet-after-windows-update`
+  - `/panel-zavdan-ne-pratsyuie-windows-vyrishennya`
+  **INTERVENTION:** exactly one new contextual markdown link added per TEST URL, from one already-crawled source article each (2 already-indexed sources, 3 crawled-not-indexed sources with recent crawl dates) — see `dee1237`-style targeted diff in commit `f9678a2`. No CONTROL files, target-article content, sitemap, homepage, tags, canonicals, hreflang, or redirects touched.
+  **BASELINE (recorded before deploy):** all 10 URLs = "Discovered — currently not indexed" in GSC. TEST inbound counts: 0, 1, 0, 0, 0. CONTROL inbound counts: 1, 0, 1, 0, 0.
+  **CHECK DATE:** 2026-10-08 (+14 days)
+  **SUCCESS CRITERIA:** ≥3 of 5 TEST URLs move from Discovered to Crawled-not-indexed or Indexed, compared against the CONTROL group's movement rate over the same window. No manual GSC submission was used for any of the 10 URLs — the test is specifically about whether added internal links alone shift crawl behavior.
 
 ## COMPLETED WORK
 
