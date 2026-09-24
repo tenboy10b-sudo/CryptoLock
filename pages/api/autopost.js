@@ -331,6 +331,13 @@ async function safeReleaseLock(owner, repo, token, executionId) {
 const POLL_STYLE_INDICES = new Set([1, 5, 14]) // суперечка двох підходів / швидке голосування / дилема
 const QUIZ_STYLE_INDEX = 16 // швидкий тест знань — окремо, з правильною відповіддю
 
+// Стилі, придатні для текстової (не-poll) сторони A/B-експерименту "Telegram Poll
+// Experiment" (див. TELEGRAM POLL EXPERIMENT нижче) — усі ENGAGE_STYLES, окрім тих,
+// що й так структурно є опитуванням/квізом (щоб B-варіант завжди був текстовим постом,
+// а не випадково теж опитуванням).
+const TEXT_ONLY_ENGAGE_STYLE_INDICES = ENGAGE_STYLES.map((_, i) => i)
+  .filter(i => !POLL_STYLE_INDICES.has(i) && i !== QUIZ_STYLE_INDEX)
+
 function promptPollJSON(style, isQuiz) {
   return `Ти адміністратор Telegram каналу про Windows і кібербезпеку (CryptoLock, @cryptolock888).
 На основі цього формату посту — створи дані для інтерактивного опитування Telegram:
@@ -361,6 +368,37 @@ async function generatePollData(apiKey, style, isQuiz) {
     correctIndex: data.correct_index,
     explanation: data.explanation,
   }
+}
+
+// ── TELEGRAM POLL EXPERIMENT (14-day A/B: real poll vs normal engage text) ──
+// Опитування на практичну Windows/безпека/адміністрування тему — НЕ загальний
+// engage-стиль (ті лишаються для B-варіанту), і НЕ реклама/промо під виглядом опитування.
+function promptPracticalPoll(recentTopics = []) {
+  const avoidBlock = recentTopics.length
+    ? `\n\nОстанні теми опитувань, які вже публікувались (НЕ бери ту саму тему і не перефразовуй її):\n${recentTopics.map(t => `- ${t}`).join('\n')}`
+    : ''
+  return `Ти адміністратор Telegram каналу CryptoLock (@cryptolock888) про Windows і кібербезпеку.
+Створи дані для короткого практичного опитування Telegram на тему Windows, безпеки або адміністрування ПК.
+
+Вимоги до теми:
+- Конкретна практична звичка, налаштування або ситуація користувача Windows — не абстрактна
+- НЕ клікбейт, НЕ формат "а ви знали що"
+- НЕ реклама жодної статті чи продукту — опитування має самостійну цінність саме як питання
+- Варіанти відповіді мають бути реальними, не однобокими
+
+Поверни ТІЛЬКИ валідний JSON, без жодного тексту навколо, без markdown-обгортки:
+{"question": "текст питання (до 200 символів)", "options": ["варіант 1", "варіант 2", "варіант 3"]}
+
+Вимоги:
+- Українська мова
+- 2-4 варіанти відповіді, короткі (2-6 слів кожен)${avoidBlock}`
+}
+
+async function generatePracticalPoll(apiKey, recentTopics) {
+  const raw = await generateText(apiKey, promptPracticalPoll(recentTopics), 300)
+  const cleaned = raw.trim().replace(/^```(json)?/i, '').replace(/```$/, '').trim()
+  const data = JSON.parse(cleaned)
+  return { question: data.question, options: data.options, isQuiz: false }
 }
 
 // ── Генератори промптів (1:1 з bot.py) ──
@@ -480,6 +518,12 @@ function withDefaults(published) {
     extra_recent_topics: published.extra_recent_topics || [],
     lock: published.lock || null,
     pending: published.pending || null,
+    // Telegram Poll Experiment (14-day A/B, middle-engage only): деталь у
+    // generateForType(). engage_ab_index визначає чи наступний middle-engage —
+    // A (poll) чи B (текст); parity зберігається лише через finalizeFields, як і
+    // всі інші лічильники, тож збій/повтор циклу ніколи не просуває його двічі.
+    engage_ab_index: published.engage_ab_index || 0,
+    poll_recent_topics: published.poll_recent_topics || [],
   }
 }
 
@@ -506,12 +550,33 @@ async function generateForType(type, published, anthropicKey) {
   if (type === 'middle') {
     const dayOfMonth = new Date().getUTCDate()
     if (dayOfMonth % 2 === 0) {
+      // Telegram Poll Experiment: deterministic A/B — poll (A, even engage_ab_index)
+      // alternates with the existing normal engage text post (B, odd). Only this
+      // middle-engage branch changes; standalone type=engage below is untouched.
+      const abIdx = published.engage_ab_index || 0
+      const isPollTurn = abIdx % 2 === 0
+
+      if (isPollTurn) {
+        const recentTopics = published.poll_recent_topics || []
+        const poll = await generatePracticalPoll(anthropicKey, recentTopics)
+        return {
+          text: undefined, poll,
+          identifier: `engage-ab-poll:${abIdx}`,
+          finalizeFields: {
+            engage_ab_index: abIdx + 1,
+            poll_recent_topics: [...recentTopics, poll.question].filter(Boolean).slice(-6),
+          },
+          commitMsg: 'bot: update published.json [middle-engage]',
+        }
+      }
+
       const idx = published.engage_index
-      const content = await generateEngageContent(anthropicKey, idx)
+      const styleIdx = TEXT_ONLY_ENGAGE_STYLE_INDICES[idx % TEXT_ONLY_ENGAGE_STYLE_INDICES.length]
+      const text = await generateText(anthropicKey, promptEngage(ENGAGE_STYLES[styleIdx]), 400)
       return {
-        text: content.text, poll: content.poll,
-        identifier: `engage-style-${content.styleIdx}`,
-        finalizeFields: { engage_index: idx + 1 },
+        text, poll: undefined,
+        identifier: `engage-ab-text:${abIdx}:style-${styleIdx}`,
+        finalizeFields: { engage_ab_index: abIdx + 1, engage_index: idx + 1 },
         commitMsg: 'bot: update published.json [middle-engage]',
       }
     }

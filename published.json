@@ -142,5 +142,7 @@
   ],
   "lock": null,
   "pending": null,
-  "last_message_id": 509
+  "last_message_id": 509,
+  "engage_ab_index": 0,
+  "poll_recent_topics": []
 }
