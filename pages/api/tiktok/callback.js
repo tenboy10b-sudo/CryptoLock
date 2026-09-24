@@ -10,9 +10,18 @@ import {
   renderErrorPage,
   renderResultPage,
   renderStateDiagnosticPage,
+  renderTokenDiagnosticPage,
 } from '../../../lib/tiktokAuth'
 
 const REQUIRED_SCOPES = ['user.info.basic', 'video.list']
+
+// Defensive coercion for the 4 safe fields TikTok's token endpoint returns on
+// failure (error/error_description/log_id) — always a short string or null,
+// never an object/array that could smuggle unexpected content through.
+function safeStr(value, maxLen = 300) {
+  if (typeof value !== 'string' || !value) return null
+  return value.length > maxLen ? value.slice(0, maxLen) + '…' : value
+}
 
 function log(event, fields = {}) {
   // Safe by construction: callers below only ever pass status codes / booleans /
@@ -93,14 +102,46 @@ export default async function handler(req, res) {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Cache-Control': 'no-cache' },
       body: params.toString(),
     })
-    const tokenJson = await tokenRes.json()
-    if (!tokenRes.ok || !tokenJson.access_token) {
-      log('token_exchange_failed', { status: tokenRes.status })
-      return fail(res, 502, 'Token exchange with TikTok failed.', null)
+
+    // Parse separately from the ok/access_token check so a malformed/non-JSON
+    // body (TikTok outage, proxy error page, etc.) is distinguishable from a
+    // well-formed JSON error response.
+    let tokenJson = null
+    try {
+      tokenJson = await tokenRes.json()
+    } catch (parseErr) {
+      tokenJson = null
     }
+
+    if (tokenJson === null || typeof tokenJson !== 'object') {
+      log('token_exchange_malformed', { http_status: tokenRes.status })
+      res.status(502).setHeader('Content-Type', 'text/html; charset=utf-8')
+      return res.end(renderTokenDiagnosticPage({ malformed: true, httpStatus: tokenRes.status }))
+    }
+
+    if (!tokenRes.ok || !tokenJson.access_token) {
+      // Only these four safe fields are ever extracted, logged, or displayed —
+      // never client_secret/client_key/authorization code/tokens/full body.
+      const diag = {
+        httpStatus: tokenRes.status,
+        error: safeStr(tokenJson.error),
+        errorDescription: safeStr(tokenJson.error_description),
+        logId: safeStr(tokenJson.log_id),
+      }
+      log('token_exchange_failed', {
+        http_status: diag.httpStatus,
+        error: diag.error,
+        error_description: diag.errorDescription,
+        log_id: diag.logId,
+      })
+      res.status(502).setHeader('Content-Type', 'text/html; charset=utf-8')
+      return res.end(renderTokenDiagnosticPage(diag))
+    }
+
     accessToken = tokenJson.access_token
     grantedScopesRaw = tokenJson.scope || ''
   } catch (e) {
+    // Network/fetch-level failure — no HTTP response to extract diagnostic fields from.
     log('token_exchange_error', { status: 0 })
     return fail(res, 502, 'Token exchange with TikTok failed.', null)
   }
