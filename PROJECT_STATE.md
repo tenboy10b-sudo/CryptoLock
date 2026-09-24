@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-24
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-CURRENT ORIGIN MAIN SHA: 9acd92f
+CURRENT ORIGIN MAIN SHA: f2e12e4
 
 ## PROJECT
 
@@ -51,7 +51,7 @@ STATUS: no verified data in this repository's documentation.
 - Telegram: Bot API, channel @cryptolock888
 - Anthropic: Claude API (`claude-sonnet-4-5`) generates all autopost text/poll content
 - cron-job.org: external scheduler triggering `/api/autopost` on a daily schedule (exact current schedule not independently re-verified against the cron-job.org dashboard this session — only inferred from commit timestamps)
-- TikTok: business channel exists per stated goals; no technical integration with this repo
+- TikTok: Login Kit OAuth smoke test integrated 2026-09-24 (`/api/tiktok/login`, `/api/tiktok/callback`, `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET`/`TIKTOK_REDIRECT_URI` env vars) — see TIKTOK STATUS below
 
 ## SITE STATUS
 
@@ -105,7 +105,26 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 ## TIKTOK STATUS
 
-No verified technical facts available in this repository. Business goal (continue scaling) is stated by the user; no data to report.
+**CURRENT STATUS: DIAGNOSING**
+
+**Configuration (as stated by the account owner, not independently re-verified against the TikTok dashboard this session):**
+- TikTok Sandbox app configured
+- Domain verified
+- Login Kit enabled
+- Scopes: `user.info.basic`, `video.list`
+- Vercel Production env vars present (**names only, values never written here**): `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REDIRECT_URI`
+
+**What exists in this repo (implemented and deployed 2026-09-24, commits `7cfd17c` + `f2e12e4`):**
+- `/terms` — public Terms of Service page, live, required alongside `/privacy` for TikTok Developer app review (see COMPLETED WORK, commit `9acd92f`)
+- `/tiktok-connect` — temporary internal test route (`noindex,nofollow`, not in nav/footer/sitemap)
+- `/api/tiktok/login` — OAuth start: random CSRF state → Secure/HttpOnly/SameSite=Lax cookie → redirect to TikTok's real authorize screen (confirmed live, redirects with the genuine production `client_key`)
+- `/api/tiktok/callback` — OAuth completion: server-side token exchange, `user.info.basic` + `video.list` calls, renders a throwaway result page
+- **Tokens are NOT persisted anywhere** (no DB, no GitHub write, no file) — this is a smoke test only
+- **The permanent analytics collector does NOT exist yet.** Ultimate integration goal, not yet built: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`
+
+**Live status:** the first real authorization attempt reached `/api/tiktok/callback` but failed CSRF state validation *before* token exchange (`Invalid or missing CSRF state`) — root cause not yet confirmed. Commit `f2e12e4` deployed safe boolean-only diagnostics (`state_present` / `cookie_header_present` / `state_cookie_present` / `state_matches_cookie` / `request_method` / `request_host` — logged via Vercel function logs, never the actual values) so the next live attempt will reveal which of the three failure modes (missing state param, missing cookie, or mismatch) actually occurred. Four candidate causes were investigated by code inspection only (cookie `Path` scope, `SameSite=Lax` appropriateness, the existing `www`→apex redirect, GET-vs-POST arrival) — none showed a demonstrable bug, so none were changed.
+
+**NEXT ACTION:** repeat the real TikTok Sandbox OAuth flow via `/tiktok-connect` and record only the three safe YES/NO diagnostic results (state returned by TikTok / cookie returned by browser / state matched cookie) — do not guess at root cause until that data is in hand.
 
 ## MONETIZATION
 
@@ -140,6 +159,7 @@ No verified technical facts available in this repository. Business goal (continu
 5. No mass SEO/content deletion or restructuring without GSC evidence.
 6. Git push success and production deployment success are separate states — always report them separately.
 7. Significant completed work must exist in Git history and documentation, not only in AI chat history.
+8. Every significant implementation must end with the full pipeline: **implementation → test → deploy → production verify → documentation → docs commit → push**. A task is not complete if it stops before the documentation/docs-commit/push steps. This exists so a new Claude/GPT session — including a different account — can reconstruct current project state from GitHub alone, without any prior chat history.
 
 ## ACTIVE EXPERIMENTS
 
@@ -187,6 +207,8 @@ No verified technical facts available in this repository. Business goal (continu
 - Removed `Disallow: /_next/` from robots.txt so Googlebot can load Next.js JS/CSS resources (`pages/robots.txt.js`, commit `bc1ecb6`, deployed 2026-09-23)
 - Added Terms of Service page (`pages/terms.js`, commit `9acd92f`, deployed 2026-09-24) at `/terms` (+ `/en/terms` via existing i18n routing) — required alongside the existing `/privacy` page for TikTok Developer app production review (Terms of Service URL + Privacy Policy URL + public website URL)
 - Fixed EN article tag links (`pages/[slug].js`) that were resolving to bare `/tags/{tag}` instead of `/en/tags/{tag}` — caused by a stray `locale={false}` on the tag-chip/breadcrumb `<Link>`s and JSON-LD `BreadcrumbList`. Confirmed live 404s (`/tags/hardware`, `/tags/settings`, `/tags/productivity`) before the fix; all now resolve via `/en/tags/*` (commit `44d20ae`, deployed 2026-09-23)
+- Added a global execution lock + persisted pending-outbox to `pages/api/autopost.js` so overlapping cron invocations can no longer both post to Telegram, and a GitHub-write failure after a successful send no longer silently desyncs state (commit `ef134a7`, deployed 2026-09-24; live-verified on the first real cycle afterward)
+- TikTok Sandbox OAuth Login Kit smoke test implemented (`/tiktok-connect`, `/api/tiktok/login`, `/api/tiktok/callback`) — see TIKTOK STATUS above for current blocked-on-CSRF status (commits `7cfd17c` + `f2e12e4`, deployed 2026-09-24)
 
 ## BACKLOG
 

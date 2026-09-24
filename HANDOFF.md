@@ -68,7 +68,10 @@ This ordering (Telegram send before the GitHub state write) is a confirmed, unfi
 | `pages/api/autopost.js` | Live Telegram autopost logic |
 | `pages/tools/` | Free browser tools (password generator, subnet calculator, etc.) |
 | `pages/sitemap.xml.js`, `pages/robots.txt.js` | Dynamic SEO endpoints |
+| `pages/terms.js`, `pages/privacy.js` | Public legal pages (Terms of Service, Privacy Policy) |
+| `pages/tiktok-connect.js`, `pages/api/tiktok/` | TikTok Sandbox OAuth smoke test (temporary, noindex — see TikTok section below) |
 | `lib/posts.js` | Content-reading/filtering logic |
+| `lib/tiktokAuth.js` | TikTok OAuth helpers — CSRF cookie, HTML escaping, result-page rendering |
 | `components/` | Shared UI (Layout, PostCard, SearchBar, TableOfContents) |
 | `next.config.js` | i18n, headers, the accumulated redirect list |
 | `site.config.js` | Site name, description, social links, nav, GA id |
@@ -110,7 +113,16 @@ This has been the standard practice throughout this project whenever auto-deploy
 
 ## TikTok
 
-Stated as an active growth channel in the overall business funnel. No technical integration with this repository; no verified performance data available here.
+Active growth channel in the overall business funnel. As of 2026-09-24, a Sandbox OAuth smoke test is integrated (Login Kit only — this is **not** a permanent analytics collector yet):
+
+```
+User (via /tiktok-connect, temporary internal test route, noindex/nofollow)
+  → /api/tiktok/login (random CSRF state → Secure/HttpOnly/SameSite=Lax cookie, redirects to TikTok)
+  → TikTok OAuth (Sandbox app, scopes: user.info.basic, video.list)
+  → /api/tiktok/callback (server-side token exchange, calls user/info + video/list, renders a throwaway result page)
+```
+
+Tokens are **never persisted** — no DB, no GitHub write, no file. The intended eventual architecture (not yet built) is: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`. See `PROJECT_STATE.md` → TIKTOK STATUS for current live status (currently blocked on a CSRF state-check failure during the first real login attempt — see `DOCUMENTATION.md` for the incident record) and `DOCUMENTATION.md` (продовження 52-55) for the full implementation history.
 
 ## Tools
 
@@ -131,6 +143,9 @@ Names only, no values:
 | `GITHUB_OWNER` | `pages/api/autopost.js` (defaults to `tenboy10b-sudo` if unset) |
 | `GITHUB_REPO` | `pages/api/autopost.js` (defaults to `CryptoLock` if unset) |
 | `AUTOPOST_SECRET` | `pages/api/autopost.js` (query-param auth gate) |
+| `TIKTOK_CLIENT_KEY` | `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js` |
+| `TIKTOK_CLIENT_SECRET` | `pages/api/tiktok/callback.js` only — never sent to the client |
+| `TIKTOK_REDIRECT_URI` | `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js` |
 
 ## Local setup
 

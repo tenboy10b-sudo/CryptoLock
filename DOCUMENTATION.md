@@ -3589,3 +3589,106 @@ Disallow: /_next/
 **Регресій не виявлено.**
 
 ---
+
+### Сесія 12 (продовження 52) — Terms of Service сторінка (підготовка до TikTok Developer review)
+
+**DATE:** 2026-09-24
+
+**PROBLEM:** TikTok Developer production review вимагає Terms of Service URL, Privacy Policy URL і публічний website URL. `/privacy` вже існував; матчингової сторінки Умов використання не було.
+
+**EVIDENCE:** явна вимога користувача з посиланням на конкретний список вимог TikTok review.
+
+**DECISION:** одна нова сторінка `pages/terms.js`, що дзеркалить структуру/конвенції `pages/privacy.js` один-в-один (той самий `Layout`, той самий locale-aware uk/en патерн через існуючий i18n-роутинг — окремий EN-файл не потрібен), той самий контакт (`siteConfig.social.telegram`, жодного нового контакту не вигадано). 11 обов'язкових секцій: опис сервісу, дисклеймер про інформаційний характер, відповідальність користувача (команди/скрипти/бекапи), відсутність гарантій, належне використання, інтелектуальна власність, сторонні сервіси, обмеження відповідальності, зміни до сервісу/умов, контакти, дата оновлення.
+
+**IMPLEMENTATION:** `pages/terms.js` (новий) + один новий рядок у футері (`components/Layout.js`, посилання "Terms"/"Умови використання" одразу після "Privacy") + один новий запис у `pages/sitemap.xml.js`'s `staticPages` (той самий priority-tier що й `/privacy`, той самий існуючий `lastmod`-механізм, без змін самого механізму).
+
+**TESTS:** `npm run build` — успішно; локальна перевірка через `next start` (`/terms` і `/en/terms` — 200, canonical коректний, robots `index, follow`, посилання у футері присутнє); `/privacy` — без регресій.
+
+**RESULT:** `/terms` і `/en/terms` живі в продакшені, self-canonical, indexable, у sitemap, посилання з футера робоче.
+
+**COMMIT SHA:** `9acd92f`
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_2y6QUnHeA2pee2QsM2soCG1XhiXN`, `cryptolockua.com`.
+
+**FOLLOW-UP:** немає — сторінка постійна (не тимчасовий тестовий артефакт, на відміну від `/tiktok-connect` нижче).
+
+---
+
+### Сесія 12 (продовження 53) — TikTok Sandbox OAuth smoke test
+
+**DATE:** 2026-09-24
+
+**PROBLEM:** TikTok Developer Sandbox налаштований (Login Kit, scopes `user.info.basic`+`video.list`, цільовий акаунт CryptoLock, домен верифікований), змінні середовища `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET`/`TIKTOK_REDIRECT_URI` вже існували в Vercel Production, але жодної інтеграції з репозиторієм ще не було. Потрібен був мінімальний, безпечний smoke test: Login → OAuth callback → `user.info.basic` → `video.list` → сторінка результату — **НЕ постійний збирач аналітики**. Кінцева мета інтеграції (ще НЕ реалізована): `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`.
+
+**EVIDENCE:** явний технічний запит користувача з повним офіційним OAuth-flow TikTok (`/v2/auth/authorize/`, `/v2/oauth/token/`, `/v2/user/info/`, `/v2/video/list/`) і детальними вимогами безпеки (server-side token exchange, CSRF state, Secure/HttpOnly/SameSite=Lax cookie, жодної персистенції токенів, жодного логування секретів).
+
+**DECISION:** реалізувати рівно 3 нові файли (`lib/tiktokAuth.js`, `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js`) + 1 тимчасову admin-тест-сторінку (`pages/tiktok-connect.js`, `noindex,nofollow`, не додана до навігації/футера/sitemap). Жодних змін до Telegram, sitemap, SEO-експериментів чи іншого коду сайту.
+
+**IMPLEMENTATION:**
+- `/tiktok-connect` → кнопка "Login with TikTok" → `/api/tiktok/login`.
+- `login.js`: генерує криптографічно випадковий CSRF state (`crypto.randomBytes(24)`), зберігає у cookie (`Path=/api/tiktok`, `Secure`, `HttpOnly`, `SameSite=Lax`, `Max-Age=600`), редіректить на офіційний TikTok authorize URL. Ніколи не звертається до `TIKTOK_CLIENT_SECRET`.
+- `callback.js`: перевіряє `state` точно проти cookie (fail 403 при відсутності/невідповідності), обмінює код на токен виключно server-side (`POST /v2/oauth/token/`), перевіряє видані scopes, викликає `user/info` і `video/list`, рендерить одноразову HTML-сторінку результату (статус підключення, ім'я, scopes, таблиця до 20 відео) — токени ніде не зберігаються (жодного запису в GitHub/БД/файл, значення просто виходять зі скоупу після відповіді).
+- Захист: `Cache-Control: no-store`, HTML-екранування будь-якого тексту від TikTok (ім'я, назви відео, повідомлення про помилку), додатковий https-only allowlist на рендерені посилання на відео, fail-closed на кожній помилці API/токена, `open_id` навмисно ніколи не рендериться, жоден `console.log` ніколи не містить token/code/secret — лише статус-коди й назви подій.
+
+**TESTS:** 32/32 локальних асертів (мокнуті TikTok endpoints) — усі 11 функціональних сценаріїв + автоматична перевірка повної відповіді на відсутність access/refresh token, client secret, authorization code, open_id, і що `<script>` у назві відео рендериться екранованим (XSS-safe). `npm run build` — успішно.
+
+**RESULT:** smoke test повністю задеплоєний і живий; `/api/tiktok/login` підтверджено редіректить на справжній TikTok authorize URL з реальним production `client_key` (значення не записується в документацію). Реальний TikTok-логін НЕ завершувався автоматично — див. наступний запис (продовження 54) для результату першої живої спроби.
+
+**COMMIT SHA:** `7cfd17c`
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_9cpCcg7sKRnD63GUQ7JbPWKYVzNy`, `cryptolockua.com`.
+
+**FOLLOW-UP:** живий TikTok-логін виконав користувач самостійно після цього деплою — результат задокументовано окремо нижче.
+
+---
+
+### Сесія 12 (продовження 54) — Перша реальна спроба OAuth: збій
+
+**DATE:** 2026-09-24
+
+**PROBLEM/EVENT:** користувач виконав реальний TikTok-логін через `/tiktok-connect` (продовження 53).
+
+**EVIDENCE:** повідомлено користувачем напряму.
+
+**RESULT: FAILED перед обміном токена.**
+Потік дійшов до `/api/tiktok/callback`, але впав на кроці перевірки CSRF-стану з помилкою:
+```
+Invalid or missing CSRF state.
+```
+Обмін коду на токен (`POST /v2/oauth/token/`), `user.info.basic` і `video.list` — жоден з цих кроків НЕ виконувався, оскільки збій стався раніше в потоці.
+
+**DECISION:** причина ще НЕ підтверджена і НЕ заявляється. Замість здогадок — додати безпечну діагностику видимості (продовження 55) перед будь-яким виправленням коду.
+
+**COMMIT SHA:** немає (це запис про подію/інцидент, не про зміну коду).
+
+**FOLLOW-UP:** див. продовження 55.
+
+---
+
+### Сесія 12 (продовження 55) — Безпечна діагностика CSRF-збою
+
+**DATE:** 2026-09-24
+
+**PROBLEM:** після збою в продовженні 54 єдине повідомлення "Invalid or missing CSRF state" об'єднувало три різні можливі причини (відсутній `state`-параметр, відсутня cookie, чи є розбіжність значень) в одну — неможливо було визначити яка саме спрацювала.
+
+**EVIDENCE:** прямий технічний запит користувача з точним переліком 6 полів для безпечного логування і 3 YES/NO-фактів для тимчасової сторінки помилки — явно без зміни моделі безпеки OAuth.
+
+**DECISION:** додати діагностику ТІЛЬКИ на кроці перевірки CSRF-стану, ніде більше. Жодних змін до scopes, обміну токена, `video.list`, sitemap, SEO, Telegram чи іншого коду сайту. Дослідити (без змін коду) 4 підозрювані причини, названі користувачем.
+
+**IMPLEMENTATION:**
+- `pages/api/tiktok/callback.js`: структурований лог із 6 булевими/рядковими полями (`state_present`, `cookie_header_present`, `state_cookie_present`, `state_matches_cookie`, `request_method`, `request_host`) — ніколи не саме значення `state`/cookie/секрету.
+- `lib/tiktokAuth.js`: нова тимчасова `renderStateDiagnosticPage()` — та сама 403-сторінка, але з трьома YES/NO-фактами (State returned by TikTok / OAuth cookie returned by browser / State matched cookie), без жодних реальних значень.
+- 403-статус і решта моделі безпеки (cookie-атрибути, обмін токена, scopes) — без змін.
+- Досліджено 4 підозри користувача (лише читання коду, нічого не змінено): `Path=/api/tiktok` коректно покриває `/api/tiktok/callback` за RFC 6265 path-matching; `SameSite=Lax` коректний для стандартного top-level GET-редіректу OAuth; існуюче правило `www.cryptolockua.com` → `cryptolockua.com` в `next.config.js` (`source: '/:path*'`) — комплексне і резолвиться ДО виконання коду хендлерів (обидва `/api/tiktok/login` і `/api/tiktok/callback` потрапляють на той самий хост до того, як спрацює наш код), тож малоймовірно є прямою причиною; GET vs POST не має значення, бо `req.query` наповнюється з URL незалежно від методу, а хендлер ніколи не перевіряє `req.method`. **Жодна з 4 причин не показала явного бага в цих трьох файлах — нічого з цього не змінено, як і було явно вказано не робити.**
+
+**TESTS:** 25/25 локальних асертів — усі 4 обов'язкові сценарії (state відсутній/cookie присутня; state присутній/cookie відсутня; обидва присутні але розбіжність; обидва присутні і збіг) + автоматична перевірка що жодне реальне значення state/cookie/секрету ніколи не потрапляє в лог чи HTML. `npm run build` — успішно.
+
+**RESULT:** діагностика задеплоєна і жива, перевірена безпечним синтетичним запитом (без реального TikTok-логіну) — коректно показує статус 403 і правильні YES/NO-значення. **Справжня причина CSRF-збою (продовження 54) ще НЕ підтверджена.** Модель безпеки OAuth НЕ послаблена — той самий 403, ті самі cookie-атрибути, той самий обмін токена.
+
+**COMMIT SHA:** `f2e12e4`
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_59kKSF6LA3WyUtVzuXM3C79MJd4j`, `cryptolockua.com`.
+
+**FOLLOW-UP (не зроблено цієї сесії):** повторити живий TikTok-логін через `/tiktok-connect` і прочитати новий `state_mismatch`-лог у Vercel production logs для встановлення справжньої причини — тільки після цього приймати рішення про виправлення. `/tiktok-connect` і всі TikTok-файли лишаються тимчасовими smoke-test артефактами, не постійною функцією збору аналітики.
+
+---
