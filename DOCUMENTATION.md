@@ -3937,3 +3937,31 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** перейти до архітектури/реалізації постійного сховища analytics history, паралельно очікуючи природний production-запуск collector'а, що потрапить у 20-хвилинне вікно оновлення (це підтвердить реальний token refresh).
 
 ---
+
+### Сесія 12 (продовження 65) — Створено приватний репозиторій CryptoLock-analytics
+
+**DATE:** 2026-09-24
+
+**OBJECTIVE:** створити і ініціалізувати окремий ПРИВАТНИЙ GitHub-репозиторій для довгострокової історії TikTok-аналітики, оскільки основний репозиторій `tenboy10b-sudo/CryptoLock` є ПУБЛІЧНИМ, а аналітична історія — це бізнес-дані, які не можна зберігати публічно. Ця задача — лише інфраструктура/сховище; ні продакшн TikTok collector, ні persistence аналітики, ні cron цього разу НЕ реалізовувались.
+
+**EVIDENCE:** прямий технічний запит користувача з точною специфікацією назви репозиторію, власника, видимості, структури і критеріями прийняття.
+
+**DECISION:** архітектура сховища: **runtime-секрети/стан** (token bundle, refresh-стан, collector lock, майбутній idempotency-стан) → Upstash Redis (без змін); **довгострокова аналітична історія** → окремий ПРИВАТНИЙ репозиторій `tenboy10b-sudo/CryptoLock-analytics`. Той самий власник (`tenboy10b-sudo`), що й основний репозиторій.
+
+**IMPLEMENTATION:**
+- Перевірено (`gh api user`), що аутентифікований GitHub-акаунт — саме `tenboy10b-sudo` з правами `repo`.
+- Перевірено, що `tenboy10b-sudo/CryptoLock-analytics` ще НЕ існував.
+- Створено через `gh repo create tenboy10b-sudo/CryptoLock-analytics --private` — одразу після створення підтверджено (`gh repo view --json`) `isPrivate: true`, `visibility: "PRIVATE"`, правильний власник.
+- Клоновано локально в сесійний scratchpad, додано `README.md` (документує призначення, заплановану структуру снапшотів `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json` — один файл на UTC-день, заплановану JSON-схему снапшота, правило безпеки — перелік того, що НІКОЛИ не повинно тут зберігатися, і 7 принципів зберігання снапшотів — один файл/день, ідемпотентність запису, safe retry, ніколи не один вічно зростаючий файл, без секретів, репозиторій завжди приватний, читабельність без доступу до Redis) і `tiktok/snapshots/.gitkeep`. Жодних фейкових чи реальних TikTok-даних не додано.
+
+**SECURITY:** скановано вміст нового `README.md` на патерни секретів (access_token/refresh_token/client_secret/Bearer-значення/redis://) — нічого не знайдено. Явно задокументовано в самому README, що ніколи не зберігати: access_token, refresh_token, open_id, TIKTOK_CLIENT_SECRET, TIKTOK_COLLECT_SECRET, Redis credentials, Authorization-заголовки, OAuth code/state/cookie.
+
+**RESULT:** репозиторій `tenboy10b-sudo/CryptoLock-analytics` створено, ПРИВАТНИЙ, `main` — гілка за замовчуванням, README.md і tiktok/snapshots/.gitkeep присутні. Читання незалежно підтверджено через `gh api repos/.../contents/...` і `gh api .../git/trees/main?recursive=true` (показало РІВНО 4 очікувані шляхи — жодних інших файлів, жодних реальних даних). Основний репозиторій CryptoLock — без змін коду.
+
+**COMMIT SHA (CryptoLock-analytics):** `a2471a1`
+
+**COMMIT SHA (CryptoLock, документація):** див. окремий docs-коміт цієї ж задачі.
+
+**FOLLOW-UP:** реалізувати ідемпотентний writer TikTok-аналітичних снапшотів, що читає з уже верифікованого collector'а і пише в приватний `CryptoLock-analytics` (один файл на UTC-день, безпечний при повторному запуску в той самий день — точна семантика retry визначиться під час реалізації). Cron/scheduled collection НЕ вмикати, поки writer не буде вручну перевірений у продакшн.
+
+---

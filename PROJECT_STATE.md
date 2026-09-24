@@ -175,7 +175,16 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 - **Real bug fixed:** the refresh `open_id`-continuity check (`lib/tiktokCollector.js`) used `previousOpenId && base.bundle.open_id && previousOpenId !== base.bundle.open_id`, which silently skipped the check entirely whenever a refresh response came back with `open_id` missing/null — meaning a refresh that silently dropped `open_id` would have been accepted and persisted. Now correctly rejects any refresh where a previously-known non-null `open_id` goes missing, becomes `null`, or changes to a different value.
 - 27 new unit tests (all 26 stored-bundle/refresh-response edge cases) + full 36-test collector regression suite re-run with zero prior coverage lost. `npm run build` passed. No change to refresh threshold, collector auth, Redis lock behavior, pagination, or the token persistence key — `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js`, `pages/api/tiktok/collect.js` all untouched (confirmed via `git diff`). Deployed and safely verified in production (405/401/401/200 checks only — no authenticated collector call made, no Redis writes).
 
-**NEXT ACTION:** proceed to analytics-history storage architecture/implementation, while waiting for a natural token-refresh production run (or a deliberate test) to verify the refresh path itself. Analytics history remains **NOT IMPLEMENTED**.
+**TIKTOK ANALYTICS STORAGE ARCHITECTURE (продовження 65, 2026-09-24):**
+- **Runtime secrets/state (token bundle, refresh state, collector lock, future idempotency state):** Upstash Redis — unchanged, this task did not touch Redis.
+- **Long-term analytics history:** a separate **PRIVATE** GitHub repository, `tenboy10b-sudo/CryptoLock-analytics` — deliberately NOT the public `tenboy10b-sudo/CryptoLock` repo, since analytics history is business data. Planned layout: `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`, one file per UTC calendar day (documented in that repo's own `README.md`, not duplicated here).
+- **Analytics storage repository: CREATED / VERIFIED.** Private, correct owner, `main` default branch, `README.md` + `tiktok/snapshots/.gitkeep` present, read access confirmed via authenticated `gh`/API tooling independent of the creation step. No real analytics data written yet (repo contains only the 4 expected paths).
+- **Analytics writer: NOT IMPLEMENTED.** No code reads from the collector and writes a snapshot into this repo yet.
+- **Scheduled collection: NOT IMPLEMENTED.** No cron-job.org trigger configured for the collector.
+- **Autonomous collector: VERIFIED** (продовження 62-63, unchanged by this task).
+- **Real token refresh: IMPLEMENTED — NOT YET VERIFIED naturally** (unchanged by this task).
+
+**NEXT ACTION:** implement an idempotent TikTok analytics snapshot writer from the existing verified collector into the private `CryptoLock-analytics` repository (one file per UTC day, safe on retry — exact retry semantics to be decided during that implementation). Do not enable cron/scheduled collection until the writer has been manually verified in production.
 
 ## MONETIZATION
 

@@ -146,7 +146,18 @@ As of 2026-09-24 (commit `5b0b073`), a secret-gated **`POST /api/tiktok/collect`
 
 Redis keys in use: `cryptolock:tiktok:token_bundle:v1` (token bundle) and `cryptolock:tiktok:collector_lock:v1` (collector concurrency lock). **Recovery:** if the token bundle is absent or corrupt, perform a fresh manual authorization through `/tiktok-connect` — there is no other recovery path, and none is needed (this is a smoke-test route, not a production login users depend on).
 
-The intended eventual architecture (not yet built) is: `TikTok API → server-side collector (implemented and verified) → Redis (tokens/state, implemented and verified) + persistent analytics history (storage TBD) → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login**, **token persistence to Redis is also VERIFIED by a real write**, and the **autonomous collector is VERIFIED by a real authenticated run** (110 videos, 6 pages, no truncation) — but that run did not exercise the refresh branch (`token_refreshed: false`), so **real token refresh remains implemented but not yet verified by a live run**. See `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-63) for the full implementation/incident history.
+### Analytics history storage
+
+```
+TikTok API
+  → CryptoLock collector (POST /api/tiktok/collect)
+  → Redis (token bundle + collector lock — runtime/secret state only)
+  → private GitHub analytics history (durable, non-secret snapshot history)
+```
+
+Long-term TikTok analytics history is stored in a **separate PRIVATE** GitHub repository, **`tenboy10b-sudo/CryptoLock-analytics`** — created 2026-09-24, same owner as this repo. **The public `tenboy10b-sudo/CryptoLock` repository must never be used for TikTok analytics-history snapshots** — analytics is business data and this repo is public. Snapshot path convention (documented in that repo's own README): `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`, one file per UTC calendar day. Redis remains the store for runtime/secret state only (token bundle, collector lock) — it is explicitly **not** the long-term analytics history store. As of 2026-09-24 the private repo exists with only `README.md` + `tiktok/snapshots/.gitkeep`; no analytics writer is implemented yet, no real snapshot data has been written, and no scheduled collection is configured.
+
+The intended eventual architecture is: `TikTok API → server-side collector (implemented and verified) → Redis (tokens/state, implemented and verified) + private CryptoLock-analytics repo (created, writer not yet built) → GPT/Claude analysis`. As of 2026-09-24 the Sandbox OAuth smoke test is **VERIFIED end-to-end via a real login**, **token persistence to Redis is also VERIFIED by a real write**, and the **autonomous collector is VERIFIED by a real authenticated run** (110 videos, 6 pages, no truncation) — but that run did not exercise the refresh branch (`token_refreshed: false`), so **real token refresh remains implemented but not yet verified by a live run**. Token/refresh validation was hardened 2026-09-24 (commit `474acba`) ahead of enabling scheduled collection. See `PROJECT_STATE.md` → TIKTOK STATUS for the current snapshot and `DOCUMENTATION.md` (продовження 52-65) for the full implementation/incident history.
 
 ## Tools
 
