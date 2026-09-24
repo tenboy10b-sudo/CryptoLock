@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-24
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-CURRENT ORIGIN MAIN SHA: f2e12e4
+CURRENT ORIGIN MAIN SHA: a0110c3
 
 ## PROJECT
 
@@ -114,7 +114,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 - Scopes: `user.info.basic`, `video.list`
 - Vercel Production env vars present (**names only, values never written here**): `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REDIRECT_URI`
 
-**What exists in this repo (implemented and deployed 2026-09-24, commits `7cfd17c` + `f2e12e4`):**
+**What exists in this repo (implemented and deployed 2026-09-24, commits `7cfd17c` + `f2e12e4` + `a0110c3`):**
 - `/terms` — public Terms of Service page, live, required alongside `/privacy` for TikTok Developer app review (see COMPLETED WORK, commit `9acd92f`)
 - `/tiktok-connect` — temporary internal test route (`noindex,nofollow`, not in nav/footer/sitemap)
 - `/api/tiktok/login` — OAuth start: random CSRF state → Secure/HttpOnly/SameSite=Lax cookie → redirect to TikTok's real authorize screen (confirmed live, redirects with the genuine production `client_key`)
@@ -122,9 +122,13 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 - **Tokens are NOT persisted anywhere** (no DB, no GitHub write, no file) — this is a smoke test only
 - **The permanent analytics collector does NOT exist yet.** Ultimate integration goal, not yet built: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`
 
-**Live status:** the first real authorization attempt reached `/api/tiktok/callback` but failed CSRF state validation *before* token exchange (`Invalid or missing CSRF state`) — root cause not yet confirmed. Commit `f2e12e4` deployed safe boolean-only diagnostics (`state_present` / `cookie_header_present` / `state_cookie_present` / `state_matches_cookie` / `request_method` / `request_host` — logged via Vercel function logs, never the actual values) so the next live attempt will reveal which of the three failure modes (missing state param, missing cookie, or mismatch) actually occurred. Four candidate causes were investigated by code inspection only (cookie `Path` scope, `SameSite=Lax` appropriateness, the existing `www`→apex redirect, GET-vs-POST arrival) — none showed a demonstrable bug, so none were changed.
+**Live status (superseded — see below for the current blocker):** the *first* real authorization attempt reached `/api/tiktok/callback` but failed CSRF state validation *before* token exchange (`Invalid or missing CSRF state`). Commit `f2e12e4` deployed safe boolean-only CSRF diagnostics.
 
-**NEXT ACTION:** repeat the real TikTok Sandbox OAuth flow via `/tiktok-connect` and record only the three safe YES/NO diagnostic results (state returned by TikTok / cookie returned by browser / state matched cookie) — do not guess at root cause until that data is in hand.
+**CURRENT BLOCKER (as of a later real attempt, same day):** a subsequent real browser attempt **passed CSRF validation** (state matched cookie correctly — the earlier CSRF failure did not recur and its root cause remains unexplained but is no longer blocking). The flow now fails one step later, at server-side token exchange (`POST https://open.tiktokapis.com/v2/oauth/token/`), with `Token exchange with TikTok failed.` **Root cause: still UNKNOWN.**
+
+Commit `a0110c3` deployed safe token-exchange diagnostics: on failure, `/api/tiktok/callback` now extracts and displays/logs only the 4 fields TikTok's token endpoint itself returns — HTTP status, `error`, `error_description`, `log_id` — never `client_key`/`client_secret`/the authorization code/`access_token`/`refresh_token`/the CSRF state or cookie value/any full request or response body. A malformed/non-JSON response is distinguished from a well-formed JSON error and shows only "Unexpected TikTok token response" + HTTP status (no fabricated fields). 26/26 local tests passed (invalid_client/invalid_grant/invalid_request/malformed/success-path-unchanged/no-secret-leakage/network-error). Production-verified same day via a safe synthetic request (real TikTok token endpoint, deliberately expired/fake code, **not a real login**): TikTok returned HTTP 200 with `error=invalid_grant`, `error_description="Authorization code is expired."`, and a real `log_id` — confirming the new diagnostic path is live and correctly parses TikTok's actual response shape (flat JSON, not nested under `data`, and note TikTok can return HTTP 200 with an error body rather than a 4xx/5xx).
+
+**NEXT ACTION:** one more real TikTok Sandbox OAuth login attempt via `/tiktok-connect`, capturing the 4 safe diagnostic fields now shown on failure (HTTP status / `error` / `error_description` / `log_id`) — this is required before any root-cause fix can be attempted, since the actual failure reason from a genuine (non-expired, non-fabricated) authorization code is still unknown.
 
 ## MONETIZATION
 
@@ -208,7 +212,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 - Added Terms of Service page (`pages/terms.js`, commit `9acd92f`, deployed 2026-09-24) at `/terms` (+ `/en/terms` via existing i18n routing) — required alongside the existing `/privacy` page for TikTok Developer app production review (Terms of Service URL + Privacy Policy URL + public website URL)
 - Fixed EN article tag links (`pages/[slug].js`) that were resolving to bare `/tags/{tag}` instead of `/en/tags/{tag}` — caused by a stray `locale={false}` on the tag-chip/breadcrumb `<Link>`s and JSON-LD `BreadcrumbList`. Confirmed live 404s (`/tags/hardware`, `/tags/settings`, `/tags/productivity`) before the fix; all now resolve via `/en/tags/*` (commit `44d20ae`, deployed 2026-09-23)
 - Added a global execution lock + persisted pending-outbox to `pages/api/autopost.js` so overlapping cron invocations can no longer both post to Telegram, and a GitHub-write failure after a successful send no longer silently desyncs state (commit `ef134a7`, deployed 2026-09-24; live-verified on the first real cycle afterward)
-- TikTok Sandbox OAuth Login Kit smoke test implemented (`/tiktok-connect`, `/api/tiktok/login`, `/api/tiktok/callback`) — see TIKTOK STATUS above for current blocked-on-CSRF status (commits `7cfd17c` + `f2e12e4`, deployed 2026-09-24)
+- TikTok Sandbox OAuth Login Kit smoke test implemented (`/tiktok-connect`, `/api/tiktok/login`, `/api/tiktok/callback`) — see TIKTOK STATUS above for current blocked-on-token-exchange status (commits `7cfd17c` + `f2e12e4` + `a0110c3`, deployed 2026-09-24)
 
 ## BACKLOG
 
