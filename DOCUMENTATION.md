@@ -3992,3 +3992,42 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** створити виділений credential з мінімальними правами (наприклад, fine-grained PAT, обмежений саме на `tenboy10b-sudo/CryptoLock-analytics`, з правами Contents read/write) і зберегти його як нову змінну Vercel Production, потім повторити цей самий preflight перед реалізацією writer'а. Не розширювати існуючий scope `GITHUB_TOKEN` без окремого свідомого рішення про це.
 
 ---
+
+### Сесія 12 (продовження 67) — ANALYTICS_GITHUB_TOKEN preflight: PASS, реалізовано writer TikTok-снапшотів
+
+**DATE:** 2026-09-25
+
+**OBJECTIVE:** повторити preflight (продовження 66 провалився для `GITHUB_TOKEN`) для нового виділеного credential `ANALYTICS_GITHUB_TOKEN`, і за умови успіху — реалізувати writer щоденних TikTok-аналітичних снапшотів у приватний `tenboy10b-sudo/CryptoLock-analytics`.
+
+**BASELINE:** локальний `main` був позаду `origin/main` на 9 рутинних комітів Telegram-бота (`bot: update published.json [...]`, `bot: persist pending [...]`, `bot: acquire lock [...]`) — перевірено, жоден не зачіпав TikTok-файли, безпечний fast-forward до `e4c9854`.
+
+**EVIDENCE:** прямий технічний запит користувача, що підтвердив: власник акаунту додав `ANALYTICS_GITHUB_TOKEN` у Vercel Production — виділений fine-grained PAT, призначений виключно для `CryptoLock-analytics` (Contents: read+write, Metadata: read-only). Стара `GITHUB_TOKEN` НЕ повинна повторно використовуватись для аналітики.
+
+**DECISION:** повторити той самий тимчасовий, secret-gated, READ-ONLY діагностичний endpoint (`POST /api/internal/github-analytics-preflight`), цього разу з новим одноразовим `ANALYTICS_PREFLIGHT_SECRET` (НЕ `TIKTOK_COLLECT_SECRET`/`AUTOPOST_SECRET`/`GITHUB_TOKEN`/`ANALYTICS_GITHUB_TOKEN`), який використовує ВИКЛЮЧНО `process.env.ANALYTICS_GITHUB_TOKEN` (без fallback на `GITHUB_TOKEN`). Якщо PASS — негайно прибрати діагностику ПЕРЕД реалізацією writer'а (як і в продовженні 66), потім продовжити раніше узгоджену задачу writer'а.
+
+**IMPLEMENTATION (preflight):**
+- Згенеровано новий одноразовий `ANALYTICS_PREFLIGHT_SECRET`, доданий у Vercel Production через stdin (значення ніколи не виведене).
+- `pages/api/internal/github-analytics-preflight.js` — задеплоєно (коміт `9de374a`, `dpl_9a9NsAAj8xyUYiZxYiq4nq9xMdwZ`), викликано один раз.
+- **Результат:** `{"ok":true,"repo_access":true,"private":true,"read_access":true,"write_permission":true}` — **PASS** за всіма 4 критеріями.
+- Негайно прибрано: видалено `pages/api/internal/github-analytics-preflight.js` (коміт `22bba4d`), видалено `ANALYTICS_PREFLIGHT_SECRET` з Vercel Production, видалено локальну копію секрету, задеплоєно чистий проміжний baseline (`dpl_EW12uNNFMjAkBTwEKBDffteEVW3D`), підтверджено 404 на видаленому endpoint'і.
+
+**IMPLEMENTATION (writer):**
+- `lib/tiktokAnalyticsStore.js` (новий): `validateSnapshot()` — чиста структурна валідація (schema_version, формат snapshot_date, валідний collected_at, невід'ємні цілі лічильники, булевий truncated, непорожній video_id для кожного відео, метрики — число або null). `deriveSnapshotPath()` — виключно UTC (`getUTCFullYear`/`getUTCMonth`/`getUTCDate`), локальна таймзона сервера ніяк не може змінити дату снапшота: `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`. `writeSnapshot()` — GET точного шляху: 404 → CREATE (PUT без sha), 200 → UPDATE (PUT з поточним blob SHA, ніколи новий файл). Конфлікт запису (409/422) — рівно один re-read + один retry, без нескінченного циклу. Детерміновані commit-повідомлення (`analytics(tiktok): snapshot YYYY-MM-DD` / `... update snapshot YYYY-MM-DD`) без відео-даних. Безпечне логування (шлях, операція, HTTP статус, conflict_retry) — ніколи значення токена чи тіла відповіді.
+- `pages/api/tiktok/collect.js`: після успішного `video.list` будується снапшот з тих самих даних, що вже повертаються, і записується ДО звіту про загальний успіх. Збій запису снапшота → безпечний 502 (`{stage:"analytics_snapshot", error:"snapshot_write_failed"}`), collector НЕ заявляє успіх; Redis-lock і далі звільняється через існуючий `finally`. Успішна відповідь тепер містить `analytics_snapshot: {status, path}`.
+- `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js`, `lib/tiktokTokenStore.js`, `lib/tiktokCollector.js` — без змін (підтверджено `git diff`).
+
+**SECURITY:** жодне значення `ANALYTICS_GITHUB_TOKEN`, `ANALYTICS_PREFLIGHT_SECRET`, `GITHUB_TOKEN` не логувалось, не виводилось, не commit'илось. Git-історія містить реалізацію й видалення тимчасової діагностики (як і дозволено), без жодних значень секретів.
+
+**TESTS:** 46/46 локальних асертів — усі 37 обов'язкових сценаріїв (UTC-шлях і незалежність від локальної таймзони, повна валідація схеми, create/update/ідемпотентність, політика "один retry" при конфлікті, fail-closed при відсутньому credential і GitHub-помилках, відсутність витоку токена, повна інтеграція з collector'ом — успішний create/update снапшота, збій запису блокує загальний успіх, але lock звільняється, TikTok/refresh-persist збої ніколи не доходять до writer'а) + регресія auth/lock/пагінації/token lifecycle/CSRF. `npm run build` — успішно.
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_J7vRNvjsG3ddHTeY5NwTn994ouNV`, `cryptolockua.com`.
+
+**RESULT:** задеплоєно і безпечно перевірено в продакшн: `GET /api/tiktok/collect` → 405, `POST` без Bearer → 401, `POST` з явно невірним Bearer → 401, `/tiktok-connect` і далі 200. **Жодного автентифікованого виклику collector'а НЕ виконувалось, жодного снапшота вручну НЕ створювалось.** Writer — **IMPLEMENTED, awaiting real production snapshot validation**.
+
+**COMMIT SHA (preflight, додавання):** `9de374a`
+**COMMIT SHA (preflight, видалення):** `22bba4d`
+**COMMIT SHA (writer):** `c6f9fd2`
+
+**FOLLOW-UP:** власник акаунту виконує один автентифікований `POST /api/tiktok/collect`, потім перевіряється точний приватний денний снапшот у `tenboy10b-sudo/CryptoLock-analytics` за сьогоднішньою UTC-датою і збіг його вмісту з поверненою колекцією. Лише після цього writer можна вважати ПІДТВЕРДЖЕНИМ (VERIFIED). Cron/scheduled collection і далі НЕ реалізовано.
+
+---
