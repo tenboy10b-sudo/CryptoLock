@@ -146,7 +146,15 @@
     "started_at": "2026-09-25T08:01:11.426Z",
     "expires_at": "2026-09-25T08:16:11.426Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "269fa88e-0363-4393-89c5-94bda032b44f",
+    "type": "content",
+    "identifier": "how-to-configure-windows-firewall-gpo",
+    "payload": {
+      "text": "🛡️ **Налаштування Windows Firewall через Group Policy**\n\nЯкщо ви адмініструєте декілька комп'ютерів у домені, Group Policy — ваш найкращий друг для централізованого керування брандмауером. Ось як це зробити правильно:\n\n**Основні кроки:**\n\n1️⃣ **Відкрийте Group Policy Management Console** (gpmc.msc) → створіть новий GPO або відредагуйте існуючий\n\n2️⃣ **Перейдіть до налаштувань:** Computer Configuration → Policies → Windows Settings → Security Settings → Windows Defender Firewall with Advanced Security\n\n3️⃣ **Налаштуйте профілі:** Окремо для Domain, Private та Public. Рекомендую блокувати вхідні з'єднання за замовчуванням, дозволяючи лише потрібні\n\n4️⃣ **Створюйте правила:** Inbound/Outbound Rules → вказуйте конкретні порти, програми або служби. Не забудьте про Remote Desktop (TCP 3389) для адміністрування\n\n5️⃣ **Перевірте застосування:**\n```powershell\ngpupdate /force\nGet-NetFirewallRule | Where-Object {$_.DisplayName -like \"*назва*\"}\n```\n\n**Порада:** Використовуйте WMI фільтри, щоб застосовувати різні правила для серверів і робочих станцій. І завжди тестуйте GPO на окремій OU перед масовим розгортанням!\n\n#Windows #Безпека #GroupPolicy #Firewall"
+    },
+    "created_at": "2026-09-25T08:01:22.915Z"
+  },
   "last_message_id": 511,
   "engage_ab_index": 1,
   "poll_recent_topics": [
