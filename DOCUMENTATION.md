@@ -3965,3 +3965,30 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** реалізувати ідемпотентний writer TikTok-аналітичних снапшотів, що читає з уже верифікованого collector'а і пише в приватний `CryptoLock-analytics` (один файл на UTC-день, безпечний при повторному запуску в той самий день — точна семантика retry визначиться під час реалізації). Cron/scheduled collection НЕ вмикати, поки writer не буде вручну перевірений у продакшн.
 
 ---
+
+### Сесія 12 (продовження 66) — GITHUB_TOKEN preflight для приватного analytics-репозиторію: FAILED
+
+**DATE:** 2026-09-25
+
+**OBJECTIVE:** перед реалізацією writer'а TikTok-аналітичних снапшотів (продовження 65 → наступний крок) перевірити, чи продакшн `GITHUB_TOKEN` дійсно має доступ до приватного `tenboy10b-sudo/CryptoLock-analytics`, а не лише до публічного `CryptoLock`.
+
+**EVIDENCE:** пряма спроба локально прочитати значення `GITHUB_TOKEN` через `vercel env pull` показала, що ця змінна налаштована в Vercel як **"Sensitive"** — усі інші production-змінні (`TIKTOK_CLIENT_KEY`, `AUTOPOST_SECRET`, `GITHUB_OWNER` тощо) повертались з реальними значеннями, а `GITHUB_TOKEN` — порожнім рядком (`""`, підтверджено вимірюванням довжини рядка без виводу самого значення). Це навмисна платформна поведінка Vercel для "Sensitive"-змінних: значення можна встановити, але ніколи не прочитати назад — ні через CLI, ні через API, ні через дашборд.
+
+**DECISION:** оскільки локальне тестування неможливе за дизайном, розгорнуто тимчасовий, secret-gated (`Bearer ANALYTICS_PREFLIGHT_SECRET` — одноразова, спеціально згенерована змінна, НІКОЛИ не `TIKTOK_COLLECT_SECRET`/`AUTOPOST_SECRET`/сам `GITHUB_TOKEN`), READ-ONLY діагностичний endpoint (`POST /api/internal/github-analytics-preflight`), що виконується server-side всередині самого Vercel-рантайму (де реальне значення `GITHUB_TOKEN` доступне), перевіряє: `GET /repos/tenboy10b-sudo/CryptoLock-analytics` (доступність репо, `private`, `default_branch`, права `push`/`pull`) і `GET /repos/.../contents/README.md?ref=main` (реальне читання контенту). Жодного create/update/delete під час preflight. Повертає лише безпечні булеві поля — ніколи значення токена, заголовки чи сирі відповіді GitHub.
+
+**IMPLEMENTATION:**
+- Згенеровано одноразовий `ANALYTICS_PREFLIGHT_SECRET` (крипто-випадковий, 48 hex-символів), доданий у Vercel Production через `vercel env add` (значення передане через stdin, ніколи не виведене в лог).
+- `pages/api/internal/github-analytics-preflight.js` — задеплоєно (коміт `ddd5c88`, `dpl_1P2s8RYEbKK1A2gBiivWL5p3hCUn`), викликано один раз з тимчасовим секретом.
+- **Результат виклику:** `{"ok":false,"repo_access":false,"private":null,"read_access":false,"write_permission":false}` — `repo_access: false` означає, що продакшн `GITHUB_TOKEN` НЕ зміг прочитати навіть метадані приватного репозиторію. Найімовірніша причина: токен обмежений лише публічним `CryptoLock` (наприклад, fine-grained PAT, прив'язаний до конкретних репозиторіїв, або classic-токен без scope `repo`, якого вимагають будь-які приватні репозиторії).
+- Негайно виконано повне прибирання (незалежно від результату, як і вимагалось): видалено `pages/api/internal/github-analytics-preflight.js` (коміт `4f3fd1a`), видалено `ANALYTICS_PREFLIGHT_SECRET` з Vercel Production, видалено локальну копію секрету зі scratchpad, задеплоєно чистий baseline (`dpl_Dgtd1CtpLaxyHAJVCMubErToERHR`). Підтверджено: `POST /api/internal/github-analytics-preflight` тепер повертає 404, решта TikTok-роутів не зачеплені.
+
+**SECURITY:** значення `GITHUB_TOKEN` і `ANALYTICS_PREFLIGHT_SECRET` НІКОЛИ не виводились, не логувались, не commit'ились — лише довжини рядків перевірялись локально для діагностики. Git-історія містить реалізацію й видалення тимчасового endpoint'а (як і дозволено), але жодних значень секретів.
+
+**RESULT:** **PRODUCTION GITHUB_TOKEN PREFLIGHT: FAILED.** Репозиторій: `tenboy10b-sudo/CryptoLock-analytics`. Підтверджені можливості: read = NO, write = NO (write окремо не тестувався, оскільки read вже провалився). Реалізацію writer'а аналітичних снапшотів **ЗУПИНЕНО** відповідно до прямої інструкції — жодного fallback-credential, репозиторій НЕ зроблено публічним, аналітика НЕ збережена в Redis чи публічному репозиторії як обхідний шлях.
+
+**COMMIT SHA (додавання діагностики):** `ddd5c88`
+**COMMIT SHA (видалення діагностики):** `4f3fd1a`
+
+**FOLLOW-UP:** створити виділений credential з мінімальними правами (наприклад, fine-grained PAT, обмежений саме на `tenboy10b-sudo/CryptoLock-analytics`, з правами Contents read/write) і зберегти його як нову змінну Vercel Production, потім повторити цей самий preflight перед реалізацією writer'а. Не розширювати існуючий scope `GITHUB_TOKEN` без окремого свідомого рішення про це.
+
+---

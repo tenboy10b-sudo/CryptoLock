@@ -184,7 +184,11 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 - **Autonomous collector: VERIFIED** (продовження 62-63, unchanged by this task).
 - **Real token refresh: IMPLEMENTED — NOT YET VERIFIED naturally** (unchanged by this task).
 
-**NEXT ACTION:** implement an idempotent TikTok analytics snapshot writer from the existing verified collector into the private `CryptoLock-analytics` repository (one file per UTC day, safe on retry — exact retry semantics to be decided during that implementation). Do not enable cron/scheduled collection until the writer has been manually verified in production.
+**PRODUCTION GITHUB_TOKEN PREFLIGHT: FAILED (продовження 66, 2026-09-25).** Before implementing the analytics writer, the production `GITHUB_TOKEN`'s actual access to `tenboy10b-sudo/CryptoLock-analytics` was tested (its value cannot be read locally — it's configured as a Vercel "Sensitive" env var — so a temporary, secret-gated, read-only diagnostic endpoint was deployed to test it server-side inside Vercel's own runtime, then fully removed regardless of outcome). Result: **`repo_access: false`** — the production `GITHUB_TOKEN` cannot even read the private repository's metadata (most likely scoped only to the public `CryptoLock` repo — e.g. a fine-grained PAT limited to specific repos, or missing the classic `repo` scope needed for any private repo). **Repository:** `tenboy10b-sudo/CryptoLock-analytics`. **Verified capabilities: read = NO, write = NO** (write was not separately testable since read already failed). Per explicit instruction, the analytics-writer implementation was **stopped** — no fallback credential was attempted, the analytics repo was not made public, and analytics data was not stored in Redis or the public repo as a workaround.
+
+**Analytics writer: NOT IMPLEMENTED** (blocked on the credential above — code was never written this task; only the preflight diagnostic was, and it has been fully removed).
+
+**NEXT ACTION:** create a dedicated least-privilege GitHub credential (e.g. a fine-grained PAT scoped specifically to `tenboy10b-sudo/CryptoLock-analytics` with Contents read/write) and set it as a new Vercel Production env var, then repeat this same preflight check before implementing the analytics snapshot writer. Do not reuse or broaden `GITHUB_TOKEN`'s existing scope without a deliberate decision to do so. Do not enable cron/scheduled collection until a writer exists and has been manually verified in production.
 
 ## MONETIZATION
 
