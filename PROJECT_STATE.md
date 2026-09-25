@@ -1,8 +1,8 @@
 # CryptoLock Project State
 
-LAST UPDATED: 2026-09-24
+LAST UPDATED: 2026-09-25
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-CURRENT ORIGIN MAIN SHA: a0110c3
+CURRENT ORIGIN MAIN SHA: 0c5b1eb (last code/docs commit this snapshot was written against; the bot's `published.json` commits keep advancing origin/main independently)
 
 ## PROJECT
 
@@ -165,7 +165,7 @@ This confirms a real TikTok OAuth token bundle was successfully written to Upsta
 
 This confirms, by a real run: Bearer authentication works, the collector runs without any new TikTok browser login, the persisted Redis token bundle reads successfully, the existing `access_token` works outside the OAuth callback, and `video.list` pagination works correctly across multiple pages (6 pages, 110 videos, no truncation). **Autonomous collector = VERIFIED. Pagination = VERIFIED.**
 
-**Token refresh: IMPLEMENTED, NOT YET VERIFIED by a real run.** `token_refreshed: false` means the access token was still fresh enough that the refresh branch was never exercised — the refresh code path itself has not yet been triggered by a real production run. This remains a distinct, separate status from the collector/pagination verification above — do not conflate the two.
+**Token refresh (status at the time of the first collector run): was IMPLEMENTED, NOT YET VERIFIED.** `token_refreshed: false` on that run meant the access token was still fresh enough that the refresh branch was never exercised. **Superseded — real token refresh is now VERIFIED by a later real production run (`token_refreshed: true`, продовження 69, 2026-09-25); see below.** The two statuses were deliberately kept separate until that evidence existed.
 
 **TOKEN LIFECYCLE HARDENING — deployed 2026-09-24 (продовження 64, commit `474acba`), ahead of enabling scheduled collection or analytics persistence.** Tightened validation for both the persisted and refreshed token bundle:
 - `access_token_expires_at`/`refresh_token_expires_at`: now rejected if `NaN`/`Infinity`/`<= 0`, not just non-numeric as before.
@@ -178,17 +178,17 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 **TIKTOK ANALYTICS STORAGE ARCHITECTURE (продовження 65, 2026-09-24):**
 - **Runtime secrets/state (token bundle, refresh state, collector lock, future idempotency state):** Upstash Redis — unchanged, this task did not touch Redis.
 - **Long-term analytics history:** a separate **PRIVATE** GitHub repository, `tenboy10b-sudo/CryptoLock-analytics` — deliberately NOT the public `tenboy10b-sudo/CryptoLock` repo, since analytics history is business data. Planned layout: `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`, one file per UTC calendar day (documented in that repo's own `README.md`, not duplicated here).
-- **Analytics storage repository: CREATED / VERIFIED.** Private, correct owner, `main` default branch, `README.md` + `tiktok/snapshots/.gitkeep` present, read access confirmed via authenticated `gh`/API tooling independent of the creation step. No real analytics data written yet (repo contains only the 4 expected paths).
-- **Analytics writer: IMPLEMENTED — awaiting real production snapshot validation** (see продовження 67 below).
+- **Analytics storage repository: CREATED / VERIFIED.** Private, correct owner, `main` default branch, `README.md` + `tiktok/snapshots/.gitkeep` present at creation (first real snapshot since added — see продовження 69).
+- **Analytics writer: VERIFIED** by a real production snapshot write (продовження 69).
 - **Scheduled collection: NOT IMPLEMENTED.** No cron-job.org trigger configured for the collector.
-- **Autonomous collector: VERIFIED** (продовження 62-63, unchanged by this task).
-- **Real token refresh: IMPLEMENTED — NOT YET VERIFIED naturally** (unchanged by this task).
+- **Autonomous collector: VERIFIED** (продовження 62-63).
+- **Real token refresh: VERIFIED** by a real production run (продовження 69).
 
 **PRODUCTION GITHUB_TOKEN PREFLIGHT: FAILED (продовження 66, 2026-09-25).** The original production `GITHUB_TOKEN` cannot read `tenboy10b-sudo/CryptoLock-analytics` at all (`repo_access: false`) — most likely scoped only to the public `CryptoLock` repo. **This token must never be used for analytics.** (Full incident record preserved below/in DOCUMENTATION.md продовження 66.)
 
 **PRODUCTION ANALYTICS_GITHUB_TOKEN PREFLIGHT: PASS (продовження 67, 2026-09-25).** A dedicated, least-privilege fine-grained PAT was added as a new Vercel Production env var, `ANALYTICS_GITHUB_TOKEN` (**name only**, value never documented), scoped specifically to `CryptoLock-analytics` with Contents read/write. Tested via the same temporary, secret-gated, read-only diagnostic pattern (deployed, called once, then fully removed regardless of outcome — same discipline as продовження 66). **Repository:** `tenboy10b-sudo/CryptoLock-analytics`. **Verified capabilities: read = YES, write = YES.** Old `GITHUB_TOKEN`: confirmed NOT used for analytics.
 
-**TIKTOK ANALYTICS SNAPSHOT WRITER — IMPLEMENTED (продовження 67, commit `c6f9fd2`, deployed 2026-09-25).**
+**TIKTOK ANALYTICS SNAPSHOT WRITER — VERIFIED (implemented продовження 67, commit `c6f9fd2`, deployed 2026-09-25; validated by a real production run продовження 69).**
 - New `lib/tiktokAnalyticsStore.js`: `validateSnapshot()` (structural validation — schema_version, snapshot_date format, valid collected_at, non-negative integer counts, boolean truncated, non-empty video_id per video), `deriveSnapshotPath()` (UTC-only via `getUTC*` accessors — server local timezone can never change which daily file a snapshot lands in: `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`), `writeSnapshot()` (GET-then-PUT: 404 → CREATE, 200 → UPDATE with the current blob SHA — never a new filename; a write conflict gets exactly one re-read + one retry, never an unbounded loop; deterministic commit messages with no video data in them). Uses **only** `process.env.ANALYTICS_GITHUB_TOKEN`, never `GITHUB_TOKEN`.
 - `pages/api/tiktok/collect.js` modified: after `video.list` succeeds, builds the snapshot from the same data already being returned and writes it before reporting overall success. A snapshot write failure returns a safe 502 (`{stage: "analytics_snapshot", error: "snapshot_write_failed"}`) — the collector does not claim success, though the Redis lock is still released. Success responses now include `analytics_snapshot: {status, path}`.
 - `pages/api/tiktok/login.js`, `pages/api/tiktok/callback.js`, `lib/tiktokTokenStore.js`, `lib/tiktokCollector.js` all untouched.
@@ -196,9 +196,35 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 
 **TIKTOK_COLLECT_SECRET ROTATION (продовження 68, 2026-09-25).** The first real analytics-writer validation call returned `401 unauthorized` — rejected at collector authentication, before the Redis lock, any TikTok API call, token refresh, or the analytics snapshot writer ran, so nothing downstream was exercised. The account owner then **rotated `TIKTOK_COLLECT_SECRET` in Vercel Production** (env var **name only** — the value is not documented anywhere). Production was **redeployed** (`dpl_EcDVgjAK7hsQRFCV6or5RxmZ2V6Z`, no application code change) so the runtime picks up the new value. Safe collector auth checks passed after the redeploy: `GET` → 405, `POST` without `Authorization` → 401, `POST` with an obviously wrong Bearer → 401, `/tiktok-connect` → 200 — these prove the endpoint is live and enforcing auth, **not** that the new secret works; no authenticated collector call was made.
 
-**Analytics writer: IMPLEMENTED — awaiting real production snapshot validation** (unchanged). **Cron: NOT IMPLEMENTED** (unchanged). Authenticated collector success has **not** yet been observed since the rotation.
+**REAL PRODUCTION VALIDATION — REFRESH + ANALYTICS SNAPSHOT PIPELINE (продовження 69, 2026-09-25).** After the rotation, the account owner performed an authenticated `POST /api/tiktok/collect`:
+- `ok`: true
+- `token_refreshed`: **true**
+- `videos_returned`: 110
+- `pages_fetched`: 6
+- `truncated`: false
+- `collected_at`: `2026-09-25T13:37:45.620Z`
+- `analytics_snapshot`: `status: created`, `path: tiktok/snapshots/2026/09/2026-09-25.json`
 
-**NEXT ACTION:** account owner retries one authenticated `POST /api/tiktok/collect` using the newly rotated `TIKTOK_COLLECT_SECRET`, then verify the exact private daily snapshot exists in `tenboy10b-sudo/CryptoLock-analytics` under today's UTC date and its content matches the returned collection. Only after that real write should the analytics writer be considered VERIFIED (not just implemented). Do not enable cron/scheduled collection until then.
+**Independently verified on GitHub (read-only, by Claude):** the private repo `tenboy10b-sudo/CryptoLock-analytics` (visibility PRIVATE) contains exactly that file, with `schema_version: 1`, `snapshot_date: 2026-09-25`, `collected_at: 2026-09-25T13:37:45.620Z`, `videos_returned: 110` (a 110-entry `videos` array), `pages_fetched: 6`, `truncated: false`. Top-level keys are exactly the schema's seven fields; each video record has exactly the ten schema fields. A scan of the file found no `access_token`, `refresh_token`, `open_id`, `ANALYTICS_GITHUB_TOKEN`, `TIKTOK_COLLECT_SECRET`, `Authorization`, or `token_refreshed`. The commit message follows the specified pattern (`analytics(tiktok): snapshot 2026-09-25`).
+
+**What `token_refreshed: true` + `ok: true` proves:** the real production refresh branch executed and the whole chain completed — stored Redis token bundle → `refresh_token` grant → refreshed-bundle validation → refreshed bundle persisted to Redis (before `video.list`) → `video.list` (6 pages / 110 videos) → private GitHub daily snapshot. Because the collector returns 502 rather than `ok: true` if refresh validation, refreshed-token persistence, or the snapshot write fails, a successful response is itself evidence each of those steps succeeded.
+
+**Current TikTok pipeline:** TikTok OAuth → Upstash Redis token bundle → autonomous collector → automatic token refresh when needed → `video.list` pagination → private `CryptoLock-analytics` daily snapshot. Snapshot convention: `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`, one canonical file per UTC day — the first successful run that day creates it, a later same-day run updates that same file in place.
+
+**Verified status:**
+- TikTok OAuth: **VERIFIED**
+- Redis token persistence: **VERIFIED**
+- Autonomous collector: **VERIFIED**
+- Pagination: **VERIFIED**
+- Real token refresh: **VERIFIED**
+- Refreshed token persistence: **VERIFIED**
+- Private analytics GitHub writer: **VERIFIED**
+- Daily analytics snapshot storage: **VERIFIED**
+- Scheduled collection / cron: **NOT IMPLEMENTED**
+
+Not yet observed: the same-day **update** path (this was a first-of-the-day create) and a conflict retry — both are covered by local tests only, not yet by a live run. The private repo's `README.md` was updated to match the live storage model (private-repo commit `cb9a08f`).
+
+**NEXT ACTION:** implement and validate once-daily scheduled collection. Do not change the analytics schema or storage architecture unless evidence requires it.
 
 ## MONETIZATION
 

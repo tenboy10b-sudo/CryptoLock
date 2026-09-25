@@ -4053,3 +4053,32 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** власник акаунту повторює один автентифікований `POST /api/tiktok/collect` з новим `TIKTOK_COLLECT_SECRET`, потім перевіряється точний приватний денний снапшот у `tenboy10b-sudo/CryptoLock-analytics` за сьогоднішньою UTC-датою і збіг його вмісту з поверненою колекцією.
 
 ---
+
+### Сесія 12 (продовження 69) — Підтверджено реальним запуском: token refresh + запис аналітичного снапшота
+
+**DATE:** 2026-09-25
+
+**OBJECTIVE:** зафіксувати успішну реальну production-валідацію повного ланцюга: реальний token refresh → персистенція оновленого токена → автономний збір відео → запис приватного GitHub-снапшота аналітики (реалізовано в продовженнях 62, 64, 67; після ротації секрету в продовженні 68).
+
+**EVIDENCE:** власник акаунту виконав автентифікований `POST /api/tiktok/collect` з ротованим `TIKTOK_COLLECT_SECRET`, повідомлено напряму. Результат:
+- `ok`: true
+- `token_refreshed`: **true**
+- `videos_returned`: 110
+- `pages_fetched`: 6
+- `truncated`: false
+- `collected_at`: `2026-09-25T13:37:45.620Z`
+- `analytics_snapshot`: `status: created`, `path: tiktok/snapshots/2026/09/2026-09-25.json`
+
+**INDEPENDENT VERIFICATION:** окремо, лише на читання (`gh api`), перевірено безпосередньо в GitHub. Приватний репозиторій `tenboy10b-sudo/CryptoLock-analytics` — `visibility: PRIVATE`; у ньому рівно один снапшот `tiktok/snapshots/2026/09/2026-09-25.json`. Метадані файлу збігаються зі звітом: `schema_version: 1`, `snapshot_date: 2026-09-25`, `collected_at: 2026-09-25T13:37:45.620Z`, `videos_returned: 110` (масив `videos` справді містить 110 записів), `pages_fetched: 6`, `truncated: false`. Верхній рівень містить рівно 7 полів схеми, кожен відео-запис — рівно 10 полів схеми. Скан файлу НЕ знайшов `access_token`, `refresh_token`, `open_id`, `ANALYTICS_GITHUB_TOKEN`, `TIKTOK_COLLECT_SECRET`, `Authorization`, `token_refreshed`. Commit-повідомлення відповідає специфікації (`analytics(tiktok): snapshot 2026-09-25`). Вміст відео (назви/описи/метрики) під час перевірки НЕ виводився.
+
+**RESULT:** `token_refreshed: true` доводить, що реальна production-гілка refresh виконалась. Оскільки collector повертає 502 (а не `ok: true`), якщо падає валідація refresh, персистенція оновленого токена або запис снапшота, успішна відповідь сама є доказом, що весь ланцюг завершився: збережений Redis token bundle → `refresh_token` grant → валідація оновленого bundle → персистенція оновленого bundle в Redis (ДО `video.list`) → `video.list` (6 сторінок / 110 відео) → приватний щоденний GitHub-снапшот. Статус refresh більше НЕ "IMPLEMENTED — NOT YET VERIFIED" (продовження 63/64/66-68) — тепер він **VERIFIED**.
+
+**VERIFIED COMPONENTS:** TikTok OAuth; персистенція токенів у Redis; автономний collector; пагінація; реальний token refresh; персистенція оновленого токена; приватний GitHub-writer аналітики; сховище щоденних снапшотів. **НЕ РЕАЛІЗОВАНО:** заплановане (cron) збирання. **Ще не спостерігалось живцем:** шлях оновлення того самого дня (`update`; це був перший запуск дня — `created`) та повторна спроба після конфлікту — обидва покриті лише локальними тестами.
+
+**SECURITY:** жодне значення токена/секрету не записано в цей запис чи будь-де в документації. Приватний README (`CryptoLock-analytics`) містив застарілий текст ("No analytics writer implemented yet, no real snapshot data has been written" і "exact retry semantics will be decided") — оновлено окремим README-only комітом `cb9a08f` у приватному репозиторії, файл снапшота НЕ чіпали.
+
+**COMMIT SHA:** немає (документаційний запис про подію верифікації, без змін коду; production-версія та сама, `c6f9fd2`/`dpl_EcDVgjAK7hsQRFCV6or5RxmZ2V6Z`). Приватний репозиторій: `934f68c` (реальний снапшот, створений collector'ом), `cb9a08f` (README).
+
+**FOLLOW-UP:** реалізувати і провалідувати щоденне заплановане збирання (once-daily). Схему аналітики та архітектуру сховища не змінювати, доки цього не вимагатимуть докази.
+
+---
