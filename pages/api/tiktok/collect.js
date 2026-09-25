@@ -1,9 +1,8 @@
 // Autonomous TikTok collector: proves CryptoLock can read TikTok video metrics
 // without a browser OAuth session, using the token bundle persisted by
-// /api/tiktok/callback. Secret-gated (Bearer TIKTOK_COLLECT_SECRET), POST only.
-// Does NOT persist analytics history yet — this stage only proves the token
-// lifecycle (proactive refresh, atomic Redis overwrite) and video.list
-// pagination work end to end.
+// /api/tiktok/callback, then persists a daily analytics snapshot into the
+// private tenboy10b-sudo/CryptoLock-analytics repo (never Redis, never the
+// public repo). Secret-gated (Bearer TIKTOK_COLLECT_SECRET), POST only.
 import crypto from 'crypto'
 import {
   loadTokenBundle,
@@ -17,6 +16,7 @@ import {
   validateRefreshedBundle,
   collectVideos,
 } from '../../../lib/tiktokCollector'
+import { writeSnapshot } from '../../../lib/tiktokAnalyticsStore'
 
 function log(event, fields = {}) {
   // Safe by construction: callers below only ever pass status codes / booleans /
@@ -172,11 +172,30 @@ export default async function handler(req, res) {
       shares: v.share_count ?? null,
     }))
 
+    const collectedAt = new Date().toISOString()
+    const snapshotDate = collectedAt.slice(0, 10)
+    const snapshot = {
+      schema_version: 1,
+      snapshot_date: snapshotDate,
+      collected_at: collectedAt,
+      videos_returned: responseVideos.length,
+      pages_fetched: videoResult.pagesFetched,
+      truncated: videoResult.truncated,
+      videos: responseVideos,
+    }
+
+    const writeResult = await writeSnapshot(snapshot)
+    if (!writeResult.ok) {
+      log('collector_failed', { stage: 'analytics_snapshot', reason: writeResult.reason, http_status: writeResult.httpStatus ?? null })
+      return jsonResponse(res, 502, { ok: false, stage: 'analytics_snapshot', error: 'snapshot_write_failed' })
+    }
+
     log('collector_success', {
       token_refreshed: tokenRefreshed,
       video_count: responseVideos.length,
       pages_fetched: videoResult.pagesFetched,
       truncated: videoResult.truncated,
+      analytics_snapshot_status: writeResult.status,
     })
 
     return jsonResponse(res, 200, {
@@ -185,8 +204,12 @@ export default async function handler(req, res) {
       videos_returned: responseVideos.length,
       pages_fetched: videoResult.pagesFetched,
       truncated: videoResult.truncated,
-      collected_at: new Date().toISOString(),
+      collected_at: collectedAt,
       videos: responseVideos,
+      analytics_snapshot: {
+        status: writeResult.status,
+        path: writeResult.path,
+      },
     })
   } finally {
     await releaseCollectorLock(executionId)
