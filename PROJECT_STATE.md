@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-25
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-CURRENT ORIGIN MAIN SHA: 0c5b1eb (last code/docs commit this snapshot was written against; the bot's `published.json` commits keep advancing origin/main independently)
+BASE SHA (snapshot, not a live HEAD): ee5be10 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
 
 ## PROJECT
 
@@ -30,13 +30,13 @@ Telegram:
 - First subscriber-growth giveaway launched 30.08.2026 (AuditShield licenses, goal: 150 subscribers) — outcome not yet confirmed in this repo
 
 TikTok:
-STATUS: no verified data in this repository's documentation.
+STATUS: real, verified data collection is live (Sandbox app, account `cryptolockua`). A real production collector run on 2026-09-25 returned 110 videos across 6 pages (`truncated: false`) and wrote the first daily analytics snapshot to the private `CryptoLock-analytics` repo (`tiktok/snapshots/2026/09/2026-09-25.json`). Per-video views/likes/comments/shares are being captured; no performance conclusions have been drawn from them yet. Scheduled (daily) collection is NOT implemented — collection is currently manual. See TIKTOK STATUS.
 
 ## ARCHITECTURE
 
 - Framework: Next.js 14.2.3, Pages Router (not App Router)
 - Rendering: `pages/index.js` = pure SSG, no `revalidate`; `pages/[slug].js` = ISR (`revalidate: 3600`, `fallback: 'blocking'`)
-- Repository: github.com/tenboy10b-sudo/CryptoLock (private/public status not re-verified this session)
+- Repository: github.com/tenboy10b-sudo/CryptoLock — **PUBLIC** (verified 2026-09-25 via `gh`). This is why TikTok analytics history lives in a separate private repo, never here.
 - Hosting: Vercel (project `crypto-lock`)
 - Domain: cryptolockua.com (+ www redirect, + legacy `crypto-lock-five.vercel.app` redirect)
 - Languages: uk (default, no URL prefix), en (`/en/` prefix) — Next.js built-in i18n routing
@@ -51,7 +51,9 @@ STATUS: no verified data in this repository's documentation.
 - Telegram: Bot API, channel @cryptolock888
 - Anthropic: Claude API (`claude-sonnet-4-5`) generates all autopost text/poll content
 - cron-job.org: external scheduler triggering `/api/autopost` on a daily schedule (exact current schedule not independently re-verified against the cron-job.org dashboard this session — only inferred from commit timestamps)
-- TikTok: Login Kit OAuth smoke test integrated 2026-09-24 (`/api/tiktok/login`, `/api/tiktok/callback`, `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET`/`TIKTOK_REDIRECT_URI` env vars) — see TIKTOK STATUS below
+- TikTok: Login Kit OAuth + an autonomous collector (`/api/tiktok/login`, `/api/tiktok/callback`, `POST /api/tiktok/collect`), integrated 2026-09-24/25 and verified end-to-end in production — see TIKTOK STATUS below
+- Upstash Redis (via Vercel Marketplace): TikTok token bundle + collector lock (runtime/secret state only)
+- `tenboy10b-sudo/CryptoLock-analytics` (separate PRIVATE GitHub repo): TikTok analytics snapshot history, one file per UTC day
 
 ## SITE STATUS
 
@@ -68,7 +70,7 @@ These are explicitly separate systems — do not conflate them:
 - **GitHub repository status:** origin/main is healthy, linear history, receiving continuous automated commits from the Telegram bot.
 - **Vercel auto-deploy status:** BROKEN. `vercel git connect` fails with "Failed to connect tenboy10b-sudo/CryptoLock to project" — a recurring issue (6th confirmed occurrence) tied to a GitHub account OAuth-App flag. Last independently confirmed as broken: 2026-09-22 (this session).
 - **Manual deploy procedure:** `vercel --prod --yes` from the repo root — the established workaround used repeatedly throughout this project's history when auto-deploy is broken.
-- **Current production verification status:** last known production deploy was 2026-08-29 19:13 (commit `039d61c`) — 24 days stale relative to today's git history, though this does NOT mean the site is broken (ISR still serves individual pages correctly); it means the static homepage list and any code/config changes since 29.08 have not reached production.
+- **Current production verification status:** production is current as of 2026-09-25 — the latest deployment is `dpl_EcDVgjAK7hsQRFCV6or5RxmZ2V6Z` (redeploy of commit `4205546` after the `TIKTOK_COLLECT_SECRET` rotation), aliased to `cryptolockua.com`. Every deploy since 2026-09-22 was done manually via `vercel --prod --yes` (auto-deploy remains broken, above), so the earlier "last production deploy was 2026-08-29 (`039d61c`), 24 days stale" statement (written 2026-09-22) is superseded — the code and config changes since then, including the entire TikTok pipeline, are live. Doc-only commits after that deploy (this one included) do not require a redeploy.
 
 ## GSC STATUS
 
@@ -105,24 +107,26 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 ## TIKTOK STATUS
 
-**CURRENT STATUS: VERIFIED — Sandbox API connection works end-to-end.**
+**CURRENT STATUS: VERIFIED END-TO-END — manual collection works; scheduled collection is NOT implemented.** Pipeline: TikTok OAuth → Upstash Redis token bundle → autonomous collector → automatic token refresh when needed → `video.list` pagination → private `CryptoLock-analytics` daily snapshot. Every stage below is verified by real production runs. The only missing piece is a scheduler that triggers the collector once a day.
 
 **Configuration (as stated by the account owner, not independently re-verified against the TikTok dashboard this session):**
 - TikTok Sandbox app configured
 - Domain verified
 - Login Kit enabled
 - Scopes: `user.info.basic`, `video.list`
-- Vercel Production env vars present (**names only, values never written here**): `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REDIRECT_URI`
+- Vercel Production env vars present (**names only, values never written here**): `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REDIRECT_URI` (OAuth); `TIKTOK_COLLECT_SECRET` (collector Bearer auth); `KV_REST_API_URL`, `KV_REST_API_TOKEN` (used), plus `KV_REST_API_READ_ONLY_TOKEN`, `KV_URL`, `REDIS_URL` (auto-provisioned, unused) for Upstash Redis; `ANALYTICS_GITHUB_TOKEN` (private analytics repo writer). The older `GITHUB_TOKEN` is NOT used for analytics.
 
-**What exists in this repo (implemented and deployed 2026-09-24, commits `7cfd17c` + `f2e12e4` + `a0110c3`):**
+**What exists in this repo (implemented and deployed 2026-09-24/25):**
 - `/terms` — public Terms of Service page, live, required alongside `/privacy` for TikTok Developer app review (see COMPLETED WORK, commit `9acd92f`)
 - `/tiktok-connect` — temporary internal test route (`noindex,nofollow`, not in nav/footer/sitemap) — **still exists, still temporary**, has NOT been promoted to a permanent feature
 - `/api/tiktok/login` — OAuth start: random CSRF state → Secure/HttpOnly/SameSite=Lax cookie → redirect to TikTok's real authorize screen
-- `/api/tiktok/callback` — OAuth completion: server-side token exchange, `user.info.basic` + `video.list` calls, renders a throwaway result page
-- **Tokens are now persisted server-side to Upstash Redis on a successful OAuth login** (commit `b8193db`, deployed 2026-09-24) — see the persistence status block below. Still no GitHub write, no file, no client-side exposure.
-- **The permanent analytics collector does NOT exist yet.** Ultimate integration goal, not yet built: `TikTok API → server-side collector → persistent analytics data → GPT/Claude analysis`
+- `/api/tiktok/callback` — OAuth completion: server-side token exchange, validation, persistence of the token bundle to Redis, then `user.info.basic` + `video.list` calls and a throwaway result page (commits `7cfd17c`, `f2e12e4`, `a0110c3`, `b8193db`)
+- `POST /api/tiktok/collect` — the autonomous collector: Bearer-authenticated, Redis-locked, refreshes the token when needed, paginates `video.list`, and writes the daily snapshot (commits `5b0b073`, `474acba`, `c6f9fd2`)
+- `lib/tiktokTokenStore.js` (Redis token bundle + collector lock), `lib/tiktokCollector.js` (refresh + pagination), `lib/tiktokAnalyticsStore.js` (private-repo snapshot writer)
+- **Tokens are persisted server-side to Upstash Redis only** — never to GitHub, a file, or the client. (Analytics snapshots, which contain no tokens, are written to a separate private GitHub repo; see below.)
+- **The autonomous collector and analytics snapshot writer DO exist and are VERIFIED.** What does NOT exist yet is *scheduled* collection — the collector is currently triggered manually by the account owner. The GPT/Claude analysis step reads the snapshots from the private repo; no automated analysis is built.
 
-**Verification history (see DOCUMENTATION.md продовження 54-58 for the full incident-by-incident record):** first real attempt failed CSRF (продовження 54) → safe CSRF diagnostics added (55) → later real attempt passed CSRF but failed token exchange (56) → diagnostics revealed `invalid_client` (credential mismatch) → account owner corrected the Vercel `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET` pair and production was redeployed (57) → **a real end-to-end OAuth login now succeeds** (58).
+**Verification history (see DOCUMENTATION.md продовження 54-58 for the full incident-by-incident record):** first real attempt failed CSRF (продовження 54) → safe CSRF diagnostics added (55) → later real attempt passed CSRF but failed token exchange (56) → diagnostics revealed `invalid_client` (credential mismatch) → account owner corrected the Vercel `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET` pair and production was redeployed (57) → **a real end-to-end OAuth login now succeeds** (58) → Redis token persistence implemented and verified (59-61) → autonomous collector implemented and verified (62-63) → token-lifecycle hardening (64) → private analytics repo created (65) → `GITHUB_TOKEN` preflight failed, dedicated `ANALYTICS_GITHUB_TOKEN` passed (66-67) → collect secret rotated (68) → **real token refresh and the first private analytics snapshot verified (69)**.
 
 **VERIFIED REAL RESULT (2026-09-24, via `/tiktok-connect`, real browser login):**
 - TikTok connected: YES
@@ -132,7 +136,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 **Now confirmed working:** CSRF/state flow, Vercel Sandbox credentials, token exchange, `user.info.basic`, `video.list` — CryptoLock can read its own TikTok public video metrics via the Sandbox app. Not yet confirmed available via this API/scope set: retention, completion rate, profile visits, follows — do not assume these are accessible until specifically checked.
 
-**INFRASTRUCTURE — Upstash Redis (connected 2026-09-24, продовження 59):** Upstash for Redis created via Vercel Marketplace and connected to the `crypto-lock` Vercel project, for TikTok server-side runtime state (`access_token`, `refresh_token`, token expiration metadata, future collector lock/idempotency state). Vercel Production env var **NAMES only** (values never written here): `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. Analytics-history storage remains a **separate, still-pending decision** — Redis is scoped to tokens/runtime state only, not analytics history.
+**INFRASTRUCTURE — Upstash Redis (connected 2026-09-24, продовження 59):** Upstash for Redis created via Vercel Marketplace and connected to the `crypto-lock` Vercel project, for TikTok server-side runtime state (`access_token`, `refresh_token`, token expiration metadata, future collector lock/idempotency state). Vercel Production env var **NAMES only** (values never written here): `KV_REST_API_READ_ONLY_TOKEN`, `KV_REST_API_TOKEN`, `KV_REST_API_URL`, `KV_URL`, `REDIS_URL`. Redis is scoped to tokens/runtime state only (token bundle, collector lock) — it is NOT the analytics-history store. Analytics history lives in the separate private `CryptoLock-analytics` GitHub repo (decided and implemented; see the storage-architecture block below).
 
 **TOKEN PERSISTENCE — STATUS: VERIFIED (продовження 60-61, commit `b8193db`, deployed 2026-09-24).** `pages/api/tiktok/callback.js` persists the token bundle to Redis under the fixed key **`cryptolock:tiktok:token_bundle:v1`** via a single Redis SET, using `KV_REST_API_URL`/`KV_REST_API_TOKEN` only (never the read-only token or `KV_URL`/`REDIS_URL`). Pipeline order: token exchange → structural validation (`access_token`/`refresh_token`/`expires_in`/`refresh_expires_in` all required) → required-scope check → persist to Redis → `user.info.basic` → `video.list` → success page. Any validation or Redis failure fails closed with a generic 502 page and `user.info`/`video.list` are never called. 65/65 local tests passed. `npm run build` passed.
 
@@ -152,7 +156,7 @@ This confirms a real TikTok OAuth token bundle was successfully written to Upsta
 - **Concurrency:** a Redis lock (`cryptolock:tiktok:collector_lock:v1`, `SET NX EX 120`) prevents overlapping runs; released only via an atomic Lua compare-and-delete so a run can never clear a lock it doesn't own, always in a `finally` block.
 - **Video collection:** paginates `video.list` up to a hard cap of **10 pages / 200 videos**; reports `truncated: true` rather than silently claiming completeness if the cap is hit while TikTok still has more.
 - **Response:** secret-gated JSON only (`ok`, `token_refreshed`, `videos_returned`, `pages_fetched`, `truncated`, `collected_at`, `videos[]`) — never `open_id`/`access_token`/`refresh_token`/expiry values/any secret.
-- **Analytics history is NOT persisted yet** — this stage only proves the token lifecycle and API collection; `pages/api/tiktok/login.js` and `pages/api/tiktok/callback.js` are untouched.
+- *(First version of the collector, commit `5b0b073`.)* It did not persist analytics history at that stage — it only proved the token lifecycle and API collection. **Superseded:** the snapshot writer was added in `c6f9fd2` (продовження 67) and verified by a real run (продовження 69); see below. `pages/api/tiktok/login.js` and `pages/api/tiktok/callback.js` were untouched by the collector work.
 - 55/55 local tests passed (auth, lock ownership/release, all refresh-validation-reject paths, Redis-persist-failure-blocks-video-list, pagination cap/truncation, no-secret-leakage). `npm run build` passed.
 
 **REAL PRODUCTION VALIDATION (2026-09-24, account owner's first authenticated call to `POST /api/tiktok/collect`, real `TIKTOK_COLLECT_SECRET`):**
@@ -177,14 +181,14 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 
 **TIKTOK ANALYTICS STORAGE ARCHITECTURE (продовження 65, 2026-09-24):**
 - **Runtime secrets/state (token bundle, refresh state, collector lock, future idempotency state):** Upstash Redis — unchanged, this task did not touch Redis.
-- **Long-term analytics history:** a separate **PRIVATE** GitHub repository, `tenboy10b-sudo/CryptoLock-analytics` — deliberately NOT the public `tenboy10b-sudo/CryptoLock` repo, since analytics history is business data. Planned layout: `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`, one file per UTC calendar day (documented in that repo's own `README.md`, not duplicated here).
+- **Long-term analytics history:** a separate **PRIVATE** GitHub repository, `tenboy10b-sudo/CryptoLock-analytics` — deliberately NOT the public `tenboy10b-sudo/CryptoLock` repo, since analytics history is business data. Layout (live): `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`, one file per UTC calendar day (documented in that repo's own `README.md`, not duplicated here).
 - **Analytics storage repository: CREATED / VERIFIED.** Private, correct owner, `main` default branch, `README.md` + `tiktok/snapshots/.gitkeep` present at creation (first real snapshot since added — see продовження 69).
 - **Analytics writer: VERIFIED** by a real production snapshot write (продовження 69).
 - **Scheduled collection: NOT IMPLEMENTED.** No cron-job.org trigger configured for the collector.
 - **Autonomous collector: VERIFIED** (продовження 62-63).
 - **Real token refresh: VERIFIED** by a real production run (продовження 69).
 
-**PRODUCTION GITHUB_TOKEN PREFLIGHT: FAILED (продовження 66, 2026-09-25).** The original production `GITHUB_TOKEN` cannot read `tenboy10b-sudo/CryptoLock-analytics` at all (`repo_access: false`) — most likely scoped only to the public `CryptoLock` repo. **This token must never be used for analytics.** (Full incident record preserved below/in DOCUMENTATION.md продовження 66.)
+**PRODUCTION GITHUB_TOKEN PREFLIGHT: FAILED (продовження 66, 2026-09-25).** The original production `GITHUB_TOKEN` cannot read `tenboy10b-sudo/CryptoLock-analytics` at all (`repo_access: false`) — most likely scoped only to the public `CryptoLock` repo. **This token must never be used for analytics.** (Full incident record is preserved in DOCUMENTATION.md продовження 66.)
 
 **PRODUCTION ANALYTICS_GITHUB_TOKEN PREFLIGHT: PASS (продовження 67, 2026-09-25).** A dedicated, least-privilege fine-grained PAT was added as a new Vercel Production env var, `ANALYTICS_GITHUB_TOKEN` (**name only**, value never documented), scoped specifically to `CryptoLock-analytics` with Contents read/write. Tested via the same temporary, secret-gated, read-only diagnostic pattern (deployed, called once, then fully removed regardless of outcome — same discipline as продовження 66). **Repository:** `tenboy10b-sudo/CryptoLock-analytics`. **Verified capabilities: read = YES, write = YES.** Old `GITHUB_TOKEN`: confirmed NOT used for analytics.
 
@@ -308,7 +312,9 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 - Added Terms of Service page (`pages/terms.js`, commit `9acd92f`, deployed 2026-09-24) at `/terms` (+ `/en/terms` via existing i18n routing) — required alongside the existing `/privacy` page for TikTok Developer app production review (Terms of Service URL + Privacy Policy URL + public website URL)
 - Fixed EN article tag links (`pages/[slug].js`) that were resolving to bare `/tags/{tag}` instead of `/en/tags/{tag}` — caused by a stray `locale={false}` on the tag-chip/breadcrumb `<Link>`s and JSON-LD `BreadcrumbList`. Confirmed live 404s (`/tags/hardware`, `/tags/settings`, `/tags/productivity`) before the fix; all now resolve via `/en/tags/*` (commit `44d20ae`, deployed 2026-09-23)
 - Added a global execution lock + persisted pending-outbox to `pages/api/autopost.js` so overlapping cron invocations can no longer both post to Telegram, and a GitHub-write failure after a successful send no longer silently desyncs state (commit `ef134a7`, deployed 2026-09-24; live-verified on the first real cycle afterward)
-- TikTok Sandbox OAuth Login Kit smoke test implemented (`/tiktok-connect`, `/api/tiktok/login`, `/api/tiktok/callback`) — see TIKTOK STATUS above for current blocked-on-token-exchange status (commits `7cfd17c` + `f2e12e4` + `a0110c3`, deployed 2026-09-24)
+- TikTok Sandbox OAuth Login Kit smoke test implemented and verified end-to-end (`/tiktok-connect`, `/api/tiktok/login`, `/api/tiktok/callback`; commits `7cfd17c` + `f2e12e4` + `a0110c3`, deployed 2026-09-24). The earlier CSRF and `invalid_client` blockers were diagnosed and resolved — see DOCUMENTATION.md продовження 54-58.
+- TikTok token persistence to Upstash Redis (`b8193db`), autonomous collector with proactive token refresh, locking and pagination (`5b0b073`), token-lifecycle validation hardening including an `open_id`-continuity bug fix (`474acba`) — all deployed 2026-09-24 and verified by real production runs
+- Private TikTok analytics storage: separate PRIVATE repo `tenboy10b-sudo/CryptoLock-analytics` created (2026-09-24), dedicated `ANALYTICS_GITHUB_TOKEN` preflight-verified (2026-09-25), and an idempotent daily snapshot writer (`c6f9fd2`) verified by a real run — real token refresh and the first snapshot (110 videos, 6 pages) confirmed 2026-09-25 (DOCUMENTATION.md продовження 65-69)
 
 ## BACKLOG
 
@@ -316,6 +322,8 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 - Resolve Vercel↔GitHub OAuth connection (or formally commit to the manual-deploy workaround as standard practice)
 
 **P1:**
+- Implement and validate once-daily scheduled TikTok collection (this is the current global NEXT ACTION, below)
+- Repeat GSC URL Inspection Live Test for `/yak-vstanovyty-python-windows` (or another representative UK article) to confirm the `/_next/` robots.txt fix actually resolves the "10 of 14 resources blocked" result now that it's live in production. Do not expect this to move the June-13 traffic-collapse question — that stays a separate, still-open investigation (see Stage 2C in DOCUMENTATION.md).
 - Fix the autopost.js race condition (reorder state write before Telegram send, or add an idempotency key)
 
 **P2:**
@@ -324,4 +332,4 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 
 ## NEXT ACTION
 
-Repeat GSC URL Inspection Live Test for `/yak-vstanovyty-python-windows` (or another representative UK article) to confirm the `/_next/` robots.txt fix actually resolves the "10 of 14 resources blocked" result now that it's live in production. Do not expect this to move the June-13 traffic-collapse question — that stays a separate, still-open investigation (see Stage 2C in DOCUMENTATION.md).
+Implement and validate once-daily scheduled TikTok collection. The collector (`POST /api/tiktok/collect`), token refresh, and the private daily snapshot writer are all VERIFIED; only the scheduler that triggers it once per day is missing. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
