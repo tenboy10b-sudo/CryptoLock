@@ -4031,3 +4031,25 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** власник акаунту виконує один автентифікований `POST /api/tiktok/collect`, потім перевіряється точний приватний денний снапшот у `tenboy10b-sudo/CryptoLock-analytics` за сьогоднішньою UTC-датою і збіг його вмісту з поверненою колекцією. Лише після цього writer можна вважати ПІДТВЕРДЖЕНИМ (VERIFIED). Cron/scheduled collection і далі НЕ реалізовано.
 
 ---
+
+### Сесія 12 (продовження 68) — Ротація TIKTOK_COLLECT_SECRET і редеплой
+
+**DATE:** 2026-09-25
+
+**PROBLEM/EVENT:** перший реальний валідаційний виклик analytics-writer'а (`POST /api/tiktok/collect`) повернув `401 unauthorized`. Запит було відхилено на етапі автентифікації collector'а — ДО отримання Redis-lock, ДО будь-яких викликів TikTok API, ДО token refresh і ДО analytics snapshot writer'а. Тобто жоден із цих компонентів у цьому виклику не виконувався і не був перевірений.
+
+**EVIDENCE:** повідомлено користувачем напряму. Причину 401 (невідповідність значення секрету) тут НЕ встановлено — записано лише факт: виклик відхилено на auth-кроці.
+
+**DECISION:** власник акаунту виконав ротацію `TIKTOK_COLLECT_SECRET` у Vercel Production. Значення секрету НЕ документується ніде. Оскільки serverless-функції не перечитують env vars без нового деплою, потрібен редеплой поточного коду.
+
+**IMPLEMENTATION:** змін коду немає. Продакшн передеплоєно (`vercel --prod --yes`) з тієї самої версії `4205546`, `dpl_EcDVgjAK7hsQRFCV6or5RxmZ2V6Z`, аліас `cryptolockua.com`.
+
+**SECURITY:** значення `TIKTOK_COLLECT_SECRET` (ні старе, ні нове) не читалось, не використовувалось, не виводилось і не зберігається у Git/документації — перевірки нижче використовують лише свідомо неправильний Bearer.
+
+**RESULT:** безпечні перевірки автентифікації після редеплою: `GET /api/tiktok/collect` → 405, `POST` без `Authorization` → 401, `POST` з явно невірним Bearer → 401, `/tiktok-connect` → 200. Ці перевірки доводять лише те, що endpoint живий і застосовує auth — вони НЕ доводять, що новий секрет працює. Автентифікований виклик collector'а НЕ виконувався, снапшот вручну НЕ створювався, Redis НЕ чіпався. Analytics writer лишається **IMPLEMENTED — awaiting real production snapshot validation**; cron — **NOT IMPLEMENTED**. Успішний автентифікований запуск collector'а після ротації ще НЕ спостерігався.
+
+**COMMIT SHA:** немає (без змін коду — лише ротація env var + редеплой).
+
+**FOLLOW-UP:** власник акаунту повторює один автентифікований `POST /api/tiktok/collect` з новим `TIKTOK_COLLECT_SECRET`, потім перевіряється точний приватний денний снапшот у `tenboy10b-sudo/CryptoLock-analytics` за сьогоднішньою UTC-датою і збіг його вмісту з поверненою колекцією.
+
+---
