@@ -140,7 +140,12 @@
     "🔋 **Команда дня: powercfg /batteryreport**",
     "🎯 **Мало хто знає, що в Windows є повноцінна пісочниця для безпечного тестування**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "269fa88e-0363-4393-89c5-94bda032b44f",
+    "type": "content",
+    "started_at": "2026-09-25T08:01:11.426Z",
+    "expires_at": "2026-09-25T08:16:11.426Z"
+  },
   "pending": null,
   "last_message_id": 511,
   "engage_ab_index": 1,
