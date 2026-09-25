@@ -115,14 +115,15 @@
     "how-to-configure-windows-vpn-server",
     "nalashtuvannya-faylovoho-servera-windows",
     "yak-nalashtuvaty-diahnostiku-pamiati-windows",
-    "how-to-configure-windows-server-core"
+    "how-to-configure-windows-server-core",
+    "how-to-configure-windows-firewall-gpo"
   ],
-  "count": 116,
+  "count": 117,
   "promo_index": 74,
   "last_post": {
-    "slug": "how-to-configure-windows-server-core",
-    "title": "How to Manage Windows Server Core Without a GUI",
-    "time": "2026-09-24T08:01:29.780Z"
+    "slug": "how-to-configure-windows-firewall-gpo",
+    "title": "How to Configure Windows Firewall via Group Policy",
+    "time": "2026-09-25T08:01:22.915Z"
   },
   "engage_index": 65,
   "extra_index": 92,
@@ -140,22 +141,9 @@
     "🔋 **Команда дня: powercfg /batteryreport**",
     "🎯 **Мало хто знає, що в Windows є повноцінна пісочниця для безпечного тестування**"
   ],
-  "lock": {
-    "execution_id": "269fa88e-0363-4393-89c5-94bda032b44f",
-    "type": "content",
-    "started_at": "2026-09-25T08:01:11.426Z",
-    "expires_at": "2026-09-25T08:16:11.426Z"
-  },
-  "pending": {
-    "execution_id": "269fa88e-0363-4393-89c5-94bda032b44f",
-    "type": "content",
-    "identifier": "how-to-configure-windows-firewall-gpo",
-    "payload": {
-      "text": "🛡️ **Налаштування Windows Firewall через Group Policy**\n\nЯкщо ви адмініструєте декілька комп'ютерів у домені, Group Policy — ваш найкращий друг для централізованого керування брандмауером. Ось як це зробити правильно:\n\n**Основні кроки:**\n\n1️⃣ **Відкрийте Group Policy Management Console** (gpmc.msc) → створіть новий GPO або відредагуйте існуючий\n\n2️⃣ **Перейдіть до налаштувань:** Computer Configuration → Policies → Windows Settings → Security Settings → Windows Defender Firewall with Advanced Security\n\n3️⃣ **Налаштуйте профілі:** Окремо для Domain, Private та Public. Рекомендую блокувати вхідні з'єднання за замовчуванням, дозволяючи лише потрібні\n\n4️⃣ **Створюйте правила:** Inbound/Outbound Rules → вказуйте конкретні порти, програми або служби. Не забудьте про Remote Desktop (TCP 3389) для адміністрування\n\n5️⃣ **Перевірте застосування:**\n```powershell\ngpupdate /force\nGet-NetFirewallRule | Where-Object {$_.DisplayName -like \"*назва*\"}\n```\n\n**Порада:** Використовуйте WMI фільтри, щоб застосовувати різні правила для серверів і робочих станцій. І завжди тестуйте GPO на окремій OU перед масовим розгортанням!\n\n#Windows #Безпека #GroupPolicy #Firewall"
-    },
-    "created_at": "2026-09-25T08:01:22.915Z"
-  },
-  "last_message_id": 511,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 512,
   "engage_ab_index": 1,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?"
