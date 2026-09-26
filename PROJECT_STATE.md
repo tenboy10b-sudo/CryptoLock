@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-26
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-BASE SHA (snapshot, not a live HEAD): 4f0f109 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
+BASE SHA (snapshot, not a live HEAD): 0670579 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
 
 ## PROJECT
 
@@ -70,7 +70,7 @@ These are explicitly separate systems — do not conflate them:
 - **GitHub repository status:** origin/main is healthy, linear history, receiving continuous automated commits from the Telegram bot.
 - **Vercel auto-deploy status:** BROKEN. `vercel git connect` fails with "Failed to connect tenboy10b-sudo/CryptoLock to project" — a recurring issue (6th confirmed occurrence) tied to a GitHub account OAuth-App flag. Last independently confirmed as broken: 2026-09-22 (this session).
 - **Manual deploy procedure:** `vercel --prod --yes` from the repo root — the established workaround used repeatedly throughout this project's history when auto-deploy is broken.
-- **Current production verification status:** production is current as of 2026-09-26 — the latest deployment is `dpl_E5SQU7yaCnkiL5Pkr2qE3kqLFSfL` (commit `4f0f109`, the scheduler-safe collector auth mode), aliased to `cryptolockua.com`. Every deploy since 2026-09-22 was done manually via `vercel --prod --yes` (auto-deploy remains broken, above), so the earlier "last production deploy was 2026-08-29 (`039d61c`), 24 days stale" statement (written 2026-09-22) is superseded — the code and config changes since then, including the entire TikTok pipeline, are live. Doc-only commits after that deploy (this one included) do not require a redeploy.
+- **Current production verification status:** production is current as of 2026-09-26 — the latest deployment is `dpl_AEfwg85byMR77KuMidkJiFVMZdqk` (a code-unchanged redeploy of commit `0670579`, run to load the rotated `TIKTOK_SCHEDULE_SECRET`; the scheduler-safe auth code itself shipped in commit `4f0f109`), aliased to `cryptolockua.com`. Every deploy since 2026-09-22 was done manually via `vercel --prod --yes` (auto-deploy remains broken, above), so the earlier "last production deploy was 2026-08-29 (`039d61c`), 24 days stale" statement (written 2026-09-22) is superseded — the code and config changes since then, including the entire TikTok pipeline, are live. Doc-only commits after that deploy (this one included) do not require a redeploy.
 
 ## GSC STATUS
 
@@ -236,9 +236,13 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 - 93/93 local tests (full auth matrix; manual response preserved; schedule response compact and leak-free and snapshot-identical to manual; lock/refresh/persistence/TikTok-failure/snapshot-failure/lock-release/pagination/create-update regressions run in **both** modes). The new-mode tests were confirmed to fail against the pre-change code. `npm run build` passed.
 - Safe production checks after deploy: `GET` → 405, `POST` without `Authorization` → 401, `POST` with an obviously wrong Bearer → 401, `/tiktok-connect` → 200, and both env-var **names** present for Production. The wrong-Bearer request returning 401 (not 500) also shows production is configured with at least one secret and the two are not identical. **Neither real secret was used** — no authenticated collector call was made and no snapshot was created or updated.
 
-**Status:** scheduler-safe collector auth **IMPLEMENTED + DEPLOYED**. cron-job.org schedule: **NOT CONFIGURED YET**. Real schedule-secret call: **NOT YET VERIFIED**. Automatic scheduled execution: **NOT YET VERIFIED**. (The manual mode remains VERIFIED by earlier real runs.)
+**Status (as first deployed, продовження 70):** scheduler-safe collector auth **IMPLEMENTED + DEPLOYED**; the cron-job.org job did not exist yet.
 
-**NEXT ACTION:** configure cron-job.org once daily (Bearer `TIKTOK_SCHEDULE_SECRET`), then perform a controlled "Run now" validation. Do not change the analytics schema or storage architecture unless evidence requires it.
+**TIKTOK_SCHEDULE_SECRET ROTATION + REDEPLOY (продовження 71, 2026-09-26).** The account owner **rotated `TIKTOK_SCHEDULE_SECRET` in Vercel Production** (env var **name only**; the value is not documented anywhere, and Claude never read it). Production was **redeployed** (`dpl_AEfwg85byMR77KuMidkJiFVMZdqk`, READY, aliased to `cryptolockua.com`, **no application code change**) so the runtime loads the new value. Safe checks passed: `GET` → 405, `POST` without `Authorization` → 401, `POST` with an obviously wrong Bearer → 401, `/tiktok-connect` → 200. As before, these prove the endpoint is live and enforcing auth — **not** that the new schedule secret works; the wrong-Bearer 401 (not 500) only shows the secrets are configured and not identical. No authenticated call was made and no snapshot was created or updated.
+
+**Status now:** per the account owner, the **cron-job.org job is configured** (Claude has not inspected the cron-job.org dashboard, so its schedule and settings are unverified from this side). **Real scheduler auth (a real call using `TIKTOK_SCHEDULE_SECRET`): NOT YET VERIFIED. Automatic scheduled execution: NOT YET VERIFIED.** The task that requested this redeploy did not state why the rotation was needed, so no cause is recorded. Manual mode remains VERIFIED by earlier real runs.
+
+**NEXT ACTION:** rerun the cron-job.org TEST RUN (Bearer `TIKTOK_SCHEDULE_SECRET`) and confirm it returns the compact success response. Do not change the analytics schema or storage architecture unless evidence requires it.
 
 ## MONETIZATION
 
@@ -332,7 +336,7 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 - Resolve Vercel↔GitHub OAuth connection (or formally commit to the manual-deploy workaround as standard practice)
 
 **P1:**
-- Configure cron-job.org for once-daily TikTok collection and validate it (the scheduler-safe auth mode is already deployed; this is the current global NEXT ACTION, below)
+- Validate once-daily TikTok collection: rerun the cron-job.org TEST RUN with the rotated `TIKTOK_SCHEDULE_SECRET` (the job is configured per the account owner; scheduler-safe auth is deployed; this is the current global NEXT ACTION, below)
 - Repeat GSC URL Inspection Live Test for `/yak-vstanovyty-python-windows` (or another representative UK article) to confirm the `/_next/` robots.txt fix actually resolves the "10 of 14 resources blocked" result now that it's live in production. Do not expect this to move the June-13 traffic-collapse question — that stays a separate, still-open investigation (see Stage 2C in DOCUMENTATION.md).
 - Fix the autopost.js race condition (reorder state write before Telegram send, or add an idempotency key)
 
@@ -342,4 +346,4 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 
 ## NEXT ACTION
 
-Configure cron-job.org to call the TikTok collector once daily, then perform a controlled "Run now" validation. The collector (`POST /api/tiktok/collect`), token refresh, and the private daily snapshot writer are all VERIFIED, and the scheduler-safe auth mode (`TIKTOK_SCHEDULE_SECRET`, compact response) is deployed — what is missing is the cron-job.org job itself and a real schedule-secret call to verify it. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
+Rerun the cron-job.org TEST RUN for the once-daily TikTok collector and confirm it returns the compact success response. The collector (`POST /api/tiktok/collect`), token refresh, and the private daily snapshot writer are all VERIFIED, the scheduler-safe auth mode (`TIKTOK_SCHEDULE_SECRET`, compact response) is deployed, and the cron-job.org job is configured per the account owner — what is missing is a real, successful call using the rotated schedule secret. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
