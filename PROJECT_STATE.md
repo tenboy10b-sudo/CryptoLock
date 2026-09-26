@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-26
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-BASE SHA (snapshot, not a live HEAD): 3559983 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
+BASE SHA (snapshot, not a live HEAD): 95a5efd — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
 
 ## PROJECT
 
@@ -28,7 +28,7 @@ Telegram:
 - Channel: @cryptolock888
 - Autopost running continuously — 72 consecutive state commits confirmed 30.08.2026–22.09.2026, ~3/day (content/middle/extra), zero gaps
 - First subscriber-growth giveaway launched 30.08.2026 (AuditShield licenses, goal: 150 subscribers) — outcome not yet confirmed in this repo
-- **Automated AuditShield promotion PAUSED since 2026-09-26** (product/security P0 findings — see AUDITSHIELD STATUS). Odd-UTC-day `middle` slots now publish standalone Windows how-to posts; the 3 posts/day schedule and the even-day Telegram Poll Experiment are unchanged.
+- **Automated AuditShield promotion PAUSED since 2026-09-26** (found P0 security/reliability problems; the P0 security problems are now FIXED and verified, promotion stays paused until P1 reliability work + an owner end-to-end test — see AUDITSHIELD STATUS). Odd-UTC-day `middle` slots now publish standalone Windows how-to posts; the 3 posts/day schedule and the even-day Telegram Poll Experiment are unchanged.
 
 TikTok:
 STATUS: real, verified data collection is live (Sandbox app, account `cryptolockua`). A real production collector run on 2026-09-25 returned 110 videos across 6 pages (`truncated: false`) and wrote the first daily analytics snapshot to the private `CryptoLock-analytics` repo (`tiktok/snapshots/2026/09/2026-09-25.json`). Per-video views/likes/comments/shares are being captured (111 videos in the latest 2026-09-26 snapshot); no performance conclusions have been drawn from them yet. A daily cron-job.org job (03:15 UTC) is configured and enabled and two scheduler test runs succeeded, but the first natural clock-triggered run is still awaiting verification. See TIKTOK STATUS.
@@ -321,24 +321,34 @@ Still covered by local tests only: the GitHub write-conflict retry.
 
 ## AUDITSHIELD STATUS
 
-**STATUS: PAUSE PROMOTION** (decided 2026-09-26). **Not SUNSET.**
+**PROMOTION: PAUSED** (decided 2026-09-26). **SECURITY: P0 FIXED / VERIFIED** (closed 2026-09-26). **Not SUNSET.**
 
-AuditShield is a separate product in two PRIVATE repos (`tenboy10b-sudo/audit-shield-bot`, `tenboy10b-sudo/security-audit-private`; Telegram bot `@AuditShield_01_Bot`, Railway). This repo only promotes it (Telegram autopost, `/tools/auditshield`, `/links`) and used its licences as the giveaway prize. The product itself was NOT changed by this pause.
+AuditShield is a separate product in two PRIVATE repos (`tenboy10b-sudo/audit-shield-bot`, `tenboy10b-sudo/security-audit-private`; Telegram bot `@AuditShield_01_Bot`, Railway). This repo only promotes it (Telegram autopost, `/tools/auditshield`, `/links`) and used its licences as the giveaway prize. The promotion pause in this repo did not change the product; the P0 security fixes below were separate changes in the AuditShield repos.
 
-**Reason:** the full read-only product/security audit of 2026-09-26 (bot `811f271`, private repo `20b2098`) found P0 security/reliability problems and **no validated real paid demand**.
+**Reason for the pause:** the full read-only product/security audit of 2026-09-26 (bot `811f271`, private repo `20b2098`) found P0 security/reliability problems and **no validated real paid demand**. The P0 security problems are now fixed; the pause stays because the paid path is still unverified end to end, the P1 licensing/reliability problems below are open, and there is no validated demand yet.
+
+**P0 SECURITY PHASE — CLOSED (2026-09-26, VERIFIED).** Full record: `security-audit-private/DOCUMENTATION.md`, session 4.
+- **Admin authorization P0: FIXED.** Every privileged bot command and callback (`/admin` `/clients` `/find` `/stats` `/note`, `adm_*` `issue_*` `reject_*` `offer_*`) checks the admin server-side, fail-closed — `audit-shield-bot` `57cdb58`.
+- **Unauthenticated `/launch` P0: FIXED.** It requires the short-lived signed ticket from `/verify-license` (401/403 otherwise); identity comes from the ticket, the request body is never read — `57cdb58`.
+- **Telegram-token log exposure: FIXED** — HTTP-client INFO logging suppressed (`51cbb1b`); runtime logs re-checked by count only: 0 token-shaped strings. **Token: ROTATED by the owner** (old token revoked, new token installed in Railway, service redeployed, `/start` works). Token values are not documented anywhere. The old token remains in older Railway deployments' logs, but it is revoked.
+- **Admin `/start` / menu production bug: FIXED** — `d63c0ad`. This was a **pre-existing** bug, not caused by the security hardening: `kb.inline_keyboard.append(...)` was added on 2026-05-11 against the already-pinned `python-telegram-bot==20.7`, where `inline_keyboard` is an immutable tuple; the hardening did not touch that code. It surfaced during the owner's post-deployment verification (the admin had been using `/admin`).
+- **Owner manual verification: 4/4 passed** (admin `/start`; "До меню" returns the admin menu; "Панель адмiна" opens; non-admin `/start` shows no admin button).
+- **Evidence:** current AuditShield Railway deployment `93a49a78-edd5-4325-ac55-bf247b698f6e` SUCCESS; 56/56 tests; production negative check (`/launch` without auth → 401, state repository unchanged). Server-side denial for a real non-admin account was verified by mocked tests, not against a live non-admin account.
 
 **FACTS**
 - **Real confirmed purchases: 0. Real confirmed revenue: $0.** The May 2026 buyer/payment/licence records were **owner tests** (owner-confirmed); the "first real purchase" wording in older AuditShield docs is wrong. Do not use those records as demand evidence or for demo→paid conversion.
 - Demo interest: 18 unique demo accounts in the CRM over ~4.5 months (about 14–17 plausibly external; 12 of the 18 date from the May ad push, one new account since mid-July). Actual demo *executions* are **unknown** — the demo script has no telemetry, so "unknown", not "zero".
 - The paid path (licence check → module fetch → run) has **not completed a real end-to-end run in production** since the 2026-09-23 proxy re-architecture; older buyers reportedly received a non-functional launcher.
-- P0 findings (all in the AuditShield bot, none fixed yet): admin commands `/clients` `/find` `/stats` `/note` and admin callbacks have no admin check; `/launch` on Railway is unauthenticated; the paid path is unverified in production. P1 highlights: a licence run is consumed before the module is delivered; CRM analytics are unreliable (`runs` vs `runs_max`, `converted` never set, source never saved); the landing claim "no data leaves your PC / fully local" is false for the paid version (licence check + telemetry + code download; audit/report data itself never leaves the PC).
+- **STILL OPEN after the P0 phase (P1/P2, none of these was in the P0 change sets):** the **primary P1** — a licence run is irreversibly consumed at `/verify-license` *before* the core module is delivered by `/get-module` (a failed delivery loses the run; no retry or refund). Other P1: CRM `runs` vs `runs_max` inconsistency; `runs_used` not synchronized into the CRM; `converted` never set; traffic-source attribution not working; `/verify-license` can exhaust the GitHub API quota; the paid path still needs an owner end-to-end test. Related: the landing claim "no data leaves your PC / fully local" is false for the paid version (licence check + telemetry + code download; audit/report data itself never leaves the PC). P2: licence passwords stored in plaintext and generated with `random`; the `/launch` replay guard is in-memory; demo execution telemetry is not implemented; no code signing / `Invoke-Expression` of a remotely fetched script; the GitHub token has broader permissions than needed; older sections of the private repo's documentation still contain payment details and test-purchase wording ("first real purchase") that the owner has confirmed were tests.
 - 3 giveaway licences were created 2026-08-30 and none had been used as of the audit; the giveaway package still contains a stale launcher.
 
 **Public-repo hygiene (2026-09-26):** AuditShield payment details were present in one line of this PUBLIC repo's `DOCUMENTATION.md`; they were redacted from current HEAD (commit `3559983`). They **remain in git history** — no history rewrite and no rotation was done; that is an owner decision.
 
 **What was paused (this repo):** automated Telegram AuditShield promotion (see TELEGRAM STATUS). **Not touched:** the website page `/tools/auditshield` and `/links` still link to the bot, and its landing claims are not yet corrected — separate task.
 
-**Next state transition** (PAUSE → resume/KEEP, or → SUNSET) requires, in order: (1) AuditShield P0 hardening, (2) an owner end-to-end test of the paid flow on a clean Windows PC, (3) a measurable validation window (demo-execution measurement + source attribution + owner-set keep/sunset criteria). Until then, no new promotion.
+**Next state transition** (PAUSE → resume/KEEP, or → SUNSET) requires, in order: (1) ~~AuditShield P0 hardening~~ — **DONE 2026-09-26**; (1b) **AuditShield P1 licensing/reliability** (primary: the run must not be consumed before the module is delivered), (2) an owner end-to-end test of the paid flow on a clean Windows PC, (3) a measurable validation window (demo-execution measurement + source attribution + owner-set keep/sunset criteria). Until then, **no promotion**.
+
+**Experiments:** the SEO Crawl Priority Experiment and the Telegram Poll Experiment are **unchanged** by the P0 closure (the Poll Experiment's odd-day environment-change caveat, recorded under ACTIVE EXPERIMENTS, still applies).
 
 ## MONETIZATION
 
@@ -350,9 +360,9 @@ AuditShield is a separate product in two PRIVATE repos (`tenboy10b-sudo/audit-sh
 
 **P0:**
 - Vercel↔GitHub auto-deploy connection broken (OAuth account flag, recurring — 6th occurrence)
-- **AuditShield bot P0 findings (separate repos, NOT fixed; promotion paused for this reason — see AUDITSHIELD STATUS):** unauthenticated admin commands/callbacks, unauthenticated `/launch`, paid path unverified in production
 
 **P1:**
+- **AuditShield licensing/reliability (separate repos; promotion stays paused until fixed — see AUDITSHIELD STATUS):** a licence run is consumed before the core module is delivered (primary); CRM `runs`/`runs_max`, `runs_used`, `converted` and source-attribution problems; `/verify-license` GitHub-quota exposure; paid path still needs an owner end-to-end test. (The earlier AuditShield P0s — open admin commands/callbacks, unauthenticated `/launch`, Telegram-token log leak, admin `/start` menu crash — are FIXED and were removed from this list on 2026-09-26.)
 - Race condition in `pages/api/autopost.js`: Telegram send precedes GitHub state write, no idempotency key, no lock
 
 **P2:**
@@ -383,7 +393,7 @@ AuditShield is a separate product in two PRIVATE repos (`tenboy10b-sudo/audit-sh
 7. Significant completed work must exist in Git history and documentation, not only in AI chat history.
 8. Every significant implementation must end with the full pipeline: **implementation → test → deploy → production verify → documentation → docs commit → push**. A task is not complete if it stops before the documentation/docs-commit/push steps. This exists so a new Claude/GPT session — including a different account — can reconstruct current project state from GitHub alone, without any prior chat history.
 9. **No new crawl/indexing SEO change before 2026-10-08 unless a P0 production/indexing issue appears** (decided 2026-09-26 after the GSC Indexing Backlog Classification Audit). Reason: preserve the validity of the running Crawl Priority Internal-Link Experiment and avoid mixing interventions, so any TEST-vs-CONTROL movement can be attributed. The audit's small hygiene findings (KNOWN BUGS P2) do not qualify as P0 and wait for this window to close.
-10. **AuditShield: PAUSE PROMOTION, NOT SUNSET** (decided 2026-09-26 after the AuditShield product/security audit). Automated promotion stops now; the product is neither closed nor endorsed. Resuming requires P0 hardening, an owner end-to-end test and a measurable validation window (AUDITSHIELD STATUS). The pause was implemented as the smallest change that keeps the Telegram schedule intact and leaves the Poll Experiment's even-day branch untouched; the resulting odd-day change is a recorded confounder (ACTIVE EXPERIMENTS).
+10. **AuditShield: PAUSE PROMOTION, NOT SUNSET** (decided 2026-09-26 after the AuditShield product/security audit). Automated promotion stops now; the product is neither closed nor endorsed. Resuming requires P0 hardening, an owner end-to-end test and a measurable validation window (AUDITSHIELD STATUS). The pause was implemented as the smallest change that keeps the Telegram schedule intact and leaves the Poll Experiment's even-day branch untouched; the resulting odd-day change is a recorded confounder (ACTIVE EXPERIMENTS). **Update 2026-09-26:** the AuditShield P0 security phase is closed and verified (AUDITSHIELD STATUS); the decision is unchanged — promotion stays paused until P1 licensing/reliability, an owner end-to-end test and a measurable validation window are done; the product is not sunset.
 
 ## ACTIVE EXPERIMENTS
 
@@ -439,15 +449,15 @@ AuditShield is a separate product in two PRIVATE repos (`tenboy10b-sudo/audit-sh
 - Private TikTok analytics storage: separate PRIVATE repo `tenboy10b-sudo/CryptoLock-analytics` created (2026-09-24), dedicated `ANALYTICS_GITHUB_TOKEN` preflight-verified (2026-09-25), and an idempotent daily snapshot writer (`c6f9fd2`) verified by a real run — real token refresh and the first snapshot (110 videos, 6 pages) confirmed 2026-09-25 (DOCUMENTATION.md продовження 65-69)
 - **GSC Indexing Backlog Classification Audit (read-only, 2026-09-26) — VERIFIED.** All 828 non-indexed URLs from the Crawled (650) and Discovered (178) exports classified against the current repo and re-checked against live production responses; findings, limitations and unverified hypotheses recorded under GSC STATUS above and in DOCUMENTATION.md продовження 73. Read-only: no code, SEO, sitemap, redirect, robots, content, deployment, GSC or experiment change. No fresh "indexed" total was obtained.
 - **AuditShield promotion containment (2026-09-26, commit `3559983`, deployment `dpl_34iYhpK32qjzuSJL2gG5G1TKaeME`):** automated AuditShield promotion paused — odd-day `middle` slots now publish standalone Windows how-tos, `type=promo` is a no-op, the even-day Poll Experiment branch and its counters are untouched; AuditShield payment details redacted from current HEAD of this public repo (history not rewritten). Verified by a mocked 40-assertion differential test (no Telegram send) and a green `npm run build`; production deployment Ready. The AuditShield product itself was not changed. See AUDITSHIELD STATUS, TELEGRAM STATUS and DOCUMENTATION.md продовження 74.
+- **AuditShield P0 security phase CLOSED (2026-09-26; docs-only sync in this repo):** in the AuditShield repos — admin commands/callbacks fail closed and unauthenticated `/launch` is now authenticated (`audit-shield-bot` `57cdb58`); Telegram-token HTTP-log leak fixed (`51cbb1b`) and the token **rotated by the owner** (value never documented); pre-existing admin `/start` menu crash fixed (`d63c0ad`). 56/56 tests; Railway deployment `93a49a78-edd5-4325-ac55-bf247b698f6e` SUCCESS; owner manual verification 4/4. Promotion stays PAUSED. See AUDITSHIELD STATUS, `security-audit-private/DOCUMENTATION.md` session 4 and DOCUMENTATION.md продовження 75.
 
 ## BACKLOG
 
 **P0:**
 - Resolve Vercel↔GitHub OAuth connection (or formally commit to the manual-deploy workaround as standard practice)
-- **AuditShield P0 hardening** (separate change set in the AuditShield repos, NOT this repo): server-side admin authorization on every bot command and callback; authenticate or remove the public `/launch` endpoint; make the paid path (licence check → module → run) observably work end to end. Prerequisite for any resumed promotion — see AUDITSHIELD STATUS
 
 **P1:**
-- **After AuditShield P0 hardening:** owner end-to-end test of the paid flow on a clean Windows PC (also records real timings and Defender/SmartScreen behaviour); define a measurable validation window (demo-execution measurement, source attribution, owner-set keep/sunset criteria); refresh the stale giveaway package before any prize is delivered; correct the `/tools/auditshield` landing claims that the audit found false or misleading (a page-copy change — coordinate with DECISIONS #9, which limits crawl/indexing changes only)
+- **AuditShield P1 licensing/reliability (primary AuditShield task, separate repos — the P0 security phase is DONE):** (1) **primary:** a licence run must not be irreversibly consumed before the core module delivery succeeds; (2) CRM consistency — `runs` vs `runs_max`; (3) `runs_used` synchronization; (4) `converted` flag; (5) source attribution; (6) `/verify-license` GitHub-quota exposure. **After that:** owner end-to-end test of the paid flow on a clean Windows PC (also records real timings and Defender/SmartScreen behaviour); define a measurable validation window (demo-execution measurement, source attribution, owner-set keep/sunset criteria); refresh the stale giveaway package before any prize is delivered; correct the `/tools/auditshield` landing claims that the audit found false or misleading (a page-copy change — coordinate with DECISIONS #9, which limits crawl/indexing changes only). Promotion is not resumed before all of this
 - Decide what to do about the payment details still present in this public repo's git history (AuditShield payment details; redacted at HEAD only)
 - Check the first live odd-day standalone post (2026-09-27 middle slot): the `published.json` bot commit is labelled `[middle-standalone]`, `promo_index` advanced by 1, `engage_ab_index` did not move, and the published Telegram text contains no product/bot/price/CTA reference
 - **Evaluate the active Crawl Priority Internal-Link Experiment on 2026-10-08** (fresh GSC Crawled + Discovered exports; TEST vs CONTROL) — this is the primary NEXT ACTION, below
@@ -464,7 +474,7 @@ AuditShield is a separate product in two PRIVATE repos (`tenboy10b-sudo/audit-sh
 
 ## NEXT ACTION
 
-**Primary (actionable now): the AuditShield P0 hardening task** — a separate change set in the AuditShield repos, not part of this repo and not started by the containment change. Scope: server-side admin authorization on all bot commands/callbacks; authenticate or remove `/launch`; make the paid path verifiable end to end. Until that ships, the automated promotion stays paused (AUDITSHIELD STATUS). Immediately verify the first live odd-day standalone post on 2026-09-27 (BACKLOG P1).
+**Primary (actionable now): AuditShield P1 licensing/reliability** — a separate change set in the AuditShield repos (the P0 security phase is closed and verified; see AUDITSHIELD STATUS). **Primary P1:** a licence run must not be irreversibly consumed before the core module delivery succeeds (today `/verify-license` consumes the run before `/get-module`, and a failed delivery loses it). **Other known P1:** `runs` / `runs_max` CRM consistency; `runs_used` synchronization; the `converted` flag; source attribution; `/verify-license` GitHub-quota exposure; then an owner end-to-end test on a clean Windows PC. **Do not resume promotion yet** — it stays PAUSED until P1, the end-to-end test and a measurable validation window are done. Also verify the first live odd-day standalone Telegram post on 2026-09-27 (BACKLOG P1).
 
 **Time-gated tracks (nothing to do before their dates):**
 
