@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-26
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-BASE SHA (snapshot, not a live HEAD): 1ce57ef — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
+BASE SHA (snapshot, not a live HEAD): 3559983 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
 
 ## PROJECT
 
@@ -28,6 +28,7 @@ Telegram:
 - Channel: @cryptolock888
 - Autopost running continuously — 72 consecutive state commits confirmed 30.08.2026–22.09.2026, ~3/day (content/middle/extra), zero gaps
 - First subscriber-growth giveaway launched 30.08.2026 (AuditShield licenses, goal: 150 subscribers) — outcome not yet confirmed in this repo
+- **Automated AuditShield promotion PAUSED since 2026-09-26** (product/security P0 findings — see AUDITSHIELD STATUS). Odd-UTC-day `middle` slots now publish standalone Windows how-to posts; the 3 posts/day schedule and the even-day Telegram Poll Experiment are unchanged.
 
 TikTok:
 STATUS: real, verified data collection is live (Sandbox app, account `cryptolockua`). A real production collector run on 2026-09-25 returned 110 videos across 6 pages (`truncated: false`) and wrote the first daily analytics snapshot to the private `CryptoLock-analytics` repo (`tiktok/snapshots/2026/09/2026-09-25.json`). Per-video views/likes/comments/shares are being captured (111 videos in the latest 2026-09-26 snapshot); no performance conclusions have been drawn from them yet. A daily cron-job.org job (03:15 UTC) is configured and enabled and two scheduler test runs succeeded, but the first natural clock-triggered run is still awaiting verification. See TIKTOK STATUS.
@@ -71,7 +72,7 @@ These are explicitly separate systems — do not conflate them:
 - **GitHub repository status:** origin/main is healthy, linear history, receiving continuous automated commits from the Telegram bot.
 - **Vercel auto-deploy status:** BROKEN. `vercel git connect` fails with "Failed to connect tenboy10b-sudo/CryptoLock to project" — a recurring issue (6th confirmed occurrence) tied to a GitHub account OAuth-App flag. Last independently confirmed as broken: 2026-09-22 (this session).
 - **Manual deploy procedure:** `vercel --prod --yes` from the repo root — the established workaround used repeatedly throughout this project's history when auto-deploy is broken.
-- **Current production verification status:** production is current as of 2026-09-26 — the latest deployment is `dpl_AEfwg85byMR77KuMidkJiFVMZdqk` (a code-unchanged redeploy of commit `0670579`, run to load the rotated `TIKTOK_SCHEDULE_SECRET`; the scheduler-safe auth code itself shipped in commit `4f0f109`), aliased to `cryptolockua.com`. Every deploy since 2026-09-22 was done manually via `vercel --prod --yes` (auto-deploy remains broken, above), so the earlier "last production deploy was 2026-08-29 (`039d61c`), 24 days stale" statement (written 2026-09-22) is superseded — the code and config changes since then, including the entire TikTok pipeline, are live. Doc-only commits after that deploy (this one included) do not require a redeploy.
+- **Current production verification status:** production is current as of 2026-09-26 — the latest deployment is `dpl_34iYhpK32qjzuSJL2gG5G1TKaeME` (commit `3559983` — AuditShield-promotion pause in `pages/api/autopost.js`; status Ready, target production, aliased to `cryptolockua.com` and `www.cryptolockua.com`; verified 2026-09-26: site 200, `/api/autopost` returns 401 to unauthenticated requests). Previous production deployment: `dpl_AEfwg85byMR77KuMidkJiFVMZdqk` (a code-unchanged redeploy of commit `0670579`, run to load the rotated `TIKTOK_SCHEDULE_SECRET`; the scheduler-safe auth code itself shipped in commit `4f0f109`). Every deploy since 2026-09-22 was done manually via `vercel --prod --yes` (auto-deploy remains broken, above), so the earlier "last production deploy was 2026-08-29 (`039d61c`), 24 days stale" statement (written 2026-09-22) is superseded — the code and config changes since then, including the entire TikTok pipeline, are live. Doc-only commits after that deploy (this one included) do not require a redeploy.
 
 ## GSC STATUS
 
@@ -144,6 +145,14 @@ REASON: The local development clone was 72 bot-state commits behind origin/main.
 CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.json [...]`) continued uninterrupted, approximately 3 times daily, from 2026-08-30 through 2026-09-22 (the date of this entry), confirmed by inspecting `origin/main` directly.
 
 **Confirmed (not fixed) race condition:** in `pages/api/autopost.js`, the Telegram send call happens before the `published.json` GitHub write. Under a concurrent or retried invocation, this can result in two Telegram messages being sent while only one state update is persisted (the losing write fails on a GitHub SHA conflict and is silently dropped from the bot's own tracking). This is documented for awareness only — it has NOT been fixed as part of this session.
+
+**AuditShield promotion PAUSED (2026-09-26, commit `3559983`, deployment `dpl_34iYhpK32qjzuSJL2gG5G1TKaeME`):**
+- `type=middle` alternates by UTC day-of-month parity. **EVEN days:** `middle-engage` — the Telegram Poll Experiment A/B (poll ↔ text via `engage_ab_index`) — **completely unchanged**. **ODD days:** was the AuditShield promo post; now a **standalone practical Windows how-to** generated from the same 22-topic list (`PROMO_MODULES`, only the topic and "when it matters" text reach the prompt). Same slot, same schedule, same lock → pending → send → finalize safety path.
+- No product name, bot handle, price, payment or purchase/demo/licence CTA is left anywhere in the generation path (`PRODUCT_BASE` and `promptPromo` were removed). The only remaining mentions of the product in `pages/api/autopost.js` are code comments.
+- **Counters:** `promo_index` is kept as the topic-rotation counter (75 → 76 on the next odd day; no new persistent state). `engage_ab_index`, `engage_index`, `extra_index`, `count` and `poll_recent_topics` are not touched by odd-day posts. `published.json` was not edited by hand.
+- **`type=promo`** (standalone AuditShield ad; its cron was already documented as inactive) now returns `{ok:true, skipped:true, reason:'promo_paused'}` before any GitHub/Anthropic/Telegram call. It must not fall through to the article path, so it is handled explicitly.
+- **Traceability:** odd-day bot commits are now labelled `bot: update published.json [middle-standalone]` (previously `[middle-promo]`), so the switchover is visible in git history for the 2026-10-08 evaluation.
+- Verified locally with a fully mocked differential test (original `HEAD` vs new code, 40/40 assertions): even-day transcripts byte-identical, poll/text alternation identical over an 8-day sequence, all 22 topics × 2 rotations product-free, `type=promo` makes zero external calls. No real Telegram send occurred during testing. The first live odd-day cycle (next: 2026-09-27) is the real-world confirmation — see NEXT ACTION.
 
 ## TIKTOK STATUS
 
@@ -310,9 +319,30 @@ Still covered by local tests only: the GitHub write-conflict retry.
 
 **NEXT ACTION:** verify the first natural scheduled execution after 03:15 UTC on 2026-09-27: (1) cron-job.org history shows a successful automatic execution; (2) the private repo contains `tiktok/snapshots/2026/09/2026-09-27.json`; (3) its `collected_at` corresponds to the scheduled run (≈03:15 UTC); (4) the snapshot schema and counts are valid. Only after that can the TikTok daily analytics pipeline be marked fully autonomous and VERIFIED. Do not change the analytics schema or storage architecture unless evidence requires it.
 
+## AUDITSHIELD STATUS
+
+**STATUS: PAUSE PROMOTION** (decided 2026-09-26). **Not SUNSET.**
+
+AuditShield is a separate product in two PRIVATE repos (`tenboy10b-sudo/audit-shield-bot`, `tenboy10b-sudo/security-audit-private`; Telegram bot `@AuditShield_01_Bot`, Railway). This repo only promotes it (Telegram autopost, `/tools/auditshield`, `/links`) and used its licences as the giveaway prize. The product itself was NOT changed by this pause.
+
+**Reason:** the full read-only product/security audit of 2026-09-26 (bot `811f271`, private repo `20b2098`) found P0 security/reliability problems and **no validated real paid demand**.
+
+**FACTS**
+- **Real confirmed purchases: 0. Real confirmed revenue: $0.** The May 2026 buyer/payment/licence records were **owner tests** (owner-confirmed); the "first real purchase" wording in older AuditShield docs is wrong. Do not use those records as demand evidence or for demo→paid conversion.
+- Demo interest: 18 unique demo accounts in the CRM over ~4.5 months (about 14–17 plausibly external; 12 of the 18 date from the May ad push, one new account since mid-July). Actual demo *executions* are **unknown** — the demo script has no telemetry, so "unknown", not "zero".
+- The paid path (licence check → module fetch → run) has **not completed a real end-to-end run in production** since the 2026-09-23 proxy re-architecture; older buyers reportedly received a non-functional launcher.
+- P0 findings (all in the AuditShield bot, none fixed yet): admin commands `/clients` `/find` `/stats` `/note` and admin callbacks have no admin check; `/launch` on Railway is unauthenticated; the paid path is unverified in production. P1 highlights: a licence run is consumed before the module is delivered; CRM analytics are unreliable (`runs` vs `runs_max`, `converted` never set, source never saved); the landing claim "no data leaves your PC / fully local" is false for the paid version (licence check + telemetry + code download; audit/report data itself never leaves the PC).
+- 3 giveaway licences were created 2026-08-30 and none had been used as of the audit; the giveaway package still contains a stale launcher.
+
+**Public-repo hygiene (2026-09-26):** AuditShield payment details were present in one line of this PUBLIC repo's `DOCUMENTATION.md`; they were redacted from current HEAD (commit `3559983`). They **remain in git history** — no history rewrite and no rotation was done; that is an owner decision.
+
+**What was paused (this repo):** automated Telegram AuditShield promotion (see TELEGRAM STATUS). **Not touched:** the website page `/tools/auditshield` and `/links` still link to the bot, and its landing claims are not yet corrected — separate task.
+
+**Next state transition** (PAUSE → resume/KEEP, or → SUNSET) requires, in order: (1) AuditShield P0 hardening, (2) an owner end-to-end test of the paid flow on a clean Windows PC, (3) a measurable validation window (demo-execution measurement + source attribution + owner-set keep/sunset criteria). Until then, no new promotion.
+
 ## MONETIZATION
 
-- Existing products: AuditShield (Windows security audit tool, sold via a separate Telegram bot/repo, `security-audit-private` + `audit-shield-bot`) — used as the prize mechanism for the CryptoLock channel's first giveaway
+- Existing products: AuditShield (Windows security audit tool, sold via a separate Telegram bot/repo, `security-audit-private` + `audit-shield-bot`) — **promotion paused, see AUDITSHIELD STATUS**; it was used as the prize mechanism for the CryptoLock channel's first giveaway
 - Revenue status: unknown/not tracked in this repository
 - Open questions: no monetization mechanism exists yet directly on cryptolockua.com itself (site currently has no ads/paid product of its own; `adsenseId` in `site.config.js` is empty)
 
@@ -320,6 +350,7 @@ Still covered by local tests only: the GitHub write-conflict retry.
 
 **P0:**
 - Vercel↔GitHub auto-deploy connection broken (OAuth account flag, recurring — 6th occurrence)
+- **AuditShield bot P0 findings (separate repos, NOT fixed; promotion paused for this reason — see AUDITSHIELD STATUS):** unauthenticated admin commands/callbacks, unauthenticated `/launch`, paid path unverified in production
 
 **P1:**
 - Race condition in `pages/api/autopost.js`: Telegram send precedes GitHub state write, no idempotency key, no lock
@@ -332,6 +363,8 @@ Still covered by local tests only: the GitHub write-conflict retry.
   - **Literal SearchAction placeholder crawled:** `/search?q={search_term_string}` was crawled as a real URL. The WebSite `SearchAction` JSON-LD emits that template (`components/Layout.js:192`, `pages/index.js:70`).
   - **Redirect-rule scope gap:** a mojibake-encoded `/en/yak-nalashtuvanty-dvokrok…` 2FA URL is not covered by the redirect rules (they only handle its `/uk/` variant) and 404s; it is one of the 2 NONEXISTENT rows in the Crawled export.
   - **5 existing tool pages absent from the sitemap:** `/tools/base64`, `/tools/hash`, `/tools/ip-info`, `/tools/port-checker`, `/tools/regex`.
+
+**Public git history still contains AuditShield payment details (found 2026-09-26; redacted from HEAD only):** the values remain retrievable from earlier commits of this PUBLIC repo. No history rewrite or rotation has been performed — owner decision pending (the details are also shown to customers by the bot, so this is a privacy/linkability question rather than a credential leak).
 
 **Security note (local hygiene, not a production issue):** the local `.claude/settings.local.json` permission cache has held a plaintext secret (`AUTOPOST_SECRET`) in a cached command string. It was never committed to git and is now git-ignored (see `.gitignore`). No rotation performed as part of documenting this — that remains a separate decision for whoever owns the secret.
 
@@ -350,6 +383,7 @@ Still covered by local tests only: the GitHub write-conflict retry.
 7. Significant completed work must exist in Git history and documentation, not only in AI chat history.
 8. Every significant implementation must end with the full pipeline: **implementation → test → deploy → production verify → documentation → docs commit → push**. A task is not complete if it stops before the documentation/docs-commit/push steps. This exists so a new Claude/GPT session — including a different account — can reconstruct current project state from GitHub alone, without any prior chat history.
 9. **No new crawl/indexing SEO change before 2026-10-08 unless a P0 production/indexing issue appears** (decided 2026-09-26 after the GSC Indexing Backlog Classification Audit). Reason: preserve the validity of the running Crawl Priority Internal-Link Experiment and avoid mixing interventions, so any TEST-vs-CONTROL movement can be attributed. The audit's small hygiene findings (KNOWN BUGS P2) do not qualify as P0 and wait for this window to close.
+10. **AuditShield: PAUSE PROMOTION, NOT SUNSET** (decided 2026-09-26 after the AuditShield product/security audit). Automated promotion stops now; the product is neither closed nor endorsed. Resuming requires P0 hardening, an owner end-to-end test and a measurable validation window (AUDITSHIELD STATUS). The pause was implemented as the smallest change that keeps the Telegram schedule intact and leaves the Poll Experiment's even-day branch untouched; the resulting odd-day change is a recorded confounder (ACTIVE EXPERIMENTS).
 
 ## ACTIVE EXPERIMENTS
 
@@ -381,6 +415,7 @@ Still covered by local tests only: the GitHub write-conflict retry.
   **BASELINE** (from the 30-day Telegram performance audit completed the same day): 93 posts, median views 25, only 3 of 93 posts (all `middle-engage`) were real Telegram polls, only 9.7% of all posts received any reaction at all, and engagement was overwhelmingly concentrated in those 3 poll posts (poll voter counts 3/6/4, vs. a max of 2 reactions on any text post) — full breakdown and per-format medians in this session's transcript, not duplicated here.
   **INTERVENTION:** on `middle-engage` days only (unchanged 3-posts/day schedule, unchanged content/extra/middle structure, unchanged AuditShield-promo and article-post frequency), deterministically alternate poll (A) → text (B) → poll → text..., tracked by a new `engage_ab_index` counter that only advances on confirmed Telegram-send + finalize (same lifecycle as every other reliability-guard counter, so a failed/retried cycle never double-advances it or skips a turn). Poll topics come from a new dedicated prompt — practical Windows/security/admin topic, 2-4 options, no clickbait, no article promotion disguised as a poll — with its own rolling anti-repeat list (`poll_recent_topics`, last 6). Text-turn style selection draws from the existing `ENGAGE_STYLES` minus the 4 that already triggered a poll/quiz, so a "text turn" can never accidentally become a poll. Standalone `type=engage`, `extra`, `middle-promo`, `content`, the reliability guard, cron schedule, and the website/SEO experiment from above are all untouched — verified via a 22/22 local test suite against the real handler code.
   **SUCCESS METRICS (compare after 14 days, poll turns vs. text turns):** median views, median votes/reactions, % of posts with any engagement at all. Not judged by views alone, per the explicit instruction that prompted this experiment.
+  **ENVIRONMENT CHANGE / CONFOUNDER (recorded 2026-09-26; experiment implementation and 2026-10-08 decision date UNCHANGED):** from 2026-09-26 (commit `3559983`, deployment `dpl_34iYhpK32qjzuSJL2gG5G1TKaeME`) automated AuditShield promotion was paused for product/security reasons unrelated to this experiment. **Odd-UTC-day `middle` posts changed from AuditShield promo → standalone practical Windows how-to posts.** The even-day `middle-engage` A/B branch, `engage_ab_index` parity and poll/text alternation are identical to before (verified by a differential test). The channel's overall content mix nevertheless changed part-way through the 14-day window, so this experiment is **no longer perfectly isolated**: the final 2026-10-08 evaluation must state this caveat, treat any channel-level metric (subscriber trend, overall reaction rate, share of posts with any engagement) as affected by a step change, and not attribute such movement to the poll/text intervention alone. The poll-vs-text comparison itself uses only even-day `middle-engage` posts, whose construction is unchanged. Post-change odd-day posts are identifiable in git history by the commit label `bot: update published.json [middle-standalone]` (earlier ones: `[middle-promo]`).
 
 ## COMPLETED WORK
 
@@ -403,13 +438,18 @@ Still covered by local tests only: the GitHub write-conflict retry.
 - TikTok token persistence to Upstash Redis (`b8193db`), autonomous collector with proactive token refresh, locking and pagination (`5b0b073`), token-lifecycle validation hardening including an `open_id`-continuity bug fix (`474acba`) — all deployed 2026-09-24 and verified by real production runs
 - Private TikTok analytics storage: separate PRIVATE repo `tenboy10b-sudo/CryptoLock-analytics` created (2026-09-24), dedicated `ANALYTICS_GITHUB_TOKEN` preflight-verified (2026-09-25), and an idempotent daily snapshot writer (`c6f9fd2`) verified by a real run — real token refresh and the first snapshot (110 videos, 6 pages) confirmed 2026-09-25 (DOCUMENTATION.md продовження 65-69)
 - **GSC Indexing Backlog Classification Audit (read-only, 2026-09-26) — VERIFIED.** All 828 non-indexed URLs from the Crawled (650) and Discovered (178) exports classified against the current repo and re-checked against live production responses; findings, limitations and unverified hypotheses recorded under GSC STATUS above and in DOCUMENTATION.md продовження 73. Read-only: no code, SEO, sitemap, redirect, robots, content, deployment, GSC or experiment change. No fresh "indexed" total was obtained.
+- **AuditShield promotion containment (2026-09-26, commit `3559983`, deployment `dpl_34iYhpK32qjzuSJL2gG5G1TKaeME`):** automated AuditShield promotion paused — odd-day `middle` slots now publish standalone Windows how-tos, `type=promo` is a no-op, the even-day Poll Experiment branch and its counters are untouched; AuditShield payment details redacted from current HEAD of this public repo (history not rewritten). Verified by a mocked 40-assertion differential test (no Telegram send) and a green `npm run build`; production deployment Ready. The AuditShield product itself was not changed. See AUDITSHIELD STATUS, TELEGRAM STATUS and DOCUMENTATION.md продовження 74.
 
 ## BACKLOG
 
 **P0:**
 - Resolve Vercel↔GitHub OAuth connection (or formally commit to the manual-deploy workaround as standard practice)
+- **AuditShield P0 hardening** (separate change set in the AuditShield repos, NOT this repo): server-side admin authorization on every bot command and callback; authenticate or remove the public `/launch` endpoint; make the paid path (licence check → module → run) observably work end to end. Prerequisite for any resumed promotion — see AUDITSHIELD STATUS
 
 **P1:**
+- **After AuditShield P0 hardening:** owner end-to-end test of the paid flow on a clean Windows PC (also records real timings and Defender/SmartScreen behaviour); define a measurable validation window (demo-execution measurement, source attribution, owner-set keep/sunset criteria); refresh the stale giveaway package before any prize is delivered; correct the `/tools/auditshield` landing claims that the audit found false or misleading (a page-copy change — coordinate with DECISIONS #9, which limits crawl/indexing changes only)
+- Decide what to do about the payment details still present in this public repo's git history (AuditShield payment details; redacted at HEAD only)
+- Check the first live odd-day standalone post (2026-09-27 middle slot): the `published.json` bot commit is labelled `[middle-standalone]`, `promo_index` advanced by 1, `engage_ab_index` did not move, and the published Telegram text contains no product/bot/price/CTA reference
 - **Evaluate the active Crawl Priority Internal-Link Experiment on 2026-10-08** (fresh GSC Crawled + Discovered exports; TEST vs CONTROL) — this is the primary NEXT ACTION, below
 - **Investigate the 462 current, indexable backlog URLs after a fresh GSC export** (441 articles + 13 tools + 8 other pages in the 2026-09-21 exports) — only once the experiment window has closed; do not start before 2026-10-08 (DECISIONS #9)
 - **Review internal linking / content architecture if TEST does not outperform CONTROL** — the audit's sparse body-link graph is a hypothesis, not yet a demonstrated cause
@@ -424,6 +464,12 @@ Still covered by local tests only: the GitHub write-conflict retry.
 
 ## NEXT ACTION
 
-**SEO / indexing track (primary): wait for the Crawl Priority Experiment to complete on 2026-10-08.** Then: (1) obtain fresh GSC "Crawled – currently not indexed" and "Discovered – currently not indexed" exports (plus a current indexed total); (2) compare the 5 TEST URLs against the 5 CONTROL URLs against the success criteria above; (3) inspect crawl movement across the wider backlog (including whether the 462 current indexable URLs have moved out of Discovered and whether the legacy redirect/fallback/tag rows have dropped after the 2026-09-23 fix); (4) decide whether to **scale the crawl-priority mechanism** or to **test stronger internal-linking / content architecture**. This is **not** "fix SEO now": no new crawl/indexing SEO change before 2026-10-08 unless a P0 production/indexing issue appears (DECISIONS #9). The June-13 traffic-collapse cause remains a separate, unresolved question.
+**Primary (actionable now): the AuditShield P0 hardening task** — a separate change set in the AuditShield repos, not part of this repo and not started by the containment change. Scope: server-side admin authorization on all bot commands/callbacks; authenticate or remove `/launch`; make the paid path verifiable end to end. Until that ships, the automated promotion stays paused (AUDITSHIELD STATUS). Immediately verify the first live odd-day standalone post on 2026-09-27 (BACKLOG P1).
+
+**Time-gated tracks (nothing to do before their dates):**
+
+**Telegram Poll Experiment: evaluate on 2026-10-08** — decision date and implementation unchanged; the evaluation must include the environment-change caveat (odd-day posts changed from AuditShield promo to standalone how-tos on 2026-09-26).
+
+**SEO / indexing track: wait for the Crawl Priority Experiment to complete on 2026-10-08.** Then: (1) obtain fresh GSC "Crawled – currently not indexed" and "Discovered – currently not indexed" exports (plus a current indexed total); (2) compare the 5 TEST URLs against the 5 CONTROL URLs against the success criteria above; (3) inspect crawl movement across the wider backlog (including whether the 462 current indexable URLs have moved out of Discovered and whether the legacy redirect/fallback/tag rows have dropped after the 2026-09-23 fix); (4) decide whether to **scale the crawl-priority mechanism** or to **test stronger internal-linking / content architecture**. This is **not** "fix SEO now": no new crawl/indexing SEO change before 2026-10-08 unless a P0 production/indexing issue appears (DECISIONS #9). The June-13 traffic-collapse cause remains a separate, unresolved question.
 
 **Parallel operational track (TikTok, unrelated to SEO):** verify the first natural scheduled execution of the TikTok daily collector, after 03:15 UTC on 2026-09-27: cron-job.org history shows a successful automatic run; the private repo contains `tiktok/snapshots/2026/09/2026-09-27.json` with a `collected_at` matching the scheduled time and a valid schema/counts. The collector, token refresh, private snapshot writer, scheduler-safe auth, and the create and same-day-update paths are all VERIFIED live (two scheduler test runs on 2026-09-26); the cron job is configured and enabled. What is missing is a run triggered by the actual clock — only then can the pipeline be marked fully autonomous. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
