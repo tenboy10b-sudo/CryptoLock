@@ -1,6 +1,6 @@
 // Автопостинг в Telegram — заміна content.yml/middle.yml/extra.yml/engage_*.yml/promo.yml
 // Викликається зовнішнім cron (cron-job.org) замість GitHub Actions (заблоковано).
-// GET /api/autopost?type=content|middle|extra|engage|promo&secret=...
+// GET /api/autopost?type=content|middle|extra|engage&secret=...  (type=promo — призупинено, no-op)
 import { randomUUID } from 'crypto'
 import { getAllPosts } from '../../lib/posts'
 
@@ -9,13 +9,10 @@ export const config = { maxDuration: 60 }
 const SITE_URL = 'https://cryptolockua.com'
 const LOCK_TTL_MS = 15 * 60 * 1000 // 15 хвилин — після цього лок вважається "мертвим" і може бути перезахоплений
 
-const PRODUCT_BASE = {
-  name: 'AuditShield — Windows Security Audit Tool',
-  description: 'Програма яка аналізує Windows ПК по 22 напрямках і видає детальний HTML-звіт з оцінкою ризику за 10 хвилин.',
-  report: 'Детальний HTML-звіт з кольоровими індикаторами: зелений (норма), жовтий (увага), червоний (загроза). Зберігається локально.',
-  pricing: 'Старт — 3 запуски | $9\nБазовий — 5 запусків | $13\nПро — 10 запусків | $22\nОплата Monobank або USDT',
-}
-
+// AuditShield-просування ПРИЗУПИНЕНО з 2026-09-26 (верифікований аудит продукту/безпеки).
+// Список лишився лише як джерело ТЕМ для самостійних практичних постів (odd-day middle):
+// у промпт потрапляють тільки `module` і `when`. `promo_index` збережено як лічильник
+// ротації цих тем, щоб не вводити новий persistent state.
 const PROMO_MODULES = [
   { module: 'USB-історія', what: 'Сканує реєстр Windows і витягує повну історію всіх USB-пристроїв що коли-небудь підключались. Навіть якщо флешку підключали рік тому — слід залишається.', shows: 'Назва і модель пристрою, серійний номер (VID/PID), дати першого і останнього підключення, кількість підключень, тип пристрою.', when: 'Після ремонту ПК, при підозрі що співробітник виносить дані, після того як хтось мав фізичний доступ до комп\'ютера.' },
   { module: 'Автозапуск', what: 'Перевіряє всі місця де програми можуть прописатись на автоматичний запуск разом з Windows.', shows: 'Назва програми, шлях до файлу, цифровий підпис, дата додавання, чи є програма легітимною.', when: 'Шкідливе ПЗ майже завжди прописується в автозапуск. Якщо там є незнайомі записи — це серйозний сигнал.' },
@@ -423,29 +420,24 @@ function promptContent(article, includeLink) {
 Стиль: дружній, технічний, як від досвідченого системного адміністратора.`
 }
 
-function promptPromo(m) {
-  return `Ти копірайтер який пише про реальний продукт для Telegram каналу про Windows і безпеку.
-Продукт: ${PRODUCT_BASE.name}
-Що робить: ${PRODUCT_BASE.description}
-Звіт: ${PRODUCT_BASE.report}
-Ціни: ${PRODUCT_BASE.pricing}
-Модуль: ${m.module}
-Що перевіряє: ${m.what}
-Що показує в звіті: ${m.shows}
-Коли особливо важливо: ${m.when}
+function promptStandaloneTopic(m) {
+  return `Ти досвідчений адміністратор Telegram каналу про Windows і кібербезпеку.
+Канал CryptoLock (@cryptolock888) — практичні поради про Windows для українців.
+Тема посту: ${m.module}
+Коли це особливо важливо: ${m.when}
+Напиши самостійний практичний пост: як користувач може сам перевірити це у Windows вбудованими засобами (Параметри, Диспетчер завдань, PowerShell, CMD, Перегляд подій тощо) і як зрозуміти результат.
 Структура посту:
-1. Емодзі + заголовок про цей модуль
-2. Що саме перевіряє цей модуль і як це працює технічно
-3. Що конкретно побачиш у звіті
-4. 2-3 конкретні ситуації коли ця інформація критично важлива
-5. Заклик спробувати демо: @AuditShield\\_01\\_Bot
+1. Емодзі + короткий заголовок
+2. Що саме перевіряємо і навіщо
+3. 3-5 конкретних кроків або команд (команди в окремих рядках)
+4. На що звернути увагу в результаті — ознаки, що щось не так
+5. Що робити, якщо знайшов підозрілий запис
 Вимоги:
 - Українська мова
 - Довжина: 180-250 слів
-- Пиши про реальний функціонал — конкретно і технічно
-- Без вигаданих персонажів і історій
-- В кінці хештеги: #безпека #windows #аудит #AuditShield
-- Посилання пиши ТІЛЬКИ так: @AuditShield\\_01\\_Bot`
+- Конкретно і технічно, без води; без вигаданих персонажів і історій
+- НЕ рекламуй жодних продуктів, сервісів чи ботів; без цін, демо, ліцензій, закликів щось купити чи спробувати, без посилань
+- В кінці 2-3 хештеги (#windows #безпека #tips)`
 }
 
 function promptExtra(style, recentTopics = []) {
@@ -580,13 +572,16 @@ async function generateForType(type, published, anthropicKey) {
         commitMsg: 'bot: update published.json [middle-engage]',
       }
     }
+    // Odd-day middle: раніше AuditShield-промо (призупинено 2026-09-26). Слот і розклад
+    // зберігаємо, але публікуємо самостійний практичний пост без згадки продукту.
+    // engage_ab_index тут навмисно НЕ чіпаємо — парність Poll Experiment лишається як є.
     const idx = published.promo_index
-    const module = PROMO_MODULES[idx % PROMO_MODULES.length]
+    const topic = PROMO_MODULES[idx % PROMO_MODULES.length]
     return {
-      text: await generateText(anthropicKey, promptPromo(module), 700), poll: undefined,
-      identifier: `promo-module:${module.module}`,
+      text: await generateText(anthropicKey, promptStandaloneTopic(topic), 700), poll: undefined,
+      identifier: `standalone-topic:${topic.module}`,
       finalizeFields: { promo_index: idx + 1 },
-      commitMsg: 'bot: update published.json [middle-promo]',
+      commitMsg: 'bot: update published.json [middle-standalone]',
     }
   }
 
@@ -619,17 +614,6 @@ async function generateForType(type, published, anthropicKey) {
     }
   }
 
-  if (type === 'promo') {
-    const idx = published.promo_index
-    const module = PROMO_MODULES[idx % PROMO_MODULES.length]
-    return {
-      text: await generateText(anthropicKey, promptPromo(module), 700), poll: undefined,
-      identifier: `promo-module:${module.module}`,
-      finalizeFields: { promo_index: idx + 1 },
-      commitMsg: 'bot: update published.json [promo]',
-    }
-  }
-
   // type === 'content' (default)
   const ukPosts = getAllPosts('uk').map(p => ({ slug: p.slug, title: p.title || '', description: p.description || '', lang: 'uk' }))
   const enPosts = getAllPosts('en').map(p => ({ slug: p.slug, title: p.title || '', description: p.description || '', lang: 'en' }))
@@ -659,6 +643,14 @@ export default async function handler(req, res) {
 
   if (!process.env.AUTOPOST_SECRET || secret !== process.env.AUTOPOST_SECRET) {
     return res.status(401).json({ error: 'unauthorized' })
+  }
+
+  // Окремий type=promo (AuditShield-реклама) призупинено з 2026-09-26. Повертаємо skip ДО
+  // будь-якого GitHub/Anthropic/Telegram виклику — інакше невідомий type впав би в гілку
+  // 'content' за замовчуванням і просунув би лічильники статей.
+  if (type === 'promo') {
+    log('promo_paused_skip', { execution_id: executionId, type })
+    return res.status(200).json({ ok: true, skipped: true, reason: 'promo_paused' })
   }
 
   const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN
