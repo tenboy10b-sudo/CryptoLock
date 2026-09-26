@@ -4082,3 +4082,36 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** реалізувати і провалідувати щоденне заплановане збирання (once-daily). Схему аналітики та архітектуру сховища не змінювати, доки цього не вимагатимуть докази.
 
 ---
+
+### Сесія 12 (продовження 70) — Scheduler-safe режим автентифікації TikTok collector'а
+
+**DATE:** 2026-09-26
+
+**PROBLEM:** щоб запускати collector раз на добу через сторонній планувальник (cron-job.org), потрібен окремий credential з мінімальними правами і компактна відповідь. Існуюча успішна відповідь містить повний масив `videos` (назви, описи, share-URL), а cron-job.org зберігає тіла відповідей в історії виконань — тобто аналітичні дані потрапляли б у сторонній сервіс. Використовувати для цього ручний `TIKTOK_COLLECT_SECRET` теж небажано: один секрет з адмін-роллю не слід віддавати планувальнику.
+
+**BASELINE:** локальний `main` був позаду `origin/main` на 3 рутинні коміти Telegram-бота (`published.json`) — перевірено, що вони не зачіпають TikTok-файли, fast-forward до `975b208`. Власник акаунту вже додав у Vercel Production нову змінну `TIKTOK_SCHEDULE_SECRET` (підтверджено лише за НАЗВОЮ через `vercel env ls`, значення не читалось).
+
+**DECISION:** зберегти єдиний endpoint `POST /api/tiktok/collect` і єдиний pipeline; дозволити автентифікацію двома окремими Bearer-credentials, змінюючи лише (1) який credential прийнято і (2) форму успішної відповіді. Жодного дублювання pipeline у другому route.
+
+**IMPLEMENTATION:** змінено лише `pages/api/tiktok/collect.js` (+37/−11).
+- **Auth:** наданий Bearer порівнюється в константний час з кожним налаштованим секретом (обидва порівняння виконуються завжди, без short-circuit між ними). Немає жодного налаштованого секрету → 500 `server_misconfigured`. Обидва налаштовані з ОДНАКОВИМ значенням → 500 (credentials задумані з різними ролями, тому fail closed навіть для формально валідного запиту). Відсутність одного не блокує інший. Немає збігу → 401. Секрет — лише заголовок `Authorization: Bearer`, ніколи query/body/cookie.
+- **manual** (`TIKTOK_COLLECT_SECRET`): відповідь БЕЗ змін — ті самі ключі в тому самому порядку, включно з `videos`.
+- **schedule** (`TIKTOK_SCHEDULE_SECRET`): той самий pipeline (Redis lock → load token → refresh за потреби → persist оновленого токена → `video.list` пагінація → snapshot writer), але успішна відповідь — лише `ok`, `token_refreshed`, `videos_returned`, `pages_fetched`, `truncated`, `collected_at`, `analytics_snapshot {status, path}`. Жодних videos/назв/описів/share-URL/токенів/`open_id`. Снапшот у приватному репозиторії ідентичний в обох режимах. Відповіді про помилки однакові в обох режимах.
+- Логи отримали безпечне поле `auth_mode` (`manual`/`schedule`) — ніколи секрет.
+- `login.js`, `callback.js`, усі `lib/*`, схема й writer аналітики, ключі Redis — без змін.
+
+**TESTS:** 93/93 локальних асертів: повна матриця auth (прийняття обох секретів; відхилення невірного/відсутнього/некоректного Bearer — `Bearer`, `Bearer `, `Basic …`, `Token …`, без префікса, нижній регістр `bearer`; відсутні обидві змінні → 500; лише manual або лише schedule налаштований → працює відповідний, чужий → 401; однакові значення → 500 навіть з валідним Bearer; секрет через query/body/cookie → 401 без жодних зовнішніх викликів), збереження manual-відповіді (ключі й порядок), schedule-відповідь (без `videos`; ключі рівно компактний набір; сентинел-рядки з назв/описів/URL відсутні у відповіді; метадані збігаються з manual; снапшот ідентичний manual і все ще містить повні відео), а також регресії lock/refresh/persist/TikTok-збій/збій снапшота/звільнення lock/пагінація/create-update — виконані в ОБОХ режимах. Додатково підтверджено, що нові тести ПАДАЮТЬ проти старого `collect.js` (тобто вони не вакуумні). `npm run build` — успішно.
+
+**DEPLOYMENT:** `vercel --prod --yes`, `dpl_E5SQU7yaCnkiL5Pkr2qE3kqLFSfL`, аліас `cryptolockua.com`. Цей деплой водночас активував уже доданий у Production `TIKTOK_SCHEDULE_SECRET`.
+
+**SECURITY:** значення `TIKTOK_SCHEDULE_SECRET` і `TIKTOK_COLLECT_SECRET` не читались, не виводились, не логувались і не зберігаються у Git/документації; безпечні перевірки використовували лише свідомо неправильний Bearer.
+
+**RESULT:** безпечні перевірки в продакшн: `GET /api/tiktok/collect` → 405, `POST` без `Authorization` → 401, `POST` з явно невірним Bearer → 401, `/tiktok-connect` → 200; обидві НАЗВИ змінних (`TIKTOK_SCHEDULE_SECRET`, `TIKTOK_COLLECT_SECRET`) присутні для Production. Те, що невірний Bearer дав 401, а не 500, додатково свідчить: у продакшн налаштований щонайменше один секрет і два секрети НЕ однакові. **Справжній автентифікований виклик collector'а НЕ виконувався, снапшот НЕ створювався й НЕ оновлювався.**
+
+**STATUS:** scheduler-safe collector auth — **IMPLEMENTED + DEPLOYED**. cron-job.org розклад — **NOT CONFIGURED YET**. Реальний виклик зі schedule-секретом — **NOT YET VERIFIED**. Автоматичне заплановане виконання — **NOT YET VERIFIED**.
+
+**COMMIT SHA:** `4f0f109`
+
+**FOLLOW-UP:** налаштувати cron-job.org раз на добу (Bearer `TIKTOK_SCHEDULE_SECRET`), потім виконати контрольований "Run now". Слід пам'ятати: перший запуск того ж UTC-дня, що й уже наявний снапшот, буде першою живою перевіркою шляху `updated` (створення вже перевірене живцем, оновлення — лише локальними тестами).
+
+---

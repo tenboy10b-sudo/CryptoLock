@@ -1,8 +1,8 @@
 # CryptoLock Project State
 
-LAST UPDATED: 2026-09-25
+LAST UPDATED: 2026-09-26
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-BASE SHA (snapshot, not a live HEAD): ee5be10 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
+BASE SHA (snapshot, not a live HEAD): 4f0f109 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
 
 ## PROJECT
 
@@ -70,7 +70,7 @@ These are explicitly separate systems — do not conflate them:
 - **GitHub repository status:** origin/main is healthy, linear history, receiving continuous automated commits from the Telegram bot.
 - **Vercel auto-deploy status:** BROKEN. `vercel git connect` fails with "Failed to connect tenboy10b-sudo/CryptoLock to project" — a recurring issue (6th confirmed occurrence) tied to a GitHub account OAuth-App flag. Last independently confirmed as broken: 2026-09-22 (this session).
 - **Manual deploy procedure:** `vercel --prod --yes` from the repo root — the established workaround used repeatedly throughout this project's history when auto-deploy is broken.
-- **Current production verification status:** production is current as of 2026-09-25 — the latest deployment is `dpl_EcDVgjAK7hsQRFCV6or5RxmZ2V6Z` (redeploy of commit `4205546` after the `TIKTOK_COLLECT_SECRET` rotation), aliased to `cryptolockua.com`. Every deploy since 2026-09-22 was done manually via `vercel --prod --yes` (auto-deploy remains broken, above), so the earlier "last production deploy was 2026-08-29 (`039d61c`), 24 days stale" statement (written 2026-09-22) is superseded — the code and config changes since then, including the entire TikTok pipeline, are live. Doc-only commits after that deploy (this one included) do not require a redeploy.
+- **Current production verification status:** production is current as of 2026-09-26 — the latest deployment is `dpl_E5SQU7yaCnkiL5Pkr2qE3kqLFSfL` (commit `4f0f109`, the scheduler-safe collector auth mode), aliased to `cryptolockua.com`. Every deploy since 2026-09-22 was done manually via `vercel --prod --yes` (auto-deploy remains broken, above), so the earlier "last production deploy was 2026-08-29 (`039d61c`), 24 days stale" statement (written 2026-09-22) is superseded — the code and config changes since then, including the entire TikTok pipeline, are live. Doc-only commits after that deploy (this one included) do not require a redeploy.
 
 ## GSC STATUS
 
@@ -114,14 +114,14 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 - Domain verified
 - Login Kit enabled
 - Scopes: `user.info.basic`, `video.list`
-- Vercel Production env vars present (**names only, values never written here**): `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REDIRECT_URI` (OAuth); `TIKTOK_COLLECT_SECRET` (collector Bearer auth); `KV_REST_API_URL`, `KV_REST_API_TOKEN` (used), plus `KV_REST_API_READ_ONLY_TOKEN`, `KV_URL`, `REDIS_URL` (auto-provisioned, unused) for Upstash Redis; `ANALYTICS_GITHUB_TOKEN` (private analytics repo writer). The older `GITHUB_TOKEN` is NOT used for analytics.
+- Vercel Production env vars present (**names only, values never written here**): `TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_REDIRECT_URI` (OAuth); `TIKTOK_COLLECT_SECRET` (collector Bearer auth, manual/admin mode) and `TIKTOK_SCHEDULE_SECRET` (collector Bearer auth, scheduler mode — a separate credential); `KV_REST_API_URL`, `KV_REST_API_TOKEN` (used), plus `KV_REST_API_READ_ONLY_TOKEN`, `KV_URL`, `REDIS_URL` (auto-provisioned, unused) for Upstash Redis; `ANALYTICS_GITHUB_TOKEN` (private analytics repo writer). The older `GITHUB_TOKEN` is NOT used for analytics.
 
 **What exists in this repo (implemented and deployed 2026-09-24/25):**
 - `/terms` — public Terms of Service page, live, required alongside `/privacy` for TikTok Developer app review (see COMPLETED WORK, commit `9acd92f`)
 - `/tiktok-connect` — temporary internal test route (`noindex,nofollow`, not in nav/footer/sitemap) — **still exists, still temporary**, has NOT been promoted to a permanent feature
 - `/api/tiktok/login` — OAuth start: random CSRF state → Secure/HttpOnly/SameSite=Lax cookie → redirect to TikTok's real authorize screen
 - `/api/tiktok/callback` — OAuth completion: server-side token exchange, validation, persistence of the token bundle to Redis, then `user.info.basic` + `video.list` calls and a throwaway result page (commits `7cfd17c`, `f2e12e4`, `a0110c3`, `b8193db`)
-- `POST /api/tiktok/collect` — the autonomous collector: Bearer-authenticated, Redis-locked, refreshes the token when needed, paginates `video.list`, and writes the daily snapshot (commits `5b0b073`, `474acba`, `c6f9fd2`)
+- `POST /api/tiktok/collect` — the autonomous collector (two Bearer auth modes, see the scheduler-safe auth block below): Bearer-authenticated, Redis-locked, refreshes the token when needed, paginates `video.list`, and writes the daily snapshot (commits `5b0b073`, `474acba`, `c6f9fd2`)
 - `lib/tiktokTokenStore.js` (Redis token bundle + collector lock), `lib/tiktokCollector.js` (refresh + pagination), `lib/tiktokAnalyticsStore.js` (private-repo snapshot writer)
 - **Tokens are persisted server-side to Upstash Redis only** — never to GitHub, a file, or the client. (Analytics snapshots, which contain no tokens, are written to a separate private GitHub repo; see below.)
 - **The autonomous collector and analytics snapshot writer DO exist and are VERIFIED.** What does NOT exist yet is *scheduled* collection — the collector is currently triggered manually by the account owner. The GPT/Claude analysis step reads the snapshots from the private repo; no automated analysis is built.
@@ -228,7 +228,17 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 
 Not yet observed: the same-day **update** path (this was a first-of-the-day create) and a conflict retry — both are covered by local tests only, not yet by a live run. The private repo's `README.md` was updated to match the live storage model (private-repo commit `cb9a08f`).
 
-**NEXT ACTION:** implement and validate once-daily scheduled collection. Do not change the analytics schema or storage architecture unless evidence requires it.
+**SCHEDULER-SAFE COLLECTOR AUTH — IMPLEMENTED + DEPLOYED (продовження 70, commit `4f0f109`, deployment `dpl_E5SQU7yaCnkiL5Pkr2qE3kqLFSfL`, 2026-09-26).** `POST /api/tiktok/collect` remains the single collector endpoint and now authenticates with either of two **separate** Bearer credentials (Production env var **names only**, values never documented):
+- **manual** — `TIKTOK_COLLECT_SECRET`: unchanged behavior; success returns the full response including the `videos` array (same keys, same order as before).
+- **schedule** — `TIKTOK_SCHEDULE_SECRET` (a dedicated, least-privilege credential intended for cron-job.org): runs the **exact same** pipeline (Redis lock → token load → refresh when needed → persist refreshed token → `video.list` pagination → analytics snapshot writer) but returns only compact metadata on success: `ok`, `token_refreshed`, `videos_returned`, `pages_fetched`, `truncated`, `collected_at`, `analytics_snapshot {status, path}` — **no** videos, titles, descriptions, share URLs, tokens, or `open_id`, because a third-party scheduler stores response bodies in its execution history. The snapshot written to the private repo is identical in both modes. Error responses are the same in both modes.
+- **Auth rules:** Bearer header only (never query string, body, or cookie); constant-time comparison; no match → 401; neither env var set → 500 `server_misconfigured`; both set to the *identical* value → 500 (fail closed, since they are meant to have separate roles); one env var missing never blocks the other. Logs gain a safe `auth_mode` field (`manual`/`schedule`) — never a secret.
+- No duplicated pipeline: one handler, varying only the accepted credential and the success body. `login.js`, `callback.js`, `lib/*`, the analytics schema/writer, and the Redis keys are untouched.
+- 93/93 local tests (full auth matrix; manual response preserved; schedule response compact and leak-free and snapshot-identical to manual; lock/refresh/persistence/TikTok-failure/snapshot-failure/lock-release/pagination/create-update regressions run in **both** modes). The new-mode tests were confirmed to fail against the pre-change code. `npm run build` passed.
+- Safe production checks after deploy: `GET` → 405, `POST` without `Authorization` → 401, `POST` with an obviously wrong Bearer → 401, `/tiktok-connect` → 200, and both env-var **names** present for Production. The wrong-Bearer request returning 401 (not 500) also shows production is configured with at least one secret and the two are not identical. **Neither real secret was used** — no authenticated collector call was made and no snapshot was created or updated.
+
+**Status:** scheduler-safe collector auth **IMPLEMENTED + DEPLOYED**. cron-job.org schedule: **NOT CONFIGURED YET**. Real schedule-secret call: **NOT YET VERIFIED**. Automatic scheduled execution: **NOT YET VERIFIED**. (The manual mode remains VERIFIED by earlier real runs.)
+
+**NEXT ACTION:** configure cron-job.org once daily (Bearer `TIKTOK_SCHEDULE_SECRET`), then perform a controlled "Run now" validation. Do not change the analytics schema or storage architecture unless evidence requires it.
 
 ## MONETIZATION
 
@@ -322,7 +332,7 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 - Resolve Vercel↔GitHub OAuth connection (or formally commit to the manual-deploy workaround as standard practice)
 
 **P1:**
-- Implement and validate once-daily scheduled TikTok collection (this is the current global NEXT ACTION, below)
+- Configure cron-job.org for once-daily TikTok collection and validate it (the scheduler-safe auth mode is already deployed; this is the current global NEXT ACTION, below)
 - Repeat GSC URL Inspection Live Test for `/yak-vstanovyty-python-windows` (or another representative UK article) to confirm the `/_next/` robots.txt fix actually resolves the "10 of 14 resources blocked" result now that it's live in production. Do not expect this to move the June-13 traffic-collapse question — that stays a separate, still-open investigation (see Stage 2C in DOCUMENTATION.md).
 - Fix the autopost.js race condition (reorder state write before Telegram send, or add an idempotency key)
 
@@ -332,4 +342,4 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 
 ## NEXT ACTION
 
-Implement and validate once-daily scheduled TikTok collection. The collector (`POST /api/tiktok/collect`), token refresh, and the private daily snapshot writer are all VERIFIED; only the scheduler that triggers it once per day is missing. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
+Configure cron-job.org to call the TikTok collector once daily, then perform a controlled "Run now" validation. The collector (`POST /api/tiktok/collect`), token refresh, and the private daily snapshot writer are all VERIFIED, and the scheduler-safe auth mode (`TIKTOK_SCHEDULE_SECRET`, compact response) is deployed — what is missing is the cron-job.org job itself and a real schedule-secret call to verify it. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
