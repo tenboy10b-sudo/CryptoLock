@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-26
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-BASE SHA (snapshot, not a live HEAD): 0670579 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
+BASE SHA (snapshot, not a live HEAD): 8fa72a2 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
 
 ## PROJECT
 
@@ -30,7 +30,7 @@ Telegram:
 - First subscriber-growth giveaway launched 30.08.2026 (AuditShield licenses, goal: 150 subscribers) — outcome not yet confirmed in this repo
 
 TikTok:
-STATUS: real, verified data collection is live (Sandbox app, account `cryptolockua`). A real production collector run on 2026-09-25 returned 110 videos across 6 pages (`truncated: false`) and wrote the first daily analytics snapshot to the private `CryptoLock-analytics` repo (`tiktok/snapshots/2026/09/2026-09-25.json`). Per-video views/likes/comments/shares are being captured; no performance conclusions have been drawn from them yet. Scheduled (daily) collection is NOT implemented — collection is currently manual. See TIKTOK STATUS.
+STATUS: real, verified data collection is live (Sandbox app, account `cryptolockua`). A real production collector run on 2026-09-25 returned 110 videos across 6 pages (`truncated: false`) and wrote the first daily analytics snapshot to the private `CryptoLock-analytics` repo (`tiktok/snapshots/2026/09/2026-09-25.json`). Per-video views/likes/comments/shares are being captured (111 videos in the latest 2026-09-26 snapshot); no performance conclusions have been drawn from them yet. A daily cron-job.org job (03:15 UTC) is configured and enabled and two scheduler test runs succeeded, but the first natural clock-triggered run is still awaiting verification. See TIKTOK STATUS.
 
 ## ARCHITECTURE
 
@@ -51,6 +51,7 @@ STATUS: real, verified data collection is live (Sandbox app, account `cryptolock
 - Telegram: Bot API, channel @cryptolock888
 - Anthropic: Claude API (`claude-sonnet-4-5`) generates all autopost text/poll content
 - cron-job.org: external scheduler triggering `/api/autopost` on a daily schedule (exact current schedule not independently re-verified against the cron-job.org dashboard this session — only inferred from commit timestamps)
+- cron-job.org (second job): `CryptoLock TikTok Daily Analytics` — `POST https://cryptolockua.com/api/tiktok/collect`, daily 03:15 UTC, enabled (per the account owner; dashboard not inspected by Claude). Authenticates with `TIKTOK_SCHEDULE_SECRET` and receives the compact response. See TIKTOK STATUS.
 - TikTok: Login Kit OAuth + an autonomous collector (`/api/tiktok/login`, `/api/tiktok/callback`, `POST /api/tiktok/collect`), integrated 2026-09-24/25 and verified end-to-end in production — see TIKTOK STATUS below
 - Upstash Redis (via Vercel Marketplace): TikTok token bundle + collector lock (runtime/secret state only)
 - `tenboy10b-sudo/CryptoLock-analytics` (separate PRIVATE GitHub repo): TikTok analytics snapshot history, one file per UTC day
@@ -107,7 +108,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 
 ## TIKTOK STATUS
 
-**CURRENT STATUS: VERIFIED END-TO-END — manual collection works; scheduled collection is NOT implemented.** Pipeline: TikTok OAuth → Upstash Redis token bundle → autonomous collector → automatic token refresh when needed → `video.list` pagination → private `CryptoLock-analytics` daily snapshot. Every stage below is verified by real production runs. The only missing piece is a scheduler that triggers the collector once a day.
+**CURRENT STATUS: VERIFIED END-TO-END, including scheduler-triggered runs; daily cron CONFIGURED — awaiting the first natural scheduled run.** Pipeline: TikTok OAuth → Upstash Redis token bundle → autonomous collector → automatic token refresh when needed → `video.list` pagination → private `CryptoLock-analytics` daily snapshot, triggered daily at 03:15 UTC by cron-job.org. Every stage is verified by real production runs, including two live cron-job.org TEST RUNs on 2026-09-26. The only thing not yet observed is a run triggered by the actual clock schedule (first expected 2026-09-27 03:15 UTC) — until then the pipeline is not claimed to be fully autonomous.
 
 **Configuration (as stated by the account owner, not independently re-verified against the TikTok dashboard this session):**
 - TikTok Sandbox app configured
@@ -124,7 +125,7 @@ CURRENT VERIFIED FACT: Telegram autopost state commits (`bot: update published.j
 - `POST /api/tiktok/collect` — the autonomous collector (two Bearer auth modes, see the scheduler-safe auth block below): Bearer-authenticated, Redis-locked, refreshes the token when needed, paginates `video.list`, and writes the daily snapshot (commits `5b0b073`, `474acba`, `c6f9fd2`)
 - `lib/tiktokTokenStore.js` (Redis token bundle + collector lock), `lib/tiktokCollector.js` (refresh + pagination), `lib/tiktokAnalyticsStore.js` (private-repo snapshot writer)
 - **Tokens are persisted server-side to Upstash Redis only** — never to GitHub, a file, or the client. (Analytics snapshots, which contain no tokens, are written to a separate private GitHub repo; see below.)
-- **The autonomous collector and analytics snapshot writer DO exist and are VERIFIED.** What does NOT exist yet is *scheduled* collection — the collector is currently triggered manually by the account owner. The GPT/Claude analysis step reads the snapshots from the private repo; no automated analysis is built.
+- **The autonomous collector and analytics snapshot writer DO exist and are VERIFIED.** Scheduled collection is now **configured** (a cron-job.org job, daily at 03:15 UTC, calling the collector with the dedicated `TIKTOK_SCHEDULE_SECRET`); scheduler-triggered TEST RUNs are verified live, but the first natural clock-triggered run is still awaited. Before the cron job existed, the collector was triggered manually by the account owner (manual mode with `TIKTOK_COLLECT_SECRET` still works). The GPT/Claude analysis step reads the snapshots from the private repo; no automated analysis is built.
 
 **Verification history (see DOCUMENTATION.md продовження 54-58 for the full incident-by-incident record):** first real attempt failed CSRF (продовження 54) → safe CSRF diagnostics added (55) → later real attempt passed CSRF but failed token exchange (56) → diagnostics revealed `invalid_client` (credential mismatch) → account owner corrected the Vercel `TIKTOK_CLIENT_KEY`/`TIKTOK_CLIENT_SECRET` pair and production was redeployed (57) → **a real end-to-end OAuth login now succeeds** (58) → Redis token persistence implemented and verified (59-61) → autonomous collector implemented and verified (62-63) → token-lifecycle hardening (64) → private analytics repo created (65) → `GITHUB_TOKEN` preflight failed, dedicated `ANALYTICS_GITHUB_TOKEN` passed (66-67) → collect secret rotated (68) → **real token refresh and the first private analytics snapshot verified (69)**.
 
@@ -184,7 +185,7 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 - **Long-term analytics history:** a separate **PRIVATE** GitHub repository, `tenboy10b-sudo/CryptoLock-analytics` — deliberately NOT the public `tenboy10b-sudo/CryptoLock` repo, since analytics history is business data. Layout (live): `tiktok/snapshots/YYYY/MM/YYYY-MM-DD.json`, one file per UTC calendar day (documented in that repo's own `README.md`, not duplicated here).
 - **Analytics storage repository: CREATED / VERIFIED.** Private, correct owner, `main` default branch, `README.md` + `tiktok/snapshots/.gitkeep` present at creation (first real snapshot since added — see продовження 69).
 - **Analytics writer: VERIFIED** by a real production snapshot write (продовження 69).
-- **Scheduled collection: NOT IMPLEMENTED.** No cron-job.org trigger configured for the collector.
+- **Scheduled collection: CONFIGURED (cron-job.org, daily 03:15 UTC, enabled); first natural run awaiting verification** — see продовження 72 below. (At the time of this block's original writing, продовження 65, no cron job existed.)
 - **Autonomous collector: VERIFIED** (продовження 62-63).
 - **Real token refresh: VERIFIED** by a real production run (продовження 69).
 
@@ -224,9 +225,9 @@ This confirms, by a real run: Bearer authentication works, the collector runs wi
 - Refreshed token persistence: **VERIFIED**
 - Private analytics GitHub writer: **VERIFIED**
 - Daily analytics snapshot storage: **VERIFIED**
-- Scheduled collection / cron: **NOT IMPLEMENTED**
+- *(Status at the time of продовження 69. Superseded — see the продовження 72 block below for the current, more complete list: same-day update, scheduler-safe auth and cron configuration are now verified/configured, and the daily cron job is no longer "not implemented".)* Scheduled collection / cron: **NOT IMPLEMENTED** (at that time)
 
-Not yet observed: the same-day **update** path (this was a first-of-the-day create) and a conflict retry — both are covered by local tests only, not yet by a live run. The private repo's `README.md` was updated to match the live storage model (private-repo commit `cb9a08f`).
+At that time not yet observed: the same-day **update** path (that run was a first-of-the-day create) and a conflict retry. **The same-day update path has since been verified live (продовження 72).** The conflict retry is still covered by local tests only. The private repo's `README.md` was updated to match the live storage model (private-repo commits `cb9a08f`, then `57ceb84` for the cron status).
 
 **SCHEDULER-SAFE COLLECTOR AUTH — IMPLEMENTED + DEPLOYED (продовження 70, commit `4f0f109`, deployment `dpl_E5SQU7yaCnkiL5Pkr2qE3kqLFSfL`, 2026-09-26).** `POST /api/tiktok/collect` remains the single collector endpoint and now authenticates with either of two **separate** Bearer credentials (Production env var **names only**, values never documented):
 - **manual** — `TIKTOK_COLLECT_SECRET`: unchanged behavior; success returns the full response including the `videos` array (same keys, same order as before).
@@ -240,9 +241,35 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 
 **TIKTOK_SCHEDULE_SECRET ROTATION + REDEPLOY (продовження 71, 2026-09-26).** The account owner **rotated `TIKTOK_SCHEDULE_SECRET` in Vercel Production** (env var **name only**; the value is not documented anywhere, and Claude never read it). Production was **redeployed** (`dpl_AEfwg85byMR77KuMidkJiFVMZdqk`, READY, aliased to `cryptolockua.com`, **no application code change**) so the runtime loads the new value. Safe checks passed: `GET` → 405, `POST` without `Authorization` → 401, `POST` with an obviously wrong Bearer → 401, `/tiktok-connect` → 200. As before, these prove the endpoint is live and enforcing auth — **not** that the new schedule secret works; the wrong-Bearer 401 (not 500) only shows the secrets are configured and not identical. No authenticated call was made and no snapshot was created or updated.
 
-**Status now:** per the account owner, the **cron-job.org job is configured** (Claude has not inspected the cron-job.org dashboard, so its schedule and settings are unverified from this side). **Real scheduler auth (a real call using `TIKTOK_SCHEDULE_SECRET`): NOT YET VERIFIED. Automatic scheduled execution: NOT YET VERIFIED.** The task that requested this redeploy did not state why the rotation was needed, so no cause is recorded. Manual mode remains VERIFIED by earlier real runs.
+**Status at the time of продовження 71:** the cron-job.org job was configured per the account owner; real scheduler auth was NOT YET VERIFIED. The task that requested that redeploy did not state why the rotation was needed, so no cause is recorded. **Superseded by the live test runs below.**
 
-**NEXT ACTION:** rerun the cron-job.org TEST RUN (Bearer `TIKTOK_SCHEDULE_SECRET`) and confirm it returns the compact success response. Do not change the analytics schema or storage architecture unless evidence requires it.
+**DAILY SCHEDULER CONFIGURED + LIVE TEST RUNS VERIFIED (продовження 72, 2026-09-26).**
+
+**cron-job.org job (as reported by the account owner, with a screenshot Claude has not seen — Claude has not inspected the cron-job.org dashboard itself):** title `CryptoLock TikTok Daily Analytics`; `POST https://cryptolockua.com/api/tiktok/collect`; schedule **03:15 UTC daily**; job **ENABLED**. The cron-job.org UI shows the next execution as 06:15 local time because the owner's timezone is UTC+3; the job's configured timezone remains UTC.
+
+**Live TEST RUN #1 (cron-job.org, reported HTTP 200):** created `tiktok/snapshots/2026/09/2026-09-26.json` — `snapshot_date: 2026-09-26`, `collected_at: 2026-09-26T07:23:10.963Z`, `videos_returned: 111`, `pages_fetched: 6`, `truncated: false`. This proves cron-job.org → `TIKTOK_SCHEDULE_SECRET` auth → collector → TikTok API → private GitHub snapshot works end to end.
+
+**Live TEST RUN #2 (reported HTTP 200):** updated the **same** canonical file in place — new `collected_at: 2026-09-26T07:24:27.487Z`, `videos_returned: 111`, `pages_fetched: 6`, `truncated: false`.
+
+**Independently verified by Claude on GitHub (read-only, 2026-09-26):** the private repo is `PRIVATE`; it contains exactly two snapshot files, `2026-09-25.json` and `2026-09-26.json`; **exactly one** file is named for 2026-09-26 (no duplicate); the git history of that path shows exactly two commits — `analytics(tiktok): snapshot 2026-09-26` (07:23:11Z, create) then `analytics(tiktok): update snapshot 2026-09-26` (07:24:27Z, update); the file's current metadata matches run #2 (`collected_at 2026-09-26T07:24:27.487Z`, 111 videos with a 111-entry array, 6 pages, `truncated: false`, exactly the seven schema keys); and a scan found no `access_token`, `refresh_token`, `open_id`, `TIKTOK_SCHEDULE_SECRET`, `TIKTOK_COLLECT_SECRET`, `ANALYTICS_GITHUB_TOKEN`, `Authorization`, or `token_refreshed`. The 110→111 video count is consistent with one newly published video, not an error. Not independently visible to Claude: cron-job.org's own execution history and the HTTP 200 codes (owner-reported).
+
+**Verified status (current):**
+- TikTok OAuth: **VERIFIED**
+- Redis token persistence: **VERIFIED**
+- Automatic token refresh: **VERIFIED**
+- Refreshed token persistence: **VERIFIED**
+- Autonomous collector: **VERIFIED**
+- Pagination: **VERIFIED**
+- Private GitHub analytics writer: **VERIFIED**
+- Daily snapshot CREATE: **VERIFIED LIVE**
+- Same-day snapshot UPDATE (idempotency, no duplicate daily file): **VERIFIED LIVE**
+- Scheduler-safe auth mode (`TIKTOK_SCHEDULE_SECRET`, compact response): **VERIFIED LIVE**
+- cron-job.org configuration: **CONFIGURED / ENABLED** (per the owner's screenshot)
+- Automatic execution triggered by the actual clock schedule: **CONFIGURED — awaiting first natural scheduled run. NOT verified; do not claim it is.**
+
+Still covered by local tests only: the GitHub write-conflict retry.
+
+**NEXT ACTION:** verify the first natural scheduled execution after 03:15 UTC on 2026-09-27: (1) cron-job.org history shows a successful automatic execution; (2) the private repo contains `tiktok/snapshots/2026/09/2026-09-27.json`; (3) its `collected_at` corresponds to the scheduled run (≈03:15 UTC); (4) the snapshot schema and counts are valid. Only after that can the TikTok daily analytics pipeline be marked fully autonomous and VERIFIED. Do not change the analytics schema or storage architecture unless evidence requires it.
 
 ## MONETIZATION
 
@@ -336,7 +363,7 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 - Resolve Vercel↔GitHub OAuth connection (or formally commit to the manual-deploy workaround as standard practice)
 
 **P1:**
-- Validate once-daily TikTok collection: rerun the cron-job.org TEST RUN with the rotated `TIKTOK_SCHEDULE_SECRET` (the job is configured per the account owner; scheduler-safe auth is deployed; this is the current global NEXT ACTION, below)
+- Verify the first natural scheduled TikTok collection (03:15 UTC on 2026-09-27) — the cron job is configured and enabled and the scheduler test runs are verified live; this is the current global NEXT ACTION, below
 - Repeat GSC URL Inspection Live Test for `/yak-vstanovyty-python-windows` (or another representative UK article) to confirm the `/_next/` robots.txt fix actually resolves the "10 of 14 resources blocked" result now that it's live in production. Do not expect this to move the June-13 traffic-collapse question — that stays a separate, still-open investigation (see Stage 2C in DOCUMENTATION.md).
 - Fix the autopost.js race condition (reorder state write before Telegram send, or add an idempotency key)
 
@@ -346,4 +373,4 @@ Not yet observed: the same-day **update** path (this was a first-of-the-day crea
 
 ## NEXT ACTION
 
-Rerun the cron-job.org TEST RUN for the once-daily TikTok collector and confirm it returns the compact success response. The collector (`POST /api/tiktok/collect`), token refresh, and the private daily snapshot writer are all VERIFIED, the scheduler-safe auth mode (`TIKTOK_SCHEDULE_SECRET`, compact response) is deployed, and the cron-job.org job is configured per the account owner — what is missing is a real, successful call using the rotated schedule secret. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
+Verify the first natural scheduled execution of the TikTok daily collector, after 03:15 UTC on 2026-09-27: cron-job.org history shows a successful automatic run; the private repo contains `tiktok/snapshots/2026/09/2026-09-27.json` with a `collected_at` matching the scheduled time and a valid schema/counts. The collector, token refresh, private snapshot writer, scheduler-safe auth, and the create and same-day-update paths are all VERIFIED live (two scheduler test runs on 2026-09-26); the cron job is configured and enabled. What is missing is a run triggered by the actual clock — only then can the pipeline be marked fully autonomous. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)

@@ -4137,3 +4137,27 @@ error_description: Client key or secret is incorrect.
 **FOLLOW-UP:** повторити TEST RUN у cron-job.org і підтвердити компактну успішну відповідь (без `videos`). Нагадування: якщо снапшот за поточну UTC-дату вже існує, цей запуск буде першою живою перевіркою шляху `updated`.
 
 ---
+
+### Сесія 12 (продовження 72) — Щоденний планувальник налаштований; живі TEST RUN підтверджено (create + update)
+
+**DATE:** 2026-09-26
+
+**OBJECTIVE:** зафіксувати завершене налаштування щоденного планувальника TikTok-збору і його живу валідацію (реалізація scheduler-safe auth — продовження 70; ротація секрету й редеплой — продовження 71). Змін коду й деплою немає.
+
+**EVIDENCE (повідомлено власником акаунту; скріншот я не бачив):** job у cron-job.org — назва `CryptoLock TikTok Daily Analytics`; `POST https://cryptolockua.com/api/tiktok/collect`; розклад **03:15 UTC щодня**; статус **ENABLED**. UI cron-job.org показує наступне виконання о 06:15 за місцевим часом, бо часовий пояс власника — UTC+3; налаштований часовий пояс job'а лишається UTC.
+- **TEST RUN #1** (HTTP 200): створено `tiktok/snapshots/2026/09/2026-09-26.json` — `snapshot_date: 2026-09-26`, `collected_at: 2026-09-26T07:23:10.963Z`, `videos_returned: 111`, `pages_fetched: 6`, `truncated: false`.
+- **TEST RUN #2** (HTTP 200): оновлено той самий канонічний файл — новий `collected_at: 2026-09-26T07:24:27.487Z`, `videos_returned: 111`, `pages_fetched: 6`, `truncated: false`.
+
+**INDEPENDENT VERIFICATION (Claude, лише читання, через `gh`):** приватний репозиторій `tenboy10b-sudo/CryptoLock-analytics` — `PRIVATE`. Він містить рівно два файли снапшотів: `2026-09-25.json` і `2026-09-26.json`; файлів із назвою за 2026-09-26 — рівно ОДИН (дубліката немає). Історія git цього шляху містить рівно два коміти: `analytics(tiktok): snapshot 2026-09-26` (07:23:11Z — create) і `analytics(tiktok): update snapshot 2026-09-26` (07:24:27Z — update). Метадані поточного файлу збігаються з TEST RUN #2: `collected_at 2026-09-26T07:24:27.487Z`, `videos_returned: 111` (масив `videos` справді містить 111 записів), `pages_fetched: 6`, `truncated: false`, рівно 7 ключів схеми. Скан НЕ знайшов `access_token`, `refresh_token`, `open_id`, `TIKTOK_SCHEDULE_SECRET`, `TIKTOK_COLLECT_SECRET`, `ANALYTICS_GITHUB_TOKEN`, `Authorization`, `token_refreshed`. Зміна 110→111 відео узгоджується з одним новоопублікованим відео, а не з помилкою. Чого Claude НЕ бачив: власну історію виконань cron-job.org і HTTP-коди 200 (це повідомлено власником).
+
+**RESULT:** підтверджено наскрізно вживу: cron-job.org → auth за `TIKTOK_SCHEDULE_SECRET` → collector → TikTok API → приватний GitHub-снапшот. Шлях **create** — VERIFIED LIVE (він і раніше був підтверджений 2026-09-25). Шлях **same-day update** — **VERIFIED LIVE** уперше (до цього — лише локальні тести): другий запуск оновив той самий файл на місці, без дубліката. Ідемпотентність щоденного снапшота — VERIFIED LIVE. Scheduler-safe auth mode — VERIFIED LIVE. Приватний README оновлено окремим README-only комітом `57ceb84` у приватному репозиторії (файли снапшотів НЕ чіпали).
+
+**STATUS:** TikTok OAuth, персистенція токенів у Redis, автоматичний token refresh, персистенція оновленого токена, автономний collector, пагінація, приватний GitHub-writer — **VERIFIED**. Snapshot CREATE і same-day UPDATE — **VERIFIED LIVE**. Scheduler-safe auth — **VERIFIED LIVE**. cron-job.org — **CONFIGURED / ENABLED**. Автоматичне виконання за реальним годинником — **CONFIGURED, ОЧІКУЄ першого природного запуску; НЕ підтверджено** — його не слід називати VERIFIED. Лише локальними тестами покритий ще шлях повторної спроби при GitHub write-конфлікті.
+
+**SECURITY:** жодне значення `TIKTOK_SCHEDULE_SECRET`/`TIKTOK_COLLECT_SECRET`, токена TikTok, GitHub PAT, Redis credential чи Authorization не читалось і не записано в документацію (ні в цій репо, ні в приватній). Вміст відео (назви/описи/URL) під час перевірки не виводився.
+
+**COMMIT SHA:** немає змін коду (production-версія та сама, `dpl_AEfwg85byMR77KuMidkJiFVMZdqk`). Приватний репозиторій: `af9a523` (TEST RUN #1, create), `064d27c` (TEST RUN #2, update), `57ceb84` (README).
+
+**FOLLOW-UP:** перевірити перше природне заплановане виконання після 03:15 UTC 2026-09-27: (1) історія cron-job.org показує успішне автоматичне виконання; (2) приватний репозиторій містить `tiktok/snapshots/2026/09/2026-09-27.json`; (3) його `collected_at` відповідає запланованому часу (≈03:15 UTC); (4) схема й лічильники снапшота валідні. Лише після цього пайплайн можна вважати повністю автономним і VERIFIED.
+
+---
