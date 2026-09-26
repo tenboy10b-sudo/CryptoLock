@@ -2,7 +2,7 @@
 
 LAST UPDATED: 2026-09-26
 CURRENT PHASE: Post-SEO-crisis recovery (ongoing since 2026-06-13), governance/documentation baseline established
-BASE SHA (snapshot, not a live HEAD): 8fa72a2 — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
+BASE SHA (snapshot, not a live HEAD): 1ce57ef — the commit this document was last reconciled against. This is a point-in-time reference, NOT a self-updating field: the docs commit that records it and the Telegram bot's frequent `published.json` commits land after it, so origin/main is normally ahead. Always `git fetch origin` and compare before trusting it.
 
 ## PROJECT
 
@@ -19,7 +19,7 @@ CryptoLock (cryptolockua.com) — Ukrainian-language content site with step-by-s
 ## CURRENT KPIs
 
 GSC:
-STATUS: awaiting fresh data — last known checkpoint was 13.08.2026 (66 indexed / 792 not indexed / 858 total); no more recent export has been reviewed in this repo's documentation.
+STATUS: indexing-backlog composition VERIFIED by the 2026-09-26 audit (GSC exports with data through 2026-09-21): 828 URLs across the two non-indexed buckets — 650 "Crawled – currently not indexed" + 178 "Discovered – currently not indexed" — of which **462 are real, current, indexable URLs** (441 of them articles); the rest of the Crawled bucket is legacy noise. See GSC STATUS for the full facts, limitations and unverified hypotheses. These exports do not state an "indexed" total; the last known total-indexed checkpoint remains 13.08.2026 (66 indexed / 792 not indexed / 858 total).
 
 GA4:
 STATUS: awaiting fresh data — no recent export reviewed.
@@ -60,7 +60,7 @@ STATUS: real, verified data collection is live (Sandbox app, account `cryptolock
 
 - Production responds 200 OK (verified 2026-09-23)
 - `robots.txt` no longer blocks `/_next/` (fixed 2026-09-23, commit `bc1ecb6`, deployment `dpl_3hPjQVojRbLu9As1ZVcQFLwMzNKd` — see KNOWN BUGS/COMPLETED WORK below). `Disallow: /_next/` had been present since commit `a0c979f`, 2026-04-24, and was confirmed via GSC URL Inspection Live Test to block Googlebot from loading 10 of 14 page resources (JS/CSS) during rendering. This fix addresses only that confirmed current rendering restriction — it is NOT claimed to be the cause of the 2026-06-13 traffic collapse (see Stage 2C forensic reconstruction in DOCUMENTATION.md for that separate, still-open question).
-- `sitemap.xml` returns 480 URLs, confirmed 0 `/tags/*` entries (noindex + sitemap-exclusion fix from an earlier session is holding)
+- `sitemap.xml` returns **483** URLs as of 2026-09-26 (13 static + 313 UK articles + 157 EN articles), confirmed 0 `/tags/*` entries (noindex + sitemap-exclusion fix from an earlier session is holding). The set derived from repo code equals the live sitemap exactly (0 differences either way). One sitemap URL currently redirects (`/yak-zashyfruvaty-dysk-bitlocker`) and 5 existing tool pages are absent from it — see KNOWN BUGS P2. (Earlier figure: 480 URLs, 2026-09-23.)
 - Individual ISR article pages generate correctly on demand even without a fresh full deploy (confirmed by testing several September-dated articles: 200 OK)
 
 ## DEPLOYMENT STATUS
@@ -75,12 +75,51 @@ These are explicitly separate systems — do not conflate them:
 
 ## GSC STATUS
 
-Missing evidence. Last checkpoint used in project documentation: 13.08.2026 (66 indexed / 792 not indexed / 858 total, per DOCUMENTATION.md). No fresher export has been reviewed by any session recorded in this repo.
+**GSC INDEXING BACKLOG CLASSIFICATION AUDIT — STATUS: VERIFIED (read-only, 2026-09-26; DOCUMENTATION.md продовження 73).** Two GSC coverage-drilldown exports were parsed and every URL was classified against the *current* repository. All 828 rows were then compared with live production HEAD responses (all matched; 4 transient network errors were re-checked and matched; all 208 unique redirect/fallback destinations return 200). The last known total-indexed checkpoint remains 13.08.2026 (66 indexed / 792 not indexed / 858 total) — these exports contain no "indexed" total.
+
+**FACTS (verified)**
+
+*Totals.* 828 URLs audited: **650** "Crawled – currently not indexed" + **178** "Discovered – currently not indexed". Each export's chart total on its last date (2026-09-21) equals its row count (650 / 178). No URL is in both buckets; the only duplicate logical URLs are 8 trailing-slash twins in the Crawled bucket.
+
+*Combined current, indexable core (REAL_CURRENT_INDEXABLE_URLS): **462**.* = 441 articles (**290 UK**, **151 EN**) + **13** tools + **8** other pages.
+
+*CRAWLED bucket (650):* **284** real current indexable (209 UK articles, 55 EN articles, 13 tools, 7 other current pages) and **366 legacy / non-actionable** (**106** historical EN fallback URLs, **75** tag URLs, **183** redirected URLs, **2** nonexistent URLs). 264 of the 284 are articles. Last-crawl dates run 2026-04-30 to 2026-09-21 (median 2026-07-17).
+- The 106 fallback URLs (`/en/{uk-slug}`, no EN file) now 308-redirect to the UK original (fix deployed 2026-09-23). Another 39 `/en/…` rows are explicit `next.config.js` redirects to a UK page; only 55 of the 269 EN-prefixed article-shaped rows are real EN articles.
+- Tags: 72 existing tag pages (noindex), 2 tags-index pages (indexable), 1 tag that now 404s. All 73 non-index tag pages were last crawled *before* the noindex + sitemap-exclusion commit (`247a24a`, 2026-08-12); none after.
+- Redirected: 179 explicit rules (117 EN-prefixed, 62 UK) + 4 trailing-slash normalisations; every one ends on a live 200 page.
+
+*DISCOVERED bucket (178):* **all 178 are real current indexable** (81 UK articles, 96 EN articles, 1 other page, `/bookmarks`), **all 178 are in the sitemap**, and **all 178 carry the never-crawled placeholder date** (`1970-01-01`, raw export value `25569`). There is no legacy noise in this bucket.
+
+*Coverage.* The 441 articles in the two buckets are 94% of the 470 published articles (313 UK + 157 EN); 29 published articles are in neither bucket (their status is unknown from these exports — they may be indexed or in another status).
+
+*Recency (an association, not a proven cause).* **104 of 112 (93%)** articles published on/after 2026-06-01 are in Discovered (UK 52 of 57, EN 52 of 55); versus 73 of 358 (20%) of articles published earlier. Median publish date: UK Discovered 2026-06-25 vs UK Crawled 2026-03-26.
+
+*Sitemap.* The sitemap derived from repo code equals the live sitemap exactly: **483** URLs. **453 of 483** sitemap URLs are in one of the two non-indexed buckets; 30 are in neither. Every article in either bucket is in the sitemap. Exactly one sitemap URL redirects: `/yak-zashyfruvaty-dysk-bitlocker` (a real published UK article shadowed by an explicit redirect rule, and listed in the sitemap's high-priority set). 5 existing tool pages are absent from the sitemap: `base64`, `hash`, `ip-info`, `port-checker`, `regex`.
+
+*Other observed facts.* `/search?q={search_term_string}` — the literal placeholder from the WebSite SearchAction JSON-LD — was crawled as a URL. One mojibake-encoded EN 2FA URL falls outside the redirect rules (they cover only its `/uk/` variant). Internal body-link graph is sparse: the median inbound body-link count is 0 and roughly 73–84% of articles in the main groups have none (the buckets are similar on this measure — this does **not** yet show internal linking is the cause). Objective size, prose words excluding code (corpus medians UK 248, EN 315): Discovered UK median 162 vs Crawled UK 263; Discovered EN 275 vs Crawled EN 387 — descriptive only, no quality judgement made.
+
+*Crawl Priority Experiment overlap.* All 10 experiment URLs (5 TEST + 5 CONTROL) are in **Discovered**; none is in Crawled. The export is therefore a valid **pre-intervention baseline**, consistent with the baseline recorded when the experiment started.
+
+**LIMITATIONS**
+- The exports end **2026-09-21**. They therefore predate the fallback-redirect fix (deployed 2026-09-23) and the Crawl Priority Experiment start (2026-09-24). **This export does not measure any experiment effect** and does not show the effect of the 2026-09-23 fix (the 106 fallback rows are shown as they were before it).
+- Classification reflects production behaviour on 2026-09-26, not the state at each URL's crawl date.
+- The Discovered bucket's count was volatile in GSC's own chart (e.g. 0 → 210 → 0 → 219 → 161 → 178 between 2026-07-11 and 2026-09-21); treat single-day counts with caution.
+- Word counts are approximate (fenced code excluded, markdown stripped).
+
+**HYPOTHESES (UNVERIFIED — none of these is a fact and none has been tested)**
+1. Google may be allocating little crawl attention to *new* URLs (consistent with the recency association above).
+2. The ~366 legacy Crawled rows (redirects, fallback URLs, tags) may be consuming crawl attention that new URLs would otherwise get.
+3. Weak internal linking may contribute (the body-link graph is sparse — but see above: the buckets look alike on this measure, so this is not supported as a discriminator yet).
+
+**JUNE 13 TRAFFIC COLLAPSE: CAUSE STILL UNRESOLVED.** The audit confirms a *current* crawl/indexation backlog. It does **not** establish, and this document does not claim, what caused the 2026-06-13 collapse (see Stage 2C in DOCUMENTATION.md for that separate, still-open investigation).
+
+**DECISION IN FORCE:** no new crawl/indexing SEO change before **2026-10-08** unless a P0 production/indexing issue appears, to keep the Crawl Priority Experiment valid (DECISIONS #9). The four small hygiene findings are logged in KNOWN BUGS / BACKLOG as P2, not P0.
 
 ## CONTENT STATUS
 
-- UK: 350 published `.md` files in `posts/`, 38 future-dated (publishDate > 2026-09-22)
-- EN: 194 published `.md` files in `posts-en/`, 38 future-dated
+- UK: 350 `.md` files in `posts/`, of which 313 are published and 37 future-dated (counted 2026-09-26; earlier figure: 38 future-dated as of 2026-09-22)
+- EN: 194 `.md` files in `posts-en/`, of which 157 are published and 37 future-dated (counted 2026-09-26)
+- No slug exists in both `posts/` and `posts-en/`; all 142 `translatesEn` links point to a *different* EN slug (so every `/en/{uk-slug}` is a fallback URL by construction)
 - Known consolidation state: ~50+ duplicate clusters merged across UK+EN through August 2026 (see DOCUMENTATION.md for full session-by-session history); publish queue deliberately slowed from ~1 pair/day to 2 pairs/week starting 21.08.2026 as an extra-caution measure during the recovery window
 
 ## LANGUAGE ARCHITECTURE
@@ -288,6 +327,11 @@ Still covered by local tests only: the GitHub write-conflict retry.
 **P2:**
 - `@next/third-parties ^16.2.4` listed in `package.json` alongside `next@14.2.3` but never imported anywhere in the codebase (dead dependency, no runtime effect)
 - `/tags` page label "N статей" is actually a sum of per-tag article counts (an article with 6 tags counts 6 times), not a deduplicated article count — not a bug, but a misleading label
+- Hygiene findings from the 2026-09-26 GSC audit (all P2 — small, low-blast-radius, no evidence any of them drives the indexing backlog; **not** to be re-classified as P0 without evidence; inspect-only until 2026-10-08, see DECISIONS #9):
+  - **Redirect-shadowed article:** `/yak-zashyfruvaty-dysk-bitlocker` is a real published UK article, but an explicit `next.config.js` rule redirects it to `/yak-uvimknuty-bitlocker-windows-11`. It is nevertheless still listed in the sitemap (the only redirecting sitemap URL) and in the sitemap's high-priority set. Intent not yet established (deliberate consolidation with a stale sitemap entry vs. an over-broad rule).
+  - **Literal SearchAction placeholder crawled:** `/search?q={search_term_string}` was crawled as a real URL. The WebSite `SearchAction` JSON-LD emits that template (`components/Layout.js:192`, `pages/index.js:70`).
+  - **Redirect-rule scope gap:** a mojibake-encoded `/en/yak-nalashtuvanty-dvokrok…` 2FA URL is not covered by the redirect rules (they only handle its `/uk/` variant) and 404s; it is one of the 2 NONEXISTENT rows in the Crawled export.
+  - **5 existing tool pages absent from the sitemap:** `/tools/base64`, `/tools/hash`, `/tools/ip-info`, `/tools/port-checker`, `/tools/regex`.
 
 **Security note (local hygiene, not a production issue):** the local `.claude/settings.local.json` permission cache has held a plaintext secret (`AUTOPOST_SECRET`) in a cached command string. It was never committed to git and is now git-ignored (see `.gitignore`). No rotation performed as part of documenting this — that remains a separate decision for whoever owns the secret.
 
@@ -305,6 +349,7 @@ Still covered by local tests only: the GitHub write-conflict retry.
 6. Git push success and production deployment success are separate states — always report them separately.
 7. Significant completed work must exist in Git history and documentation, not only in AI chat history.
 8. Every significant implementation must end with the full pipeline: **implementation → test → deploy → production verify → documentation → docs commit → push**. A task is not complete if it stops before the documentation/docs-commit/push steps. This exists so a new Claude/GPT session — including a different account — can reconstruct current project state from GitHub alone, without any prior chat history.
+9. **No new crawl/indexing SEO change before 2026-10-08 unless a P0 production/indexing issue appears** (decided 2026-09-26 after the GSC Indexing Backlog Classification Audit). Reason: preserve the validity of the running Crawl Priority Internal-Link Experiment and avoid mixing interventions, so any TEST-vs-CONTROL movement can be attributed. The audit's small hygiene findings (KNOWN BUGS P2) do not qualify as P0 and wait for this window to close.
 
 ## ACTIVE EXPERIMENTS
 
@@ -328,6 +373,7 @@ Still covered by local tests only: the GitHub write-conflict retry.
   **BASELINE (recorded before deploy):** all 10 URLs = "Discovered — currently not indexed" in GSC. TEST inbound counts: 0, 1, 0, 0, 0. CONTROL inbound counts: 1, 0, 1, 0, 0.
   **CHECK DATE:** 2026-10-08 (+14 days)
   **SUCCESS CRITERIA:** ≥3 of 5 TEST URLs move from Discovered to Crawled-not-indexed or Indexed, compared against the CONTROL group's movement rate over the same window. No manual GSC submission was used for any of the 10 URLs — the test is specifically about whether added internal links alone shift crawl behavior.
+  **AUDIT NOTE (2026-09-26; experiment definition above is unchanged, experiment status: RUNNING, unmodified):** the GSC Indexing Backlog Classification Audit found all 10 TEST/CONTROL URLs in the **Discovered** bucket and none in Crawled — this matches the baseline above and confirms it as a valid pre-intervention baseline. The audited exports end 2026-09-21, i.e. *before* this experiment started (2026-09-24), so they **do not measure the experiment's effect**. Evaluation still happens on 2026-10-08 from a fresh GSC export (see NEXT ACTION).
 
 - **NAME:** Telegram Poll Experiment
   **START DATE:** 2026-09-24 (commit `ecb7845`, deployment `dpl_ETGzSHiEnKELFWVez23i37Zt6iNE`)
@@ -356,6 +402,7 @@ Still covered by local tests only: the GitHub write-conflict retry.
 - TikTok Sandbox OAuth Login Kit smoke test implemented and verified end-to-end (`/tiktok-connect`, `/api/tiktok/login`, `/api/tiktok/callback`; commits `7cfd17c` + `f2e12e4` + `a0110c3`, deployed 2026-09-24). The earlier CSRF and `invalid_client` blockers were diagnosed and resolved — see DOCUMENTATION.md продовження 54-58.
 - TikTok token persistence to Upstash Redis (`b8193db`), autonomous collector with proactive token refresh, locking and pagination (`5b0b073`), token-lifecycle validation hardening including an `open_id`-continuity bug fix (`474acba`) — all deployed 2026-09-24 and verified by real production runs
 - Private TikTok analytics storage: separate PRIVATE repo `tenboy10b-sudo/CryptoLock-analytics` created (2026-09-24), dedicated `ANALYTICS_GITHUB_TOKEN` preflight-verified (2026-09-25), and an idempotent daily snapshot writer (`c6f9fd2`) verified by a real run — real token refresh and the first snapshot (110 videos, 6 pages) confirmed 2026-09-25 (DOCUMENTATION.md продовження 65-69)
+- **GSC Indexing Backlog Classification Audit (read-only, 2026-09-26) — VERIFIED.** All 828 non-indexed URLs from the Crawled (650) and Discovered (178) exports classified against the current repo and re-checked against live production responses; findings, limitations and unverified hypotheses recorded under GSC STATUS above and in DOCUMENTATION.md продовження 73. Read-only: no code, SEO, sitemap, redirect, robots, content, deployment, GSC or experiment change. No fresh "indexed" total was obtained.
 
 ## BACKLOG
 
@@ -363,14 +410,20 @@ Still covered by local tests only: the GitHub write-conflict retry.
 - Resolve Vercel↔GitHub OAuth connection (or formally commit to the manual-deploy workaround as standard practice)
 
 **P1:**
-- Verify the first natural scheduled TikTok collection (03:15 UTC on 2026-09-27) — the cron job is configured and enabled and the scheduler test runs are verified live; this is the current global NEXT ACTION, below
+- **Evaluate the active Crawl Priority Internal-Link Experiment on 2026-10-08** (fresh GSC Crawled + Discovered exports; TEST vs CONTROL) — this is the primary NEXT ACTION, below
+- **Investigate the 462 current, indexable backlog URLs after a fresh GSC export** (441 articles + 13 tools + 8 other pages in the 2026-09-21 exports) — only once the experiment window has closed; do not start before 2026-10-08 (DECISIONS #9)
+- **Review internal linking / content architecture if TEST does not outperform CONTROL** — the audit's sparse body-link graph is a hypothesis, not yet a demonstrated cause
+- Verify the first natural scheduled TikTok collection (03:15 UTC on 2026-09-27) — the cron job is configured and enabled and the scheduler test runs are verified live; this is the parallel operational track in NEXT ACTION, below
 - Repeat GSC URL Inspection Live Test for `/yak-vstanovyty-python-windows` (or another representative UK article) to confirm the `/_next/` robots.txt fix actually resolves the "10 of 14 resources blocked" result now that it's live in production. Do not expect this to move the June-13 traffic-collapse question — that stays a separate, still-open investigation (see Stage 2C in DOCUMENTATION.md).
 - Fix the autopost.js race condition (reorder state write before Telegram send, or add an idempotency key)
 
 **P2:**
 - Remove unused `@next/third-parties` dependency
 - Clarify the `/tags` "N статей" label
+- GSC-audit hygiene (inspect-only until 2026-10-08, DECISIONS #9; details under KNOWN BUGS P2): inspect the redirect-shadowed article `/yak-zashyfruvaty-dysk-bitlocker` (also still in the sitemap); fix the literal SearchAction placeholder crawl `/search?q={search_term_string}`; review redirect-rule scope gaps (mojibake `/en/…` 2FA URL); review the 5 existing tool pages absent from the sitemap
 
 ## NEXT ACTION
 
-Verify the first natural scheduled execution of the TikTok daily collector, after 03:15 UTC on 2026-09-27: cron-job.org history shows a successful automatic run; the private repo contains `tiktok/snapshots/2026/09/2026-09-27.json` with a `collected_at` matching the scheduled time and a valid schema/counts. The collector, token refresh, private snapshot writer, scheduler-safe auth, and the create and same-day-update paths are all VERIFIED live (two scheduler test runs on 2026-09-26); the cron job is configured and enabled. What is missing is a run triggered by the actual clock — only then can the pipeline be marked fully autonomous. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
+**SEO / indexing track (primary): wait for the Crawl Priority Experiment to complete on 2026-10-08.** Then: (1) obtain fresh GSC "Crawled – currently not indexed" and "Discovered – currently not indexed" exports (plus a current indexed total); (2) compare the 5 TEST URLs against the 5 CONTROL URLs against the success criteria above; (3) inspect crawl movement across the wider backlog (including whether the 462 current indexable URLs have moved out of Discovered and whether the legacy redirect/fallback/tag rows have dropped after the 2026-09-23 fix); (4) decide whether to **scale the crawl-priority mechanism** or to **test stronger internal-linking / content architecture**. This is **not** "fix SEO now": no new crawl/indexing SEO change before 2026-10-08 unless a P0 production/indexing issue appears (DECISIONS #9). The June-13 traffic-collapse cause remains a separate, unresolved question.
+
+**Parallel operational track (TikTok, unrelated to SEO):** verify the first natural scheduled execution of the TikTok daily collector, after 03:15 UTC on 2026-09-27: cron-job.org history shows a successful automatic run; the private repo contains `tiktok/snapshots/2026/09/2026-09-27.json` with a `collected_at` matching the scheduled time and a valid schema/counts. The collector, token refresh, private snapshot writer, scheduler-safe auth, and the create and same-day-update paths are all VERIFIED live (two scheduler test runs on 2026-09-26); the cron job is configured and enabled. What is missing is a run triggered by the actual clock — only then can the pipeline be marked fully autonomous. Do not change the analytics schema or storage architecture unless evidence requires it. (The GSC URL Inspection Live Test that used to be listed here remains in the BACKLOG.)
