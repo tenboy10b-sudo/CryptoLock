@@ -2,7 +2,11 @@
 // without a browser OAuth session, using the token bundle persisted by
 // /api/tiktok/callback, then persists a daily analytics snapshot into the
 // private tenboy10b-sudo/CryptoLock-analytics repo (never Redis, never the
-// public repo). Secret-gated (Bearer TIKTOK_COLLECT_SECRET), POST only.
+// public repo). POST only, Bearer-authenticated with one of two separate
+// credentials that run the exact same pipeline:
+//   - TIKTOK_COLLECT_SECRET  -> "manual" mode: full response incl. the videos array
+//   - TIKTOK_SCHEDULE_SECRET -> "schedule" mode: compact metadata only (for a
+//     third-party scheduler's execution history — no video content)
 import crypto from 'crypto'
 import {
   loadTokenBundle,
@@ -52,19 +56,32 @@ export default async function handler(req, res) {
   }
 
   const COLLECT_SECRET = process.env.TIKTOK_COLLECT_SECRET
-  if (!COLLECT_SECRET) {
+  const SCHEDULE_SECRET = process.env.TIKTOK_SCHEDULE_SECRET
+  if (!COLLECT_SECRET && !SCHEDULE_SECRET) {
     log('collector_failed', { stage: 'auth', reason: 'missing_env' })
+    return jsonResponse(res, 500, { ok: false, error: 'server_misconfigured' })
+  }
+  // The two credentials are meant to have separate roles; identical values
+  // would make the manual/schedule distinction meaningless, so fail closed
+  // (even for an otherwise valid request) rather than guess which role applies.
+  if (COLLECT_SECRET && SCHEDULE_SECRET && safeEqual(COLLECT_SECRET, SCHEDULE_SECRET)) {
+    log('collector_failed', { stage: 'auth', reason: 'identical_credentials' })
     return jsonResponse(res, 500, { ok: false, error: 'server_misconfigured' })
   }
 
   const authHeader = req.headers.authorization || ''
   const match = /^Bearer\s+(.+)$/.exec(authHeader)
   const providedSecret = match ? match[1] : null
-  if (!providedSecret || !safeEqual(providedSecret, COLLECT_SECRET)) {
+  // Both comparisons always run (no short-circuit between the two secrets); a
+  // missing env var simply can't match, so it never blocks the other one.
+  const matchesManual = Boolean(providedSecret && COLLECT_SECRET && safeEqual(providedSecret, COLLECT_SECRET))
+  const matchesSchedule = Boolean(providedSecret && SCHEDULE_SECRET && safeEqual(providedSecret, SCHEDULE_SECRET))
+  if (!matchesManual && !matchesSchedule) {
     return jsonResponse(res, 401, { ok: false, error: 'unauthorized' })
   }
+  const authMode = matchesManual ? 'manual' : 'schedule'
 
-  log('collector_started', {})
+  log('collector_started', { auth_mode: authMode })
 
   const executionId = crypto.randomBytes(16).toString('hex')
   const lockResult = await acquireCollectorLock(executionId)
@@ -196,21 +213,30 @@ export default async function handler(req, res) {
       pages_fetched: videoResult.pagesFetched,
       truncated: videoResult.truncated,
       analytics_snapshot_status: writeResult.status,
+      auth_mode: authMode,
     })
 
-    return jsonResponse(res, 200, {
+    const metadata = {
       ok: true,
       token_refreshed: tokenRefreshed,
       videos_returned: responseVideos.length,
       pages_fetched: videoResult.pagesFetched,
       truncated: videoResult.truncated,
       collected_at: collectedAt,
-      videos: responseVideos,
-      analytics_snapshot: {
-        status: writeResult.status,
-        path: writeResult.path,
-      },
-    })
+    }
+    const analyticsSnapshot = {
+      status: writeResult.status,
+      path: writeResult.path,
+    }
+
+    // Schedule mode: compact metadata only — no videos/titles/descriptions/share
+    // URLs — since a third-party scheduler stores response bodies in its history.
+    if (authMode === 'schedule') {
+      return jsonResponse(res, 200, { ...metadata, analytics_snapshot: analyticsSnapshot })
+    }
+
+    // Manual mode: unchanged full response (same keys, same order as before).
+    return jsonResponse(res, 200, { ...metadata, videos: responseVideos, analytics_snapshot: analyticsSnapshot })
   } finally {
     await releaseCollectorLock(executionId)
   }
