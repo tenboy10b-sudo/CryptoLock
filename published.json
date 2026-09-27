@@ -142,7 +142,12 @@
     "Чому програми повільно відкриваються вперше після завантаження?",
     "⚙️ Режим сну vs повне вимкнення ПК — що обрати?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "eff97842-4f3d-41d9-8e97-6147b8adca4c",
+    "type": "content",
+    "started_at": "2026-09-27T08:01:10.368Z",
+    "expires_at": "2026-09-27T08:16:10.368Z"
+  },
   "pending": null,
   "last_message_id": 517,
   "engage_ab_index": 2,
