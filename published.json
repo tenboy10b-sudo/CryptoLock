@@ -148,7 +148,15 @@
     "started_at": "2026-09-27T08:01:10.368Z",
     "expires_at": "2026-09-27T08:16:10.368Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "eff97842-4f3d-41d9-8e97-6147b8adca4c",
+    "type": "content",
+    "identifier": "avto-blokuvannya-ekranu-gpo",
+    "payload": {
+      "text": "🔒 **Автоматичне блокування екрана через GPO**\n\nЯкщо у вас мережа з кількома комп'ютерами, налаштування блокування екрана вручну — це головний біль. Набагато розумніше зробити це через Group Policy раз і назавжди.\n\n**Покрокова інструкція:**\n\n1️⃣ Відкрийте **gpedit.msc** (або Group Policy Management Console для домену)\n\n2️⃣ Перейдіть до: \n`Computer Configuration → Policies → Windows Settings → Security Settings → Local Policies → Security Options`\n\n3️⃣ Налаштуйте політику **\"Interactive logon: Machine inactivity limit\"** — встановіть час у секундах (наприклад, 600 = 10 хвилин)\n\n4️⃣ Додатково увімкніть заставку через:\n`User Configuration → Policies → Administrative Templates → Control Panel → Personalization`\n\nАктивуйте **\"Enable screen saver\"** і **\"Password protect the screen saver\"**\n\n5️⃣ Оновіть політики командою:\n```\ngpupdate /force\n```\n\n**Порада:** Для корпоративного середовища рекомендую встановлювати таймаут 5-15 хвилин залежно від рівня безпеки вашої організації.\n\nТепер всі робочі станції будуть автоматично блокуватися, навіть якщо користувачі про це забувають! 💪\n\n#Windows #GPO #Безпека #SysAdmin"
+    },
+    "created_at": "2026-09-27T08:01:22.182Z"
+  },
   "last_message_id": 517,
   "engage_ab_index": 2,
   "poll_recent_topics": [
