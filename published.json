@@ -121,7 +121,7 @@
     "avto-blokuvannya-ekranu-gpo"
   ],
   "count": 119,
-  "promo_index": 75,
+  "promo_index": 76,
   "last_post": {
     "slug": "avto-blokuvannya-ekranu-gpo",
     "title": "Як налаштувати автоматичне блокування екрана через GPO",
@@ -143,22 +143,9 @@
     "Чому програми повільно відкриваються вперше після завантаження?",
     "⚙️ Режим сну vs повне вимкнення ПК — що обрати?"
   ],
-  "lock": {
-    "execution_id": "c6f97427-07a8-4773-9d7d-f4eb67a04c5d",
-    "type": "middle",
-    "started_at": "2026-09-27T10:00:52.986Z",
-    "expires_at": "2026-09-27T10:15:52.986Z"
-  },
-  "pending": {
-    "execution_id": "c6f97427-07a8-4773-9d7d-f4eb67a04c5d",
-    "type": "middle",
-    "identifier": "standalone-topic:Брандмауер Windows",
-    "payload": {
-      "text": "🛡️ **Перевіряємо виключення брандмауера Windows**\n\nШкідливе ПЗ часто додає себе у виключення брандмауера, щоб безперешкодно з'єднуватися з інтернетом. Перевіряємо список дозволених програм.\n\n**Через Параметри:**\n1. Пошук → \"Брандмауер Windows\" → \"Дозволити програму через брандмауер\"\n2. Переглянути список програм у приватних і публічних мережах\n3. Шукати незнайомі .exe файли, особливо з %temp%, %appdata%, невідомих папок\n\n**Через PowerShell (від адміністратора):**\n```\nGet-NetFirewallRule | Where-Object {$_.Enabled -eq 'True' -and $_.Direction -eq 'Outbound'} | Select-Object DisplayName, Program\n```\n\n**Через CMD (від адміністратора):**\n```\nnetsh advfirewall firewall show rule name=all dir=out\n```\n\n**На що звернути увагу:**\n- Програми з випадковими іменами (ghj45sdfs.exe)\n- Шляхи до Temp, AppData\\Local\\Temp, невідомих підпапок Users\n- Дублювання легітимних програм із дивними шляхами\n- Програми, які ви не встановлювали\n\n**Що робити:**\n1. Зняти галочку з підозрілої програми в списку виключень\n2. Знайти файл за шляхом і перевірити через VirusTotal\n3. Видалити правило через PowerShell:\n```\nRemove-NetFirewallRule -DisplayName \"підозріле_ім'я\"\n```\n4. Провести повне сканування антивірусом\n\n#windows #безпека #брандмауер"
-    },
-    "created_at": "2026-09-27T10:01:06.571Z"
-  },
-  "last_message_id": 518,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 519,
   "engage_ab_index": 2,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?"
