@@ -118,14 +118,15 @@
     "how-to-configure-windows-server-core",
     "how-to-configure-windows-firewall-gpo",
     "how-to-speed-up-windows-11",
-    "avto-blokuvannya-ekranu-gpo"
+    "avto-blokuvannya-ekranu-gpo",
+    "nemaye-internetu-pislya-onovlennya-windows"
   ],
-  "count": 119,
+  "count": 120,
   "promo_index": 76,
   "last_post": {
-    "slug": "avto-blokuvannya-ekranu-gpo",
-    "title": "Як налаштувати автоматичне блокування екрана через GPO",
-    "time": "2026-09-27T08:01:22.182Z"
+    "slug": "nemaye-internetu-pislya-onovlennya-windows",
+    "title": "Немає інтернету після оновлення Windows: як виправити",
+    "time": "2026-09-28T08:01:28.209Z"
   },
   "engage_index": 66,
   "extra_index": 95,
@@ -143,22 +144,9 @@
     "⚙️ Режим сну vs повне вимкнення ПК — що обрати?",
     "🧳 Чеклист: Безпека перед подорожжю з ноутбуком"
   ],
-  "lock": {
-    "execution_id": "bdf71db5-a5b9-4b9c-9474-c1c82dceed7e",
-    "type": "content",
-    "started_at": "2026-09-28T08:01:15.587Z",
-    "expires_at": "2026-09-28T08:16:15.587Z"
-  },
-  "pending": {
-    "execution_id": "bdf71db5-a5b9-4b9c-9474-c1c82dceed7e",
-    "type": "content",
-    "identifier": "nemaye-internetu-pislya-onovlennya-windows",
-    "payload": {
-      "text": "🌐 Пропав інтернет після оновлення Windows? Швидке виправлення\n\nЗнайома ситуація: встановилося оновлення Windows, перезавантажились — і інтернету немає. Розбираємось, як повернути з'єднання.\n\n**Що робити:**\n\n**1. Скинути мережеві налаштування**\nВідкрийте CMD як адміністратор і виконайте:\n```\nnetsh winsock reset\nnetsh int ip reset\nipconfig /flushdns\n```\nПісля цього перезавантажте ПК.\n\n**2. Відкотити драйвер мережевої карти**\nДиспетчер пристроїв → Мережеві адаптери → правою кнопкою на ваш адаптер → Властивості → вкладка \"Драйвер\" → \"Відкотити\". Якщо Windows автоматично оновив драйвер — це часто допомагає.\n\n**3. Видалити проблемне оновлення**\nНалаштування → Оновлення та безпека → Переглянути журнал оновлень → Видалити оновлення. Зверніть увагу на останні встановлені патчі.\n\n**4. Перезапустити мережеві служби**\nУ PowerShell (від адміністратора):\n```\nRestart-NetAdapter -Name \"Ethernet\"\n```\n(замініть \"Ethernet\" на назву вашого адаптера)\n\nУ 90% випадків один із цих методів повертає інтернет. Якщо не допомогло — можливо, варто встановити драйвер мережевої карти вручну з сайту виробника.\n\n#Windows #WindowsTips #ІнтернетПроблеми #СистемнийАдмін\n\n🔗 https://cryptolockua.com/nemaye-internetu-pislya-onovlennya-windows"
-    },
-    "created_at": "2026-09-28T08:01:28.209Z"
-  },
-  "last_message_id": 520,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 521,
   "engage_ab_index": 2,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?"
