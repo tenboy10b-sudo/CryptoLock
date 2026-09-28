@@ -143,7 +143,12 @@
     "⚙️ Режим сну vs повне вимкнення ПК — що обрати?",
     "🧳 Чеклист: Безпека перед подорожжю з ноутбуком"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "bdf71db5-a5b9-4b9c-9474-c1c82dceed7e",
+    "type": "content",
+    "started_at": "2026-09-28T08:01:15.587Z",
+    "expires_at": "2026-09-28T08:16:15.587Z"
+  },
   "pending": null,
   "last_message_id": 520,
   "engage_ab_index": 2,
