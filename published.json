@@ -119,14 +119,15 @@
     "how-to-configure-windows-firewall-gpo",
     "how-to-speed-up-windows-11",
     "avto-blokuvannya-ekranu-gpo",
-    "nemaye-internetu-pislya-onovlennya-windows"
+    "nemaye-internetu-pislya-onovlennya-windows",
+    "how-to-fix-windows-black-screen"
   ],
-  "count": 120,
+  "count": 121,
   "promo_index": 76,
   "last_post": {
-    "slug": "nemaye-internetu-pislya-onovlennya-windows",
-    "title": "Немає інтернету після оновлення Windows: як виправити",
-    "time": "2026-09-28T08:01:28.209Z"
+    "slug": "how-to-fix-windows-black-screen",
+    "title": "How to Fix Black Screen in Windows 10 and 11",
+    "time": "2026-09-29T08:01:29.141Z"
   },
   "engage_index": 66,
   "extra_index": 96,
@@ -144,22 +145,9 @@
     "🧳 Чеклист: Безпека перед подорожжю з ноутбуком",
     "⚫ Чорний екран після входу — курсор є, а робочий стіл не завантажується"
   ],
-  "lock": {
-    "execution_id": "ccda760e-73b1-48d0-93ec-f8b7845992f7",
-    "type": "content",
-    "started_at": "2026-09-29T08:01:17.528Z",
-    "expires_at": "2026-09-29T08:16:17.528Z"
-  },
-  "pending": {
-    "execution_id": "ccda760e-73b1-48d0-93ec-f8b7845992f7",
-    "type": "content",
-    "identifier": "how-to-fix-windows-black-screen",
-    "payload": {
-      "text": "🖥️ **Чорний екран у Windows? Вирішуємо проблему**\n\nЗіткнулися з чорним екраном після входу в систему або оновлення? Ось перевірені способи виправлення:\n\n**1. Перезапуск Explorer.exe**\nНатисніть Ctrl+Shift+Esc → Файл → Запустити нове завдання → введіть:\n```\nexplorer.exe\n```\n\n**2. Оновлення драйвера відеокарти**\nЗавантажтеся в Безпечному режимі (F8 при старті), видаліть поточний драйвер GPU через Диспетчер пристроїв і встановіть свіжу версію з сайту виробника.\n\n**3. Перевірка підключення монітора**\nЯкщо є дискретна відеокарта — переключіть кабель з материнської плати на неї (або навпаки). Часто система перемикає вихід після оновлень.\n\n**4. Відновлення системи**\nЧерез екран відновлення (F11 при старті) оберіть \"Виправлення неполадок\" → \"Повернути комп'ютер у вихідний стан\"\n\n**5. Відключення швидкого запуску**\nУ CMD від адміністратора:\n```\npowercfg /h off\n```\n\n💡 **Порада**: У 80% випадків допомагає простий перезапуск Explorer або оновлення драйвера.\n\n#Windows #Windows10 #Windows11 #troubleshooting"
-    },
-    "created_at": "2026-09-29T08:01:29.141Z"
-  },
-  "last_message_id": 523,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 524,
   "engage_ab_index": 3,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
