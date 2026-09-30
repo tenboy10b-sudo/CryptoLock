@@ -120,14 +120,15 @@
     "how-to-speed-up-windows-11",
     "avto-blokuvannya-ekranu-gpo",
     "nemaye-internetu-pislya-onovlennya-windows",
-    "how-to-fix-windows-black-screen"
+    "how-to-fix-windows-black-screen",
+    "powershell-skrypty-dlya-admina-top20"
   ],
-  "count": 121,
+  "count": 122,
   "promo_index": 77,
   "last_post": {
-    "slug": "how-to-fix-windows-black-screen",
-    "title": "How to Fix Black Screen in Windows 10 and 11",
-    "time": "2026-09-29T08:01:29.141Z"
+    "slug": "powershell-skrypty-dlya-admina-top20",
+    "title": "20 PowerShell скриптів які має кожен адміністратор Windows",
+    "time": "2026-09-30T08:01:32.724Z"
   },
   "engage_index": 66,
   "extra_index": 97,
@@ -145,22 +146,9 @@
     "⚫ Чорний екран після входу — курсор є, а робочий стіл не завантажується",
     "🧹 **Команда дня: cleanmgr /sageset:1**"
   ],
-  "lock": {
-    "execution_id": "31cacf82-8faa-4500-8b66-2a092f3e8156",
-    "type": "content",
-    "started_at": "2026-09-30T08:01:20.373Z",
-    "expires_at": "2026-09-30T08:16:20.373Z"
-  },
-  "pending": {
-    "execution_id": "31cacf82-8faa-4500-8b66-2a092f3e8156",
-    "type": "content",
-    "identifier": "powershell-skrypty-dlya-admina-top20",
-    "payload": {
-      "text": "⚡️ PowerShell скрипти для кожного адміністратора Windows\n\nЗібрав для вас найкорисніші PowerShell команди, які щодня економлять час та нерви. Тримайте у закладках!\n\n**🔍 Швидка інвентаризація системи:**\n```powershell\nGet-ComputerInfo | Select-Object WindowsVersion, OsHardwareAbstractionLayer\n```\n\n**🛡 Перевірка останніх невдалих спроб входу:**\n```powershell\nGet-EventLog -LogName Security -InstanceId 4625 -Newest 10\n```\n\n**🧹 Очищення старих профілів (30+ днів):**\n```powershell\nGet-CimInstance Win32_UserProfile | Where {$_.LastUseTime -lt (Get-Date).AddDays(-30)} | Remove-CimInstance\n```\n\n**📊 Топ-10 процесів за споживанням пам'яті:**\n```powershell\nGet-Process | Sort-Object WS -Descending | Select-Object -First 10\n```\n\n**🔐 Список локальних адмінів:**\n```powershell\nGet-LocalGroupMember -Group \"Administrators\"\n```\n\n**Порада:** Створіть папку Scripts на диску C: і зберігайте там свої найчастіше використовувані команди у .ps1 файлах. Додайте цю папку до PATH для швидкого доступу.\n\nPowerShell — це не просто консоль, а потужний інструмент автоматизації, який має освоїти кожен адміністратор!\n\n#PowerShell #Windows #СисАдмін #Автоматизація"
-    },
-    "created_at": "2026-09-30T08:01:32.724Z"
-  },
-  "last_message_id": 526,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 527,
   "engage_ab_index": 3,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
