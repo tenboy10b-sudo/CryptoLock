@@ -152,7 +152,15 @@
     "started_at": "2026-10-01T08:01:18.183Z",
     "expires_at": "2026-10-01T08:16:18.183Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "fb3d423c-8116-4dec-992f-08b1c45c8adf",
+    "type": "content",
+    "identifier": "how-to-configure-windows-disk-management",
+    "payload": {
+      "text": "💾 Керування дисками через PowerShell і DiskPart\n\nХлопці, сьогодні розберемо, як професійно управляти дисками без графічного інтерфейсу. Це швидше і зручніше, ніж клацати мишкою!\n\n**📋 Основні команди DiskPart:**\n\n1️⃣ **Переглянути всі диски:**\n```\ndiskpart\nlist disk\n```\n\n2️⃣ **Створити новий розділ:**\n```\nselect disk 1\ncreate partition primary\nformat fs=ntfs quick\nassign letter=D\n```\n\n3️⃣ **PowerShell для швидкого форматування:**\n```powershell\nFormat-Volume -DriveLetter D -FileSystem NTFS -NewFileSystemLabel \"MyDisk\"\n```\n\n4️⃣ **Переглянути інфо про розділи:**\n```powershell\nGet-Partition\nGet-Disk\n```\n\n5️⃣ **Змінити букву диска:**\n```powershell\nSet-Partition -DriveLetter D -NewDriveLetter E\n```\n\n⚠️ **Важливо:** Завжди перевіряйте номер диска перед операціями! Помилка може призвести до втрати даних.\n\n💡 Порада: DiskPart — для складних операцій, PowerShell — для автоматизації та скриптів.\n\n#Windows #PowerShell #DiskPart #СистемнеАдміністрування"
+    },
+    "created_at": "2026-10-01T08:01:28.269Z"
+  },
   "last_message_id": 529,
   "engage_ab_index": 4,
   "poll_recent_topics": [
