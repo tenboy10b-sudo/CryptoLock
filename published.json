@@ -147,7 +147,12 @@
     "🧹 **Команда дня: cleanmgr /sageset:1**",
     "🎯 **Мало хто знає, що в Windows є буфер обміну з історією — можна копіювати десятки елементів і повертатися до них**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "f6e1e623-6e29-40c1-92d3-b2e4e63b8d87",
+    "type": "extra",
+    "started_at": "2026-10-01T16:00:53.211Z",
+    "expires_at": "2026-10-01T16:15:53.211Z"
+  },
   "pending": null,
   "last_message_id": 531,
   "engage_ab_index": 4,
