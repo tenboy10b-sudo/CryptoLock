@@ -153,7 +153,15 @@
     "started_at": "2026-10-02T08:01:16.008Z",
     "expires_at": "2026-10-02T08:16:16.008Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "45b60190-83ce-4fa8-9890-2a393062b922",
+    "type": "content",
+    "identifier": "windows-hello-nalashtuvannya-ta-vypravlennya",
+    "payload": {
+      "text": "🔐 **Windows Hello: налаштування та виправлення помилок**\n\nWindows Hello — зручний спосіб авторизації через PIN, відбиток або обличчя. Але що робити, коли щось йде не так?\n\n**Основні налаштування:**\n• Відкрийте **Параметри → Облікові записи → Параметри входу**\n• Налаштуйте PIN (мінімум 4 цифри, можна додати літери)\n• Активуйте біометрію, якщо є відповідне обладнання\n\n**Виправлення типових проблем:**\n\n**1. Hello не працює після оновлення**\nПерезапустіть службу через PowerShell (від адміністратора):\n```\nRestart-Service -Name \"WbioSrvc\" -Force\n```\n\n**2. Цикл скидання PIN**\nВидаліть папку **NGC**:\n- Завантажтеся в Safe Mode\n- Видаліть `C:\\Windows\\ServiceProfiles\\LocalService\\AppData\\Local\\Microsoft\\Ngc`\n- Перезавантажте і створіть новий PIN\n\n**3. Біометрія недоступна**\nПеревірте драйвери сканера/камери в Диспетчері пристроїв. Часто допомагає оновлення драйверів з сайту виробника.\n\n**Порада:** Завжди тримайте резервний спосіб входу (пароль облікового запису Microsoft).\n\n#Windows #WindowsHello #безпека #tips\n\n🔗 https://cryptolockua.com/windows-hello-nalashtuvannya-ta-vypravlennya"
+    },
+    "created_at": "2026-10-02T08:01:27.237Z"
+  },
   "last_message_id": 532,
   "engage_ab_index": 4,
   "poll_recent_topics": [
