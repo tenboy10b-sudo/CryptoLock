@@ -149,7 +149,12 @@
     "Чому вентилятор на ПК постійно гучно шумить?",
     "CMD vs PowerShell — що краще для звичайного користувача?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "396c10a4-22e4-4628-ab87-c84ed0db0b04",
+    "type": "middle",
+    "started_at": "2026-10-03T10:00:54.691Z",
+    "expires_at": "2026-10-03T10:15:54.691Z"
+  },
   "pending": null,
   "last_message_id": 536,
   "engage_ab_index": 5,
