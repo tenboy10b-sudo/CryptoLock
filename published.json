@@ -155,7 +155,15 @@
     "started_at": "2026-10-04T08:01:13.428Z",
     "expires_at": "2026-10-04T08:16:13.428Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "2eb34a2d-949a-4d37-8f2d-6b87ef18984b",
+    "type": "content",
+    "identifier": "yak-nalashtuvanty-avtomatychne-blokuvannya-windows",
+    "payload": {
+      "text": "🔒 **Автоблокування екрана Windows — захист за 2 хвилини**\n\nВідходиш від комп'ютера? Налаштуй автоматичне блокування екрана через певний час бездіяльності. Це базова, але критично важлива практика безпеки.\n\n**Три способи налаштування:**\n\n**1️⃣ Через Параметри (найпростіше)**\nПараметри → Облікові записи → Параметри входу → У разі вашої відсутності → встанови час (наприклад, 5 хвилин)\n\n**2️⃣ Через Реєстр**\n```\nreg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\" /v InactivityTimeoutSecs /t REG_DWORD /d 300 /f\n```\n(300 = 5 хвилин у секундах)\n\n**3️⃣ Через GPO (для доменів)**\nComputer Configuration → Policies → Windows Settings → Security Settings → Local Policies → Security Options → \nЗнайди \"Interactive logon: Machine inactivity limit\" та встанови потрібне значення в секундах\n\n**💡 Порада:** Комбінуй з налаштуванням заставки, яка також блокує екран. Подвійний захист ніколи не завадить!\n\nПам'ятай: навіть хвилина відсутності — це вікно можливостей для зловмисників або просто цікавих колег 😉\n\n#Windows #безпека #tips #sysadmin"
+    },
+    "created_at": "2026-10-04T08:01:24.785Z"
+  },
   "last_message_id": 538,
   "engage_ab_index": 5,
   "poll_recent_topics": [
