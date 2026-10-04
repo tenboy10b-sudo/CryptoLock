@@ -124,14 +124,15 @@
     "powershell-skrypty-dlya-admina-top20",
     "how-to-configure-windows-disk-management",
     "windows-hello-nalashtuvannya-ta-vypravlennya",
-    "yak-nalashtuvanty-son-ta-hibernatsiyu-windows"
+    "yak-nalashtuvanty-son-ta-hibernatsiyu-windows",
+    "yak-nalashtuvanty-avtomatychne-blokuvannya-windows"
   ],
-  "count": 125,
+  "count": 126,
   "promo_index": 79,
   "last_post": {
-    "slug": "yak-nalashtuvanty-son-ta-hibernatsiyu-windows",
-    "title": "Сон і гібернація в Windows: налаштування, різниця і проблеми",
-    "time": "2026-10-03T08:01:30.869Z"
+    "slug": "yak-nalashtuvanty-avtomatychne-blokuvannya-windows",
+    "title": "Автоблокування екрана Windows через GPO, реєстр і Параметри",
+    "time": "2026-10-04T08:01:24.785Z"
   },
   "engage_index": 67,
   "extra_index": 101,
@@ -149,22 +150,9 @@
     "CMD vs PowerShell — що краще для звичайного користувача?",
     "✅ Чеклист: Щомісячне обслуговування ПК"
   ],
-  "lock": {
-    "execution_id": "2eb34a2d-949a-4d37-8f2d-6b87ef18984b",
-    "type": "content",
-    "started_at": "2026-10-04T08:01:13.428Z",
-    "expires_at": "2026-10-04T08:16:13.428Z"
-  },
-  "pending": {
-    "execution_id": "2eb34a2d-949a-4d37-8f2d-6b87ef18984b",
-    "type": "content",
-    "identifier": "yak-nalashtuvanty-avtomatychne-blokuvannya-windows",
-    "payload": {
-      "text": "🔒 **Автоблокування екрана Windows — захист за 2 хвилини**\n\nВідходиш від комп'ютера? Налаштуй автоматичне блокування екрана через певний час бездіяльності. Це базова, але критично важлива практика безпеки.\n\n**Три способи налаштування:**\n\n**1️⃣ Через Параметри (найпростіше)**\nПараметри → Облікові записи → Параметри входу → У разі вашої відсутності → встанови час (наприклад, 5 хвилин)\n\n**2️⃣ Через Реєстр**\n```\nreg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\" /v InactivityTimeoutSecs /t REG_DWORD /d 300 /f\n```\n(300 = 5 хвилин у секундах)\n\n**3️⃣ Через GPO (для доменів)**\nComputer Configuration → Policies → Windows Settings → Security Settings → Local Policies → Security Options → \nЗнайди \"Interactive logon: Machine inactivity limit\" та встанови потрібне значення в секундах\n\n**💡 Порада:** Комбінуй з налаштуванням заставки, яка також блокує екран. Подвійний захист ніколи не завадить!\n\nПам'ятай: навіть хвилина відсутності — це вікно можливостей для зловмисників або просто цікавих колег 😉\n\n#Windows #безпека #tips #sysadmin"
-    },
-    "created_at": "2026-10-04T08:01:24.785Z"
-  },
-  "last_message_id": 538,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 539,
   "engage_ab_index": 5,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
