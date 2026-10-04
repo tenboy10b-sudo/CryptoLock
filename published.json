@@ -150,7 +150,12 @@
     "CMD vs PowerShell — що краще для звичайного користувача?",
     "✅ Чеклист: Щомісячне обслуговування ПК"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "469ce7d7-993a-4d1d-a25e-aebd06d853d1",
+    "type": "extra",
+    "started_at": "2026-10-04T16:00:46.296Z",
+    "expires_at": "2026-10-04T16:15:46.296Z"
+  },
   "pending": null,
   "last_message_id": 540,
   "engage_ab_index": 6,
