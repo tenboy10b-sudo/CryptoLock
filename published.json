@@ -150,7 +150,12 @@
     "✅ Чеклист: Щомісячне обслуговування ПК",
     "🖨️ Принтер не друкує — підключений, але нічого не відбувається"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "34e57512-a98e-4edb-9d3f-f14b45b348c0",
+    "type": "content",
+    "started_at": "2026-10-05T08:01:17.523Z",
+    "expires_at": "2026-10-05T08:16:17.523Z"
+  },
   "pending": null,
   "last_message_id": 541,
   "engage_ab_index": 6,
