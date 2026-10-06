@@ -157,7 +157,15 @@
     "started_at": "2026-10-06T08:01:18.710Z",
     "expires_at": "2026-10-06T08:16:18.710Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "9be10d98-79b0-40aa-be8e-5e81be1e00b7",
+    "type": "content",
+    "identifier": "how-to-configure-windows-ipv6",
+    "payload": {
+      "text": "🌐 Як керувати IPv6 у Windows\n\nIPv6 увімкнений за замовчуванням у Windows, але іноді може викликати проблеми з мережею. Ось що потрібно знати:\n\n**Перевірка статусу IPv6:**\nВідкрийте PowerShell та виконайте:\n```\nGet-NetAdapterBinding -ComponentID ms_tcpip6\n```\n\n**Коли варто вимкнути IPv6:**\n• Проблеми з підключенням до локальної мережі\n• Повільне завантаження DNS\n• Конфлікти з VPN або застарілим обладнанням\n\n**Вимкнення через інтерфейс:**\nПанель керування → Мережа та Інтернет → Центр керування мережами → Властивості адаптера → зніміть галочку з \"IP версії 6 (TCP/IPv6)\"\n\n**Вимкнення через реєстр (для всіх адаптерів):**\n```\nreg add \"HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters\" /v DisabledComponents /t REG_DWORD /d 255 /f\n```\nПісля цього потрібен перезавантаження.\n\n**Важливо:** Не вимикайте IPv6 повністю без потреби — це може порушити роботу деяких служб Windows і Microsoft 365.\n\n💡 Якщо виникли проблеми після відключення, скиньте мережеві налаштування:\n```\nnetsh int ipv6 reset\n```\n\n#Windows #мережа #IPv6 #сисадмін\n\n🔗 https://cryptolockua.com/en/how-to-configure-windows-ipv6"
+    },
+    "created_at": "2026-10-06T08:01:31.547Z"
+  },
   "last_message_id": 544,
   "engage_ab_index": 6,
   "poll_recent_topics": [
