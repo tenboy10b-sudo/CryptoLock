@@ -158,7 +158,23 @@
     "started_at": "2026-10-06T10:00:54.643Z",
     "expires_at": "2026-10-06T10:15:54.643Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "f2531b9f-c34f-4024-836b-b4cc10f3ae14",
+    "type": "middle",
+    "identifier": "engage-ab-poll:6",
+    "payload": {
+      "poll": {
+        "question": "Яку клавішу ви використовуєте для видалення файлів?",
+        "options": [
+          "Delete (у кошик)",
+          "Shift+Delete (назавжди)",
+          "Обидва варіанти"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-10-06T10:00:58.872Z"
+  },
   "last_message_id": 545,
   "engage_ab_index": 6,
   "poll_recent_topics": [
