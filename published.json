@@ -158,7 +158,15 @@
     "started_at": "2026-10-07T08:01:22.892Z",
     "expires_at": "2026-10-07T08:16:22.892Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "85463da8-0b37-4841-8d44-e4a4525bef09",
+    "type": "content",
+    "identifier": "robocopy-synkhronizatsiya-papok-windows",
+    "payload": {
+      "text": "💾 **Robocopy: потужне резервне копіювання без сторонніх програм**\n\nЗабудьте про copy і xcopy — Robocopy це професійний інструмент для синхронізації та бекапу, вбудований у Windows!\n\n**Основні команди:**\n\n🔹 **Просте копіювання з підпапками:**\n```\nrobocopy C:\\Source D:\\Backup /E\n```\n\n🔹 **Дзеркальна синхронізація** (видаляє зайве в призначенні):\n```\nrobocopy C:\\Data D:\\Mirror /MIR\n```\n\n🔹 **З журналом помилок:**\n```\nrobocopy C:\\Docs E:\\Backup /E /LOG:backup.log /TEE\n```\n\n🔹 **Копіювати тільки нові файли** (економить час):\n```\nrobocopy C:\\Work D:\\Backup /E /XO\n```\n\n**Автоматизація:**\nСтворіть .bat файл з командою і додайте його в Task Scheduler для щоденного бекапу о 2:00 ночі.\n\n**Переваги:**\n✅ Відновлює з'єднання при обриві\n✅ Пропускає файли в користуванні\n✅ Детальна статистика копіювання\n✅ Багатопоточність (/MT:8)\n\n⚠️ Будьте обережні з /MIR — він видаляє файли в призначенні, яких немає в джерелі!\n\n#Windows #Robocopy #Backup #СистемнеАдміністрування"
+    },
+    "created_at": "2026-10-07T08:01:43.315Z"
+  },
   "last_message_id": 547,
   "engage_ab_index": 7,
   "poll_recent_topics": [
