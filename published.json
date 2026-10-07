@@ -153,7 +153,12 @@
     "🔍 **Команда дня: netstat -aon**",
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису екрану — без жодних сторонніх програм**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "8476c97b-9412-4a3b-a0a7-70041b5cc438",
+    "type": "middle",
+    "started_at": "2026-10-07T10:00:55.943Z",
+    "expires_at": "2026-10-07T10:15:55.943Z"
+  },
   "pending": null,
   "last_message_id": 548,
   "engage_ab_index": 7,
