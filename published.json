@@ -128,14 +128,15 @@
     "yak-nalashtuvanty-avtomatychne-blokuvannya-windows",
     "how-to-decode-windows-error-codes",
     "how-to-configure-windows-ipv6",
-    "robocopy-synkhronizatsiya-papok-windows"
+    "robocopy-synkhronizatsiya-papok-windows",
+    "how-to-install-drivers-windows-10-11"
   ],
-  "count": 129,
+  "count": 130,
   "promo_index": 81,
   "last_post": {
-    "slug": "robocopy-synkhronizatsiya-papok-windows",
-    "title": "Robocopy: синхронізація папок і резервне копіювання в Windows",
-    "time": "2026-10-07T08:01:43.315Z"
+    "slug": "how-to-install-drivers-windows-10-11",
+    "title": "How to Install Drivers on Windows 10 and 11: Complete Guide for All Devices",
+    "time": "2026-10-08T08:01:35.515Z"
   },
   "engage_index": 68,
   "extra_index": 105,
@@ -153,22 +154,9 @@
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису екрану — без жодних сторонніх програм**",
     "Чому з'являється синій екран після виходу зі сну?"
   ],
-  "lock": {
-    "execution_id": "b0f5e7cc-4457-476f-88b7-87f24218c62e",
-    "type": "content",
-    "started_at": "2026-10-08T08:01:21.023Z",
-    "expires_at": "2026-10-08T08:16:21.023Z"
-  },
-  "pending": {
-    "execution_id": "b0f5e7cc-4457-476f-88b7-87f24218c62e",
-    "type": "content",
-    "identifier": "how-to-install-drivers-windows-10-11",
-    "payload": {
-      "text": "🔧 Як правильно встановити драйвери на Windows 10/11\n\nПісля чистої інсталяції Windows важливо правильно встановити драйвери, щоб система працювала стабільно і безпечно. Ось перевірені способи:\n\n**1. Автоматичне оновлення**\nВідкрийте Параметри → Оновлення та безпека → Центр оновлення Windows. Система сама завантажить більшість драйверів.\n\n**2. Визначити невідомий пристрій**\nУ Диспетчері пристроїв (Win+X) знайдіть пристрій з жовтим знаком → Властивості → Відомості → ІД обладнання. Скопіюйте VEN і DEV коди та шукайте драйвер на сайті виробника.\n\n**3. Перевірка драйверів через PowerShell**\n```powershell\nGet-WmiObject Win32_PnPEntity | Where-Object{$_.ConfigManagerErrorCode -ne 0} | Select Name, DeviceID\n```\n\n**4. Пріоритет встановлення**\nСпочатку встановіть драйвери чипсету, потім відеокарти, далі — решту. Це запобігає конфліктам та BSOD.\n\n**5. Офіційні джерела**\nЗавантажуйте драйвери лише з сайтів виробників (Intel, AMD, NVIDIA, виробника материнської плати). Сторонні \"пакувальники драйверів\" можуть містити шкідливе ПЗ.\n\n⚠️ Після встановлення драйверів створіть точку відновлення системи!\n\n#Windows #драйвери #безпека #tips"
-    },
-    "created_at": "2026-10-08T08:01:35.515Z"
-  },
-  "last_message_id": 550,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 551,
   "engage_ab_index": 7,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
