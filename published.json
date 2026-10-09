@@ -155,7 +155,12 @@
     "Чому з'являється синій екран після виходу зі сну?",
     "🛡️ Windows Defender vs сторонній антивірус — що обрати у 2025?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "02d106e2-7a08-4f76-8b54-c8fc87eb75a1",
+    "type": "middle",
+    "started_at": "2026-10-09T10:00:54.957Z",
+    "expires_at": "2026-10-09T10:15:54.957Z"
+  },
   "pending": null,
   "last_message_id": 554,
   "engage_ab_index": 8,
