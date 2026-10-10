@@ -130,14 +130,15 @@
     "how-to-configure-windows-ipv6",
     "robocopy-synkhronizatsiya-papok-windows",
     "how-to-install-drivers-windows-10-11",
-    "yak-zminyty-dns-windows"
+    "yak-zminyty-dns-windows",
+    "stvorenny-admina-cherez-cmd"
   ],
-  "count": 131,
+  "count": 132,
   "promo_index": 82,
   "last_post": {
-    "slug": "yak-zminyty-dns-windows",
-    "title": "Як налаштувати DNS в Windows вручну",
-    "time": "2026-10-09T08:01:22.471Z"
+    "slug": "stvorenny-admina-cherez-cmd",
+    "title": "Як створити обліковий запис адміністратора через командний рядок",
+    "time": "2026-10-10T08:01:12.009Z"
   },
   "engage_index": 69,
   "extra_index": 107,
@@ -155,22 +156,9 @@
     "🛡️ Windows Defender vs сторонній антивірус — що обрати у 2025?",
     "🚀 Чеклист: Прискорення Windows за 10 хвилин"
   ],
-  "lock": {
-    "execution_id": "31ac16d1-8918-4173-9eb1-68f0814a689b",
-    "type": "content",
-    "started_at": "2026-10-10T08:01:00.695Z",
-    "expires_at": "2026-10-10T08:16:00.695Z"
-  },
-  "pending": {
-    "execution_id": "31ac16d1-8918-4173-9eb1-68f0814a689b",
-    "type": "content",
-    "identifier": "stvorenny-admina-cherez-cmd",
-    "payload": {
-      "text": "💻 Як створити адміністратора через командний рядок\n\nІноді потрібно швидко створити новий обліковий запис адміністратора — наприклад, коли основний акаунт заблоковано або для тестування. CMD справляється з цим за хвилину!\n\n**Покрокова інструкція:**\n\n**Крок 1.** Запустіть командний рядок від імені адміністратора (клік правою кнопкою → \"Запустити від імені адміністратора\")\n\n**Крок 2.** Створіть нового користувача:\n```\nnet user ІмяКористувача Пароль /add\n```\n\n**Крок 3.** Надайте права адміністратора:\n```\nnet localgroup Адміністратори ІмяКористувача /add\n```\n\n**Крок 4.** Перевірте створення:\n```\nnet user ІмяКористувача\n```\n\n**Важливо!** Використовуйте складний пароль і зберігайте облікові дані в безпечному місці. Цей метод корисний для відновлення доступу, але не зловживайте правами адміністратора в повсякденній роботі.\n\n**Порада:** Для Windows 11 команди ідентичні. Якщо працюєте в домені, використовуйте \"Domain Admins\" замість \"Адміністратори\".\n\n#Windows #безпека #CMD #tips\n\n🔗 https://cryptolockua.com/stvorenny-admina-cherez-cmd"
-    },
-    "created_at": "2026-10-10T08:01:12.009Z"
-  },
-  "last_message_id": 556,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 557,
   "engage_ab_index": 8,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
