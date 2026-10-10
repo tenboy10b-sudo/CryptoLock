@@ -156,7 +156,12 @@
     "🛡️ Windows Defender vs сторонній антивірус — що обрати у 2025?",
     "🚀 Чеклист: Прискорення Windows за 10 хвилин"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "2741d9c1-b2af-4e73-ba43-e88abcab092f",
+    "type": "middle",
+    "started_at": "2026-10-10T10:00:54.678Z",
+    "expires_at": "2026-10-10T10:15:54.678Z"
+  },
   "pending": null,
   "last_message_id": 557,
   "engage_ab_index": 8,
