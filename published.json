@@ -157,7 +157,12 @@
     "🚀 Чеклист: Прискорення Windows за 10 хвилин",
     "🔊 Звук пропав після оновлення Windows"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "f02f2310-0e2d-4ede-b016-deb295af39ff",
+    "type": "middle",
+    "started_at": "2026-10-11T10:00:56.597Z",
+    "expires_at": "2026-10-11T10:15:56.597Z"
+  },
   "pending": null,
   "last_message_id": 560,
   "engage_ab_index": 9,
