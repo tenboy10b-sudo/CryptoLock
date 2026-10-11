@@ -162,7 +162,15 @@
     "started_at": "2026-10-11T08:01:02.164Z",
     "expires_at": "2026-10-11T08:16:02.164Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "8ad61a01-f9d1-4781-8c49-44684d586528",
+    "type": "content",
+    "identifier": "yak-pidklyuchyty-pk-bez-display",
+    "payload": {
+      "text": "🖥️ **Як підключитись до ПК без монітора**\n\nПотрібно керувати комп'ютером, до якого немає фізичного доступу? Розбираємо три основні способи віддаленого підключення у Windows:\n\n**1️⃣ RDP (Remote Desktop Protocol)**\nНайпростіший варіант для Windows. Увімкніть RDP у налаштуваннях системи або через PowerShell:\n```\nSet-ItemProperty -Path 'HKLM:\\System\\CurrentControlSet\\Control\\Terminal Server' -name \"fDenyTSConnections\" -value 0\nEnable-NetFirewallRule -DisplayGroup \"Remote Desktop\"\n```\n\n**2️⃣ VNC (Virtual Network Computing)**\nУніверсальне рішення для всіх ОС. Встановіть TightVNC або UltraVNC. Працює навіть коли RDP недоступний. Не забудьте встановити надійний пароль!\n\n**3️⃣ SSH (OpenSSH)**\nІдеально для командного рядка. У Windows 10/11 вже вбудований:\n```\nAdd-WindowsCapability -Online -Name OpenSSH.Server*\nStart-Service sshd\n```\n\n**⚠️ Типові проблеми:**\n- Брандмауер блокує з'єднання — додайте правила\n- \"Чорний екран\" в RDP — перевірте драйвери відеокарти\n- Для headless режиму можуть знадобитись HDMI-заглушки\n\n**Порада:** Завжди використовуйте VPN або зміняйте стандартні порти для безпеки!\n\n#Windows #віддаленийдоступ #RDP #безпека"
+    },
+    "created_at": "2026-10-11T08:01:14.637Z"
+  },
   "last_message_id": 559,
   "engage_ab_index": 9,
   "poll_recent_topics": [
