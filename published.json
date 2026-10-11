@@ -135,7 +135,7 @@
     "yak-pidklyuchyty-pk-bez-display"
   ],
   "count": 133,
-  "promo_index": 82,
+  "promo_index": 83,
   "last_post": {
     "slug": "yak-pidklyuchyty-pk-bez-display",
     "title": "Як підключитись до ПК без монітора: RDP, VNC і SSH",
@@ -157,22 +157,9 @@
     "🚀 Чеклист: Прискорення Windows за 10 хвилин",
     "🔊 Звук пропав після оновлення Windows"
   ],
-  "lock": {
-    "execution_id": "f02f2310-0e2d-4ede-b016-deb295af39ff",
-    "type": "middle",
-    "started_at": "2026-10-11T10:00:56.597Z",
-    "expires_at": "2026-10-11T10:15:56.597Z"
-  },
-  "pending": {
-    "execution_id": "f02f2310-0e2d-4ede-b016-deb295af39ff",
-    "type": "middle",
-    "identifier": "standalone-topic:Тимчасові файли і підозрілі директорії",
-    "payload": {
-      "text": "🔍 **Перевірка тимчасових папок на підозрілі файли**\n\nШкідливе ПЗ часто розпаковується та запускається з тимчасових директорій. Регулярна перевірка цих папок допомагає виявити загрози на ранніх етапах.\n\n**Як перевірити:**\n\n1. **Відкрийте папки TEMP через Провідник:**\n   - Натисніть Win+R, введіть `%temp%` — перевірте дату створення файлів\n   - Введіть `C:\\Windows\\Temp` — системна тимчасова папка\n\n2. **Перевірте запущені процеси з TEMP через PowerShell:**\n```powershell\nGet-Process | Where-Object {$_.Path -like \"*\\Temp\\*\"} | Select-Object Name, Path, Id\n```\n\n3. **Знайдіть нещодавно створені файли в TEMP:**\n```powershell\nGet-ChildItem $env:TEMP -Recurse | Where-Object {$_.CreationTime -gt (Get-Date).AddDays(-7)} | Sort-Object CreationTime -Descending\n```\n\n4. **Перевірте автозапуск з тимчасових папок:**\n```powershell\nGet-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run | Format-List\n```\n\n**Ознаки проблем:**\n- Процеси з випадковими назвами (.exe файли в %temp%)\n- Файли з подвійними розширеннями (документ.pdf.exe)\n- Високе навантаження CPU від невідомих процесів\n- Автозапуск програм з тимчасових папок\n\n**Що робити:**\nЗавершіть підозрілий процес через Диспетчер завдань (Ctrl+Shift+Esc), видаліть файл, проскануйте систему вбудованим Windows Defender.\n\n#windows #безпека #кібербезпека"
-    },
-    "created_at": "2026-10-11T10:01:08.892Z"
-  },
-  "last_message_id": 560,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 561,
   "engage_ab_index": 9,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
