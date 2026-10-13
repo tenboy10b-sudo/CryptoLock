@@ -133,14 +133,15 @@
     "yak-zminyty-dns-windows",
     "stvorenny-admina-cherez-cmd",
     "yak-pidklyuchyty-pk-bez-display",
-    "yak-vymknuty-avtozavantazhennya"
+    "yak-vymknuty-avtozavantazhennya",
+    "how-to-manage-startup-programs-windows"
   ],
-  "count": 134,
+  "count": 135,
   "promo_index": 83,
   "last_post": {
-    "slug": "yak-vymknuty-avtozavantazhennya",
-    "title": "Як вимкнути зайві програми з автозавантаження Windows",
-    "time": "2026-10-12T08:01:21.400Z"
+    "slug": "how-to-manage-startup-programs-windows",
+    "title": "How to Manage Startup Programs in Windows 10 and 11",
+    "time": "2026-10-13T08:01:29.391Z"
   },
   "engage_index": 70,
   "extra_index": 110,
@@ -158,22 +159,9 @@
     "🔋 **Команда дня: powercfg /batteryreport**",
     "🎯 **Мало хто знає, що в Windows є God Mode — приховане меню з усіма налаштуваннями системи в одному місці**"
   ],
-  "lock": {
-    "execution_id": "43ca29eb-a358-4cd3-abc0-a565c5522904",
-    "type": "content",
-    "started_at": "2026-10-13T08:01:08.241Z",
-    "expires_at": "2026-10-13T08:16:08.241Z"
-  },
-  "pending": {
-    "execution_id": "43ca29eb-a358-4cd3-abc0-a565c5522904",
-    "type": "content",
-    "identifier": "how-to-manage-startup-programs-windows",
-    "payload": {
-      "text": "⚡ Як керувати автозапуском програм у Windows 10/11\n\nБезліч програм прописуються в автозапуск і сповільнюють завантаження системи. Ось як це виправити:\n\n**1. Диспетчер завдань (найпростіший спосіб)**\nCtrl+Shift+Esc → вкладка \"Автозавантаження\". Тут бачите вплив кожної програми на швидкість запуску. Клік правою кнопкою → \"Вимкнути\" непотрібні.\n\n**2. MSConfig (класика)**\nWin+R → `msconfig` → вкладка \"Автозавантаження\". Працює завжди, навіть якщо інші методи недоступні.\n\n**3. Папка автозапуску**\nWin+R → `shell:startup` — побачите програми, що запускаються для вашого користувача. Видаліть непотрібні ярлики.\n\n**4. PowerShell (для просунутих)**\nПереглянути всі програми автозапуску:\n```\nGet-CimInstance Win32_StartupCommand | Select-Object Name, Location\n```\n\n**💡 Порада безпеки:** \nНе вимикайте антивірус, драйвери та системні компоненти. Вимикайте лише те, що впізнаєте (месенджери, торенти, оновлювачі програм).\n\nПісля чистки автозапуску Windows завантажуватиметься на 30-50% швидше!\n\n#Windows #оптимізація #tips #безпека"
-    },
-    "created_at": "2026-10-13T08:01:29.391Z"
-  },
-  "last_message_id": 565,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 566,
   "engage_ab_index": 10,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
