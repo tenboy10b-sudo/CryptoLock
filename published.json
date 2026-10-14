@@ -160,7 +160,12 @@
     "🎯 **Мало хто знає, що в Windows є God Mode — приховане меню з усіма налаштуваннями системи в одному місці**",
     "🐌 Чому програми довго відкриваються при першому запуску?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "9c67ab2e-92cf-44d7-a4d0-386af8ed70e4",
+    "type": "middle",
+    "started_at": "2026-10-14T10:00:59.159Z",
+    "expires_at": "2026-10-14T10:15:59.159Z"
+  },
   "pending": null,
   "last_message_id": 569,
   "engage_ab_index": 10,
