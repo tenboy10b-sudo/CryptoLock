@@ -166,7 +166,24 @@
     "started_at": "2026-10-14T10:00:59.159Z",
     "expires_at": "2026-10-14T10:15:59.159Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "9c67ab2e-92cf-44d7-a4d0-386af8ed70e4",
+    "type": "middle",
+    "identifier": "engage-ab-poll:10",
+    "payload": {
+      "poll": {
+        "question": "Як ви керуєте програмами в автозапуску Windows?",
+        "options": [
+          "Вимикаю все зайве",
+          "Залишаю як є",
+          "Не знаю, де це",
+          "Регулярно переглядаю"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-10-14T10:01:03.445Z"
+  },
   "last_message_id": 569,
   "engage_ab_index": 10,
   "poll_recent_topics": [
