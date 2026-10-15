@@ -161,7 +161,12 @@
     "🐌 Чому програми довго відкриваються при першому запуску?",
     "💾 HDD vs SSD для системного диска — що обрати?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "2779ec6f-48db-44d1-b991-09dffd17c931",
+    "type": "extra",
+    "started_at": "2026-10-15T16:01:02.040Z",
+    "expires_at": "2026-10-15T16:16:02.040Z"
+  },
   "pending": null,
   "last_message_id": 573,
   "engage_ab_index": 11,
