@@ -139,7 +139,7 @@
     "nalashtuvannya-merezhevoho-adaptera-windows"
   ],
   "count": 137,
-  "promo_index": 84,
+  "promo_index": 85,
   "last_post": {
     "slug": "nalashtuvannya-merezhevoho-adaptera-windows",
     "title": "Налаштування мережевого адаптера Windows 10 і 11 через PowerShell",
@@ -161,22 +161,9 @@
     "🐌 Чому програми довго відкриваються при першому запуску?",
     "💾 HDD vs SSD для системного диска — що обрати?"
   ],
-  "lock": {
-    "execution_id": "644a3ab3-dc13-49d0-b9a1-91580864ae21",
-    "type": "middle",
-    "started_at": "2026-10-15T10:00:58.880Z",
-    "expires_at": "2026-10-15T10:15:58.880Z"
-  },
-  "pending": {
-    "execution_id": "644a3ab3-dc13-49d0-b9a1-91580864ae21",
-    "type": "middle",
-    "identifier": "standalone-topic:Реєстр — ключі автозапуску",
-    "payload": {
-      "text": "🔍 **Перевіряємо ключі автозапуску в реєстрі**\n\nШкідливе ПЗ часто прописується в реєстр Windows, щоб запускатися автоматично після перезавантаження. Перевіряємо найпопулярніші місця приховування.\n\n**Крок 1. Відкрити редактор реєстру**\nWin+R → `regedit` → Enter\n\n**Крок 2. Перевірити основні ключі автозапуску**\n```\nHKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\nHKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\nHKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce\nHKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce\n```\n\n**Крок 3. Альтернативна перевірка через PowerShell**\n```powershell\nGet-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\nGet-ItemProperty HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n```\n\n**На що звертати увагу:**\n- Незнайомі назви програм або випадкові набори символів\n- Шляхи до файлів у папках %TEMP%, %APPDATA%, користувацьких теках\n- Підозрілі розширення (.vbs, .bat, .ps1 у дивних місцях)\n- Програми, які ви не встановлювали\n\n**Якщо знайшов підозріле:**\n1. Зроби скріншот запису\n2. Перевір файл на VirusTotal (скопіюй шлях)\n3. Видаляй ключ лише якщо впевнений — деякі легітимні програми теж використовують автозапуск\n4. Створи точку відновлення перед змінами\n\n#windows #безпека #реєстр"
-    },
-    "created_at": "2026-10-15T10:01:12.759Z"
-  },
-  "last_message_id": 572,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 573,
   "engage_ab_index": 11,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
