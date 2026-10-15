@@ -166,7 +166,15 @@
     "started_at": "2026-10-15T08:01:07.155Z",
     "expires_at": "2026-10-15T08:16:07.155Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "01fd90db-b3c5-4348-b374-c9d12967c2db",
+    "type": "content",
+    "identifier": "nalashtuvannya-merezhevoho-adaptera-windows",
+    "payload": {
+      "text": "🔧 **Керуємо мережею через PowerShell**\n\nЗабудьте про клацання мишкою в GUI — налаштовуємо мережу як справжні профі!\n\n**📌 Основні команди:**\n\n**1. Переглянути всі адаптери:**\n```powershell\nGet-NetAdapter\n```\n\n**2. Встановити статичну IP-адресу:**\n```powershell\nNew-NetIPAddress -InterfaceAlias \"Ethernet\" -IPAddress 192.168.1.100 -PrefixLength 24 -DefaultGateway 192.168.1.1\n```\n\n**3. Змінити DNS-сервери:**\n```powershell\nSet-DnsClientServerAddress -InterfaceAlias \"Ethernet\" -ServerAddresses \"8.8.8.8\",\"8.8.4.4\"\n```\n\n**4. Вимкнути непотрібні адаптери:**\n```powershell\nDisable-NetAdapter -Name \"Wi-Fi\"\n```\n\n**5. Змінити MTU (корисно для VPN):**\n```powershell\nSet-NetIPInterface -InterfaceAlias \"Ethernet\" -NlMtuBytes 1400\n```\n\n**💡 Діагностика:**\n```powershell\nTest-NetConnection -ComputerName google.com -InformationLevel Detailed\n```\n\n**Порада безпеки:** Завжди вимикайте невикористовувані мережеві адаптери — це зменшує поверхню атаки на вашу систему!\n\n#Windows #PowerShell #безпека #мережа"
+    },
+    "created_at": "2026-10-15T08:01:23.577Z"
+  },
   "last_message_id": 571,
   "engage_ab_index": 11,
   "poll_recent_topics": [
