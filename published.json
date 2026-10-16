@@ -162,7 +162,12 @@
     "💾 HDD vs SSD для системного диска — що обрати?",
     "🧳 Чеклист: Безпека перед подорожжю з ноутбуком"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "e0d352ad-9ba4-4ca4-8d48-32ad01f6a52d",
+    "type": "middle",
+    "started_at": "2026-10-16T10:00:59.525Z",
+    "expires_at": "2026-10-16T10:15:59.525Z"
+  },
   "pending": null,
   "last_message_id": 575,
   "engage_ab_index": 11,
