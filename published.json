@@ -167,7 +167,15 @@
     "started_at": "2026-10-16T08:01:07.023Z",
     "expires_at": "2026-10-16T08:16:07.023Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "98bbf6e7-a2f2-45cc-8429-b7af6755e912",
+    "type": "content",
+    "identifier": "yak-pereviryty-versiyu-windows",
+    "payload": {
+      "text": "🔍 **Як дізнатись версію і збірку Windows**\n\nІноді потрібно швидко з'ясувати, яка саме версія Windows встановлена на комп'ютері. Ось найпростіші способи:\n\n**1. Команда winver**\nНатисніть Win+R, введіть `winver` і отримаєте всю інформацію: версію, збірку та видання Windows у зручному вікні.\n\n**2. Системна інформація**\nWin+R → `msinfo32` — тут побачите детальну інформацію про систему, включно з версією ОС та апаратною конфігурацією.\n\n**3. Через PowerShell**\nВідкрийте PowerShell і виконайте:\n```\nGet-ComputerInfo | select WindowsProductName, WindowsVersion, OsBuildNumber\n```\n\n**4. Швидко в CMD**\n```\nsysteminfo | findstr /B /C:\"OS Name\" /C:\"OS Version\"\n```\n\n**Навіщо це потрібно?**\nЗнання точної версії важливе для встановлення оновлень безпеки, перевірки сумісності програм та діагностики проблем. Деякі вразливості стосуються лише певних збірок!\n\n💡 **Порада:** Збережіть ці команди — вони часто стають у пригоді при технічній підтримці.\n\n#Windows #WindowsTips #КомпютернаБезпека #SysAdmin"
+    },
+    "created_at": "2026-10-16T08:01:17.502Z"
+  },
   "last_message_id": 574,
   "engage_ab_index": 11,
   "poll_recent_topics": [
