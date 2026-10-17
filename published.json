@@ -137,14 +137,15 @@
     "how-to-manage-startup-programs-windows",
     "yak-nalashtuvanty-windows-bez-internetu",
     "nalashtuvannya-merezhevoho-adaptera-windows",
-    "yak-pereviryty-versiyu-windows"
+    "yak-pereviryty-versiyu-windows",
+    "how-to-configure-group-policy-windows"
   ],
-  "count": 138,
+  "count": 139,
   "promo_index": 85,
   "last_post": {
-    "slug": "yak-pereviryty-versiyu-windows",
-    "title": "Як дізнатись версію і збірку Windows 10 і 11",
-    "time": "2026-10-16T08:01:17.502Z"
+    "slug": "how-to-configure-group-policy-windows",
+    "title": "How to Use Group Policy Editor in Windows 10 and 11",
+    "time": "2026-10-17T08:01:15.402Z"
   },
   "engage_index": 71,
   "extra_index": 114,
@@ -162,22 +163,9 @@
     "🧳 Чеклист: Безпека перед подорожжю з ноутбуком",
     "📶 Wi-Fi підключений, але інтернет не працює"
   ],
-  "lock": {
-    "execution_id": "e63a7b4f-75b3-401d-ae61-b9af196924ab",
-    "type": "content",
-    "started_at": "2026-10-17T08:01:02.957Z",
-    "expires_at": "2026-10-17T08:16:02.957Z"
-  },
-  "pending": {
-    "execution_id": "e63a7b4f-75b3-401d-ae61-b9af196924ab",
-    "type": "content",
-    "identifier": "how-to-configure-group-policy-windows",
-    "payload": {
-      "text": "⚙️ **Редактор групових політик — потужний інструмент для налаштування Windows**\n\nGroup Policy Editor (gpedit.msc) дає можливість керувати Windows на рівні, недоступному через звичайні Налаштування. Ось як його використовувати:\n\n**Як відкрити:**\n```\nWin + R → gpedit.msc\n```\n⚠️ Увага: доступно лише в Pro/Enterprise версіях Windows\n\n**Корисні налаштування безпеки:**\n\n🔒 **Вимкнути автозапуск USB**\nКонфігурація комп'ютера → Адміністративні шаблони → Компоненти Windows → Політики автозапуску → Вимкнути автозапуск\n\n🛡 **Блокувати застарілі протоколи**\nКонфігурація комп'ютера → Параметри Windows → Параметри безпеки → Локальні політики → Параметри безпеки\n\n⏱ **Автоматичне блокування ПК**\nКонфігурація комп'ютера → Параметри Windows → Параметри безпеки → Локальні політики → Параметри безпеки → Інтерактивний вхід\n\n💡 **Підказка:** Після змін виконайте `gpupdate /force` у CMD для негайного застосування політик.\n\nЗавжди створюйте точку відновлення перед експериментами з політиками!\n\n#Windows #безпека #GPO #tips"
-    },
-    "created_at": "2026-10-17T08:01:15.402Z"
-  },
-  "last_message_id": 577,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 578,
   "engage_ab_index": 12,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
