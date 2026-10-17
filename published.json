@@ -163,7 +163,12 @@
     "🧳 Чеклист: Безпека перед подорожжю з ноутбуком",
     "📶 Wi-Fi підключений, але інтернет не працює"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "dcc5d5d7-a026-4b0a-b2d1-6389630d64c6",
+    "type": "middle",
+    "started_at": "2026-10-17T10:00:57.436Z",
+    "expires_at": "2026-10-17T10:15:57.436Z"
+  },
   "pending": null,
   "last_message_id": 578,
   "engage_ab_index": 12,
