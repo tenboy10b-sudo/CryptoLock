@@ -169,7 +169,15 @@
     "started_at": "2026-10-18T08:01:05.732Z",
     "expires_at": "2026-10-18T08:16:05.732Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "3a708638-d70f-4843-8d19-8f2599fb2672",
+    "type": "content",
+    "identifier": "nalashtuvannya-uac-windows",
+    "payload": {
+      "text": "🛡️ **Налаштування UAC: баланс між безпекою та зручністю**\n\nUser Account Control — ваш перший захист від шкідливих програм. Але як налаштувати його правильно?\n\n**Основні рівні UAC:**\n• **Максимум** — сповіщення при кожній зміні (найбезпечніше)\n• **Стандарт** — не затемнює робочий стіл (рекомендовано)\n• **Мінімум** — лише для програм\n• **Вимкнено** — ⚠️ небезпечно!\n\n**Швидке налаштування:**\n1. Натисніть `Win + R` → введіть `UserAccountControlSettings`\n2. Оберіть потрібний рівень повзунком\n3. Перезавантажте систему\n\n**Через групові політики** (Win+R → `gpedit.msc`):\nКомп'ютер → Конфігурація Windows → Параметри безпеки → Локальні політики → Параметри безпеки\n\n**Команда PowerShell для перевірки:**\n```powershell\nGet-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System -Name ConsentPromptBehaviorAdmin\n```\n\n**Порада:** Не вимикайте UAC повністю! Краще налаштуйте виключення для конкретних програм через планувальник завдань із правами адміністратора.\n\n#Windows #Безпека #UAC #WindowsTips\n\n🔗 https://cryptolockua.com/nalashtuvannya-uac-windows"
+    },
+    "created_at": "2026-10-18T08:01:18.262Z"
+  },
   "last_message_id": 580,
   "engage_ab_index": 12,
   "poll_recent_topics": [
