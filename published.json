@@ -138,14 +138,15 @@
     "yak-nalashtuvanty-windows-bez-internetu",
     "nalashtuvannya-merezhevoho-adaptera-windows",
     "yak-pereviryty-versiyu-windows",
-    "how-to-configure-group-policy-windows"
+    "how-to-configure-group-policy-windows",
+    "nalashtuvannya-uac-windows"
   ],
-  "count": 139,
+  "count": 140,
   "promo_index": 86,
   "last_post": {
-    "slug": "how-to-configure-group-policy-windows",
-    "title": "How to Use Group Policy Editor in Windows 10 and 11",
-    "time": "2026-10-17T08:01:15.402Z"
+    "slug": "nalashtuvannya-uac-windows",
+    "title": "Налаштування UAC (контроль облікових записів) в Windows 10 і 11",
+    "time": "2026-10-18T08:01:18.262Z"
   },
   "engage_index": 71,
   "extra_index": 115,
@@ -163,22 +164,9 @@
     "📶 Wi-Fi підключений, але інтернет не працює",
     "🔐 **Команда дня: netsh wlan show profiles**"
   ],
-  "lock": {
-    "execution_id": "3a708638-d70f-4843-8d19-8f2599fb2672",
-    "type": "content",
-    "started_at": "2026-10-18T08:01:05.732Z",
-    "expires_at": "2026-10-18T08:16:05.732Z"
-  },
-  "pending": {
-    "execution_id": "3a708638-d70f-4843-8d19-8f2599fb2672",
-    "type": "content",
-    "identifier": "nalashtuvannya-uac-windows",
-    "payload": {
-      "text": "🛡️ **Налаштування UAC: баланс між безпекою та зручністю**\n\nUser Account Control — ваш перший захист від шкідливих програм. Але як налаштувати його правильно?\n\n**Основні рівні UAC:**\n• **Максимум** — сповіщення при кожній зміні (найбезпечніше)\n• **Стандарт** — не затемнює робочий стіл (рекомендовано)\n• **Мінімум** — лише для програм\n• **Вимкнено** — ⚠️ небезпечно!\n\n**Швидке налаштування:**\n1. Натисніть `Win + R` → введіть `UserAccountControlSettings`\n2. Оберіть потрібний рівень повзунком\n3. Перезавантажте систему\n\n**Через групові політики** (Win+R → `gpedit.msc`):\nКомп'ютер → Конфігурація Windows → Параметри безпеки → Локальні політики → Параметри безпеки\n\n**Команда PowerShell для перевірки:**\n```powershell\nGet-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System -Name ConsentPromptBehaviorAdmin\n```\n\n**Порада:** Не вимикайте UAC повністю! Краще налаштуйте виключення для конкретних програм через планувальник завдань із правами адміністратора.\n\n#Windows #Безпека #UAC #WindowsTips\n\n🔗 https://cryptolockua.com/nalashtuvannya-uac-windows"
-    },
-    "created_at": "2026-10-18T08:01:18.262Z"
-  },
-  "last_message_id": 580,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 581,
   "engage_ab_index": 12,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі на робочому ПК?",
