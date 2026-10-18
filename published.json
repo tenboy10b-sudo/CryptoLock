@@ -164,7 +164,12 @@
     "📶 Wi-Fi підключений, але інтернет не працює",
     "🔐 **Команда дня: netsh wlan show profiles**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "a4e697b8-99f7-425e-a867-97158340acc9",
+    "type": "extra",
+    "started_at": "2026-10-18T16:00:55.157Z",
+    "expires_at": "2026-10-18T16:15:55.157Z"
+  },
   "pending": null,
   "last_message_id": 582,
   "engage_ab_index": 13,
