@@ -165,7 +165,12 @@
     "🔐 **Команда дня: netsh wlan show profiles**",
     "📋 **Мало хто знає, що в Windows є буфер обміну з історією — можна зберігати до 25 скопійованих елементів одночасно**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "a5ede269-0ffc-4f3d-a263-ab67180a6213",
+    "type": "middle",
+    "started_at": "2026-10-19T10:00:58.337Z",
+    "expires_at": "2026-10-19T10:15:58.337Z"
+  },
   "pending": null,
   "last_message_id": 584,
   "engage_ab_index": 13,
