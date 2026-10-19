@@ -139,14 +139,15 @@
     "nalashtuvannya-merezhevoho-adaptera-windows",
     "yak-pereviryty-versiyu-windows",
     "how-to-configure-group-policy-windows",
-    "nalashtuvannya-uac-windows"
+    "nalashtuvannya-uac-windows",
+    "how-to-configure-windows-backup"
   ],
-  "count": 140,
+  "count": 141,
   "promo_index": 86,
   "last_post": {
-    "slug": "nalashtuvannya-uac-windows",
-    "title": "Налаштування UAC (контроль облікових записів) в Windows 10 і 11",
-    "time": "2026-10-18T08:01:18.262Z"
+    "slug": "how-to-configure-windows-backup",
+    "title": "How to Back Up Windows 10 and 11: File History, System Image and OneDrive",
+    "time": "2026-10-19T08:01:22.984Z"
   },
   "engage_index": 71,
   "extra_index": 116,
@@ -164,22 +165,9 @@
     "🔐 **Команда дня: netsh wlan show profiles**",
     "📋 **Мало хто знає, що в Windows є буфер обміну з історією — можна зберігати до 25 скопійованих елементів одночасно**"
   ],
-  "lock": {
-    "execution_id": "c8ee709d-a9a4-48a5-8327-9952bfa4b275",
-    "type": "content",
-    "started_at": "2026-10-19T08:01:07.853Z",
-    "expires_at": "2026-10-19T08:16:07.853Z"
-  },
-  "pending": {
-    "execution_id": "c8ee709d-a9a4-48a5-8327-9952bfa4b275",
-    "type": "content",
-    "identifier": "how-to-configure-windows-backup",
-    "payload": {
-      "text": "💾 Як правильно налаштувати резервне копіювання Windows\n\nДрузі, втрата даних — це завжди неприємно. Тому сьогодні розповім про три надійні способи бекапу вашої системи.\n\n**1. Історія файлів (File History)**\nНайпростіший спосіб для важливих документів. Підключіть зовнішній диск → Параметри → Оновлення та безпека → Служба архівації → Додати диск. Автоматично зберігає версії ваших файлів.\n\n**2. Образ системи (System Image)**\nПовна копія системного диска на випадок краху. Запускайте через Панель керування → Резервне копіювання та відновлення (Windows 7) → Створення образу системи.\n\n**3. OneDrive для хмарного бекапу**\nСинхронізуйте папки робочого столу, документів та зображень автоматично. Ідеально як додатковий рівень захисту.\n\n**Бонус: автоматизація через PowerShell**\n```powershell\nwbadmin start backup -backupTarget:E: -include:C: -allCritical -quiet\n```\n\n**Золоте правило:** тримайте мінімум 2 копії даних у різних місцях. Одна на зовнішньому диску, друга в хмарі.\n\nПеревіряйте бекапи раз на квартал — переконайтеся, що відновлення працює!\n\n#Windows #резервнекопіювання #безпека #PowerShell"
-    },
-    "created_at": "2026-10-19T08:01:22.984Z"
-  },
-  "last_message_id": 583,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 584,
   "engage_ab_index": 13,
   "poll_recent_topics": [
     "Як часто ви перезавантажуєте свій робочий комп'ютер?",
