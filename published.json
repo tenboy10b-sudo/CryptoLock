@@ -141,14 +141,15 @@
     "how-to-configure-group-policy-windows",
     "nalashtuvannya-uac-windows",
     "how-to-configure-windows-backup",
-    "ddu-display-driver-uninstaller-windows"
+    "ddu-display-driver-uninstaller-windows",
+    "windows-update-how-to-update-disable-fix-errors"
   ],
-  "count": 142,
+  "count": 143,
   "promo_index": 87,
   "last_post": {
-    "slug": "ddu-display-driver-uninstaller-windows",
-    "title": "DDU (Display Driver Uninstaller): повне видалення драйверів відеокарти на Windows",
-    "time": "2026-10-20T08:01:20.308Z"
+    "slug": "windows-update-how-to-update-disable-fix-errors",
+    "title": "Windows Update: How to Update, Disable, or Fix Update Errors",
+    "time": "2026-10-21T08:01:20.506Z"
   },
   "engage_index": 72,
   "extra_index": 118,
@@ -166,22 +167,9 @@
     "🔊 Чому вентилятор на ноутбуці гучно шумить?",
     "💤 Режим сну vs повне вимкнення — що краще для ПК?"
   ],
-  "lock": {
-    "execution_id": "e35e61a7-57aa-440b-9bf3-814f37e92aab",
-    "type": "content",
-    "started_at": "2026-10-21T08:01:07.482Z",
-    "expires_at": "2026-10-21T08:16:07.482Z"
-  },
-  "pending": {
-    "execution_id": "e35e61a7-57aa-440b-9bf3-814f37e92aab",
-    "type": "content",
-    "identifier": "windows-update-how-to-update-disable-fix-errors",
-    "payload": {
-      "text": "🔄 **Windows Update: вирішуємо типові проблеми**\n\nОновлення Windows — це важливо для безпеки, але іноді щось йде не так. Ось що робити:\n\n**Якщо оновлення зависло на 0%:**\n• Перезавантажте службу Windows Update через Послуги (services.msc)\n• Або виконайте в CMD від адміністратора:\n```\nnet stop wuauserv\nnet start wuauserv\n```\n\n**Помилка 0x80070422:**\nСлужба оновлень вимкнена. Увімкніть її в services.msc → Windows Update → Тип запуску: Автоматично\n\n**Помилка 0x8024402C:**\nПроблеми з мережею. Перевірте інтернет-з'єднання, тимчасово вимкніть VPN/антивірус\n\n**Потрібно відкотити проблемне оновлення?**\nНалаштування → Оновлення та безпека → Переглянути журнал оновлень → Видалити оновлення\n\n**Призупинити автооновлення (до 5 тижнів):**\nНалаштування → Windows Update → Призупинити оновлення\n\n⚠️ Пам'ятайте: вимикати оновлення назавжди — погана ідея для безпеки!\n\n#Windows #WindowsUpdate #безпека #поради"
-    },
-    "created_at": "2026-10-21T08:01:20.506Z"
-  },
-  "last_message_id": 589,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 590,
   "engage_ab_index": 14,
   "poll_recent_topics": [
     "Як часто ви перезавантажуєте свій робочий комп'ютер?",
