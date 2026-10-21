@@ -167,7 +167,12 @@
     "🔊 Чому вентилятор на ноутбуці гучно шумить?",
     "💤 Режим сну vs повне вимкнення — що краще для ПК?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "acabb3f6-5af6-4a70-8af2-619188436ec8",
+    "type": "middle",
+    "started_at": "2026-10-21T10:00:58.606Z",
+    "expires_at": "2026-10-21T10:15:58.606Z"
+  },
   "pending": null,
   "last_message_id": 590,
   "engage_ab_index": 14,
