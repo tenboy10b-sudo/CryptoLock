@@ -173,7 +173,15 @@
     "started_at": "2026-10-21T10:00:58.606Z",
     "expires_at": "2026-10-21T10:15:58.606Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "acabb3f6-5af6-4a70-8af2-619188436ec8",
+    "type": "middle",
+    "identifier": "standalone-topic:Цифрові підписи процесів",
+    "payload": {
+      "text": "🔏 **Перевірка цифрових підписів процесів**\n\nШкідливе ПЗ рідко має валідний цифровий підпис від перевіреного видавця. Перевіривши підписи запущених процесів, ви можете виявити підозрілу активність.\n\n**Як перевірити:**\n\n**Спосіб 1 — Диспетчер завдань:**\n1. Натисніть Ctrl+Shift+Esc\n2. Вкладка \"Подробиці\" → ПКМ на заголовках → \"Вибрати стовпці\"\n3. Увімкніть \"Перевірений підписувач\"\n4. Перегляньте стовпець — легітимні процеси показують видавця\n\n**Спосіб 2 — PowerShell:**\n```powershell\nGet-Process | Where-Object {$_.Path} | ForEach-Object {\n    [PSCustomObject]@{\n        Name = $_.Name\n        Publisher = (Get-AuthenticodeSignature $_.Path).SignerCertificate.Subject\n        Status = (Get-AuthenticodeSignature $_.Path).Status\n    }\n} | Format-Table -AutoSize\n```\n\n**На що звернути увагу:**\n\n- Процеси без підпису (порожнє поле або Status: NotSigned)\n- Незнайомі видавці з дивними назвами\n- Системні імена процесів (svchost.exe, explorer.exe) без підпису Microsoft\n- Status: HashMismatch або InvalidChain — сертифікат підроблений\n\n**Що робити:**\n\n1. Запишіть повний шлях до файлу (ПКМ → \"Відкрити розташування файлу\")\n2. Перевірте файл на VirusTotal\n3. Якщо підтвердилася загроза — завершіть процес і видаліть файл\n4. Запустіть повне сканування системи\n\n#windows #безпека #cryptolock"
+    },
+    "created_at": "2026-10-21T10:01:12.227Z"
+  },
   "last_message_id": 590,
   "engage_ab_index": 14,
   "poll_recent_topics": [
