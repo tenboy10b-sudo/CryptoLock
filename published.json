@@ -168,7 +168,12 @@
     "💤 Режим сну vs повне вимкнення — що краще для ПК?",
     "✅ Чеклист: Щомісячне обслуговування ПК"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "11f8fed6-35c3-4909-82f7-4b4d87d75fe7",
+    "type": "middle",
+    "started_at": "2026-10-22T10:01:01.173Z",
+    "expires_at": "2026-10-22T10:16:01.173Z"
+  },
   "pending": null,
   "last_message_id": 593,
   "engage_ab_index": 14,
