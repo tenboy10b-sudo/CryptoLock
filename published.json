@@ -173,7 +173,15 @@
     "started_at": "2026-10-22T08:01:04.345Z",
     "expires_at": "2026-10-22T08:16:04.345Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "f0f3785d-4e03-46d1-a2db-f722b4860e09",
+    "type": "content",
+    "identifier": "yak-nalashtuvanty-robotu-z-domu-vpn-rdp",
+    "payload": {
+      "text": "🏠 Робота з дому через VPN і RDP: безпечне підключення\n\nВіддалена робота стала нормою, але безпека часто страждає. Ось як правильно налаштувати доступ до робочого ПК:\n\n**1. Використовуйте сильну автентифікацію**\nУвімкніть NLA (Network Level Authentication) для RDP і двофакторну автентифікацію для VPN. Це перший бар'єр для зловмисників.\n\n**2. Змініть стандартний порт RDP**\nПорт 3389 — перша ціль для атак. Змініть його через реєстр:\n```\nREG ADD \"HKLM\\System\\CurrentControlSet\\Control\\Terminal Server\\WinStations\\RDP-Tcp\" /v PortNumber /t REG_DWORD /d 3390 /f\n```\n\n**3. Обмежте доступ за IP**\nУ фаєрволі дозвольте RDP-підключення тільки з IP-адрес вашого VPN. Ніколи не відкривайте RDP напряму в інтернет!\n\n**4. Регулярно оновлюйте систему**\nВразливості в RDP — улюблена лазівка хакерів. Windows Update має бути завжди активним.\n\n**5. Використовуйте VPN корпоративного рівня**\nWireGuard, OpenVPN або рішення типу Windows Always On VPN забезпечать шифрування всього трафіку.\n\nПам'ятайте: багаторівневий захист — це не параноя, а необхідність! 🛡️\n\n#windows #безпека #vpn #rdp\n\n🔗 https://cryptolockua.com/yak-nalashtuvanty-robotu-z-domu-vpn-rdp"
+    },
+    "created_at": "2026-10-22T08:01:17.036Z"
+  },
   "last_message_id": 592,
   "engage_ab_index": 14,
   "poll_recent_topics": [
