@@ -174,7 +174,15 @@
     "started_at": "2026-10-23T08:01:08.149Z",
     "expires_at": "2026-10-23T08:16:08.149Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "bc606ee0-1625-4808-8fa6-65c9148437f1",
+    "type": "content",
+    "identifier": "yak-nalashtuvanty-windows-server-2022",
+    "payload": {
+      "text": "🖥️ **Windows Server 2022: перші кроки після встановлення**\n\nЩойно встановили сервер? Ось чек-лист обов'язкових налаштувань:\n\n**1. Перейменуйте сервер**\nЗрозуміла назва замість WIN-X7K9L полегшить життя. PowerShell:\n```\nRename-Computer -NewName \"SRV-DC01\" -Restart\n```\n\n**2. Встановіть статичний IP**\nДинамічна адреса на сервері — це біль. Налаштуйте через Server Manager → Local Server або cmdlet `New-NetIPAddress`.\n\n**3. Оновлення безпеки**\nПерше, що робить хакер — шукає неоновлені сервери:\n```\nInstall-Module PSWindowsUpdate\nGet-WindowsUpdate -Install\n```\n\n**4. Налаштуйте firewall**\nЗаблокуйте все зайве, відкрийте тільки необхідні порти. Базове правило: мінімальні привілеї.\n\n**5. Вимкніть непотрібні служби**\nPrint Spooler на Domain Controller? Серйозно? Перевірте, що запущено і вимкніть зайве.\n\n**6. Налаштуйте моніторинг**\nEvent Viewer та Performance Monitor — ваші друзі. Налаштуйте сповіщення про критичні події.\n\n💡 **Бонус:** Увімкніть NTP синхронізацію та налаштуйте часовий пояс правильно!\n\n#WindowsServer #безпека #sysadmin #PowerShell"
+    },
+    "created_at": "2026-10-23T08:01:22.567Z"
+  },
   "last_message_id": 595,
   "engage_ab_index": 15,
   "poll_recent_topics": [
