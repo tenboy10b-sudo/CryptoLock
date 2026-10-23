@@ -169,7 +169,12 @@
     "✅ Чеклист: Щомісячне обслуговування ПК",
     "🖥️ Чорний екран після входу у Windows"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "8fe3a5fa-9154-4c96-8bdb-0715bd423d8b",
+    "type": "middle",
+    "started_at": "2026-10-23T10:01:01.331Z",
+    "expires_at": "2026-10-23T10:16:01.331Z"
+  },
   "pending": null,
   "last_message_id": 596,
   "engage_ab_index": 15,
