@@ -144,14 +144,15 @@
     "ddu-display-driver-uninstaller-windows",
     "windows-update-how-to-update-disable-fix-errors",
     "yak-nalashtuvanty-robotu-z-domu-vpn-rdp",
-    "yak-nalashtuvanty-windows-server-2022"
+    "yak-nalashtuvanty-windows-server-2022",
+    "yak-nalashtuvaty-usb-tethering-windows"
   ],
-  "count": 145,
+  "count": 146,
   "promo_index": 89,
   "last_post": {
-    "slug": "yak-nalashtuvanty-windows-server-2022",
-    "title": "Windows Server 2022: початкове налаштування після встановлення",
-    "time": "2026-10-23T08:01:22.567Z"
+    "slug": "yak-nalashtuvaty-usb-tethering-windows",
+    "title": "USB тезеринг в Windows: як роздати інтернет зі смартфона",
+    "time": "2026-10-24T08:01:17.060Z"
   },
   "engage_index": 72,
   "extra_index": 121,
@@ -169,22 +170,9 @@
     "🖥️ Чорний екран після входу у Windows",
     "🔍 **Команда дня: Get-ChildItem**"
   ],
-  "lock": {
-    "execution_id": "bdf0ab01-fc00-473d-b21a-3c00f03c3c4b",
-    "type": "content",
-    "started_at": "2026-10-24T08:01:03.158Z",
-    "expires_at": "2026-10-24T08:16:03.158Z"
-  },
-  "pending": {
-    "execution_id": "bdf0ab01-fc00-473d-b21a-3c00f03c3c4b",
-    "type": "content",
-    "identifier": "yak-nalashtuvaty-usb-tethering-windows",
-    "payload": {
-      "text": "📱 USB тезеринг: роздаємо інтернет зі смартфона на ПК\n\nКоли Wi-Fi недоступний, а інтернет потрібен терміново — USB тезеринг рятує ситуацію. Ділюся перевіреним алгоритмом.\n\n**Для Android:**\n1. Підключіть смартфон до ПК через USB-кабель\n2. Увімкніть мобільний інтернет на телефоні\n3. Налаштування → Підключення → Точка доступу → USB-модем\n4. Windows автоматично розпізнає нове з'єднання і встановить драйвери\n\n**Для iPhone:**\n1. Підключіть iPhone до ПК (при першому підключенні довірте комп'ютеру)\n2. Налаштування → Режим модема → Дозволити іншим\n3. З'єднання встановиться автоматично\n\n**Перевірка підключення через PowerShell:**\n```powershell\nGet-NetAdapter | Where-Object {$_.Status -eq \"Up\"}\n```\n\n**Корисні поради:**\n• USB тезеринг не розряджає батарею смартфона (на відміну від Wi-Fi)\n• Швидкість залежить від вашого мобільного тарифу\n• Стежте за трафіком, якщо маєте обмеження\n• Деякі оператори можуть блокувати тезеринг — використовуйте VPN\n\nЦе найстабільніший спосіб роздачі інтернету, особливо для віддаленої роботи чи екстрених ситуацій.\n\n#Windows #Tips #МобільнийІнтернет #Тезеринг"
-    },
-    "created_at": "2026-10-24T08:01:17.061Z"
-  },
-  "last_message_id": 598,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 599,
   "engage_ab_index": 15,
   "poll_recent_topics": [
     "Чи вимикаєте ви ПК на ніч, чи залишаєте в режимі сну?",
