@@ -169,7 +169,12 @@
     "🖥️ Чорний екран після входу у Windows",
     "🔍 **Команда дня: Get-ChildItem**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "bdf0ab01-fc00-473d-b21a-3c00f03c3c4b",
+    "type": "content",
+    "started_at": "2026-10-24T08:01:03.158Z",
+    "expires_at": "2026-10-24T08:16:03.158Z"
+  },
   "pending": null,
   "last_message_id": 598,
   "engage_ab_index": 15,
