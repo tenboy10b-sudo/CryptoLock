@@ -171,7 +171,12 @@
     "🔍 **Команда дня: Get-ChildItem**",
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрану — Xbox Game Bar**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "84608781-e7cf-418a-8ecb-b92b28a84cf4",
+    "type": "extra",
+    "started_at": "2026-10-25T16:00:53.825Z",
+    "expires_at": "2026-10-25T16:15:53.825Z"
+  },
   "pending": null,
   "last_message_id": 603,
   "engage_ab_index": 16,
