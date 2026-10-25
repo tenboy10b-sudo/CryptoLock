@@ -145,14 +145,15 @@
     "windows-update-how-to-update-disable-fix-errors",
     "yak-nalashtuvanty-robotu-z-domu-vpn-rdp",
     "yak-nalashtuvanty-windows-server-2022",
-    "yak-nalashtuvaty-usb-tethering-windows"
+    "yak-nalashtuvaty-usb-tethering-windows",
+    "yak-robyt-skrynshoty-windows"
   ],
-  "count": 146,
+  "count": 147,
   "promo_index": 89,
   "last_post": {
-    "slug": "yak-nalashtuvaty-usb-tethering-windows",
-    "title": "USB тезеринг в Windows: як роздати інтернет зі смартфона",
-    "time": "2026-10-24T08:01:17.060Z"
+    "slug": "yak-robyt-skrynshoty-windows",
+    "title": "Як робити скріншоти в Windows 10 і 11: Snipping Tool і гарячі клавіші",
+    "time": "2026-10-25T08:01:26.974Z"
   },
   "engage_index": 73,
   "extra_index": 122,
@@ -170,22 +171,9 @@
     "🔍 **Команда дня: Get-ChildItem**",
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрану — Xbox Game Bar**"
   ],
-  "lock": {
-    "execution_id": "94561b6b-5e01-45e5-9646-9350cd720da7",
-    "type": "content",
-    "started_at": "2026-10-25T08:01:10.947Z",
-    "expires_at": "2026-10-25T08:16:10.947Z"
-  },
-  "pending": {
-    "execution_id": "94561b6b-5e01-45e5-9646-9350cd720da7",
-    "type": "content",
-    "identifier": "yak-robyt-skrynshoty-windows",
-    "payload": {
-      "text": "📸 **Як швидко робити скріншоти в Windows**\n\nРобите скріншоти через Paint? Є кращі способи! Ділюся перевіреними методами для Windows 10/11.\n\n**Гарячі клавіші:**\n• **Win + PrtScr** — скрін всього екрану, автоматично зберігається в папку Screenshots\n• **Win + Shift + S** — вибір області екрану (найзручніше!), скрін йде в буфер обміну\n• **Alt + PrtScr** — скрін активного вікна\n• **PrtScr** — весь екран у буфер обміну\n\n**Snipping Tool (вбудований):**\nЗапускається через пошук або командою:\n```cmd\nsnippingtool\n```\n\nТут можна вибрати форму виділення, додати затримку (корисно для меню) і зробити базові анотації.\n\n**Для Windows 11 — Snipping Tool оновлений:**\nТепер підтримує запис відео з екрану та скролінг-скріншоти довгих сторінок (функція поки в тестуванні).\n\n**Порада:** Натисніть Win + Shift + S і виберіть потрібну область — скрін з'явиться в сповіщеннях, звідти можна одразу редагувати або ділитися.\n\nДля автоматизації можна налаштувати кнопку PrtScr для виклику Snipping Tool: Параметри → Спеціальні можливості → Клавіатура.\n\n#Windows #скріншоти #tips #productivity"
-    },
-    "created_at": "2026-10-25T08:01:26.974Z"
-  },
-  "last_message_id": 601,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 602,
   "engage_ab_index": 16,
   "poll_recent_topics": [
     "Чи вимикаєте ви ПК на ніч, чи залишаєте в режимі сну?",
