@@ -177,7 +177,15 @@
     "started_at": "2026-10-25T10:00:54.387Z",
     "expires_at": "2026-10-25T10:15:54.387Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "f871a36e-16f9-45e8-8666-f0a3db06ce28",
+    "type": "middle",
+    "identifier": "standalone-topic:Автозапуск",
+    "payload": {
+      "text": "⚙️ **Перевірка автозапуску: шукаємо шкідників**\n\nШкідливе ПЗ майже завжди прописується в автозапуск, щоб запускатися після кожного перезавантаження. Перевіряти це треба регулярно — незнайомі записи можуть бути ознакою зараження.\n\n**Як перевірити:**\n\n**1. Диспетчер завдань**\n`Ctrl+Shift+Esc` → вкладка **Автозагрузка**\nДивіться назви програм і видавців. Підозріло: незрозумілі назви, видавець \"Невідомо\", програми з випадковими символами.\n\n**2. Параметри Windows**\n`Win+I` → **Програми** → **Автозагрузка**\nМенш детально, ніж Диспетчер завдань, але зручно для швидкої перевірки.\n\n**3. Реєстр через PowerShell**\n```\nGet-ItemProperty HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\nGet-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n```\n\n**4. Папки автозапуску (CMD)**\n```\ndir \"%AppData%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\"\ndir \"%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\"\n```\n\n**Червоні прапорці:**\n- Невідомий видавець або відсутній цифровий підпис\n- Програми з розташуванням у Temp, AppData\\Local\\Temp\n- Назви, схожі на системні (svchost32.exe замість svchost.exe)\n- Програми, які ви не встановлювали\n\n**Якщо знайшов щось підозріле:**\nВимкни запис у Диспетчері завдань, перевір файл на VirusTotal, видали програму через Параметри або запусти перевірку Windows Defender.\n\n#windows #безпека #автозапуск"
+    },
+    "created_at": "2026-10-25T10:01:10.744Z"
+  },
   "last_message_id": 602,
   "engage_ab_index": 16,
   "poll_recent_topics": [
