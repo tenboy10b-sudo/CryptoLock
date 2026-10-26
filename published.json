@@ -171,7 +171,12 @@
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрану — Xbox Game Bar**",
     "🚫 Чому ПК не вимикається повністю?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "69c377dc-2544-4d22-9b39-706a7c17ddf1",
+    "type": "content",
+    "started_at": "2026-10-26T08:01:08.579Z",
+    "expires_at": "2026-10-26T08:16:08.579Z"
+  },
   "pending": null,
   "last_message_id": 604,
   "engage_ab_index": 16,
