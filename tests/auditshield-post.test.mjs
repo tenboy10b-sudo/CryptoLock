@@ -6,7 +6,7 @@ import { ANGLES, FORMATS, FORMAT_CYCLE, VERIFIED_FACTS } from '../lib/auditshiel
 import {
   LIMITS, CTA_VARIANTS, auditshieldEnabled, parseA1Payload, buildContentId, buildAttributionLink, readState, evaluateGates, chooseFormat,
   selectAngle, buildPrompt, parseSections, validateParts, checkDuplicate, escapeMarkdownV1, assemblePost, generateAuditshieldPost,
-  nextAuditshieldState, recordUnconfirmed, extractCode,
+  nextAuditshieldState, recordUnconfirmed, extractCode, SIMILARITY,
 } from '../lib/auditshieldPost.js'
 import { fakeSections, sectionsToText } from './helpers/fakes.mjs'
 
@@ -265,6 +265,23 @@ test('duplicates: a near-identical rewrite (few words changed) is blocked', asyn
   assert.ok(['near_duplicate', 'same_body', 'same_checklist', 'same_hook'].includes(d.reason), d.reason)
 })
 
+test('duplicates: the whole-text and the body metrics each work on their own (other metrics switched off)', async () => {
+  const a = ANGLES.find(x => x.id === 'av-registered')
+  const e = await realEntry(a)
+  const p = { ...fakeSections(a), hook: '🧪 Зовсім інший вступ без спільних слів із попереднім.', bridge: 'Абсолютно інший місток до чогось іншого, що ніяк не схоже на старий.' }
+  const saved = { ...SIMILARITY }
+  try {
+    Object.assign(SIMILARITY, { hook: 2, bridge: 2, commands: 2, body: 2 })
+    assert.equal(checkDuplicate(cand(p), [e]).reason, 'near_duplicate')
+    // тіло трохи змінено (не 1.0), щоб перевірити саме поріг, а не лише збіг
+    const p2 = { ...p, value: p.value.replace('Іноді', 'Часом').replace('показує', 'виводить'), context: p.context + ' Це нормально.' }
+    Object.assign(SIMILARITY, saved, { hook: 2, bridge: 2, commands: 2, prose: 2 })
+    assert.equal(checkDuplicate(cand(p2), [e]).reason, 'same_body')
+    Object.assign(SIMILARITY, saved, { hook: 2, bridge: 2, commands: 2, prose: 2, body: 2 })
+    assert.equal(checkDuplicate(cand(p), [e]).dup, false, 'with every metric off nothing is flagged (control)')
+  } finally { Object.assign(SIMILARITY, saved) }
+})
+
 test('duplicates: same text under a new hook is blocked as same_body; same hook with new body is blocked as same_hook', async () => {
   const a = ANGLES.find(x => x.id === 'firewall-profiles')
   const e = await realEntry(a)
@@ -360,6 +377,20 @@ test('generate: the time budget stops further attempts (the 60 s serverless limi
   })
   assert.equal(calls, 1)
   assert.ok(r.blocked.includes('time_budget'))
+})
+
+test('generate: output that breaks a content rule is rejected end to end, never returned as a post', async () => {
+  const a = ANGLES.find(x => x.id === 'defender-status')
+  const breakers = [
+    p => ({ ...p, context: p.context + ' Вас зламали!' }),
+    p => ({ ...p, value: p.value + '\n```\nRemove-Item -Recurse C:\\Users\n```' }),
+    p => ({ ...p, bridge: p.bridge + ' Купити повну версію.' }),
+  ]
+  for (const b of breakers) {
+    const r = await generateAuditshieldPost({ state: st(aud()), now: NOW, angleId: a.id, generateText: async () => sectionsToText(b(fakeSections(a))) })
+    assert.equal(r.post, undefined)
+    assert.ok(r.blocked.some(x => x.startsWith('defender-status:')), JSON.stringify(r.blocked))
+  }
 })
 
 test('generate: invalid attribution link (id not accepted by the bot grammar) blocks the post', async () => {

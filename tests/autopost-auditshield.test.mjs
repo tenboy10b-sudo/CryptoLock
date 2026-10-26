@@ -151,6 +151,23 @@ test('handler: when the model gives a genuinely different post for the next angl
   assert.equal(h.gh.state.auditshield.history[1].format, 'myth')
 })
 
+test('handler: a model output that breaks the content rules is never published; the normal post goes out instead', async t => {
+  const llm = p => {
+    if (!p.includes('[HOOK]')) return defaultLlm(p)
+    const a = ANGLES.find(x => x.topic === p.match(/КУТ ПОСТА: (.*)/)[1])
+    const s = fakeSections(a)
+    return sectionsToText({ ...s, context: s.context + ' Вас зламали, ваші дані вже крадуть!' })
+  }
+  const h = make(t, { auditshield: eligibleState() }, { llm })
+  setT(at(8, 10))
+  const r = await h.run(handler, { type: 'middle' })
+  assert.equal(r.status, 200)
+  assert.equal(h.tg.sent.length, 1)
+  assert.ok(!isAuditshieldMessage(h.tg.sent[0]))
+  assert.equal(h.events('auditshield_blocked')[0].reasons.filter(x => x.endsWith(':scare')).length, 3)
+  assert.equal(h.gh.state.auditshield.history.length, 0)
+})
+
 test('handler: invalid attribution link blocks the AuditShield post; the slot still publishes its normal post', async t => {
   const h = make(t, { auditshield: eligibleState() })
   const saved = ANGLES.splice(0, ANGLES.length, { id: 'Bad_Id', format: 'diagnostic', module: null, keywords: ['zzz'], topic: 'bad', brief: 'b', steps: ['Get-Process'], limits: 'l' })
