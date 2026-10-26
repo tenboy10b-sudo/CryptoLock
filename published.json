@@ -178,7 +178,24 @@
     "started_at": "2026-10-26T10:00:59.813Z",
     "expires_at": "2026-10-26T10:15:59.813Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "30ea72cf-4a61-4b87-98ff-908c3ece59ee",
+    "type": "middle",
+    "identifier": "engage-ab-poll:16",
+    "payload": {
+      "poll": {
+        "question": "Як ви зберігаєте паролі від своїх облікових записів?",
+        "options": [
+          "Менеджер паролів",
+          "Браузер (автозбереження)",
+          "Блокнот/файл на ПК",
+          "Пам'ятаю всі"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-10-26T10:01:11.042Z"
+  },
   "last_message_id": 605,
   "engage_ab_index": 16,
   "poll_recent_topics": [
