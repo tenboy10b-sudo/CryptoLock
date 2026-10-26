@@ -146,14 +146,15 @@
     "yak-nalashtuvanty-robotu-z-domu-vpn-rdp",
     "yak-nalashtuvanty-windows-server-2022",
     "yak-nalashtuvaty-usb-tethering-windows",
-    "yak-robyt-skrynshoty-windows"
+    "yak-robyt-skrynshoty-windows",
+    "skydannya-parolya-windows-bez-dyska"
   ],
-  "count": 147,
+  "count": 148,
   "promo_index": 90,
   "last_post": {
-    "slug": "yak-robyt-skrynshoty-windows",
-    "title": "Як робити скріншоти в Windows 10 і 11: Snipping Tool і гарячі клавіші",
-    "time": "2026-10-25T08:01:26.974Z"
+    "slug": "skydannya-parolya-windows-bez-dyska",
+    "title": "Скидання пароля Windows 10 і 11 без диска і без входу в систему",
+    "time": "2026-10-26T08:01:23.072Z"
   },
   "engage_index": 73,
   "extra_index": 123,
@@ -171,22 +172,9 @@
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрану — Xbox Game Bar**",
     "🚫 Чому ПК не вимикається повністю?"
   ],
-  "lock": {
-    "execution_id": "69c377dc-2544-4d22-9b39-706a7c17ddf1",
-    "type": "content",
-    "started_at": "2026-10-26T08:01:08.579Z",
-    "expires_at": "2026-10-26T08:16:08.579Z"
-  },
-  "pending": {
-    "execution_id": "69c377dc-2544-4d22-9b39-706a7c17ddf1",
-    "type": "content",
-    "identifier": "skydannya-parolya-windows-bez-dyska",
-    "payload": {
-      "text": "🔓 Забули пароль Windows? Є рішення!\n\nСитуація знайома: забув пароль і не можеш увійти в систему. Розповім перевірені способи скидання пароля для Windows 10 і 11.\n\n**1. Через Microsoft акаунт (найпростіше)**\nЯкщо використовуєте обліковий запис Microsoft — скиньте пароль на сайті account.live.com з іншого пристрою. Після цього використовуйте новий пароль для входу.\n\n**2. Командний рядок при завантаженні**\nНатисніть 5 разів Shift на екрані входу → відкриється CMD. Якщо не спрацювало — перезавантажте ПК 3 рази для входу в режим відновлення → Troubleshoot → Command Prompt.\n\nКоманда для скидання:\n```\nnet user ім'я_користувача новий_пароль\n```\n\n**3. Через екран блокування**\nПри вході натисніть \"Я не пам'ятаю пароль\" → відповідайте на контрольні питання (якщо налаштовували).\n\n**4. Локальний акаунт через WinPE**\nЗавантажтеся з установчого USB → Shift+F10 → використовуйте команди вище або утиліти типу Lazesoft.\n\n⚠️ **Порада:** Завжди створюйте диск скидання пароля заздалегідь через Панель керування!\n\n#Windows #безпека #поради #WindowsTips\n\n🔗 https://cryptolockua.com/skydannya-parolya-windows-bez-dyska"
-    },
-    "created_at": "2026-10-26T08:01:23.072Z"
-  },
-  "last_message_id": 604,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 605,
   "engage_ab_index": 16,
   "poll_recent_topics": [
     "Чи вимикаєте ви ПК на ніч, чи залишаєте в режимі сну?",
