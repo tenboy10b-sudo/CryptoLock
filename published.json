@@ -147,19 +147,19 @@
     "yak-nalashtuvanty-windows-server-2022",
     "yak-nalashtuvaty-usb-tethering-windows",
     "yak-robyt-skrynshoty-windows",
-    "skydannya-parolya-windows-bez-dyska"
+    "skydannya-parolya-windows-bez-dyska",
+    "autohotkey-windows-avtomatyzatsiya"
   ],
-  "count": 148,
-  "promo_index": 90,
+  "count": 149,
+  "promo_index": 91,
   "last_post": {
-    "slug": "skydannya-parolya-windows-bez-dyska",
-    "title": "Скидання пароля Windows 10 і 11 без диска і без входу в систему",
-    "time": "2026-10-26T08:01:23.072Z"
+    "slug": "autohotkey-windows-avtomatyzatsiya",
+    "title": "AutoHotkey на Windows: автоматизація, гарячі клавіші і макроси",
+    "time": "2026-10-27T08:01:26.105Z"
   },
   "engage_index": 73,
-  "extra_index": 123,
+  "extra_index": 124,
   "extra_recent_topics": [
-    "💾 HDD vs SSD для системного диска — що обрати?",
     "🧳 Чеклист: Безпека перед подорожжю з ноутбуком",
     "📶 Wi-Fi підключений, але інтернет не працює",
     "🔐 **Команда дня: netsh wlan show profiles**",
@@ -170,11 +170,12 @@
     "🖥️ Чорний екран після входу у Windows",
     "🔍 **Команда дня: Get-ChildItem**",
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрану — Xbox Game Bar**",
-    "🚫 Чому ПК не вимикається повністю?"
+    "🚫 Чому ПК не вимикається повністю?",
+    "CMD vs PowerShell — що краще?"
   ],
   "lock": null,
   "pending": null,
-  "last_message_id": 606,
+  "last_message_id": 609,
   "engage_ab_index": 17,
   "poll_recent_topics": [
     "Яку клавішу ви використовуєте для видалення файлів?",
