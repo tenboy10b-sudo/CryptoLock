@@ -45,12 +45,17 @@ export class FakeTelegram {
   }
 }
 
-// Бібліотека в репозиторії може містити кандидатів без затвердження. Тести, яким потрібні затверджені пости, затверджують їх у пам'яті
-// (версія 'test' + хеш тексту) і повертають до стану, зафіксованого при завантаженні модуля (тому вкладені виклики нічого не «заливають»).
+// Тести працюють із бібліотекою в пам'яті: approveLibrary() затверджує всі пости (версія 'test' + хеш тексту), unapproveLibrary() знімає
+// затвердження (стан «кандидати»). Обидві повертають відкат до стану, зафіксованого при завантаженні модуля (вкладені виклики нічого не «заливають»).
 const SHIPPED = APPROVED_POSTS.map(p => ({ approved_version: p.approved_version, approved_sha: p.approved_sha }))
+const restoreShipped = () => APPROVED_POSTS.forEach((p, i) => Object.assign(p, SHIPPED[i]))
 export function approveLibrary() {
   APPROVED_POSTS.forEach(p => { p.approved_version = 'test'; p.approved_sha = bodyHash(p.body) })
-  return () => APPROVED_POSTS.forEach((p, i) => Object.assign(p, SHIPPED[i]))
+  return restoreShipped
+}
+export function unapproveLibrary() {
+  APPROVED_POSTS.forEach(p => { p.approved_version = null; p.approved_sha = null })
+  return restoreShipped
 }
 
 // Фейкова модель лише для звичайних постів (AuditShield модель не викликає). Лічильник свій для кожного harness,

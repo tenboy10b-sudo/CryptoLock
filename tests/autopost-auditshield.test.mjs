@@ -3,7 +3,7 @@
 import test, { mock, before, after } from 'node:test'
 import assert from 'node:assert/strict'
 import handler from '../pages/api/autopost.js'
-import { Harness, baseState, isAuditshieldMessage, approveLibrary } from './helpers/fakes.mjs'
+import { Harness, baseState, isAuditshieldMessage, approveLibrary, unapproveLibrary } from './helpers/fakes.mjs'
 import { readState, bodyHash } from '../lib/auditshieldPost.js'
 import { APPROVED_POSTS } from '../lib/auditshieldApprovedPosts.js'
 import { FORMATS } from '../lib/auditshieldAngles.js'
@@ -28,7 +28,7 @@ after(() => { rnd.mock.restore(); mock.timers.reset() })
 
 function make(t, over = {}, { enabled = true, llm, approved = true } = {}) {
   reseed()
-  const restore = approved ? approveLibrary() : () => {}
+  const restore = approved ? approveLibrary() : unapproveLibrary()
   const h = new Harness(baseState(over), llm ? { llm } : {})
   h.install()
   h.enable(enabled)
@@ -41,7 +41,7 @@ const utcDay = ms => new Date(ms).getUTCDate()
 // Один запуск слота на окремому harness (для порівнянь «до/після»). tweak() може змінити бібліотеку і має повернути відкат.
 async function runOnce(over, { enabled = true, approved = true, llm, when = at(8, 10), type = 'middle', tweak } = {}) {
   reseed()
-  const restoreApproval = approved ? approveLibrary() : () => {}
+  const restoreApproval = approved ? approveLibrary() : unapproveLibrary()
   const restoreTweak = tweak ? tweak() : () => {}
   const h = new Harness(baseState(over), llm ? { llm } : {})
   h.install(); h.enable(enabled)

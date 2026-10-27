@@ -105,7 +105,17 @@ test('library: post text carries no AI tics, scare wording or third-party brands
   assert.doesNotMatch(blob, /нічого не надсилає|без передачі даних|жодних даних|нікуди не/i)
 })
 
-test('library: shipped posts are candidates until the owner approves them — a candidate is never selectable, an approved one is', () => {
+test('library v1: all 12 shipped posts carry the owner approval and every approved_sha is the hash of the exact shipped text', () => {
+  const v1 = APPROVED_POSTS.filter(p => /^asp0(0[1-9]|1[0-2])$/.test(p.id))
+  assert.equal(v1.length, 12)
+  for (const p of v1) {
+    assert.equal(p.approved_version, 'v1-2026-10-27', p.id)
+    assert.equal(p.approved_sha, bodyHash(p.body), `${p.id}: the text changed after approval — it must be re-approved`)
+  }
+  for (const p of APPROVED_POSTS.filter(isApproved)) assert.deepEqual(validateApprovedPost(p).reasons, [], p.id)   // повна перевірка, включно із затвердженням
+})
+
+test('library: a post without approval is never selectable, an approved one is', () => {
   const fresh = copyLib().map(p => ({ ...p, approved_version: null, approved_sha: null }))
   const r = selectApprovedPost({ state: st(aud()), now: NOW, library: fresh })
   assert.equal(r.status, 'library_empty')
