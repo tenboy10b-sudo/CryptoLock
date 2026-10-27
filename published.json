@@ -178,7 +178,15 @@
     "started_at": "2026-10-27T08:01:06.441Z",
     "expires_at": "2026-10-27T08:16:06.441Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "a33a5d18-6581-459c-a14f-6cdc20bc1411",
+    "type": "content",
+    "identifier": "autohotkey-windows-avtomatyzatsiya",
+    "payload": {
+      "text": "⌨️ **AutoHotkey: автоматизація Windows без програмування**\n\nAutoHotkey — це потужний інструмент для створення гарячих клавіш і макросів у Windows. Ось як почати:\n\n**Встановлення:**\nЗавантажте AutoHotkey v2 з офіційного сайту autohotkey.com і встановіть. Створіть текстовий файл з розширенням `.ahk`\n\n**Прості приклади скриптів:**\n\n🔹 **Текстові макроси** (автозаміна):\n```\n::btw::by the way\n::пошта::myemail@domain.com\n```\n\n🔹 **Гарячі клавіші** (Win+N відкриває Блокнот):\n```\n#n::Run \"notepad.exe\"\n```\n\n🔹 **Управління вікнами** (Ctrl+Alt+T — вікно поверх усіх):\n```\n^!t::WinSetAlwaysOnTop -1, \"A\"\n```\n\n🔹 **Швидка вставка дати** (Ctrl+Shift+D):\n```\n^+d::SendText FormatTime(, \"dd.MM.yyyy\")\n```\n\n**⚠️ Безпека:**\nЗапускайте лише перевірені скрипти! AHK-файли можуть містити шкідливий код. Завжди перевіряйте вміст перед запуском.\n\n**Порада:** Додайте корисні скрипти в автозавантаження через `shell:startup`\n\n#Windows #AutoHotkey #автоматизація #продуктивність"
+    },
+    "created_at": "2026-10-27T08:01:26.105Z"
+  },
   "last_message_id": 607,
   "engage_ab_index": 17,
   "poll_recent_topics": [
