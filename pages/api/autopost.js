@@ -3,6 +3,9 @@
 // GET /api/autopost?type=content|middle|extra|engage&secret=...  (type=promo — призупинено, no-op)
 import { randomUUID } from 'crypto'
 import { getAllPosts } from '../../lib/posts'
+import {
+  auditshieldEnabled, evaluateGates, selectApprovedPost, previewPostById, renderApprovedPost, nextAuditshieldState, recordUnconfirmed,
+} from '../../lib/auditshieldPost'
 
 export const config = { maxDuration: 60 }
 
@@ -519,6 +522,75 @@ function withDefaults(published) {
   }
 }
 
+// ── AuditShield як окремий тип контенту у слоті middle (непарні дні) — деталі і ліміти в lib/auditshieldPost.js ──
+// Вимкнено за замовчуванням (AUDITSHIELD_POSTS_ENABLED). Текст НЕ генерується: береться наступний затверджений пост із
+// lib/auditshieldApprovedPosts.js, тож у цьому шляху немає жодного виклику моделі. Повертає готовий результат generateForType
+// або null: null = слот публікується як раніше (самостійний практичний пост). Нічого не кидає: будь-який збій AuditShield = звичайний пост.
+function tryAuditshield(published) {
+  if (!auditshieldEnabled()) return null
+  const now = new Date()
+  const gate = evaluateGates(published, now)
+  log('auditshield_gate', { eligible: gate.eligible, reason: gate.reason })
+  if (!gate.eligible) return null
+  try {
+    const sel = selectApprovedPost({
+      state: published, now, promoModules: PROMO_MODULES, promoIndex: published.promo_index,
+      extraTopics: published.extra_recent_topics, lastPostTitle: (published.last_post && published.last_post.title) || '',
+    })
+    for (const bad of sel.invalid || []) log('auditshield_invalid_post', { post_id: bad.id, reasons: bad.reasons.slice(0, 8) })
+    if (sel.status !== 'selected') {
+      // Бібліотека вичерпана (або порожня): звичайний пост, без автоматичного перезапуску старих; потрібне явне поповнення і нове затвердження.
+      if (sel.status === 'library_exhausted') log('auditshield_library_exhausted', { approved: sel.pool, used: sel.used, duplicate: sel.duplicate })
+      else if (sel.status === 'library_empty') log('auditshield_library_empty', { library: sel.library })
+      log('auditshield_blocked', { reason: sel.status, eligible: sel.eligible || 0, cooldown: sel.cooldown || 0, topic: sel.topic || 0 })
+      return null
+    }
+    const rendered = renderApprovedPost(sel.post, now)
+    log('auditshield_selected', { post_id: rendered.audit.id, angle: rendered.audit.angle, format: rendered.audit.format })
+    return {
+      text: rendered.text, poll: undefined, identifier: `auditshield:${rendered.audit.id}:${rendered.audit.angle}`,
+      finalizeFields: {}, commitMsg: 'bot: update published.json [middle-auditshield]', audit: rendered.audit,
+    }
+  } catch (e) {
+    log('auditshield_error', { error: String(e.message || e).slice(0, 120) })
+    return null
+  }
+}
+
+// dry-run прев'ю (?type=middle&dry=1&auditshield=1[&post=asp###][&candidates=1]): показує наступний затверджений пост, який був би
+// опублікований; гейти НЕ обходяться мовчки — їх результат повертається. &post=… показує конкретний пост бібліотеки (навіть кандидата),
+// &candidates=1 додає незатверджені пости до вибору. Нічого не пишеться, не поститься і не викликає модель.
+function previewAuditshield(published, { post, candidates }) {
+  const state = withDefaults(published)
+  const now = new Date()
+  const head = { enabled: auditshieldEnabled(), gate: evaluateGates(state, now) }
+  const sel = typeof post === 'string' && post
+    ? previewPostById(post)
+    : selectApprovedPost({
+      state, now, promoModules: PROMO_MODULES, promoIndex: state.promo_index, extraTopics: state.extra_recent_topics,
+      lastPostTitle: (state.last_post && state.last_post.title) || '', includeCandidates: candidates === '1',
+    })
+  if (sel.status !== 'selected') return { ...head, blocked: sel.status, invalid: sel.invalid || sel.reasons, selection: summarizeSelection(sel) }
+  const r = renderApprovedPost(sel.post, now)
+  return {
+    ...head, approved: typeof sel.post.approved_version === 'string' && sel.post.approved_version !== '', text: r.text, link: r.link,
+    identifier: `auditshield:${r.audit.id}:${r.audit.angle}`, audit: r.audit, selection: summarizeSelection(sel),
+  }
+}
+function summarizeSelection({ status, library, pool, used, duplicate, cooldown, topic, eligible }) {
+  return { status, library, pool, used, duplicate, cooldown, topic, eligible }
+}
+
+// Осиротілий pending з AuditShield-постом (збій фіналізації після відправки, обрив мережі): чи пішов він у канал — невідомо,
+// тому рахуємо його як опублікований (status=unconfirmed) і закриваємо pending. Безпечніше пропустити слот, ніж зробити другий пост.
+function settleOrphanAudit(state) {
+  if (!state.pending || !state.pending.audit) return state
+  log('auditshield_unconfirmed_recorded', { orphaned_execution_id: state.pending.execution_id, post_id: state.pending.audit.id })
+  // час можливої публікації = момент, коли намір було записано (pending.created_at), а не момент прибирання
+  const when = new Date(state.pending.created_at)
+  return { ...state, pending: null, auditshield: recordUnconfirmed(state.auditshield, state.pending.audit, Number.isNaN(when.getTime()) ? new Date() : when) }
+}
+
 // Engage-контент: якщо стиль структурно є вибором з варіантів — реальне опитування Telegram,
 // інакше — звичайний текстовий пост (як і раніше). Незмінна логіка стилів/промптів.
 async function generateEngageContent(anthropicKey, idx) {
@@ -575,6 +647,10 @@ async function generateForType(type, published, anthropicKey) {
     // Odd-day middle: раніше AuditShield-промо (призупинено 2026-09-26). Слот і розклад
     // зберігаємо, але публікуємо самостійний практичний пост без згадки продукту.
     // engage_ab_index тут навмисно НЕ чіпаємо — парність Poll Experiment лишається як є.
+    // AuditShield-пост (якщо ввімкнено і всі гейти пройдені) займає цей слот; promo_index тоді НЕ просувається,
+    // самостійна ротація тем продовжується з того ж місця. Інакше — як і раніше.
+    const auditshield = tryAuditshield(published)
+    if (auditshield) return auditshield
     const idx = published.promo_index
     const topic = PROMO_MODULES[idx % PROMO_MODULES.length]
     return {
@@ -672,6 +748,10 @@ export default async function handler(req, res) {
   if (dry) {
     try {
       const { data: published } = await ghGetJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN)
+      if (req.query.auditshield && type === 'middle') {
+        const preview = previewAuditshield(published, { post: req.query.post, candidates: req.query.candidates })
+        return res.status(200).json({ ok: true, dry: true, type, auditshield: preview })
+      }
       const generated = await generateForType(type, withDefaults(published), ANTHROPIC_KEY)
       return res.status(200).json({ ok: true, dry: true, type, text: generated.text || null, poll: generated.poll || null })
     } catch (err) {
@@ -707,7 +787,7 @@ export default async function handler(req, res) {
       })
       try {
         await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN,
-          { ...state, lock: null, pending: null }, sha,
+          { ...settleOrphanAudit(state), lock: null, pending: null }, sha,
           `bot: recover orphaned pending [${type}] ${state.pending.execution_id}`)
       } catch (e) {
         log('orphaned_pending_clear_failed', { execution_id: executionId, type, error: String(e.message || e) })
@@ -718,8 +798,10 @@ export default async function handler(req, res) {
     // 3) Атомарне захоплення глобального локу через CAS (SHA) на published.json.
     // Якщо хтось паралельно вже записав стан — цей PUT впаде на конфлікті SHA,
     // і ми програли гонку: безпечний skip, нічого не постимо.
+    // settleOrphanAudit: осиротілий pending іншого типу з AuditShield-постом не губимо (його затре новий pending нижче) —
+    // фіксуємо як unconfirmed тим самим записом, що й лок.
     const lockedState = {
-      ...state,
+      ...settleOrphanAudit(state),
       lock: { execution_id: executionId, type, started_at: new Date().toISOString(), expires_at: new Date(Date.now() + LOCK_TTL_MS).toISOString() },
     }
     try {
@@ -750,6 +832,7 @@ export default async function handler(req, res) {
       identifier: generated.identifier,
       payload: generated.poll ? { poll: generated.poll } : { text: generated.text },
       created_at: new Date().toISOString(),
+      ...(generated.audit ? { audit: generated.audit } : {}),
     }
     const withPending = { ...state, pending: pendingRecord }
     try {
@@ -784,6 +867,11 @@ export default async function handler(req, res) {
       last_message_id: sendResult.messageId,
       pending: null,
       lock: null,
+    }
+    // Лічильник усіх опублікованих постів для лімітів AuditShield (1 на 8 постів); без прапорця стан еволюціонує як раніше.
+    if (auditshieldEnabled()) {
+      finalState.auditshield = nextAuditshieldState(state.auditshield, generated.audit || null, new Date(), sendResult.messageId)
+      if (generated.audit) log('auditshield_published', { execution_id: executionId, post_id: generated.audit.id, message_id: sendResult.messageId })
     }
     try {
       await ghPutJson(GITHUB_OWNER, GITHUB_REPO, 'published.json', GITHUB_TOKEN, finalState, sha, generated.commitMsg)
