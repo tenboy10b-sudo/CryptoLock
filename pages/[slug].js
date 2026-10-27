@@ -2,7 +2,7 @@ import Layout from '../components/Layout'
 import PostCard from '../components/PostCard'
 import Link from 'next/link'
 import TableOfContents from '../components/TableOfContents'
-import { getAllSlugs, getPostBySlug, getAllPosts } from '../lib/posts'
+import { getAllSlugs, getPostBySlug, getAllPosts, isPublished } from '../lib/posts'
 import siteConfig from '../site.config'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
@@ -400,9 +400,8 @@ export async function getStaticProps({ params, locale }) {
   try {
     const post = await getPostBySlug(params.slug, locale)
 
-    // Якщо стаття ще не опублікована — повертаємо 404
-    const publishDate = post.publishDate || post.date
-    if (publishDate && new Date(publishDate) > new Date()) {
+    // Якщо стаття ще не опублікована (дата не настала або діє publishCutoff) — повертаємо 404
+    if (!isPublished(post)) {
       return { notFound: true }
     }
 
