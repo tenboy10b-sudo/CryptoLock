@@ -80,7 +80,7 @@ This ordering (Telegram send before the GitHub state write) is a confirmed, unfi
 
 ## Content architecture
 
-Each `.md` file has frontmatter including `title`, `date`, `publishDate`, `updated`, `description`, `tags`, `readTime`, and — for translated pairs — `translatesEn` (in UK files) or `translatesUk` (in EN files). `publishDate` gates visibility: `lib/posts.js` filters out anything with a future `publishDate`. Slug = filename without `.md`. UK articles route at `/slug`; EN articles route at `/en/slug`.
+Each `.md` file has frontmatter including `title`, `date`, `publishDate`, `updated`, `description`, `tags`, `readTime`, and — for translated pairs — `translatesEn` (in UK files) or `translatesUk` (in EN files). `publishDate` gates visibility: `lib/posts.js` filters out anything with a future `publishDate`. **Since 2026-10-27 a temporary publication freeze is also active:** `site.config.js` `publishCutoff` (`'2026-10-27'`, inclusive) hides every article dated after the cutoff, whatever its `publishDate`, through the shared `isPublished()` in `lib/posts.js` (also used by `pages/[slug].js`); the 56 queued files stay hidden until the cutoff is lifted. Read PROJECT_STATE.md DECISIONS #17 before changing it — lifting it after the queue dates have passed, without respacing the queue, releases the whole backlog in one burst. Slug = filename without `.md`. UK articles route at `/slug`; EN articles route at `/en/slug`.
 
 ## Deployment architecture
 
