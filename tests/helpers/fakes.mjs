@@ -1,7 +1,8 @@
 // Тестова інфраструктура для pages/api/autopost.js: GitHub Contents API (з CAS за sha), Telegram і Anthropic — у пам'яті.
 // Жодних реальних мережевих викликів: global fetch підміняється на маршрутизатор до цих фейків.
 import { mock } from 'node:test'
-import { ANGLES, VERIFIED_FACTS } from '../../lib/auditshieldAngles.js'
+import { APPROVED_POSTS } from '../../lib/auditshieldApprovedPosts.js'
+import { bodyHash } from '../../lib/auditshieldPost.js'
 
 const b64 = s => Buffer.from(s, 'utf-8').toString('base64')
 const resp = (status, body) => ({ ok: status >= 200 && status < 300, status, json: async () => body, text: async () => JSON.stringify(body) })
@@ -44,54 +45,33 @@ export class FakeTelegram {
   }
 }
 
-// ── Фейкова модель ──
-let normalCounter = 0
-const fence = cmd => '```\n' + cmd + '\n```'
-const stepCmd = s => s.split(/\s{3,}\(/)[0]
-const isCmd = s => /^(Get-|net )/.test(s)
-const wrapPath = s => s.replace(/%LOCALAPPDATA%\\AuditShield_Demo\\/g, '`%LOCALAPPDATA%\\AuditShield_Demo\\`')
-
-// Правдоподібна відповідь у форматі [HOOK]/[VALUE]/[CONTEXT]/[BRIDGE], складена з даних кута (унікальна для кожного кута).
-export function fakeSections(angle, o = {}) {
-  const cmds = angle.steps.filter(isCmd).map(stepCmd)
-  const hook = o.hook || `🔍 ${angle.topic}. ${angle.brief.split('. ')[0].replace(/\.$/, '')}.`
-  let value
-  if (angle.format === 'checklist') value = cmds.slice(0, 5).map((c, i) => `${i + 1}. ${angle.topic}, перевірка ${i + 1}: \`${c}\``).join('\n')
-  else if (angle.format === 'tool') {
-    // у production кожен tool-кут спирається на свою частину фактів, тому й тут — різні підмножини
-    const subset = { 'demo-four-areas': [0, 1, 2, 3], 'demo-reports': [4, 5, 7], 'demo-vs-full': [1, 10, 0] }[angle.id] || [0, 1]
-    value = wrapPath(subset.map(i => VERIFIED_FACTS[i]).join(' ') + ` Ось що важливо для теми «${angle.topic.toLowerCase()}»: ${angle.brief}`)
-  }
-  else if (angle.format === 'quick') value = `${angle.brief}\n${fence(cmds[0])}\nПодивіться на результат і порівняйте його зі своїми очікуваннями.`
-  else value = `${angle.brief}\n${cmds.map(fence).join('\n')}`
-  if (o.value) value = o.value
-  const context = o.context || wrapPath(angle.limits)
-  const bridge = o.bridge || (angle.format === 'tool'
-    ? `Безкоштовний AuditShield Demo надсилає бот: файл і команда запуску. Тема цього допису — ${angle.topic.toLowerCase()}.`
-    : `Якщо не хочете перевіряти ${angle.id.replace(/-/g, ' ')} вручну — безкоштовний AuditShield Demo перевіряє основні області автоматично.`)
-  return { hook, value, context, bridge }
+// Бібліотека в репозиторії може містити кандидатів без затвердження. Тести, яким потрібні затверджені пости, затверджують їх у пам'яті
+// (версія 'test' + хеш тексту) і повертають до стану, зафіксованого при завантаженні модуля (тому вкладені виклики нічого не «заливають»).
+const SHIPPED = APPROVED_POSTS.map(p => ({ approved_version: p.approved_version, approved_sha: p.approved_sha }))
+export function approveLibrary() {
+  APPROVED_POSTS.forEach(p => { p.approved_version = 'test'; p.approved_sha = bodyHash(p.body) })
+  return () => APPROVED_POSTS.forEach((p, i) => Object.assign(p, SHIPPED[i]))
 }
-export function sectionsToText(p) { return `[HOOK]\n${p.hook}\n[VALUE]\n${p.value}\n[CONTEXT]\n${p.context}\n[BRIDGE]\n${p.bridge}\n` }
 
-export function defaultLlm(prompt) {
-  if (prompt.includes('[HOOK]')) {
-    const topic = (prompt.match(/КУТ ПОСТА: (.*)/) || [])[1]
-    const angle = ANGLES.find(a => a.topic === topic)
-    if (!angle) throw new Error(`fake llm: unknown angle topic ${topic}`)
-    return sectionsToText(fakeSections(angle))
+// Фейкова модель лише для звичайних постів (AuditShield модель не викликає). Лічильник свій для кожного harness,
+// щоб два прогони з однаковим станом давали однакові запити.
+export function makeLlm() {
+  let n = 0
+  return prompt => {
+    if (prompt.includes('Поверни ТІЛЬКИ валідний JSON')) {
+      return JSON.stringify({ question: `Тестове питання ${++n}?`, options: ['так', 'ні'], correct_index: 0, explanation: 'пояснення' })
+    }
+    return `Звичайний пост номер ${++n}`
   }
-  if (prompt.includes('Поверни ТІЛЬКИ валідний JSON')) {
-    return JSON.stringify({ question: `Тестове питання ${++normalCounter}?`, options: ['так', 'ні'], correct_index: 0, explanation: 'пояснення' })
-  }
-  return `Звичайний пост номер ${++normalCounter}`
 }
 
 export class Harness {
-  constructor(initial, { llm = defaultLlm } = {}) {
+  constructor(initial, { llm = makeLlm() } = {}) {
     this.gh = new FakeGitHub(initial)
     this.tg = new FakeTelegram()
     this.llm = llm
     this.llmPrompts = []
+    this.anthropic = []      // усі запити до Anthropic як є: { model, max_tokens, messages }
     this.logs = []
     this.realFetch = globalThis.fetch
     this.realLog = console.log
@@ -105,7 +85,9 @@ export class Harness {
       if (url.startsWith('https://api.github.com/')) return this.gh.handle((init.method || 'GET').toUpperCase(), init)
       if (url.startsWith('https://api.telegram.org/')) return this.tg.handle(url, init)
       if (url.startsWith('https://api.anthropic.com/')) {
-        const prompt = JSON.parse(init.body).messages[0].content
+        const request = JSON.parse(init.body)
+        const prompt = request.messages[0].content
+        this.anthropic.push(request)
         this.llmPrompts.push(prompt)
         return resp(200, { content: [{ text: await this.llm(prompt) }] })
       }
