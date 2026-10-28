@@ -4521,3 +4521,27 @@ error_description: Client key or secret is incorrect.
 **SECURITY:** запис не містить токенів, ключів, значень секретів чи даних клієнтів.
 
 ---
+
+### Сесія 12 (продовження 85) — Telegram × AuditShield: production dry-run PASS і природний flag-OFF cron `extra` PASS (за станом); READY TO ENABLE = YES, прапорець OFF, публікацій AuditShield 0
+
+**DATE:** 2026-10-28 (перевірено ~08:40Z; слот `extra` — 2026-10-27 16:01Z)
+
+**GOAL:** закрити два останні post-deploy gate'и static library v1: production dry-run і першу природну cron-перевірку з вимкненим прапорцем. Тільки читання: endpoint не викликався, стан не змінювався, env не чіпався, прапорець не вмикався, deploy не робився.
+
+**EVIDENCE — production dry-run = PASS** (власник, 2026-10-27 13:12:53Z; перевірено за логами й станом): HTTP 200, `enabled=false`, гейт не ініціалізований, `approved=true`, `asp002`, `approved_version` `v1-2026-10-27`, `text_sha` `eec9346dec4a22c1`, 0 записів стану, 0 відправок у Telegram, 0 викликів Anthropic.
+
+**EVIDENCE — природний `extra` (flag OFF) = PASS за станом:** обслуговувався деплоєм `dpl_8TwHvgGdL1z4vRu9LEDKo71RFUn1` (єдиний production-деплой того періоду). Три коміти бота з одним execution id за 20 с: `0e5a1e3` acquire lock (16:00:58Z — на ~2 с раніше за 16:01:00 за годинником GitHub) → `8431812` persist pending → `cdb719e` update published.json `[extra]` (16:01:18Z). `last_message_id` 610 → 611 (+1); `extra_index` 124 → 125 (+1); `count`, `promo_index`, `engage_index`, `engage_ab_index` без змін; lock і pending звільнені; один звичайний текстовий пост (861 символ) без згадок AuditShield і без атрибуції `a1_tc_`; ключа `auditshield` у `published.json` немає ні до, ні під час, ні після; другого посту чи повтору немає (id у Telegram йдуть 610 → 611 → 612 без пропусків; 612 — окремий слот `content` 2026-10-28 08:01Z, який у цій перевірці відокремлено). Перевірочні скрипти й дані — у scratchpad поза репозиторієм.
+
+**НЕ СПОСТЕРЕЖЕНО (без прикрас):** HTTP-статус саме цього запиту та критерії з runtime-логів (`auditshield_*`, `auditshield_invalid_post`, `approved_sha_mismatch`, ERROR/WARNING/FATAL). Vercel зберігає лише ~1 годину runtime-логів, а перевірка проводилась через ~16,5 год після слоту. Замість прямого спостереження: обробник повертає HTTP 200 лише після finalize-коміту (`finalize_success` у `pages/api/autopost.js`); жодна подія `auditshield_*` не може бути згенерована запуском `extra` з вимкненим прапорцем — вони логуються лише в `tryAuditshield` (викликається тільки з гілки `middle` непарного дня й одразу повертається при вимкненому прапорці), у dry-run прев'ю, у відновленні orphan і в логу публікації під перевіркою прапорця. Доступні зараз логи (23 рядки цього деплою, усі `info`) показують сьогоднішній слот `content` 08:01Z зі звичайною послідовністю з п'яти подій. Публічну сторінку каналу з цієї машини отримати не вдалося (connection refused), тож Telegram безпосередньо не переглядався.
+
+**FEATURE FLAG:** `AUDITSHIELD_POSTS_ENABLED` відсутній у production env (жодної змінної `AUDITSHIELD_*`; усі змінні мають вік 32+ днів, жодна не змінювалась після деплою). Позаплановий запуск `middle` 2026-10-27 13:12:30Z (HTTP 200, 0 подій `auditshield_*`, стан AuditShield не ініціалізовано) — допоміжне свідчення, але не зараховується як природна перевірка.
+
+**STATUS / RESULT:** PRODUCTION DRY-RUN = PASS. FLAG-OFF NATURAL CRON REGRESSION = PASS (за станом; логові критерії не спостережені). READY TO ENABLE = YES. FEATURE FLAG = OFF. Публікацій AuditShield = 0.
+
+**FOLLOW-UP:** увімкнення `AUDITSHIELD_POSTS_ENABLED` і перша реальна публікація — окремі рішення власника; нічого не стартує автоматично. Якщо власник вмикає прапорець — спостерігати перший запуск `middle` наживо протягом ~години (retention логів); пост AuditShield через гейти (≥ 7 днів і ≥ 7 інших постів, лише `middle` непарного дня) з'явиться не одразу.
+
+**BUSINESS TRUTH (без змін):** підтверджені реальні покупки = 0, виручка = $0, product-market fit і попит = UNPROVEN. Це механізм дистрибуції, а не доказ попиту.
+
+**SECURITY:** запис не містить токенів, ключів, значень секретів чи даних клієнтів.
+
+---
