@@ -174,7 +174,12 @@
     "CMD vs PowerShell — що краще?",
     "✅ Чеклист: Налаштування нового ноутбука з нуля"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "e159db03-03d1-48f5-a258-9cc956458ea9",
+    "type": "extra",
+    "started_at": "2026-10-28T16:00:59.215Z",
+    "expires_at": "2026-10-28T16:15:59.215Z"
+  },
   "pending": null,
   "last_message_id": 613,
   "engage_ab_index": 18,
