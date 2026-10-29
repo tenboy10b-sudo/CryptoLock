@@ -174,7 +174,12 @@
     "✅ Чеклист: Налаштування нового ноутбука з нуля",
     "🔵 Синій екран смерті (BSOD) з помилкою SYSTEM_SERVICE_EXCEPTION"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "cc0c5b1e-ec32-47f8-9520-30281ef01133",
+    "type": "content",
+    "started_at": "2026-10-29T08:01:11.147Z",
+    "expires_at": "2026-10-29T08:16:11.147Z"
+  },
   "pending": null,
   "last_message_id": 614,
   "engage_ab_index": 18,
