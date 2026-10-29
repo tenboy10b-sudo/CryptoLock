@@ -149,14 +149,15 @@
     "yak-robyt-skrynshoty-windows",
     "skydannya-parolya-windows-bez-dyska",
     "autohotkey-windows-avtomatyzatsiya",
-    "how-to-fix-windows-audio-crackling"
+    "how-to-fix-windows-audio-crackling",
+    "aktyvatsiya-windows-10-11-vsi-sposoby"
   ],
-  "count": 150,
+  "count": 151,
   "promo_index": 92,
   "last_post": {
-    "slug": "how-to-fix-windows-audio-crackling",
-    "title": "How to Fix Audio Crackling, Popping, or Stuttering in Windows",
-    "time": "2026-10-28T08:01:22.945Z"
+    "slug": "aktyvatsiya-windows-10-11-vsi-sposoby",
+    "title": "Активація Windows 10 і 11: всі способи — ключ, цифрова ліцензія, телефон",
+    "time": "2026-10-29T08:01:24.040Z"
   },
   "engage_index": 74,
   "extra_index": 126,
@@ -174,22 +175,9 @@
     "✅ Чеклист: Налаштування нового ноутбука з нуля",
     "🔵 Синій екран смерті (BSOD) з помилкою SYSTEM_SERVICE_EXCEPTION"
   ],
-  "lock": {
-    "execution_id": "cc0c5b1e-ec32-47f8-9520-30281ef01133",
-    "type": "content",
-    "started_at": "2026-10-29T08:01:11.147Z",
-    "expires_at": "2026-10-29T08:16:11.147Z"
-  },
-  "pending": {
-    "execution_id": "cc0c5b1e-ec32-47f8-9520-30281ef01133",
-    "type": "content",
-    "identifier": "aktyvatsiya-windows-10-11-vsi-sposoby",
-    "payload": {
-      "text": "🔑 **Як правильно активувати Windows 10/11**\n\nРозбираємось з усіма легальними способами активації вашої системи:\n\n**📌 Основні методи:**\n\n**1. Ключ продукту** — найпростіший варіант\nНалаштування → Оновлення та безпека → Активація → Змінити ключ продукту\n\n**2. Цифрова ліцензія** — прив'язується до облікового запису Microsoft\nПісля входу в обліковий запис система активується автоматично. Ідеально при заміні заліза!\n\n**3. Активація телефоном** — коли є проблеми з онлайн-активацією\nВиконайте команду:\n```\nslmgr.vbs /dti\n```\nЗателефонуйте за номером, який покаже система, і введіть код підтвердження.\n\n**🔍 Перевірка статусу:**\n```\nslmgr /xpr\n```\n\n**⚠️ Типові помилки:**\n\n• **0xC004F213** — невірний ключ. Перевірте правильність введення\n• **0x803F7001** — проблема з цифровою ліцензією. Переприв'яжіть обліковий запис Microsoft\n\n**Важливо:** Купуйте ліцензії лише в офіційних продавців. Дешеві ключі з сумнівних джерел — це ризик для безпеки вашої системи!\n\n#Windows #активація #tips #безпека"
-    },
-    "created_at": "2026-10-29T08:01:24.040Z"
-  },
-  "last_message_id": 614,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 615,
   "engage_ab_index": 18,
   "poll_recent_topics": [
     "Яку клавішу ви використовуєте для видалення файлів?",
@@ -202,7 +190,7 @@
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 2,
+    "posts_since": 3,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
