@@ -176,44 +176,22 @@
     "🔵 Синій екран смерті (BSOD) з помилкою SYSTEM_SERVICE_EXCEPTION",
     "🔌 **Команда дня: netstat -ano**"
   ],
-  "lock": {
-    "execution_id": "396be753-b3b1-4828-8549-4fa03a8f726e",
-    "type": "middle",
-    "started_at": "2026-10-30T10:00:59.704Z",
-    "expires_at": "2026-10-30T10:15:59.704Z"
-  },
-  "pending": {
-    "execution_id": "396be753-b3b1-4828-8549-4fa03a8f726e",
-    "type": "middle",
-    "identifier": "engage-ab-poll:18",
-    "payload": {
-      "poll": {
-        "question": "Як часто ви робите резервні копії важливих файлів?",
-        "options": [
-          "Щодня або щотижня",
-          "Раз на місяць або рідше",
-          "Тільки перед важливими змінами",
-          "Не роблюBackUp"
-        ],
-        "isQuiz": false
-      }
-    },
-    "created_at": "2026-10-30T10:01:03.697Z"
-  },
-  "last_message_id": 618,
-  "engage_ab_index": 18,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 619,
+  "engage_ab_index": 19,
   "poll_recent_topics": [
-    "Яку клавішу ви використовуєте для видалення файлів?",
     "Коли ви встановлюєте оновлення Windows?",
     "Як ви керуєте програмами в автозапуску Windows?",
     "Як ви налаштували UAC (контроль облікових записів) у Windows?",
     "Скільки облікових записів користувачів створено на вашому Windows ПК?",
-    "Як ви зберігаєте паролі від своїх облікових записів?"
+    "Як ви зберігаєте паролі від своїх облікових записів?",
+    "Як часто ви робите резервні копії важливих файлів?"
   ],
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 6,
+    "posts_since": 7,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
