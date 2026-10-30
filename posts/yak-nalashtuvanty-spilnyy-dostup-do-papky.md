@@ -109,26 +109,49 @@ New-SmbShare `
 
 ⚠️ **Приклади за документацією, не лабораторні команди.** Лабораторія виконувала `New-SmbShare` (у формі з розділу «Що показала лабораторія») і `Get-SmbShareAccess`, але жодна команда з цього блоку дослівно не виконувалась. Нижче — типові команди з мінімально потрібними правами; замість `labuser` підстав свій обліковий запис. `New-SmbShare` не створює папку: вона має існувати до виконання команди.
 
+**Основний блок: створити папку й шару та перевірити права.** Його можна копіювати й виконувати цілком; він нічого не видаляє.
+
 ```powershell
 # Папка має існувати ДО New-SmbShare (сама команда її не створює)
 New-Item -ItemType Directory -Path "C:\SharedDocuments" -Force | Out-Null
-New-Item -ItemType Directory -Path "D:\Projects" -Force | Out-Null
 
 # Читання для одного облікового запису (безпечний варіант за замовчуванням)
 New-SmbShare -Name "Docs" -Path "C:\SharedDocuments" -ReadAccess "labuser"
 
-# Читання і зміна для одного облікового запису
-New-SmbShare -Name "Projects" -Path "D:\Projects" -ChangeAccess "labuser"
-
-# Переглянути всі спільні папки (крім системних)
-Get-SmbShare | Where-Object {-not $_.Special} | Select-Object Name, Path, CurrentUsers
-
-# Права доступу до конкретної шари — перевір, що в списку лише потрібні облікові записи
+# Перевір, що в списку лише потрібні облікові записи
 Get-SmbShareAccess -Name "Docs"
-Grant-SmbShareAccess -Name "Docs" -AccountName "labuser" -AccessRight Read -Force
-Revoke-SmbShareAccess -Name "Docs" -AccountName "labuser" -Force
+```
 
-# Видалити спільну папку (сама папка залишається)
+**Окремий приклад (лише якщо потрібна друга шара):** читання і зміна для одного облікового запису. Це не продовження основного блоку, а самостійний приклад з іншою папкою.
+
+```powershell
+New-Item -ItemType Directory -Path "C:\Projects" -Force | Out-Null
+New-SmbShare -Name "Projects" -Path "C:\Projects" -ChangeAccess "labuser"
+```
+
+**Перегляд (нічого не змінює):** усі спільні папки, крім системних.
+
+```powershell
+Get-SmbShare | Where-Object {-not $_.Special} | Select-Object Name, Path, CurrentUsers
+```
+
+**Зміна й видалення — окремі операції.** Кожен блок нижче виконуй самостійно і лише тоді, коли це справді потрібно. Не копіюй їх разом з основним блоком і не виконуй підряд: наступна команда скасовує попередню або видаляє щойно створений ресурс. Замість `otheruser` підстав інший обліковий запис.
+
+Додати право читання ще одному обліковому запису:
+
+```powershell
+Grant-SmbShareAccess -Name "Docs" -AccountName "otheruser" -AccessRight Read -Force
+```
+
+Забрати це право (окрема операція):
+
+```powershell
+Revoke-SmbShareAccess -Name "Docs" -AccountName "otheruser" -Force
+```
+
+Видалити спільну папку. Ресурс `Docs` зникне, сама папка залишиться (окрема операція, виконуй лише коли шара більше не потрібна):
+
+```powershell
 Remove-SmbShare -Name "Docs" -Force
 ```
 
@@ -216,29 +239,41 @@ net use \\192.168.77.10\CL-Lab-Read * /user:DESKTOP-5FEIC76\labuser
 
 Провідник → **Цей ПК** → **Підключити мережевий диск** → вибери літеру → введи шлях → постав ✅ **Підключати при вході в систему**.
 
-**Через CMD** (пароль у команді не пиши — `*` змусить Windows запитати його окремо, і він не потрапить в історію команд):
+**Через CMD** (пароль у команді не пиши — `*` змусить Windows запитати його окремо, і він не потрапить в історію команд). Усі способи підключення диска (Провідник, CMD, PowerShell) — альтернативи: достатньо одного. Нижче два **альтернативні** варіанти CMD: **використовуй лише один**. Усі приклади в цьому розділі мають різні літери дисків, тож випадкове виконання кількох не дасть помилки «літера вже зайнята»; свою літеру підстав сам.
+
+Варіант 1 — з поточними обліковими даними Windows:
 ```cmd
-REM Варіант 1: з поточними обліковими даними Windows
 net use Z: \\192.168.1.100\Documents
-REM Варіант 2: з іншим користувачем (вибери або цей, або попередній; літера Z: не може бути зайнята двічі)
-net use Z: \\192.168.1.100\Documents * /user:ІМ'Я-СЕРВЕРА\Username
-REM Відключити диск Z:
-net use Z: /delete
-REM Показати поточні підключення
+```
+
+Варіант 2 — з іншим користувачем (пароль запитає Windows):
+```cmd
+net use Y: \\192.168.1.100\Documents * /user:ІМ'Я-СЕРВЕРА\Username
+```
+
+Показати поточні підключення й відключити диск (підстав літеру, яку підключав):
+```cmd
 net use
+net use Z: /delete
 ```
 
-**Через PowerShell** (`Get-Credential` відкриє вікно для логіна й пароля). Без `-Persist` диск тимчасовий: його видно лише в цій сесії PowerShell, а не в Провіднику й не в `net use` (саме таку форму `-Credential` ми перевіряли). Для постійного диска додай `-Persist`:
+**Через PowerShell** (`Get-Credential` відкриє вікно для логіна й пароля). Нижче три **альтернативні** варіанти: **використовуй лише один**. Кожен лежить в окремому блоці з власною літерою диска (різною і від прикладів CMD), щоб їх не можна було виконати підряд з однаковою літерою; свою літеру підстав сам. Без `-Persist` диск тимчасовий: його видно лише в цій сесії PowerShell, а не в Провіднику й не в `net use`. У лабораторії виконувалось тимчасове `New-PSDrive -Credential` без `-Persist`; точну форму команди ми не фіксували.
+
+Варіант A — тимчасовий диск (тільки ця сесія PowerShell):
 ```powershell
-# Тимчасовий диск (тільки ця сесія PowerShell)
-New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential)
-
-# Постійний мережевий диск Windows (видно в Провіднику й у net use)
-New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential) -Persist
-
-# У скрипті додай -Scope Global, інакше постійний диск не збережеться за межами скрипта
-New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential) -Persist -Scope Global
+New-PSDrive -Name "X" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential)
 ```
+
+Варіант B — постійний мережевий диск Windows (видно в Провіднику й у `net use`):
+```powershell
+New-PSDrive -Name "W" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential) -Persist
+```
+
+Варіант C — постійний диск, коли команда виконується в скрипті. Додай `-Scope Global`, інакше диск не збережеться за межами скрипта:
+```powershell
+New-PSDrive -Name "V" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential) -Persist -Scope Global
+```
+
 За документацією Microsoft, постійні диски прив'язані до облікового запису: диск, створений у сесії від адміністратора, не видно в сесіях з іншими обліковими даними.
 
 ---
@@ -250,8 +285,9 @@ New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Crede
 Додай `$` в кінці імені шари — папка не буде видна при перегляді мережевих ресурсів, але підключитись можна, якщо знаєш точний шлях:
 
 ```powershell
-# Папка D:\Sensitive має існувати до цієї команди
-New-SmbShare -Name "HiddenShare$" -Path "D:\Sensitive" -ReadAccess "labuser"
+# Папка має існувати до New-SmbShare (команда її не створює)
+New-Item -ItemType Directory -Path "C:\Sensitive" -Force | Out-Null
+New-SmbShare -Name "HiddenShare$" -Path "C:\Sensitive" -ReadAccess "labuser"
 ```
 Підключення так само, вручну: `\\server\HiddenShare$`
 
