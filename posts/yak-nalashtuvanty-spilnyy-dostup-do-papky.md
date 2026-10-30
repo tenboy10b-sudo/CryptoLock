@@ -6,7 +6,7 @@ publishDate: "2026-05-18"
 description: "Як налаштувати спільний доступ до папки в Windows через GUI і PowerShell: підключення мережевого диску, дозволи NTFS і SMB, приховані шари, безпека SMB, виправлення помилок."
 tags: ["мережа", "windows", "налаштування", "безпека", "адміністрування", "powershell", "smb"]
 translatesEn: "how-to-configure-windows-network-shares"
-readTime: 13
+readTime: 14
 ---
 
 Мережева папка (шаринг) дозволяє ділитись файлами між комп'ютерами в одній мережі без флешок і хмарних сервісів. Налаштовується за кілька хвилин через провідник, або скриптується через PowerShell для повторюваних задач.
@@ -53,6 +53,7 @@ New-SmbShare `
 
 - **Профіль `Public`** у правилі лише тому, що сервер у лабораторії мав мережу Public. Це не порада використовувати Public: правило вузьке за адресою сервера, адресою клієнта, портом і інтерфейсом, в ізольованій мережі. Варіант для звичайної мережі з `-Profile Private` — у розділі «Типові проблеми»; його ми не тестували.
 - **NTFS:** користувачу `labuser` додано дозвіл `ReadAndExecute` (`FileSystemAccessRule`, `Get-Acl`, `AddAccessRule`, `Set-Acl`). Успадковані NTFS-дозволи повністю не очищали.
+- **Також виконувалось:** `Get-SmbShareAccess` на сервері для перевірки дозволів на шарі та `New-PSDrive -Credential` (без `-Persist`) на клієнті для тимчасового підключення; точну форму цих двох команд тут не наводимо. `New-PSDrive -Persist` і `net use` ми не тестували.
 - **Обмеження висновку:** відмова створити файл підтверджує сумарне обмеження SMB і NTFS. Внесок кожного рівня окремо ми не ізолювали, тож не можна сказати, що запис заборонив саме NTFS або саме share.
 
 <figure style="margin:1.5rem 0">
@@ -66,11 +67,11 @@ New-SmbShare `
 - домен Active Directory, GPO, DFS;
 - Wi-Fi і швидкість передачі файлів — вимірювань не було;
 - мережеве виявлення та список комп'ютерів у розділі «Мережа» — підключення було за IP-адресою;
-- приховані й адміністративні шари, підключення мережевого диска (`net use`, `New-PSDrive`);
+- приховані й адміністративні шари; `net use`; постійне підключення диска (`New-PSDrive -Persist`, «Підключити мережевий диск» у Провіднику) — виконувалось лише тимчасове `New-PSDrive -Credential`;
 - налаштування SMB1 і обов'язкового підпису SMB на сервері;
 - профіль мережі Private (сервер у лабораторії мав Public) і очищення успадкованих NTFS-прав (`/inheritance:r`);
 - внесок SMB і NTFS окремо (див. обмеження вище);
-- усі команди, яких немає в блоці вище: створення користувача, NTFS-крок (код наведено лише як типовий приклад того ж методу), `net use`, `New-PSDrive` та решта PowerShell зі статті.
+- решта PowerShell зі статті: створення користувача, код NTFS-кроку (наведено лише як типовий приклад того ж методу), `Grant-SmbShareAccess`, `Revoke-SmbShareAccess`, `Remove-SmbShare`, `Get-SmbSession` та інші.
 
 ---
 
@@ -106,9 +107,13 @@ New-SmbShare `
 
 ### Через PowerShell (зручно для скриптів і повторюваних задач)
 
-⚠️ **Приклади за документацією, не лабораторні команди.** У лабораторії виконувалась лише `New-SmbShare` у формі з розділу «Що показала лабораторія». Нижче — типові команди з мінімально потрібними правами; замість `labuser` підстав свій обліковий запис.
+⚠️ **Приклади за документацією, не лабораторні команди.** Лабораторія виконувала `New-SmbShare` (у формі з розділу «Що показала лабораторія») і `Get-SmbShareAccess`, але жодна команда з цього блоку дослівно не виконувалась. Нижче — типові команди з мінімально потрібними правами; замість `labuser` підстав свій обліковий запис. `New-SmbShare` не створює папку: вона має існувати до виконання команди.
 
 ```powershell
+# Папка має існувати ДО New-SmbShare (сама команда її не створює)
+New-Item -ItemType Directory -Path "C:\SharedDocuments" -Force | Out-Null
+New-Item -ItemType Directory -Path "D:\Projects" -Force | Out-Null
+
 # Читання для одного облікового запису (безпечний варіант за замовчуванням)
 New-SmbShare -Name "Docs" -Path "C:\SharedDocuments" -ReadAccess "labuser"
 
@@ -156,14 +161,18 @@ Remove-SmbShare -Name "Docs" -Force
 ⚠️ **Команди нижче — типовий приклад за документацією, а не те, що виконувалось у лабораторії** (там були інший шлях, повне ім'я облікового запису й `-CachingMode None`, див. вище). Лабораторія підтвердила результат близького сценарію, а не кожну команду цього блоку. Виконуй на комп'ютері з папкою, у PowerShell від імені адміністратора.
 
 ```powershell
-# 1. Папка і тестовий файл
+# 1. Папка і тестовий файл. Папка має існувати до кроку 4: New-SmbShare її не створює
 New-Item -ItemType Directory -Path "C:\CL-Lab-Read" | Out-Null
 Set-Content -Path "C:\CL-Lab-Read\test.txt" -Value "test"
 
-# 2. Окремий локальний обліковий запис. Пароль вводиться в запиті, у самій команді його немає
+# 2. Окремий локальний обліковий запис. Спершу перевіряємо, чи він уже існує. Пароль вводиться в запиті, у самій команді його немає
 #    (у лабораторії labuser вже існував; команду його створення ми не фіксували)
-$pw = Read-Host "Пароль для labuser" -AsSecureString
-New-LocalUser -Name "labuser" -Password $pw -Description "SMB: тільки читання"
+if (Get-LocalUser -Name "labuser" -ErrorAction SilentlyContinue) {
+  "Користувач labuser уже існує, новий не створюю"
+} else {
+  $pw = Read-Host "Пароль для labuser" -AsSecureString
+  New-LocalUser -Name "labuser" -Password $pw -Description "SMB: тільки читання"
+}
 
 # 3. NTFS: додати labuser право «читання й виконання». Команда лише ДОДАЄ право і не прибирає успадковані
 icacls "C:\CL-Lab-Read" /grant "labuser:(OI)(CI)RX"
@@ -194,7 +203,7 @@ net use \\192.168.77.10\CL-Lab-Read * /user:DESKTOP-5FEIC76\labuser
 
 ## Підключення до мережевої папки з іншого ПК
 
-⚠️ **Підключення мережевого диска не тестувалось у лабораторії** (там ми відкривали папку у Провіднику за шляхом).
+⚠️ **Постійне підключення мережевого диска не тестувалось у лабораторії.** Ми відкривали папку у Провіднику за шляхом і виконували тимчасове `New-PSDrive -Credential` (без `-Persist`). `New-PSDrive -Persist`, `net use` і майстер «Підключити мережевий диск» не тестувалися.
 
 **Через провідник:** `Win + E` → в адресний рядок:
 ```
@@ -209,16 +218,28 @@ net use \\192.168.77.10\CL-Lab-Read * /user:DESKTOP-5FEIC76\labuser
 
 **Через CMD** (пароль у команді не пиши — `*` змусить Windows запитати його окремо, і він не потрапить в історію команд):
 ```cmd
+REM Варіант 1: з поточними обліковими даними Windows
 net use Z: \\192.168.1.100\Documents
+REM Варіант 2: з іншим користувачем (вибери або цей, або попередній; літера Z: не може бути зайнята двічі)
 net use Z: \\192.168.1.100\Documents * /user:ІМ'Я-СЕРВЕРА\Username
+REM Відключити диск Z:
 net use Z: /delete
+REM Показати поточні підключення
 net use
 ```
 
-**Через PowerShell** (`Get-Credential` відкриє вікно для логіна й пароля):
+**Через PowerShell** (`Get-Credential` відкриє вікно для логіна й пароля). Без `-Persist` диск тимчасовий: його видно лише в цій сесії PowerShell, а не в Провіднику й не в `net use` (саме таку форму `-Credential` ми перевіряли). Для постійного диска додай `-Persist`:
 ```powershell
+# Тимчасовий диск (тільки ця сесія PowerShell)
+New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential)
+
+# Постійний мережевий диск Windows (видно в Провіднику й у net use)
 New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential) -Persist
+
+# У скрипті додай -Scope Global, інакше постійний диск не збережеться за межами скрипта
+New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Credential (Get-Credential) -Persist -Scope Global
 ```
+За документацією Microsoft, постійні диски прив'язані до облікового запису: диск, створений у сесії від адміністратора, не видно в сесіях з іншими обліковими даними.
 
 ---
 
@@ -229,7 +250,8 @@ New-PSDrive -Name "Z" -PSProvider FileSystem -Root "\\192.168.1.100\Docs" -Crede
 Додай `$` в кінці імені шари — папка не буде видна при перегляді мережевих ресурсів, але підключитись можна, якщо знаєш точний шлях:
 
 ```powershell
-New-SmbShare -Name "HiddenShare$" -Path "D:\Sensitive" -FullAccess "labuser"
+# Папка D:\Sensitive має існувати до цієї команди
+New-SmbShare -Name "HiddenShare$" -Path "D:\Sensitive" -ReadAccess "labuser"
 ```
 Підключення так само, вручну: `\\server\HiddenShare$`
 
@@ -268,7 +290,7 @@ Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -NoRestart
 Set-SmbServerConfiguration -RequireSecuritySignature $true -Force
 ```
 
-За документацією Microsoft, у Windows 11 24H2 і Windows Server 2025 підпис SMB уже вимагається за замовчуванням, тож остання команда потрібна насамперед на старіших збірках. Обов'язковий підпис може завадити підключенню дуже старих пристроїв, які його не підтримують.
+За документацією Microsoft, підпис SMB за замовчуванням вимагається по-різному для вихідних (SMB-клієнт) і вхідних (SMB-сервер) з'єднань: Windows 11 24H2 Enterprise, Pro і Education — і для вихідних, і для вхідних; Windows Server 2025 — лише для вихідних; Windows 11 24H2 Home — ні для вихідних, ні для вхідних. Остання команда вмикає вимогу для вхідних з'єднань, тож вона потрібна насамперед на Windows 11 Home, Windows Server 2025 і старіших збірках. Обов'язковий підпис може завадити підключенню дуже старих пристроїв, які його не підтримують.
 
 Моніторинг активних підключень до твоїх спільних папок:
 ```powershell
@@ -298,7 +320,8 @@ Test-NetConnection 192.168.77.10 -Port 445
 
 ```powershell
 # На сервері, PowerShell від адміністратора: вхідний SMB тільки з одного клієнта і тільки в приватній мережі
-New-NetFirewallRule -DisplayName "SMB-In: тільки 192.168.77.11" -Direction Inbound -Protocol TCP -LocalPort 445 -RemoteAddress 192.168.77.11 -Profile Private -Action Allow
+$clientIp = "192.168.77.11"   # ЗАМІНИ на IP-адресу СВОГО клієнта: це лише приклад із нашої лабораторії
+New-NetFirewallRule -DisplayName "SMB-In: тільки $clientIp" -Direction Inbound -Protocol TCP -LocalPort 445 -RemoteAddress $clientIp -Profile Private -Action Allow
 ```
 
 Якщо мережа на сервері позначена Публічною, правило з `-Profile Private` не спрацює. Для звичайної мережі розумніше змінити профіль довіреної мережі на Приватний, ніж відкривати порт у Публічному. У нашій ізольованій лабораторії ми свідомо залишили Public і обмежили правило адресами та інтерфейсом, але це не рекомендація для домашньої чи офісної мережі.
@@ -321,7 +344,7 @@ Test-NetConnection -ComputerName "ІМ'Я-ПК" -Port 445
 
 Не рекомендуємо вимикати «Спільний доступ, захищений паролем» заради зручності: так папка стає доступною без облікового запису. ⚠️ Ми цього не тестували. За документацією Microsoft, Windows 11 Pro за замовчуванням і так не підключається до серверів гостем, тож «відкрита без пароля» папка може просто не відкритись.
 
-Якщо у вікні входу залишився старий обліковий запис, закрий підключення й спробуй ще раз: `net use \\IP-СЕРВЕРА /delete`.
+Якщо у вікні входу залишився старий обліковий запис, закрий підключення й спробуй ще раз: `net use \\IP-СЕРВЕРА\НазваПапки /delete` (потрібен повний шлях до шари; `net use * /delete` відключає всі підключення).
 
 ### Помилка 0x80004005
 
@@ -329,7 +352,7 @@ Test-NetConnection -ComputerName "ІМ'Я-ПК" -Port 445
 
 1. **Порт.** `Test-NetConnection IP -Port 445` має показати `True`.
 2. **Облікові дані.** Вхід має бути за логіном і паролем облікового запису, який існує на сервері, у форматі `ІМ'Я-СЕРВЕРА\користувач`.
-3. **Підпис SMB і гостьовий вхід.** Windows 11 24H2 вимагає підпис SMB за замовчуванням, а гостьові входи не підтримують підпис. Старий NAS, принтер або інший пристрій, що вміє лише гостьовий доступ, можуть не підключитись. Краще налаштувати на ньому користувача з паролем або оновити пристрій.
+3. **Підпис SMB і гостьовий вхід.** Windows 11 24H2 Enterprise, Pro і Education вимагають підпис SMB за замовчуванням (Home — ні), а гостьові входи не підтримують підпис. Старий NAS, принтер або інший пристрій, що вміє лише гостьовий доступ, можуть не підключитись. Краще налаштувати на ньому користувача з паролем або оновити пристрій.
 4. **Журнал.** Event Viewer (Перегляд подій) → `Applications and Services Logs` → `Microsoft` → `Windows` → `SMBClient` → `Security` (в україномовному Windows ці назви можуть бути перекладені). За документацією Microsoft, подія 31017 «Rejected an insecure guest logon» означає відхилений гостьовий вхід.
 
 > **Про пораду `AllowInsecureGuestAuth = 1`.** У мережі її радять як універсальне виправлення цієї помилки. Ми так не робимо і не рекомендуємо: Microsoft прямо радить не вмикати небезпечні гостьові входи. Вони не підтримують підписування й шифрування SMB, відкривають клієнт для атак «людина посередині» та підміни сервера. Налаштування не лікує причину помилки, а лише вимикає захист; ⚠️ ми його не тестували.
@@ -380,7 +403,7 @@ Share-права діють тільки при доступі по мережі
 
 **Найбезпечніший шлях (близький сценарій ми перевірили в лабораторії на Windows 11 Pro 24H2):** окремий обліковий запис на комп'ютері з папкою → «Читання» на SMB і «Читання й виконання» на NTFS → підключення з іншого ПК за `\\IP\назва-папки` з логіном і паролем цього облікового запису → перевірка, що читання працює, а створення файлу заборонене.
 
-**Для скриптів і масового керування** — `New-SmbShare` / `Grant-SmbShareAccess` / `Get-SmbSession` через PowerShell (⚠️ у лабораторії виконувалась лише `New-SmbShare`, у формі з розділу вище; решта команд не перевірялась).
+**Для скриптів і масового керування** — `New-SmbShare` / `Grant-SmbShareAccess` / `Get-SmbSession` через PowerShell (⚠️ у лабораторії виконувались `New-SmbShare` (у формі з розділу вище) і `Get-SmbShareAccess`; `Grant-SmbShareAccess`, `Get-SmbSession` та решта команд не перевірялись).
 
 **Безпека:** вимкни застарілий SMB1, не відкривай порт 445 ширше за потрібне (конкретна адреса клієнта й інтерфейс, за можливості приватний профіль), не вмикай гостьовий доступ заради однієї помилки, керуй точними правами через NTFS і не плутай «Everyone» з «без пароля».
 
@@ -388,6 +411,8 @@ Share-права діють тільки при доступі по мережі
 
 ## Джерела
 
-- Microsoft Learn: [SMB security hardening in Windows Server and Windows Client](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security-hardening) — підпис SMB за замовчуванням у Windows 11 24H2, блокування гостьових підключень у Windows 11 Pro.
+- Microsoft Learn: [SMB security hardening in Windows Server and Windows Client](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-security-hardening) — блокування гостьових підключень у Windows 11 Pro за замовчуванням.
+- Microsoft Learn: [Control SMB signing behavior](https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing) — які редакції вимагають підпис SMB для вхідних і вихідних з'єднань (Windows 11 24H2, Windows Server 2025).
+- Microsoft Learn: [New-PSDrive](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-psdrive) — тимчасові й постійні диски, `-Persist` і `-Scope Global` у скриптах.
 - Microsoft Learn: [Enable insecure guest logons in SMB2 and SMB3](https://learn.microsoft.com/en-us/windows-server/storage/file-server/enable-insecure-guest-logons-smb2-and-smb3) — ризики небезпечних гостьових входів і журнал SMBClient.
 - Microsoft Learn: [Common HRESULT values](https://learn.microsoft.com/en-us/windows/win32/seccrypto/common-hresult-values) — значення коду 0x80004005 (E_FAIL).
