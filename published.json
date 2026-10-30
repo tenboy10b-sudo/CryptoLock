@@ -176,7 +176,12 @@
     "🔵 Синій екран смерті (BSOD) з помилкою SYSTEM_SERVICE_EXCEPTION",
     "🔌 **Команда дня: netstat -ano**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "396be753-b3b1-4828-8549-4fa03a8f726e",
+    "type": "middle",
+    "started_at": "2026-10-30T10:00:59.704Z",
+    "expires_at": "2026-10-30T10:15:59.704Z"
+  },
   "pending": null,
   "last_message_id": 618,
   "engage_ab_index": 18,
