@@ -181,7 +181,15 @@
     "started_at": "2026-10-30T08:01:08.741Z",
     "expires_at": "2026-10-30T08:16:08.741Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "1c4060e4-746f-465b-924b-e1fe5e554392",
+    "type": "content",
+    "identifier": "how-to-configure-windows-user-account-control",
+    "payload": {
+      "text": "🛡️ **Налаштування UAC у Windows 10/11**\n\nUser Account Control — ваш перший щит від несанкціонованих змін системи. Давайте налаштуємо його правильно!\n\n**Основні кроки:**\n\n1️⃣ **Змінити рівень захисту**\nВідкрийте `Пуск` → введіть `UAC` → оберіть потрібний рівень повідомлень. Для домашнього ПК рекомендую 2-й рівень (за замовчуванням).\n\n2️⃣ **Налаштування через Group Policy**\nНатисніть `Win+R` → `gpedit.msc` → перейдіть:\n`Computer Configuration\\Windows Settings\\Security Settings\\Local Policies\\Security Options`\nТут знайдете всі параметри UAC для тонкого налаштування.\n\n3️⃣ **Вимкнути UAC для конкретної програми**\nСтворіть ярлик → Властивості → Сумісність → \"Виконувати від імені адміністратора\". Але використовуйте обережно!\n\n4️⃣ **Перевірка поточного статусу через PowerShell:**\n```powershell\nGet-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System -Name EnableLUA\n```\n\n⚠️ **Порада:** Ніколи повністю не вимикайте UAC — це значно знижує безпеку системи!\n\n#Windows #Безпека #UAC #WindowsTips\n\n🔗 https://cryptolockua.com/en/how-to-configure-windows-user-account-control"
+    },
+    "created_at": "2026-10-30T08:01:20.848Z"
+  },
   "last_message_id": 617,
   "engage_ab_index": 18,
   "poll_recent_topics": [
