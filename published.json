@@ -155,7 +155,7 @@
     "how-to-configure-windows-powershell-profiles"
   ],
   "count": 153,
-  "promo_index": 93,
+  "promo_index": 94,
   "last_post": {
     "slug": "how-to-configure-windows-powershell-profiles",
     "title": "How to Create and Use PowerShell Profiles for Custom Environment",
@@ -177,22 +177,9 @@
     "🔌 **Команда дня: netstat -ano**",
     "🎯 **Мало хто знає, що в Windows є God Mode — панель зі всіма налаштуваннями системи в одному місці**"
   ],
-  "lock": {
-    "execution_id": "7e672b83-4e4d-416d-a7f4-e0e02204864d",
-    "type": "middle",
-    "started_at": "2026-10-31T10:00:56.139Z",
-    "expires_at": "2026-10-31T10:15:56.139Z"
-  },
-  "pending": {
-    "execution_id": "7e672b83-4e4d-416d-a7f4-e0e02204864d",
-    "type": "middle",
-    "identifier": "standalone-topic:Планувальник завдань",
-    "payload": {
-      "text": "📋 **Перевіряємо Планувальник завдань на приховане шкідливе ПЗ**\n\n**Що перевіряємо:** Заплановані завдання, через які зловмисне ПЗ може автоматично запускатися після перезавантаження або видалення.\n\n**Крок 1. Відкриваємо Планувальник завдань**\nНатисніть Win+R → введіть `taskschd.msc` → Enter\n\n**Крок 2. Перегляд підозрілих завдань**\nРозгорніть «Бібліотека планувальника завдань» → перевірте всі папки, особливо кореневу. Зверніть увагу на завдання з незрозумілими назвами або без видавця.\n\n**Крок 3. Перевірка через PowerShell**\n```\nGet-ScheduledTask | Where-Object {$_.TaskPath -notlike \"*Microsoft*\"} | Select TaskName, TaskPath, State\n```\n\n**Крок 4. Детальний аналіз підозрілого завдання**\nКлацніть двічі на завдання → вкладка «Дії» → перевірте, що саме запускається і звідки.\n\n**На що звертати увагу:**\n- Завдання без опису або з випадковими назвами (ghJk32, update_sys)\n- Шляхи до файлів у %TEMP%, %APPDATA%, папках користувача\n- Запуск .vbs, .ps1, .bat файлів з незрозумілих джерел\n- Завдання від невідомих видавців\n- Часті інтервали запуску (кожні 5-10 хвилин)\n\n**Що робити:**\nКлацніть правою кнопкою → Вимкнути → вивчіть файл через VirusTotal → видаліть завдання і сам файл, якщо підтвердилася загроза.\n\n#windows #безпека #планувальникзавдань"
-    },
-    "created_at": "2026-10-31T10:01:10.319Z"
-  },
-  "last_message_id": 621,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 622,
   "engage_ab_index": 19,
   "poll_recent_topics": [
     "Коли ви встановлюєте оновлення Windows?",
@@ -205,7 +192,7 @@
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 9,
+    "posts_since": 10,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
