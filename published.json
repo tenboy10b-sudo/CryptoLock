@@ -177,7 +177,12 @@
     "🔌 **Команда дня: netstat -ano**",
     "🎯 **Мало хто знає, що в Windows є God Mode — панель зі всіма налаштуваннями системи в одному місці**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "f8823fb6-866a-4e96-acda-35c53c732c58",
+    "type": "extra",
+    "started_at": "2026-10-31T16:00:49.160Z",
+    "expires_at": "2026-10-31T16:15:49.160Z"
+  },
   "pending": null,
   "last_message_id": 622,
   "engage_ab_index": 19,
