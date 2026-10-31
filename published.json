@@ -182,7 +182,15 @@
     "started_at": "2026-10-31T08:01:07.499Z",
     "expires_at": "2026-10-31T08:16:07.499Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "04c33ce1-5cd7-430c-8e38-3be05b0b3bb4",
+    "type": "content",
+    "identifier": "how-to-configure-windows-powershell-profiles",
+    "payload": {
+      "text": "⚙️ **Налаштовуємо PowerShell під себе: профілі для автоматизації**\n\nЩоразу вводите одні й ті самі команди при запуску PowerShell? Час створити власний профіль, який налаштує все автоматично!\n\n**Що таке профіль?**\nЦе скрипт, який виконується при кожному запуску PowerShell. Ідеально для aliases, функцій та змінних.\n\n**Як створити:**\n\n1️⃣ Перевірте, чи існує профіль:\n```powershell\nTest-Path $PROFILE\n```\n\n2️⃣ Створіть новий профіль:\n```powershell\nNew-Item -Path $PROFILE -Type File -Force\nnotepad $PROFILE\n```\n\n3️⃣ Додайте корисні aliases та функції:\n```powershell\nSet-Alias ll Get-ChildItem\nfunction docs { Set-Location C:\\Documents }\n```\n\n4️⃣ Автозавантаження модулів:\n```powershell\nImport-Module PSReadLine\n```\n\n5️⃣ Збережіть файл і перезапустіть PowerShell\n\n**Порада безпеки:** якщо виникає помилка про політику виконання, запустіть:\n```powershell\nSet-ExecutionPolicy RemoteSigned -Scope CurrentUser\n```\n\nТепер ваше середовище налаштовується автоматично при кожному запуску! 🚀\n\n#PowerShell #Windows #Automation #SysAdmin"
+    },
+    "created_at": "2026-10-31T08:01:17.635Z"
+  },
   "last_message_id": 620,
   "engage_ab_index": 19,
   "poll_recent_topics": [
