@@ -152,14 +152,15 @@
     "how-to-fix-windows-audio-crackling",
     "aktyvatsiya-windows-10-11-vsi-sposoby",
     "how-to-configure-windows-user-account-control",
-    "how-to-configure-windows-powershell-profiles"
+    "how-to-configure-windows-powershell-profiles",
+    "optymizatsiya-ssd-windows"
   ],
-  "count": 153,
+  "count": 154,
   "promo_index": 94,
   "last_post": {
-    "slug": "how-to-configure-windows-powershell-profiles",
-    "title": "How to Create and Use PowerShell Profiles for Custom Environment",
-    "time": "2026-10-31T08:01:17.635Z"
+    "slug": "optymizatsiya-ssd-windows",
+    "title": "Оптимізація SSD в Windows 10 і 11: TRIM, дефрагментація і здоров'я",
+    "time": "2026-11-01T08:01:15.896Z"
   },
   "engage_index": 74,
   "extra_index": 129,
@@ -177,22 +178,9 @@
     "🎯 **Мало хто знає, що в Windows є God Mode — панель зі всіма налаштуваннями системи в одному місці**",
     "📁 Чому зникає місце на диску C:?"
   ],
-  "lock": {
-    "execution_id": "85310b42-9186-4c68-89b6-c47eec23d298",
-    "type": "content",
-    "started_at": "2026-11-01T08:01:04.747Z",
-    "expires_at": "2026-11-01T08:16:04.747Z"
-  },
-  "pending": {
-    "execution_id": "85310b42-9186-4c68-89b6-c47eec23d298",
-    "type": "content",
-    "identifier": "optymizatsiya-ssd-windows",
-    "payload": {
-      "text": "⚡ Оптимізація SSD в Windows: максимум швидкості\n\nЯкщо у вас SSD, правильна оптимізація подвоїть його термін служби і збереже високу швидкість роботи. Ось що потрібно налаштувати:\n\n**1. Перевірте TRIM**\nВідкрийте PowerShell як адміністратор і виконайте:\n```\nfsutil behavior query DisableDeleteNotify\n```\nЯкщо результат \"0\" — все ок, TRIM увімкнено.\n\n**2. Вимкніть дефрагментацію**\nSSD не потребує дефрагментації! Натисніть Win+R → `dfrgui` → виберіть SSD → Змінити параметри → зніміть автозапуск. Windows 10/11 має робити це сама, але краще перевірити.\n\n**3. Вимкніть SysMain (колишня SuperFetch)**\nЦя служба корисна для HDD, але марно навантажує SSD:\n```\nGet-Service \"SysMain\" | Stop-Service -PassThru | Set-Service -StartupType Disabled\n```\n\n**4. Перевірте здоров'я диску**\n```\nwmic diskdrive get status\n```\nТакож використовуйте програми виробника SSD (Samsung Magician, Crucial Storage Executive) для детальної діагностики.\n\n**Бонус:** Переконайтеся, що файл підкачки не на SSD або зменшіть його розмір.\n\n#Windows #SSD #оптимізація #tips"
-    },
-    "created_at": "2026-11-01T08:01:15.896Z"
-  },
-  "last_message_id": 623,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 624,
   "engage_ab_index": 19,
   "poll_recent_topics": [
     "Коли ви встановлюєте оновлення Windows?",
@@ -205,7 +193,7 @@
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 11,
+    "posts_since": 12,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
