@@ -1,5 +1,26 @@
 # CryptoLock — Claude Code Operating Rules
 
+
+## MANDATORY CHAT-RECOVERY LOGGING — EVERY COMPLETED RESPONSE (2026-11-01)
+
+**Owner instruction:** persist **each finished Claude Code reply/turn**, NOT only finished tasks. This includes audits, answers, decisions, partial/blocked results, and no-op responses. Do not log live progress updates or individual tool calls.
+
+**Private source of truth for chat continuity:** `tenboy10b-sudo/CryptoLock-analytics` (private), files:
+- `context/CHAT_CLAUDE.md` — Claude's append-only completed-response log.
+- `context/CHAT_GPT.md` — GPT's separate log (Claude must NOT invent GPT entries).
+- `context/CHAT_SHARED.md` — joint chronological ledger / cross-agent checkpoint.
+
+**Before starting:** read the latest `PROJECT_STATE.md`, fresh GitHub commits, private `context/CHAT_SHARED.md`, and the latest relevant agent log. Verify dates and distinguish historical facts from current production evidence.
+
+**Before each final Claude response:** (1) append one sanitized entry with unique ID `YYYY-MM-DD-CLAUDE-NNN` to `context/CHAT_CLAUDE.md`, (2) append the matching brief entry to `context/CHAT_SHARED.md`, (3) commit and push both, verify persistence, and (4) state actual log status and SHA in the final reply. The entry captures the user's task, final outcome, scope, tests, deployment separately, decisions, evidence, unresolved questions, and next action. Every completed response gets an entry even when nothing was changed.
+
+**Privacy/security:** the main `CryptoLock` repository is PUBLIC. Never put raw chat transcripts, secrets, credentials, customer/license personal data, private identifiers, payment details, or confidential material there. Private journals must also summarize rather than reproduce sensitive data.
+
+**Concurrency/failure:** append-only; fetch latest file SHA before updating; on conflict refetch and merge entries (no force push, no deletion of another agent's entry). If the private repo cannot be accessed, finish the user task but clearly report `CHAT RECOVERY: NOT PERSISTED` and supply a sanitized entry that can be copied later. Do NOT pretend the write succeeded.
+
+These journals supplement, never replace, `PROJECT_STATE.md` and `DOCUMENTATION.md` for substantial product changes. Logging must never trigger production deploy, content publication, Telegram sends, or SEO changes. See `context/CHAT_SHARED.md` for the complete cross-agent protocol.
+
+
 ## ROLE
 
 Claude Code is the technical executor.
