@@ -1,5 +1,14 @@
 # CryptoLock Handoff Guide
 
+
+## Restore recent GPT / Claude conversations (updated 2026-11-01)
+
+**IMPORTANT:** `PROJECT_STATE.md` remains the project-state reference, but may lag recent conversations. Every completed assistant response is separately journaled in the **private** `tenboy10b-sudo/CryptoLock-analytics` repository:
+`context/CHAT_GPT.md` (GPT), `context/CHAT_CLAUDE.md` (Claude Code), and `context/CHAT_SHARED.md` (combined handoff and last decisions).
+
+At the start of a new chat, fetch the live GitHub version of all relevant files, prioritize the newest dated shared entries, and verify actual code/deployment/data before declaring a task done. If the private journal cannot be accessed, say so explicitly; never assume a missing record proves the work was not done. After **every completed reply**, the speaking assistant must append to its own journal and the shared journal before responding. No raw transcripts or secrets in the public repo.
+
+
 ## What CryptoLock is
 
 A Ukrainian-language website (cryptolockua.com) with step-by-step Windows/PC-security guides, a small suite of free browser tools, and an automated Telegram channel (@cryptolock888). Part of a wider funnel (Site → TikTok → Telegram → monetization) alongside a separate product, AuditShield (a Windows security-audit tool sold via its own Telegram bot).
