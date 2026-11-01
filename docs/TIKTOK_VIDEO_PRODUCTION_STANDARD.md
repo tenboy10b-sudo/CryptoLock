@@ -1,6 +1,6 @@
 # CryptoLock — TikTok Windows tutorial production standard
 Status: **OWNER-APPROVED CREATIVE BASELINE** (2026-11-01)
-Version: 1.1 (branding/step indicator and question-led hook approved)
+Version: 1.2 (single Ostap voice reaffirmed; comparison work paused)
 Applies to: all new CryptoLock short-form Windows troubleshooting / administration / security walkthroughs.
 Origin: owner accepted Claude's Password Policy v5-style video after successive review rounds. Approval is for the creative format and workflow, **not blanket approval of future renders**.
 
@@ -63,3 +63,10 @@ FOLLOW-UP: use on new password-history source, owner review before release.
 ## Creative standard clarification — 2026-11-01
 - Owner requests removal of top-left `CryptoLock` logo/name and substitution with sequential `КРОК 1`, `КРОК 2`, etc. Treat as global rule for future tutorials. Do not place the deleted logo/text elsewhere in the video by default.
 - Owner permits hooks beginning with `Як…?`; for the current password-history topic choose `Як увімкнути історію паролів?` plus source-true `0 → 22` instead of an unsupported promise of universal password reuse prevention.
+
+
+## Voice technology decision — 2026-11-01
+- OWNER DECISION: Keep the **existing uk-UA-OstapNeural voice** as the standard in the currently accepted creative workflow and upcoming videos. No ElevenLabs subscription, Google Cloud paid-billing setup, manual captcha workflow, Piper download, or other free-voice experiments by default. This is a product prioritization decision, not evidence that Ostap sounds best in absolute terms.
+- Context: Claude's free-candidate study (CLAUDE-015) produced only an Ostap control recording; no Google Chirp 3 HD or TTSMaker comparative test audio was generated because cloud/billing and captcha barriers remained. No change to completed visuals/audio, no spending, publishing or production.
+- Preserve natural Ukrainian TTS scripts, correct contextual grammar and stress, a single consistent narrator per video, hook from the first second, editable script + isolated voice stem. If a specific phrase mispronounces, fix that phrase rather than restarting a broad TTS provider search.
+- Reconsider voices ONLY if the owner explicitly changes the decision, or actual TikTok/quality data demonstrates an actionable limitation and the owner approves a small A/B test with defined budget and rights.
