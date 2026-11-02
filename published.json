@@ -179,7 +179,12 @@
     "📁 Чому зникає місце на диску C:?",
     "🛡️ Windows Defender vs сторонній антивірус — що обрати?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "60289ece-e864-4f21-b30c-128405816cf5",
+    "type": "extra",
+    "started_at": "2026-11-02T16:00:59.606Z",
+    "expires_at": "2026-11-02T16:15:59.606Z"
+  },
   "pending": null,
   "last_message_id": 628,
   "engage_ab_index": 20,
