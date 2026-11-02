@@ -153,14 +153,15 @@
     "aktyvatsiya-windows-10-11-vsi-sposoby",
     "how-to-configure-windows-user-account-control",
     "how-to-configure-windows-powershell-profiles",
-    "optymizatsiya-ssd-windows"
+    "optymizatsiya-ssd-windows",
+    "yak-zashyfruvaty-dysk-bitlocker"
   ],
-  "count": 154,
+  "count": 155,
   "promo_index": 95,
   "last_post": {
-    "slug": "optymizatsiya-ssd-windows",
-    "title": "Оптимізація SSD в Windows 10 і 11: TRIM, дефрагментація і здоров'я",
-    "time": "2026-11-01T08:01:15.896Z"
+    "slug": "yak-zashyfruvaty-dysk-bitlocker",
+    "title": "Як зашифрувати диск BitLocker в Windows 10 і 11",
+    "time": "2026-11-02T08:01:25.737Z"
   },
   "engage_index": 74,
   "extra_index": 130,
@@ -178,22 +179,9 @@
     "📁 Чому зникає місце на диску C:?",
     "🛡️ Windows Defender vs сторонній антивірус — що обрати?"
   ],
-  "lock": {
-    "execution_id": "9854fd63-61ed-431f-a9b8-4d9279b8117b",
-    "type": "content",
-    "started_at": "2026-11-02T08:01:13.498Z",
-    "expires_at": "2026-11-02T08:16:13.498Z"
-  },
-  "pending": {
-    "execution_id": "9854fd63-61ed-431f-a9b8-4d9279b8117b",
-    "type": "content",
-    "identifier": "yak-zashyfruvaty-dysk-bitlocker",
-    "payload": {
-      "text": "🔐 Як увімкнути BitLocker для захисту диска\n\nBitLocker — вбудоване шифрування дисків у Windows. Якщо ноутбук загубиться, ваші дані залишаться в безпеці. Ось як налаштувати:\n\n**Крок 1: Перевірте доступність**\nВідкрийте PowerShell від адміна:\n```\nGet-BitLockerVolume\n```\nЯкщо команда не працює — ймовірно у вас Windows Home (BitLocker там недоступний).\n\n**Крок 2: Увімкнення BitLocker**\n• Провідник → правою кнопкою на диск → \"Увімкнути BitLocker\"\n• Процес займе 20-60 хвилин залежно від розміру диска\n• Система запропонує створити пароль або використати TPM-чіп\n\n**Крок 3: ОБОВ'ЯЗКОВО збережіть ключ відновлення!**\nЦе ваш єдиний порятунок, якщо забудете пароль. Варіанти:\n• Зберегти в обліковий запис Microsoft\n• Роздрукувати\n• Зберегти у файл (на ІНШОМУ носії!)\n\n**Немає BitLocker?**\nУ Windows Home використовуйте VeraCrypt — безкоштовна альтернатива з відкритим кодом.\n\n**Порада:** шифруйте не лише системний диск, а й зовнішні накопичувачі з важливими даними.\n\n#Windows #Безпека #BitLocker #Tips"
-    },
-    "created_at": "2026-11-02T08:01:25.737Z"
-  },
-  "last_message_id": 626,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 627,
   "engage_ab_index": 19,
   "poll_recent_topics": [
     "Коли ви встановлюєте оновлення Windows?",
@@ -206,7 +194,7 @@
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 14,
+    "posts_since": 15,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
