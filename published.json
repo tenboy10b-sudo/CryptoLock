@@ -154,14 +154,15 @@
     "how-to-configure-windows-user-account-control",
     "how-to-configure-windows-powershell-profiles",
     "optymizatsiya-ssd-windows",
-    "yak-zashyfruvaty-dysk-bitlocker"
+    "yak-zashyfruvaty-dysk-bitlocker",
+    "yak-nalashtuvanty-rezerv-systemy-windows-image"
   ],
-  "count": 155,
+  "count": 156,
   "promo_index": 95,
   "last_post": {
-    "slug": "yak-zashyfruvaty-dysk-bitlocker",
-    "title": "Як зашифрувати диск BitLocker в Windows 10 і 11",
-    "time": "2026-11-02T08:01:25.737Z"
+    "slug": "yak-nalashtuvanty-rezerv-systemy-windows-image",
+    "title": "Як створити образ системи Windows і відновитись з нього",
+    "time": "2026-11-03T08:01:25.473Z"
   },
   "engage_index": 75,
   "extra_index": 131,
@@ -179,22 +180,9 @@
     "🛡️ Windows Defender vs сторонній антивірус — що обрати?",
     "🛫 Чеклист: Безпека ноутбука перед подорожжю"
   ],
-  "lock": {
-    "execution_id": "d5132509-d1f8-4a2a-a417-e528a97b691c",
-    "type": "content",
-    "started_at": "2026-11-03T08:01:07.172Z",
-    "expires_at": "2026-11-03T08:16:07.172Z"
-  },
-  "pending": {
-    "execution_id": "d5132509-d1f8-4a2a-a417-e528a97b691c",
-    "type": "content",
-    "identifier": "yak-nalashtuvanty-rezerv-systemy-windows-image",
-    "payload": {
-      "text": "💾 **Як створити образ системи Windows і відновитись з нього**\n\nПовний образ системи — ваша страховка від критичних збоїв. Розповідаю про три перевірені способи:\n\n**1️⃣ Вбудований інструмент Windows**\nПанель керування → Резервне копіювання та відновлення (Windows 7) → Створення образу системи. Вибираєте диск для збереження, система сама запакує все необхідне.\n\n**2️⃣ DISM (для досвідчених)**\nВідкрийте CMD від адміністратора:\n```\nDism /Capture-Image /ImageFile:D:\\system-backup.wim /CaptureDir:C:\\ /Name:\"Backup\"\n```\nШвидко, потужно, але потребує розуміння процесу.\n\n**3️⃣ Macrium Reflect Free**\nНайзручніший варіант — інтуїтивний інтерфейс, можливість створення завантажувального USB для відновлення. Безкоштовна версія цілком достатня для домашнього використання.\n\n**💡 Поради:**\n- Зберігайте образи на зовнішньому диску\n- Створюйте образ після кожного важливого оновлення системи\n- Обов'язково тестуйте відновлення на віртуальній машині\n\nВідновлення з образу займає 15-30 хвилин — набагато швидше, ніж перевстановлення Windows з нуля!\n\n#Windows #безпека #backup #поради\n\n🔗 https://cryptolockua.com/yak-nalashtuvanty-rezerv-systemy-windows-image"
-    },
-    "created_at": "2026-11-03T08:01:25.473Z"
-  },
-  "last_message_id": 629,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 630,
   "engage_ab_index": 20,
   "poll_recent_topics": [
     "Коли ви встановлюєте оновлення Windows?",
@@ -207,7 +195,7 @@
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 17,
+    "posts_since": 18,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
