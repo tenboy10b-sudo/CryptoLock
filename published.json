@@ -180,7 +180,12 @@
     "🛡️ Windows Defender vs сторонній антивірус — що обрати?",
     "🛫 Чеклист: Безпека ноутбука перед подорожжю"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "f1aa6661-c376-4f38-8478-992162b7a458",
+    "type": "extra",
+    "started_at": "2026-11-03T16:01:06.907Z",
+    "expires_at": "2026-11-03T16:16:06.907Z"
+  },
   "pending": null,
   "last_message_id": 631,
   "engage_ab_index": 20,
