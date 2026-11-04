@@ -181,7 +181,12 @@
     "🛫 Чеклист: Безпека ноутбука перед подорожжю",
     "🔇 Звук пропав після оновлення Windows"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "56f0465c-a884-4ced-a7c3-adb14c496235",
+    "type": "extra",
+    "started_at": "2026-11-04T16:00:58.359Z",
+    "expires_at": "2026-11-04T16:15:58.359Z"
+  },
   "pending": null,
   "last_message_id": 634,
   "engage_ab_index": 21,
