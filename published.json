@@ -155,14 +155,15 @@
     "how-to-configure-windows-powershell-profiles",
     "optymizatsiya-ssd-windows",
     "yak-zashyfruvaty-dysk-bitlocker",
-    "yak-nalashtuvanty-rezerv-systemy-windows-image"
+    "yak-nalashtuvanty-rezerv-systemy-windows-image",
+    "yak-vstanovyty-net-framework-windows"
   ],
-  "count": 156,
+  "count": 157,
   "promo_index": 96,
   "last_post": {
-    "slug": "yak-nalashtuvanty-rezerv-systemy-windows-image",
-    "title": "Як створити образ системи Windows і відновитись з нього",
-    "time": "2026-11-03T08:01:25.473Z"
+    "slug": "yak-vstanovyty-net-framework-windows",
+    "title": "Як встановити .NET Framework 3.5 і .NET 8 на Windows 10 і 11",
+    "time": "2026-11-04T08:01:21.401Z"
   },
   "engage_index": 75,
   "extra_index": 132,
@@ -180,22 +181,9 @@
     "🛫 Чеклист: Безпека ноутбука перед подорожжю",
     "🔇 Звук пропав після оновлення Windows"
   ],
-  "lock": {
-    "execution_id": "dbfdefec-2d22-4f56-ad64-30cef031cfcb",
-    "type": "content",
-    "started_at": "2026-11-04T08:01:10.779Z",
-    "expires_at": "2026-11-04T08:16:10.779Z"
-  },
-  "pending": {
-    "execution_id": "dbfdefec-2d22-4f56-ad64-30cef031cfcb",
-    "type": "content",
-    "identifier": "yak-vstanovyty-net-framework-windows",
-    "payload": {
-      "text": "🔧 **Як встановити .NET Framework 3.5 і .NET 8 на Windows**\n\nБагато програм досі потребують старий .NET Framework 3.5, а нові додатки вже використовують .NET 8. Ось як встановити обидва:\n\n**Для .NET Framework 3.5:**\n\n1️⃣ Відкрийте PowerShell від адміністратора та виконайте:\n```\nDISM /Online /Enable-Feature /FeatureName:NetFx3 /All\n```\n\n2️⃣ Якщо помилка 0x800F081F — підключіть інтернет або вкажіть шлях до ISO Windows:\n```\nDISM /Online /Enable-Feature /FeatureName:NetFx3 /All /Source:D:\\sources\\sxs /LimitAccess\n```\n\n**Для .NET 8:**\n\n3️⃣ Завантажте офіційний інсталятор з сайту Microsoft (Runtime або SDK за потребою)\n\n4️⃣ Перевірте встановлені версії командою:\n```\ndotnet --list-runtimes\n```\n\n**Виправлення проблем:**\n\n5️⃣ Якщо .NET пошкоджений, скористайтеся відновленням системних файлів:\n```\nsfc /scannow\nDISM /Online /Cleanup-Image /RestoreHealth\n```\n\nПісля відновлення перезавантажте систему та повторіть встановлення.\n\n#Windows #NET #PowerShell #Адмін"
-    },
-    "created_at": "2026-11-04T08:01:21.401Z"
-  },
-  "last_message_id": 632,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 633,
   "engage_ab_index": 20,
   "poll_recent_topics": [
     "Коли ви встановлюєте оновлення Windows?",
@@ -208,7 +196,7 @@
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 20,
+    "posts_since": 21,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
