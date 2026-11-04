@@ -187,7 +187,24 @@
     "started_at": "2026-11-04T10:01:00.888Z",
     "expires_at": "2026-11-04T10:16:00.888Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "0b60032e-51f4-4c24-a276-1052a908bc5c",
+    "type": "middle",
+    "identifier": "engage-ab-poll:20",
+    "payload": {
+      "poll": {
+        "question": "Який антивірус ви використовуєте на своєму Windows ПК?",
+        "options": [
+          "Тільки вбудований Windows Defender",
+          "Сторонній антивірус",
+          "Defender + додатковий захист",
+          "Не використовую антивірус"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-11-04T10:01:07.156Z"
+  },
   "last_message_id": 633,
   "engage_ab_index": 20,
   "poll_recent_topics": [
