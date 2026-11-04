@@ -181,44 +181,22 @@
     "🛫 Чеклист: Безпека ноутбука перед подорожжю",
     "🔇 Звук пропав після оновлення Windows"
   ],
-  "lock": {
-    "execution_id": "0b60032e-51f4-4c24-a276-1052a908bc5c",
-    "type": "middle",
-    "started_at": "2026-11-04T10:01:00.888Z",
-    "expires_at": "2026-11-04T10:16:00.888Z"
-  },
-  "pending": {
-    "execution_id": "0b60032e-51f4-4c24-a276-1052a908bc5c",
-    "type": "middle",
-    "identifier": "engage-ab-poll:20",
-    "payload": {
-      "poll": {
-        "question": "Який антивірус ви використовуєте на своєму Windows ПК?",
-        "options": [
-          "Тільки вбудований Windows Defender",
-          "Сторонній антивірус",
-          "Defender + додатковий захист",
-          "Не використовую антивірус"
-        ],
-        "isQuiz": false
-      }
-    },
-    "created_at": "2026-11-04T10:01:07.156Z"
-  },
-  "last_message_id": 633,
-  "engage_ab_index": 20,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 634,
+  "engage_ab_index": 21,
   "poll_recent_topics": [
-    "Коли ви встановлюєте оновлення Windows?",
     "Як ви керуєте програмами в автозапуску Windows?",
     "Як ви налаштували UAC (контроль облікових записів) у Windows?",
     "Скільки облікових записів користувачів створено на вашому Windows ПК?",
     "Як ви зберігаєте паролі від своїх облікових записів?",
-    "Як часто ви робите резервні копії важливих файлів?"
+    "Як часто ви робите резервні копії важливих файлів?",
+    "Який антивірус ви використовуєте на своєму Windows ПК?"
   ],
   "auditshield": {
     "v": 1,
     "seq": 0,
-    "posts_since": 21,
+    "posts_since": 22,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": null,
     "manual_last_at": null,
