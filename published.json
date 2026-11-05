@@ -188,7 +188,26 @@
     "started_at": "2026-11-05T10:00:58.709Z",
     "expires_at": "2026-11-05T10:15:58.709Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "dfb302e3-9912-40f4-882d-ef8038440265",
+    "type": "middle",
+    "identifier": "auditshield:asp001:startup-unknown",
+    "payload": {
+      "text": "🚀 Скільки програм запускається разом із Windows, щойно ви вмикаєте ПК? Це впливає і на швидкість завантаження, і на те, що працює у фоні.\n\nНайпростіше глянути в Диспетчері завдань (Ctrl+Shift+Esc), у розділі автозавантаження: там видно назви, стан і вплив кожної програми на запуск.\n\nЩоб побачити, звідки саме береться запис, є команда в PowerShell:\n\n```\nGet-CimInstance Win32_StartupCommand | Select-Object Name, Command, Location\n```\n\nУ колонці Command — файл, який стартує. Незнайома назва ще не вирок: спершу з'ясуйте, що це за програма. Команда показує реєстр і папки автозапуску; заплановані завдання — окремий список.\n\nAuditShield Demo збирає в один звіт автозапуск і активні заплановані завдання не від Microsoft.\n\n🔎 Безкоштовна швидка перевірка AuditShield → [Demo у Telegram](https://t.me/AuditShield_01_Bot?start=a1_tc_auditshield_asp001)\n\n#windows #безпека"
+    },
+    "created_at": "2026-11-05T10:00:59.830Z",
+    "audit": {
+      "id": "asp001",
+      "angle": "startup-unknown",
+      "format": "diagnostic",
+      "topic": "Скільки програм стартує разом із Windows",
+      "content_id": "asp001",
+      "cta_variant": 0,
+      "approved_version": "v1-2026-10-27",
+      "text_sha": "92c1b0618206f686",
+      "selected_at": "2026-11-05T10:00:59.790Z"
+    }
+  },
   "last_message_id": 636,
   "engage_ab_index": 21,
   "poll_recent_topics": [
