@@ -157,14 +157,15 @@
     "yak-zashyfruvaty-dysk-bitlocker",
     "yak-nalashtuvanty-rezerv-systemy-windows-image",
     "yak-vstanovyty-net-framework-windows",
-    "yak-zakhystyty-oblikovyy-zapys-microsoft"
+    "yak-zakhystyty-oblikovyy-zapys-microsoft",
+    "zakhyst-vid-ransomware-controlled-folder"
   ],
-  "count": 158,
+  "count": 159,
   "promo_index": 96,
   "last_post": {
-    "slug": "yak-zakhystyty-oblikovyy-zapys-microsoft",
-    "title": "Як захистити обліковий запис Microsoft: двофакторна автентифікація і не тільки",
-    "time": "2026-11-05T08:01:14.672Z"
+    "slug": "zakhyst-vid-ransomware-controlled-folder",
+    "title": "Захист від програм-вимагачів: Controlled Folder Access в Windows",
+    "time": "2026-11-06T08:01:10.941Z"
   },
   "engage_index": 75,
   "extra_index": 133,
@@ -182,22 +183,9 @@
     "🔇 Звук пропав після оновлення Windows",
     "🔋 **Команда дня: powercfg /batteryreport**"
   ],
-  "lock": {
-    "execution_id": "bbc07581-0fa5-4ae4-a6f6-c38ffeae98f3",
-    "type": "content",
-    "started_at": "2026-11-06T08:00:57.941Z",
-    "expires_at": "2026-11-06T08:15:57.941Z"
-  },
-  "pending": {
-    "execution_id": "bbc07581-0fa5-4ae4-a6f6-c38ffeae98f3",
-    "type": "content",
-    "identifier": "zakhyst-vid-ransomware-controlled-folder",
-    "payload": {
-      "text": "🛡️ **Controlled Folder Access — ваш щит від ransomware**\n\nRansomware шифрує файли за лічені хвилини. Controlled Folder Access у Windows Defender блокує несанкціоновані зміни у важливих папках. Ось як налаштувати:\n\n**1. Увімкнення захисту**\nБезпека Windows → Захист від вірусів і загроз → Керування захистом від програм-шантажистів → Controlled Folder Access (Увімкнути)\n\n**2. Додайте важливі папки**\nЗа замовчуванням захищені лише стандартні папки (Документи, Зображення). Додайте свої через \"Захищені папки\" — наприклад, робочі проекти або бази даних.\n\n**3. Дозвольте довірені програми**\nЯкщо легітимна програма заблокована — додайте її у \"Дозволити програму\". Перевіряйте Центр сповіщень на предмет блокувань.\n\n**Швидке увімкнення через PowerShell:**\n```\nSet-MpPreference -EnableControlledFolderAccess Enabled\n```\n\n**4. Моніторинг загроз**\nЗахист Windows → Журнал захисту — тут бачите всі заблоковані спроби змінити файли.\n\n⚠️ Порада: регулярно перевіряйте журнал перші тижні після увімкнення, щоб не пропустити блокування потрібних програм.\n\n#Windows #безпека #ransomware #WindowsDefender"
-    },
-    "created_at": "2026-11-06T08:01:10.941Z"
-  },
-  "last_message_id": 637,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 638,
   "engage_ab_index": 21,
   "poll_recent_topics": [
     "Як ви керуєте програмами в автозапуску Windows?",
@@ -210,7 +198,7 @@
   "auditshield": {
     "v": 1,
     "seq": 1,
-    "posts_since": 0,
+    "posts_since": 1,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-05T10:01:01.589Z",
     "manual_last_at": null,
