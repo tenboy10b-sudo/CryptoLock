@@ -183,7 +183,12 @@
     "🔇 Звук пропав після оновлення Windows",
     "🔋 **Команда дня: powercfg /batteryreport**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "8a31fbec-f78f-493b-9880-60a3ca8f4634",
+    "type": "middle",
+    "started_at": "2026-11-06T10:00:59.600Z",
+    "expires_at": "2026-11-06T10:15:59.600Z"
+  },
   "pending": null,
   "last_message_id": 638,
   "engage_ab_index": 21,
