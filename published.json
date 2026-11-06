@@ -188,7 +188,15 @@
     "started_at": "2026-11-06T08:00:57.941Z",
     "expires_at": "2026-11-06T08:15:57.941Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "bbc07581-0fa5-4ae4-a6f6-c38ffeae98f3",
+    "type": "content",
+    "identifier": "zakhyst-vid-ransomware-controlled-folder",
+    "payload": {
+      "text": "🛡️ **Controlled Folder Access — ваш щит від ransomware**\n\nRansomware шифрує файли за лічені хвилини. Controlled Folder Access у Windows Defender блокує несанкціоновані зміни у важливих папках. Ось як налаштувати:\n\n**1. Увімкнення захисту**\nБезпека Windows → Захист від вірусів і загроз → Керування захистом від програм-шантажистів → Controlled Folder Access (Увімкнути)\n\n**2. Додайте важливі папки**\nЗа замовчуванням захищені лише стандартні папки (Документи, Зображення). Додайте свої через \"Захищені папки\" — наприклад, робочі проекти або бази даних.\n\n**3. Дозвольте довірені програми**\nЯкщо легітимна програма заблокована — додайте її у \"Дозволити програму\". Перевіряйте Центр сповіщень на предмет блокувань.\n\n**Швидке увімкнення через PowerShell:**\n```\nSet-MpPreference -EnableControlledFolderAccess Enabled\n```\n\n**4. Моніторинг загроз**\nЗахист Windows → Журнал захисту — тут бачите всі заблоковані спроби змінити файли.\n\n⚠️ Порада: регулярно перевіряйте журнал перші тижні після увімкнення, щоб не пропустити блокування потрібних програм.\n\n#Windows #безпека #ransomware #WindowsDefender"
+    },
+    "created_at": "2026-11-06T08:01:10.941Z"
+  },
   "last_message_id": 637,
   "engage_ab_index": 21,
   "poll_recent_topics": [
