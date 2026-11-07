@@ -158,14 +158,15 @@
     "yak-nalashtuvanty-rezerv-systemy-windows-image",
     "yak-vstanovyty-net-framework-windows",
     "yak-zakhystyty-oblikovyy-zapys-microsoft",
-    "zakhyst-vid-ransomware-controlled-folder"
+    "zakhyst-vid-ransomware-controlled-folder",
+    "yak-nalashtuvaty-sinkhroni-chasu-windows"
   ],
-  "count": 159,
+  "count": 160,
   "promo_index": 96,
   "last_post": {
-    "slug": "zakhyst-vid-ransomware-controlled-folder",
-    "title": "Захист від програм-вимагачів: Controlled Folder Access в Windows",
-    "time": "2026-11-06T08:01:10.941Z"
+    "slug": "yak-nalashtuvaty-sinkhroni-chasu-windows",
+    "title": "Як виправити неправильний час в Windows і налаштувати синхронізацію",
+    "time": "2026-11-07T08:01:10.942Z"
   },
   "engage_index": 76,
   "extra_index": 134,
@@ -183,22 +184,9 @@
     "🔋 **Команда дня: powercfg /batteryreport**",
     "📋 **Мало хто знає, що в Windows є буфер обміну з історією — можна зберігати до 25 скопійованих елементів**"
   ],
-  "lock": {
-    "execution_id": "4f7640a3-12e6-4d03-a1ba-794f801ad062",
-    "type": "content",
-    "started_at": "2026-11-07T08:00:56.332Z",
-    "expires_at": "2026-11-07T08:15:56.332Z"
-  },
-  "pending": {
-    "execution_id": "4f7640a3-12e6-4d03-a1ba-794f801ad062",
-    "type": "content",
-    "identifier": "yak-nalashtuvaty-sinkhroni-chasu-windows",
-    "payload": {
-      "text": "⏰ **Виправляємо неправильний час у Windows**\n\nЧас постійно збивається або показує невірно? Розбираємося з причинами і вирішуємо проблему!\n\n**Основні кроки:**\n\n1️⃣ **Перевірте часовий пояс**\nНалаштування → Час і мова → Дата й час. Увімкніть автоматичне встановлення часу та часового поясу.\n\n2️⃣ **Синхронізація з NTP-сервером**\nВідкрийте CMD від адміністратора:\n```\nw32tm /resync\n```\nАбо змініть сервер часу: Панель керування → Дата й час → Інтернет-час → Змінити параметри (наприклад, time.windows.com або ua.pool.ntp.org)\n\n3️⃣ **Перезапустіть службу часу**\n```\nnet stop w32time && net start w32time\n```\n\n4️⃣ **Час збивається після вимкнення ПК?**\nЦе ознака розрядженої батарейки CMOS (CR2032) на материнській платі. Її потрібно замінити — коштує копійки, а проблему вирішить назавжди.\n\n5️⃣ **Для dual-boot з Linux**\nУ реєстрі встановіть UTC замість локального часу:\n```\nreg add \"HKLM\\System\\CurrentControlSet\\Control\\TimeZoneInformation\" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f\n```\n\n💡 Точний час важливий для безпеки — сертифікати та автентифікація залежать від нього!\n\n#Windows #WindowsTips #Безпека #СисАдмін\n\n🔗 https://cryptolockua.com/yak-nalashtuvaty-sinkhroni-chasu-windows"
-    },
-    "created_at": "2026-11-07T08:01:10.942Z"
-  },
-  "last_message_id": 640,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 641,
   "engage_ab_index": 22,
   "poll_recent_topics": [
     "Як ви керуєте програмами в автозапуску Windows?",
@@ -211,7 +199,7 @@
   "auditshield": {
     "v": 1,
     "seq": 1,
-    "posts_since": 3,
+    "posts_since": 4,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-05T10:01:01.589Z",
     "manual_last_at": null,
