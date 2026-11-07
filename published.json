@@ -189,7 +189,15 @@
     "started_at": "2026-11-07T08:00:56.332Z",
     "expires_at": "2026-11-07T08:15:56.332Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "4f7640a3-12e6-4d03-a1ba-794f801ad062",
+    "type": "content",
+    "identifier": "yak-nalashtuvaty-sinkhroni-chasu-windows",
+    "payload": {
+      "text": "⏰ **Виправляємо неправильний час у Windows**\n\nЧас постійно збивається або показує невірно? Розбираємося з причинами і вирішуємо проблему!\n\n**Основні кроки:**\n\n1️⃣ **Перевірте часовий пояс**\nНалаштування → Час і мова → Дата й час. Увімкніть автоматичне встановлення часу та часового поясу.\n\n2️⃣ **Синхронізація з NTP-сервером**\nВідкрийте CMD від адміністратора:\n```\nw32tm /resync\n```\nАбо змініть сервер часу: Панель керування → Дата й час → Інтернет-час → Змінити параметри (наприклад, time.windows.com або ua.pool.ntp.org)\n\n3️⃣ **Перезапустіть службу часу**\n```\nnet stop w32time && net start w32time\n```\n\n4️⃣ **Час збивається після вимкнення ПК?**\nЦе ознака розрядженої батарейки CMOS (CR2032) на материнській платі. Її потрібно замінити — коштує копійки, а проблему вирішить назавжди.\n\n5️⃣ **Для dual-boot з Linux**\nУ реєстрі встановіть UTC замість локального часу:\n```\nreg add \"HKLM\\System\\CurrentControlSet\\Control\\TimeZoneInformation\" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f\n```\n\n💡 Точний час важливий для безпеки — сертифікати та автентифікація залежать від нього!\n\n#Windows #WindowsTips #Безпека #СисАдмін\n\n🔗 https://cryptolockua.com/yak-nalashtuvaty-sinkhroni-chasu-windows"
+    },
+    "created_at": "2026-11-07T08:01:10.942Z"
+  },
   "last_message_id": 640,
   "engage_ab_index": 22,
   "poll_recent_topics": [
