@@ -191,7 +191,24 @@
     "started_at": "2026-11-08T10:00:56.410Z",
     "expires_at": "2026-11-08T10:15:56.410Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "e6fb5699-ba6d-4cd7-aa7b-7951ed0489c8",
+    "type": "middle",
+    "identifier": "engage-ab-poll:22",
+    "payload": {
+      "poll": {
+        "question": "Чи ввімкнена у вас BitLocker (шифрування диска) на системному розділі?",
+        "options": [
+          "Так, ввімкнено",
+          "Ні, не використовую",
+          "Не знаю / не перевіряв",
+          "Використовую інше шифрування"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-11-08T10:01:00.940Z"
+  },
   "last_message_id": 644,
   "engage_ab_index": 22,
   "poll_recent_topics": [
