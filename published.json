@@ -186,7 +186,12 @@
     "🔵 Чому з'являється синій екран після виходу зі сну?",
     "💾 HDD vs SSD для системного диска — що обрати?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "d50cc76f-4d08-475d-ada0-9a00e392e6df",
+    "type": "middle",
+    "started_at": "2026-11-09T10:01:02.453Z",
+    "expires_at": "2026-11-09T10:16:02.453Z"
+  },
   "pending": null,
   "last_message_id": 647,
   "engage_ab_index": 23,
