@@ -164,7 +164,7 @@
     "how-to-use-powershell-for-daily-windows-tasks"
   ],
   "count": 162,
-  "promo_index": 97,
+  "promo_index": 98,
   "last_post": {
     "slug": "how-to-use-powershell-for-daily-windows-tasks",
     "title": "PowerShell One-Liners for Common Windows Admin Tasks",
@@ -186,22 +186,9 @@
     "🔵 Чому з'являється синій екран після виходу зі сну?",
     "💾 HDD vs SSD для системного диска — що обрати?"
   ],
-  "lock": {
-    "execution_id": "d50cc76f-4d08-475d-ada0-9a00e392e6df",
-    "type": "middle",
-    "started_at": "2026-11-09T10:01:02.453Z",
-    "expires_at": "2026-11-09T10:16:02.453Z"
-  },
-  "pending": {
-    "execution_id": "d50cc76f-4d08-475d-ada0-9a00e392e6df",
-    "type": "middle",
-    "identifier": "standalone-topic:Брандмауер Windows",
-    "payload": {
-      "text": "🛡 Перевірка виключень брандмауера Windows\n\nШкідливе ПЗ часто додає себе у виключення брандмауера, щоб безперешкодно передавати дані. Перевіримо це вручну.\n\n**Спосіб 1: Параметри Windows**\nПараметри → Конфіденційність і безпека → Безпека Windows → Брандмауер і захист мережі → Дозволити додаток через брандмауер. Переглянете список дозволених програм.\n\n**Спосіб 2: PowerShell (детальніше)**\nВідкрийте PowerShell від адміністратора:\n```\nGet-NetFirewallRule | Where-Object {$_.Enabled -eq 'True' -and $_.Direction -eq 'Outbound'} | Select-Object DisplayName, Program\n```\n\n**Спосіб 3: CMD**\n```\nnetsh advfirewall firewall show rule name=all dir=out\n```\n\n**На що звернути увагу:**\n- Програми з незнайомими назвами\n- Файли у папках %temp%, %appdata%, випадкових підкаталогах Users\n- Підозрілі назви (random123.exe, svchost32.exe)\n- Програми, яких ви не встановлювали\n- Правила з дивними іменами (латинські+цифри)\n\n**Якщо знайшли підозріле:**\n1. Запишіть повний шлях до файлу\n2. Видаліть правило брандмауера\n3. Перевірте файл на VirusTotal\n4. Просканте систему Microsoft Defender або іншим антивірусом\n5. За потреби видаліть підозрілий файл\n\n#Windows #безпека #брандмауер"
-    },
-    "created_at": "2026-11-09T10:01:18.592Z"
-  },
-  "last_message_id": 647,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 648,
   "engage_ab_index": 23,
   "poll_recent_topics": [
     "Як ви налаштували UAC (контроль облікових записів) у Windows?",
@@ -214,7 +201,7 @@
   "auditshield": {
     "v": 1,
     "seq": 1,
-    "posts_since": 10,
+    "posts_since": 11,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-05T10:01:01.589Z",
     "manual_last_at": null,
