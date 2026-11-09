@@ -191,7 +191,15 @@
     "started_at": "2026-11-09T08:01:03.047Z",
     "expires_at": "2026-11-09T08:16:03.047Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "f0446298-b141-4f02-8b39-72b4ae191884",
+    "type": "content",
+    "identifier": "how-to-use-powershell-for-daily-windows-tasks",
+    "payload": {
+      "text": "💡 **PowerShell однорядковики для щоденних завдань адміна**\n\nЗібрав для вас найкорисніші PowerShell команди, які заощадять купу часу:\n\n**🔍 Діагностика мережі:**\n```powershell\nTest-NetConnection -ComputerName google.com -Port 443\n```\nПеревіряє з'єднання з сервером і конкретним портом.\n\n**💾 Аналіз дискового простору:**\n```powershell\nGet-PSDrive -PSProvider FileSystem | Select-Object Name, @{N=\"Used(GB)\";E={[math]::Round($_.Used/1GB,2)}}, @{N=\"Free(GB)\";E={[math]::Round($_.Free/1GB,2)}}\n```\nПоказує використання дисків у зручному форматі.\n\n**🛡️ Перевірка невдалих спроб входу:**\n```powershell\nGet-EventLog -LogName Security -InstanceId 4625 -Newest 10\n```\nВиводить останні 10 невдалих авторизацій.\n\n**⚙️ Керування службами:**\n```powershell\nGet-Service | Where-Object {$_.Status -eq \"Stopped\"} | Select-Object Name, DisplayName\n```\nПоказує всі зупинені служби.\n\n**📊 Топ процесів по пам'яті:**\n```powershell\nGet-Process | Sort-Object WS -Descending | Select-Object -First 10 Name, @{N=\"Memory(MB)\";E={[math]::Round($_.WS/1MB,2)}}\n```\n\nЗбережіть цей пост — ці команди стануть у пригоді щодня! \n\n#PowerShell #Windows #SysAdmin #WindowsTips"
+    },
+    "created_at": "2026-11-09T08:01:18.512Z"
+  },
   "last_message_id": 646,
   "engage_ab_index": 23,
   "poll_recent_topics": [
