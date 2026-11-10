@@ -187,7 +187,12 @@
     "💾 HDD vs SSD для системного диска — що обрати?",
     "⚡ Чеклист: Прискорення Windows за 10 хвилин"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "2c4a8976-59e8-4be1-8323-9f993624fae1",
+    "type": "extra",
+    "started_at": "2026-11-10T16:01:00.149Z",
+    "expires_at": "2026-11-10T16:16:00.149Z"
+  },
   "pending": null,
   "last_message_id": 651,
   "engage_ab_index": 24,
