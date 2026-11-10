@@ -161,14 +161,15 @@
     "zakhyst-vid-ransomware-controlled-folder",
     "yak-nalashtuvaty-sinkhroni-chasu-windows",
     "windows-10-kinets-pidtrymky-scho-robyty",
-    "how-to-use-powershell-for-daily-windows-tasks"
+    "how-to-use-powershell-for-daily-windows-tasks",
+    "yak-nalashtuvanty-ekranna-klaviatura-windows"
   ],
-  "count": 162,
+  "count": 163,
   "promo_index": 98,
   "last_post": {
-    "slug": "how-to-use-powershell-for-daily-windows-tasks",
-    "title": "PowerShell One-Liners for Common Windows Admin Tasks",
-    "time": "2026-11-09T08:01:18.512Z"
+    "slug": "yak-nalashtuvanty-ekranna-klaviatura-windows",
+    "title": "Як увімкнути екранну клавіатуру в Windows і налаштувати введення",
+    "time": "2026-11-10T08:01:18.060Z"
   },
   "engage_index": 76,
   "extra_index": 137,
@@ -186,22 +187,9 @@
     "💾 HDD vs SSD для системного диска — що обрати?",
     "⚡ Чеклист: Прискорення Windows за 10 хвилин"
   ],
-  "lock": {
-    "execution_id": "e5bc01cf-597d-4d73-9d02-0d23fbbbd7d6",
-    "type": "content",
-    "started_at": "2026-11-10T08:01:03.635Z",
-    "expires_at": "2026-11-10T08:16:03.635Z"
-  },
-  "pending": {
-    "execution_id": "e5bc01cf-597d-4d73-9d02-0d23fbbbd7d6",
-    "type": "content",
-    "identifier": "yak-nalashtuvanty-ekranna-klaviatura-windows",
-    "payload": {
-      "text": "⌨️ **Екранна клавіатура Windows: коли фізична відмовила**\n\nЗламалася клавіатура або працюєте на планшеті? Екранна клавіатура — ваш рятівник. Ось як нею користуватися:\n\n**Швидкий запуск:**\n• **Win + Ctrl + O** — найшвидший спосіб увімкнути/вимкнути\n• Через Пуск → Спеціальні можливості → Екранна клавіатура\n• Або в CMD/PowerShell:\n```\nosk.exe\n```\n\n**Корисні налаштування:**\n1. **Автозапуск при вході** — Параметри → Спеціальні можливості → Клавіатура → увімкніть перемикач\n2. **Зміна розміру** — просто перетягніть кути вікна, воно масштабується пропорційно\n3. **Розширена розкладка** — натисніть кнопку \"Параметри\" в екранній клавіатурі для включення цифрового блоку\n\n**Для планшетів Windows 11:**\nНатисніть на іконку клавіатури на панелі завдань або в системному треї. Якщо її немає — увімкніть у Параметрах → Персоналізація → Панель завдань.\n\n**Порада безпеки:** Екранна клавіатура корисна при підозрі на кейлоггери — вони не завжди відстежують клацання миші по віртуальних кнопках.\n\n#Windows #WindowsTips #Безпека #Продуктивність"
-    },
-    "created_at": "2026-11-10T08:01:18.060Z"
-  },
-  "last_message_id": 649,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 650,
   "engage_ab_index": 23,
   "poll_recent_topics": [
     "Як ви налаштували UAC (контроль облікових записів) у Windows?",
@@ -214,7 +202,7 @@
   "auditshield": {
     "v": 1,
     "seq": 1,
-    "posts_since": 12,
+    "posts_since": 13,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-05T10:01:01.589Z",
     "manual_last_at": null,
