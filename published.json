@@ -193,7 +193,15 @@
     "started_at": "2026-11-11T08:01:03.667Z",
     "expires_at": "2026-11-11T08:16:03.668Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "2c45686f-d0e5-4e51-b935-8eb0934ec92c",
+    "type": "content",
+    "identifier": "nalashtuvannya-smartscreen-windows",
+    "payload": {
+      "text": "🛡️ **Налаштовуємо Windows Defender SmartScreen**\n\nSmartScreen — ваш перший захисник від фішингу та шкідливих файлів. Ось як його правильно налаштувати:\n\n**Базові налаштування:**\n1. **Параметри → Конфіденційність і безпека → Безпека Windows → Керування застосунками та браузером** — тут увімкніть SmartScreen для Edge, застосунків і Провідника\n\n2. **Рівні захисту:**\n   • Попереджати — рекомендовано\n   • Блокувати — максимальний захист\n   • Вимкнути — тільки якщо знаєте що робите\n\n3. **Через GPO (для Pro/Enterprise):**\n   `gpedit.msc` → Конфігурація комп'ютера → Адміністративні шаблони → Компоненти Windows → Windows Defender SmartScreen\n\n**Швидка перевірка стану через PowerShell:**\n```powershell\nGet-MpPreference | Select-Object EnableSmartScreen\n```\n\n**Порада:** SmartScreen працює краще в зв'язці з Microsoft Defender. Не вимикайте його без вагомої причини — він блокує загрози на етапі завантаження, до того як вони потраплять на диск.\n\nДля корпоративних мереж використовуйте GPO для централізованого керування на всіх робочих станціях.\n\n#Windows #Безпека #SmartScreen #WindowsDefender\n\n🔗 https://cryptolockua.com/nalashtuvannya-smartscreen-windows"
+    },
+    "created_at": "2026-11-11T08:01:16.792Z"
+  },
   "last_message_id": 651,
   "engage_ab_index": 24,
   "poll_recent_topics": [
