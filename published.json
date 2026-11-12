@@ -189,7 +189,12 @@
     "⚡ Чеклист: Прискорення Windows за 10 хвилин",
     "🖨️ **Принтер не друкує — Windows бачить, але нічого не відбувається**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "a2e04817-dddc-4e54-8773-37a85a032487",
+    "type": "middle",
+    "started_at": "2026-11-12T10:00:56.639Z",
+    "expires_at": "2026-11-12T10:15:56.639Z"
+  },
   "pending": null,
   "last_message_id": 655,
   "engage_ab_index": 24,
