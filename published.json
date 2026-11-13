@@ -190,7 +190,12 @@
     "🖨️ **Принтер не друкує — Windows бачить, але нічого не відбувається**",
     "🧹 **Команда дня: cleanmgr**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "53cd5115-929c-4150-bf0f-c582554a86f3",
+    "type": "middle",
+    "started_at": "2026-11-13T10:00:56.180Z",
+    "expires_at": "2026-11-13T10:15:56.180Z"
+  },
   "pending": null,
   "last_message_id": 658,
   "engage_ab_index": 25,
