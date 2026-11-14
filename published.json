@@ -191,7 +191,12 @@
     "🧹 **Команда дня: cleanmgr**",
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрана — Xbox Game Bar**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "b8131d39-ba14-453f-9518-1239ef555248",
+    "type": "extra",
+    "started_at": "2026-11-14T16:00:53.606Z",
+    "expires_at": "2026-11-14T16:15:53.606Z"
+  },
   "pending": null,
   "last_message_id": 662,
   "engage_ab_index": 26,
