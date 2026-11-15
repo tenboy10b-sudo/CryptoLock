@@ -191,7 +191,12 @@
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрана — Xbox Game Bar**",
     "🔊 Чому вентилятор на ноутбуці гучно шумить?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "c56a5348-faf4-4113-90a0-9ebc9ca3b364",
+    "type": "content",
+    "started_at": "2026-11-15T08:01:00.446Z",
+    "expires_at": "2026-11-15T08:16:00.446Z"
+  },
   "pending": null,
   "last_message_id": 663,
   "engage_ab_index": 26,
