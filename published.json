@@ -166,14 +166,15 @@
     "nalashtuvannya-smartscreen-windows",
     "yak-nalashtuvaty-mysh-windows",
     "how-to-configure-windows-network-shares",
-    "grupova-polityka-zaborona-usb"
+    "grupova-polityka-zaborona-usb",
+    "zbir-zhurnaliv-podiy-windows-tsentralno"
   ],
-  "count": 167,
+  "count": 168,
   "promo_index": 99,
   "last_post": {
-    "slug": "grupova-polityka-zaborona-usb",
-    "title": "Групова політика: як заборонити підключення нових USB-пристроїв",
-    "time": "2026-11-14T08:01:14.488Z"
+    "slug": "zbir-zhurnaliv-podiy-windows-tsentralno",
+    "title": "Централізований збір журналів подій Windows з кількох ПК",
+    "time": "2026-11-15T08:01:14.317Z"
   },
   "engage_index": 78,
   "extra_index": 141,
@@ -191,22 +192,9 @@
     "🎮 **Мало хто знає, що в Windows є вбудований інструмент для запису відео з екрана — Xbox Game Bar**",
     "🔊 Чому вентилятор на ноутбуці гучно шумить?"
   ],
-  "lock": {
-    "execution_id": "c56a5348-faf4-4113-90a0-9ebc9ca3b364",
-    "type": "content",
-    "started_at": "2026-11-15T08:01:00.446Z",
-    "expires_at": "2026-11-15T08:16:00.446Z"
-  },
-  "pending": {
-    "execution_id": "c56a5348-faf4-4113-90a0-9ebc9ca3b364",
-    "type": "content",
-    "identifier": "zbir-zhurnaliv-podiy-windows-tsentralno",
-    "payload": {
-      "text": "📊 Централізований збір журналів Windows: налаштовуємо за 5 кроків\n\nЯкщо адмініструєте кілька ПК, збір логів вручну — це біль. Windows Event Forwarding (WEF) дозволяє автоматично агрегувати всі журналі подій на один сервер-колектор. Ось як це налаштувати:\n\n**1. Підготуйте колектор**\nНа машині-збирачі запустіть:\n```powershell\nwecutil qc\n```\n\n**2. Увімкніть WinRM на клієнтах**\nНа кожному ПК виконайте:\n```powershell\nwinrm quickconfig\n```\n\n**3. Створіть підписку**\nУ Event Viewer на колекторі: Subscriptions → Create Subscription. Вкажіть комп'ютери-джерела та типи подій.\n\n**4. Налаштуйте фільтрацію**\nЗбирайте тільки критичні події (Security, System, Application) — економте місце і час на аналіз.\n\n**5. Перевірте збір**\n```powershell\nGet-WinEvent -LogName \"ForwardedEvents\" | Select -First 10\n```\n\n**Порада:** Додайте колектор у GPO для автоматичного підключення нових ПК до системи моніторингу.\n\nТепер всі логи в одному місці — моніторинг інцидентів і аудит безпеки стають набагато простішими! 🛡️\n\n#Windows #безпека #EventForwarding #адміністрування\n\n🔗 https://cryptolockua.com/zbir-zhurnaliv-podiy-windows-tsentralno"
-    },
-    "created_at": "2026-11-15T08:01:14.317Z"
-  },
-  "last_message_id": 663,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 664,
   "engage_ab_index": 26,
   "poll_recent_topics": [
     "Скільки облікових записів користувачів створено на вашому Windows ПК?",
@@ -219,7 +207,7 @@
   "auditshield": {
     "v": 1,
     "seq": 2,
-    "posts_since": 4,
+    "posts_since": 5,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-13T10:00:58.917Z",
     "manual_last_at": null,
