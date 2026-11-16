@@ -193,7 +193,12 @@
     "🔊 Чому вентилятор на ноутбуці гучно шумить?",
     "🔐 Менеджер паролів vs збереження в браузері — що безпечніше?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "aa20dbba-ac2a-4d13-bc3d-2b08aad4cb42",
+    "type": "extra",
+    "started_at": "2026-11-16T16:00:58.503Z",
+    "expires_at": "2026-11-16T16:15:58.503Z"
+  },
   "pending": null,
   "last_message_id": 667,
   "engage_ab_index": 26,
