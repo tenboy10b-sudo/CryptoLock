@@ -198,7 +198,15 @@
     "started_at": "2026-11-16T08:01:02.503Z",
     "expires_at": "2026-11-16T08:16:02.503Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "d179725f-ec62-45d9-8fec-d14b7816e94b",
+    "type": "content",
+    "identifier": "yak-pereyty-z-windows-10-na-windows-11",
+    "payload": {
+      "text": "🔄 **Переходимо на Windows 11: що потрібно знати**\n\nВирішили оновитися до Windows 11? Ось покрокова інструкція для безпечного апгрейду:\n\n**1. Перевірте сумісність**\nНатисніть Win+R, введіть `msinfo32` і перевірте версію BIOS. Далі запустіть PowerShell від адміністратора:\n```\nGet-WmiObject -Class Win32_Tpm -Namespace root\\cimv2\\security\\microsofttpm\n```\nЯкщо TPM не виявлено — читайте далі.\n\n**2. Увімкніть TPM 2.0**\nЗайдіть у BIOS/UEFI (зазвичай F2, Del або F10 при завантаженні), знайдіть розділ Security → TPM Device і активуйте. На AMD це може називатися fTPM, на Intel — PTT.\n\n**3. Увімкніть Secure Boot**\nТам же в BIOS: Boot → Secure Boot → Enabled. Важливо: диск має бути у форматі GPT, а не MBR.\n\n**4. Оновлення**\nНалаштування → Windows Update → Перевірити оновлення. Якщо Windows 11 доступна — побачите пропозицію.\n\n**Якщо ПК не підтримується:**\nОфіційно можна обійти вимоги через реєстр, але це не рекомендовано для production-систем — не отримаєте деяких оновлень безпеки.\n\n💡 Перед оновленням обов'язково зробіть резервну копію!\n\n#Windows11 #WindowsUpdate #TPM #безпека"
+    },
+    "created_at": "2026-11-16T08:01:16.295Z"
+  },
   "last_message_id": 666,
   "engage_ab_index": 26,
   "poll_recent_topics": [
