@@ -194,7 +194,12 @@
     "🔐 Менеджер паролів vs збереження в браузері — що безпечніше?",
     "🆕 Чеклист: Налаштування нового ноутбука з нуля"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "ece2696f-8df4-423d-bcf1-d817ebb4934e",
+    "type": "middle",
+    "started_at": "2026-11-17T10:01:07.236Z",
+    "expires_at": "2026-11-17T10:16:07.236Z"
+  },
   "pending": null,
   "last_message_id": 669,
   "engage_ab_index": 26,
