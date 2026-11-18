@@ -201,7 +201,24 @@
     "started_at": "2026-11-18T10:00:59.645Z",
     "expires_at": "2026-11-18T10:15:59.645Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "e70ca9be-8bb6-4f15-bca7-9a9c6e0f266f",
+    "type": "middle",
+    "identifier": "engage-ab-poll:26",
+    "payload": {
+      "poll": {
+        "question": "Яку політику ви використовуєте для WiFi мереж у публічних місцях?",
+        "options": [
+          "Підключаюсь без VPN",
+          "Завжди через VPN",
+          "Уникаю публічних WiFi",
+          "Тільки мобільний інтернет"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-11-18T10:01:04.615Z"
+  },
   "last_message_id": 672,
   "engage_ab_index": 26,
   "poll_recent_topics": [
