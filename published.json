@@ -169,14 +169,15 @@
     "grupova-polityka-zaborona-usb",
     "zbir-zhurnaliv-podiy-windows-tsentralno",
     "yak-pereyty-z-windows-10-na-windows-11",
-    "powershell-robota-z-merezhevymy-nalashtuvannyamy"
+    "powershell-robota-z-merezhevymy-nalashtuvannyamy",
+    "yak-nalashtuvaty-faierbol-windows-dlya-ihor"
   ],
-  "count": 170,
+  "count": 171,
   "promo_index": 101,
   "last_post": {
-    "slug": "powershell-robota-z-merezhevymy-nalashtuvannyamy",
-    "title": "PowerShell: управління мережевими налаштуваннями Windows",
-    "time": "2026-11-17T08:01:17.209Z"
+    "slug": "yak-nalashtuvaty-faierbol-windows-dlya-ihor",
+    "title": "Як відкрити порт в брандмауері Windows для гри або програми",
+    "time": "2026-11-18T08:01:10.720Z"
   },
   "engage_index": 78,
   "extra_index": 144,
@@ -194,22 +195,9 @@
     "🆕 Чеклист: Налаштування нового ноутбука з нуля",
     "⚫ Чорний екран після входу — курсор є, а робочий стіл не завантажується"
   ],
-  "lock": {
-    "execution_id": "c167eb4e-3d52-422d-8ae1-2a7237095f70",
-    "type": "content",
-    "started_at": "2026-11-18T08:00:59.835Z",
-    "expires_at": "2026-11-18T08:15:59.835Z"
-  },
-  "pending": {
-    "execution_id": "c167eb4e-3d52-422d-8ae1-2a7237095f70",
-    "type": "content",
-    "identifier": "yak-nalashtuvaty-faierbol-windows-dlya-ihor",
-    "payload": {
-      "text": "🔓 **Як відкрити порт у брандмауері Windows**\n\nГра не підключається до сервера або програма не може прийняти з'єднання? Швидше за все, справа в брандмауері. Ось як це виправити:\n\n**Через графічний інтерфейс:**\n1. Відкрийте **Брандмауер Defender** → **Додаткові параметри**\n2. Оберіть **Правила для вхідних з'єднань** → **Створити правило**\n3. Виберіть **Для порту** → вкажіть TCP/UDP і номер порту\n4. Дозвольте підключення → вкажіть ім'я правила\n5. Для вихідних з'єднань — аналогічно, але в розділі **Правила для вихідних з'єднань**\n\n**Через PowerShell (від адміністратора):**\n\nВхідне з'єднання:\n```powershell\nNew-NetFirewallRule -DisplayName \"Моя гра\" -Direction Inbound -Protocol TCP -LocalPort 27015 -Action Allow\n```\n\nВихідне з'єднання:\n```powershell\nNew-NetFirewallRule -DisplayName \"Моя програма\" -Direction Outbound -Protocol UDP -LocalPort 3074 -Action Allow\n```\n\n**Альтернатива:** можна дозволити всю програму цілком — у брандмауері оберіть **Для програми** замість порту і вкажіть шлях до .exe файлу.\n\n⚠️ **Важливо:** відкривайте тільки ті порти, які реально потрібні, і для конкретних програм!\n\n#Windows #безпека #брандмауер #tips"
-    },
-    "created_at": "2026-11-18T08:01:10.720Z"
-  },
-  "last_message_id": 671,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 672,
   "engage_ab_index": 26,
   "poll_recent_topics": [
     "Скільки облікових записів користувачів створено на вашому Windows ПК?",
@@ -222,7 +210,7 @@
   "auditshield": {
     "v": 1,
     "seq": 2,
-    "posts_since": 12,
+    "posts_since": 13,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-13T10:00:58.917Z",
     "manual_last_at": null,
