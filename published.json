@@ -174,7 +174,7 @@
     "shcho-oznachaie-kod-pomylky-windows"
   ],
   "count": 172,
-  "promo_index": 101,
+  "promo_index": 102,
   "last_post": {
     "slug": "shcho-oznachaie-kod-pomylky-windows",
     "title": "Коди помилок Windows: що означають і як виправити",
@@ -196,22 +196,9 @@
     "⚫ Чорний екран після входу — курсор є, а робочий стіл не завантажується",
     "🌐 **Команда дня: netstat -ano**"
   ],
-  "lock": {
-    "execution_id": "5f8e2a44-3fbc-41c6-8a8b-01e8f99b30fc",
-    "type": "middle",
-    "started_at": "2026-11-19T10:01:01.720Z",
-    "expires_at": "2026-11-19T10:16:01.720Z"
-  },
-  "pending": {
-    "execution_id": "5f8e2a44-3fbc-41c6-8a8b-01e8f99b30fc",
-    "type": "middle",
-    "identifier": "standalone-topic:Спільні папки і мережевий доступ",
-    "payload": {
-      "text": "🗂 **Перевірка спільних папок і мережевого доступу**\n\n**Що перевіряємо:** які папки на вашому ПК доступні через мережу та хто має до них права. Неконтрольовані shares — прямий шлях до витоку даних.\n\n**Крок 1 — Перегляд активних shares**\nВідкрийте PowerShell від адміністратора:\n```\nGet-SmbShare\n```\nПобачите всі спільні ресурси. Крім системних (C$, ADMIN$, IPC$) не повинно бути нічого незнайомого.\n\n**Крок 2 — Детальні права доступу**\n```\nGet-SmbShareAccess -Name \"назва_shares\"\n```\nПеревірте, хто має доступ до кожної папки.\n\n**Крок 3 — Альтернатива через CMD**\n```\nnet share\nnet share назва_shares\n```\n\n**Крок 4 — Перегляд активних підключень**\n```\nGet-SmbSession\n```\nПоказує, хто зараз підключений до ваших папок.\n\n**На що звернути увагу:**\n- Shares з іменами типу \"backup\", \"docs\", \"data\" — ви їх створювали?\n- Права Everyone або Users з повним доступом\n- Невідомі IP-адреси в активних сесіях\n- Shares на диску C:\\ (крім системних)\n\n**Якщо знайшли підозріле:**\nВимкніть share командою:\n```\nRemove-SmbShare -Name \"назва\" -Force\n```\nАбо через Управління комп'ютером → Спільні папки → Shares → видалити.\n\nПеревіряйте shares щомісяця — це базова гігієна безпеки.\n\n#windows #безпека #мережа"
-    },
-    "created_at": "2026-11-19T10:01:14.423Z"
-  },
-  "last_message_id": 675,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 676,
   "engage_ab_index": 27,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі від своїх облікових записів?",
@@ -224,7 +211,7 @@
   "auditshield": {
     "v": 1,
     "seq": 2,
-    "posts_since": 16,
+    "posts_since": 17,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-13T10:00:58.917Z",
     "manual_last_at": null,
