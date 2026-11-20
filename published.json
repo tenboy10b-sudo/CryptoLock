@@ -196,7 +196,12 @@
     "🌐 **Команда дня: netstat -ano**",
     "🧪 **Мало хто знає, що в Windows є повноцінне ізольоване середовище для перевірки підозрілих файлів — Windows Sandbox**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "009553e2-52ab-450d-aedb-e23fad36f361",
+    "type": "content",
+    "started_at": "2026-11-20T08:00:58.915Z",
+    "expires_at": "2026-11-20T08:15:58.915Z"
+  },
   "pending": null,
   "last_message_id": 677,
   "engage_ab_index": 27,
