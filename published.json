@@ -198,7 +198,12 @@
     "🧪 **Мало хто знає, що в Windows є повноцінне ізольоване середовище для перевірки підозрілих файлів — Windows Sandbox**",
     "📶 Чому Bluetooth не працює або постійно відключається?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "59addb6a-8e39-4ec8-a100-9cf3b6a4fc67",
+    "type": "extra",
+    "started_at": "2026-11-21T16:00:57.475Z",
+    "expires_at": "2026-11-21T16:15:57.475Z"
+  },
   "pending": null,
   "last_message_id": 682,
   "engage_ab_index": 28,
