@@ -172,14 +172,15 @@
     "powershell-robota-z-merezhevymy-nalashtuvannyamy",
     "yak-nalashtuvaty-faierbol-windows-dlya-ihor",
     "shcho-oznachaie-kod-pomylky-windows",
-    "yak-skynute-windows-do-zavodskykh"
+    "yak-skynute-windows-do-zavodskykh",
+    "windows-subsystem-android-nalashtuvannya"
   ],
-  "count": 173,
+  "count": 174,
   "promo_index": 102,
   "last_post": {
-    "slug": "yak-skynute-windows-do-zavodskykh",
-    "title": "Як скинути Windows 10 і 11 до заводських налаштувань",
-    "time": "2026-11-20T08:01:10.467Z"
+    "slug": "windows-subsystem-android-nalashtuvannya",
+    "title": "Windows Subsystem for Android: запуск Android-додатків на Windows 11",
+    "time": "2026-11-21T08:01:13.639Z"
   },
   "engage_index": 79,
   "extra_index": 147,
@@ -197,22 +198,9 @@
     "🧪 **Мало хто знає, що в Windows є повноцінне ізольоване середовище для перевірки підозрілих файлів — Windows Sandbox**",
     "📶 Чому Bluetooth не працює або постійно відключається?"
   ],
-  "lock": {
-    "execution_id": "99c55af1-5c34-4831-93a7-c941a77d7185",
-    "type": "content",
-    "started_at": "2026-11-21T08:01:01.455Z",
-    "expires_at": "2026-11-21T08:16:01.455Z"
-  },
-  "pending": {
-    "execution_id": "99c55af1-5c34-4831-93a7-c941a77d7185",
-    "type": "content",
-    "identifier": "windows-subsystem-android-nalashtuvannya",
-    "payload": {
-      "text": "📱 **Windows Subsystem for Android: Android-додатки на Windows 11**\n\nХочеш запускати Android-додатки прямо на Windows 11? WSA (Windows Subsystem for Android) дозволяє це зробити без емуляторів!\n\n**Як встановити та налаштувати:**\n\n1️⃣ **Перевір вимоги**: потрібна Windows 11, віртуалізація ввімкнена в BIOS, мінімум 8 ГБ RAM\n\n2️⃣ **Встановлення WSA**: іди в Microsoft Store → шукай \"Amazon Appstore\" → встановлюй (WSA встановиться автоматично)\n\n3️⃣ **Запуск APK без Store**: завантаж ADB Platform Tools, увімкни режим розробника в WSA, потім виконай:\n```\nadb connect 127.0.0.1:58526\nadb install додаток.apk\n```\n\n4️⃣ **Налаштування продуктивності**: у параметрах WSA обери \"Continuous\" (постійний режим) для швидшого запуску додатків. Якщо RAM обмежений — залиш \"As needed\"\n\n5️⃣ **Безпека**: встановлюй APK тільки з перевірених джерел! WSA має доступ до файлів Windows, тому уникай підозрілих додатків\n\n**Порада**: WSA споживає багато ресурсів. Закривай підсистему, коли не користуєшся Android-додатками.\n\n#Windows11 #Android #WSA #tips"
-    },
-    "created_at": "2026-11-21T08:01:13.639Z"
-  },
-  "last_message_id": 680,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 681,
   "engage_ab_index": 28,
   "poll_recent_topics": [
     "Як ви зберігаєте паролі від своїх облікових записів?",
@@ -225,7 +213,7 @@
   "auditshield": {
     "v": 1,
     "seq": 2,
-    "posts_since": 21,
+    "posts_since": 22,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-13T10:00:58.917Z",
     "manual_last_at": null,
