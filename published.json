@@ -204,7 +204,26 @@
     "started_at": "2026-11-21T10:00:58.678Z",
     "expires_at": "2026-11-21T10:15:58.678Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "5f8038ac-64d9-482b-b3e0-2ac849f188ee",
+    "type": "middle",
+    "identifier": "auditshield:asp005:usb-memory",
+    "payload": {
+      "text": "🔌 Windows запам'ятовує USB-накопичувачі, які колись підключали, навіть якщо самої флешки давно немає поруч. Це корисно знати, коли ПК побував у сервісі чи в чужих руках.\n\nНазви таких пристроїв покаже одна команда в PowerShell, права адміністратора не потрібні:\n\n```\nGet-ChildItem 'HKLM:\\SYSTEM\\CurrentControlSet\\Enum\\USBSTOR' | ForEach-Object { Get-ChildItem $_.PSPath } | Get-ItemProperty | Select-Object FriendlyName\n```\n\nУ списку — флешки й зовнішні диски, які Windows бачила хоч раз. Це історія підключень, а не вміст копіювання. Точні дати цією командою без прав адміністратора не побачити.\n\nЦя історія є й серед чотирьох областей AuditShield Demo, де серійні номери накопичувачів у звіті приховані.\n\n🔎 Безкоштовна швидка перевірка AuditShield → [Demo у Telegram](https://t.me/AuditShield_01_Bot?start=a1_tc_auditshield_asp005)\n\n#windows #безпека"
+    },
+    "created_at": "2026-11-21T10:00:59.727Z",
+    "audit": {
+      "id": "asp005",
+      "angle": "usb-memory",
+      "format": "diagnostic",
+      "topic": "USB-накопичувачі, які пам'ятає Windows",
+      "content_id": "asp005",
+      "cta_variant": 0,
+      "approved_version": "v1-2026-10-27",
+      "text_sha": "660bde5331a116be",
+      "selected_at": "2026-11-21T10:00:59.679Z"
+    }
+  },
   "last_message_id": 681,
   "engage_ab_index": 28,
   "poll_recent_topics": [
