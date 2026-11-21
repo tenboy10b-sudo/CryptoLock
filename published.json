@@ -203,7 +203,15 @@
     "started_at": "2026-11-21T08:01:01.455Z",
     "expires_at": "2026-11-21T08:16:01.455Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "99c55af1-5c34-4831-93a7-c941a77d7185",
+    "type": "content",
+    "identifier": "windows-subsystem-android-nalashtuvannya",
+    "payload": {
+      "text": "📱 **Windows Subsystem for Android: Android-додатки на Windows 11**\n\nХочеш запускати Android-додатки прямо на Windows 11? WSA (Windows Subsystem for Android) дозволяє це зробити без емуляторів!\n\n**Як встановити та налаштувати:**\n\n1️⃣ **Перевір вимоги**: потрібна Windows 11, віртуалізація ввімкнена в BIOS, мінімум 8 ГБ RAM\n\n2️⃣ **Встановлення WSA**: іди в Microsoft Store → шукай \"Amazon Appstore\" → встановлюй (WSA встановиться автоматично)\n\n3️⃣ **Запуск APK без Store**: завантаж ADB Platform Tools, увімкни режим розробника в WSA, потім виконай:\n```\nadb connect 127.0.0.1:58526\nadb install додаток.apk\n```\n\n4️⃣ **Налаштування продуктивності**: у параметрах WSA обери \"Continuous\" (постійний режим) для швидшого запуску додатків. Якщо RAM обмежений — залиш \"As needed\"\n\n5️⃣ **Безпека**: встановлюй APK тільки з перевірених джерел! WSA має доступ до файлів Windows, тому уникай підозрілих додатків\n\n**Порада**: WSA споживає багато ресурсів. Закривай підсистему, коли не користуєшся Android-додатками.\n\n#Windows11 #Android #WSA #tips"
+    },
+    "created_at": "2026-11-21T08:01:13.639Z"
+  },
   "last_message_id": 680,
   "engage_ab_index": 28,
   "poll_recent_topics": [
