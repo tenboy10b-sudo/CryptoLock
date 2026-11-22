@@ -199,7 +199,12 @@
     "📶 Чому Bluetooth не працює або постійно відключається?",
     "🛡️ Windows Defender vs сторонній антивірус — що обрати у 2024?"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "bbe40ab5-9f86-4da0-9205-fcf4abd439c6",
+    "type": "extra",
+    "started_at": "2026-11-22T16:00:56.460Z",
+    "expires_at": "2026-11-22T16:15:56.460Z"
+  },
   "pending": null,
   "last_message_id": 685,
   "engage_ab_index": 29,
