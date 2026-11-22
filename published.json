@@ -204,7 +204,15 @@
     "started_at": "2026-11-22T08:00:58.740Z",
     "expires_at": "2026-11-22T08:15:58.740Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "6a551ed9-4d7c-416f-9e75-59de543c63da",
+    "type": "content",
+    "identifier": "how-to-fix-windows-11-wont-boot",
+    "payload": {
+      "text": "🆘 **Windows 11 не завантажується? Покрокове вирішення проблеми**\n\nЗіткнулися з чорним екраном, зависанням на логотипі або синім екраном смерті після оновлення? Ось що робити:\n\n**1. Безпечний режим**\nТри рази підряд перервіть завантаження (кнопкою живлення) — запуститься Windows Recovery. Оберіть: Troubleshoot → Advanced Options → Startup Settings → Safe Mode.\n\n**2. Відкат драйверів відеокарти**\nУ безпечному режимі відкрийте Device Manager, знайдіть вашу GPU → Properties → Driver → Roll Back Driver. Часто проблема саме в свіжих драйверах.\n\n**3. Відновлення завантажувача**\nЗавантажтесь з установчої флешки, натисніть Shift+F10 і виконайте:\n\n```\nbootrec /fixmbr\nbootrec /fixboot\nbootrec /rebuildbcd\n```\n\n**4. Скасування останнього оновлення**\nВ Recovery Environment: Troubleshoot → Advanced Options → Uninstall Updates → Uninstall latest feature update.\n\n**5. Останній варіант — чисте встановлення**\nЯкщо нічого не допомагає, створіть установчу флешку через Media Creation Tool і виконайте чисту інсталяцію зі збереженням файлів.\n\n💡 Порада: Завжди робіть резервні копії перед великими оновленнями!\n\n#Windows11 #WindowsTips #Безпека #ІТдопомога"
+    },
+    "created_at": "2026-11-22T08:01:11.299Z"
+  },
   "last_message_id": 683,
   "engage_ab_index": 28,
   "poll_recent_topics": [
