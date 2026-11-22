@@ -205,7 +205,24 @@
     "started_at": "2026-11-22T10:00:59.738Z",
     "expires_at": "2026-11-22T10:15:59.738Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "acc822fa-9da3-4d2d-a5f2-766b3d4d7433",
+    "type": "middle",
+    "identifier": "engage-ab-poll:28",
+    "payload": {
+      "poll": {
+        "question": "Чи вимикаєте ви ПК на ніч, чи залишаєте в режимі сну/гібернації?",
+        "options": [
+          "Завжди вимикаю повністю",
+          "Режим сну/гібернації",
+          "Ніколи не вимикаю",
+          "По-різному, залежить від ситуації"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-11-22T10:01:04.283Z"
+  },
   "last_message_id": 684,
   "engage_ab_index": 28,
   "poll_recent_topics": [
