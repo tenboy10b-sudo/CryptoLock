@@ -205,7 +205,15 @@
     "started_at": "2026-11-23T08:01:05.700Z",
     "expires_at": "2026-11-23T08:16:05.700Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "4aaf49f8-38de-448c-8834-38478e13d870",
+    "type": "content",
+    "identifier": "nalashtuvannya-storage-spaces-windows",
+    "payload": {
+      "text": "💾 **Storage Spaces: програмний RAID у Windows**\n\nХочете захистити дані без дорогого RAID-контролера? Windows Storage Spaces — ваш варіант!\n\n**Основні кроки налаштування:**\n\n🔹 **Створення пулу через GUI:**\nНалаштування → Система → Сховище → Керування дисковими просторами. Додайте 2+ диски, виберіть тип стійкості: \"Двостороннє дзеркало\" (як RAID 1) або \"Парність\" (як RAID 5).\n\n🔹 **Через PowerShell (швидше!):**\n```powershell\nNew-StoragePool -FriendlyName \"MyPool\" -PhysicalDisks (Get-PhysicalDisk -CanPool $true)\nNew-VirtualDisk -StoragePoolFriendlyName \"MyPool\" -FriendlyName \"MirrorDisk\" -ResiliencySettingName Mirror -Size 500GB\n```\n\n🔹 **Заміна несправного диска:**\nСистема попередить про проблему. Просто вийміть старий диск, додайте новий через Storage Spaces, і відновлення відбудеться автоматично.\n\n**Коли використовувати:**\n✅ Домашні сервери та робочі станції\n✅ Коли потрібна гнучкість без спеціального заліза\n❌ НЕ для критичних серверів (апаратний RAID швидший і надійніший)\n\n**Обмеження:** нижча продуктивність порівняно з апаратним RAID, особливо на парності.\n\n🔗 https://cryptolockua.com/nalashtuvannya-storage-spaces-windows\n\n#Windows #StorageSpaces #RAID #SystemAdmin"
+    },
+    "created_at": "2026-11-23T08:01:18.285Z"
+  },
   "last_message_id": 686,
   "engage_ab_index": 29,
   "poll_recent_topics": [
