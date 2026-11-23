@@ -200,7 +200,12 @@
     "🛡️ Windows Defender vs сторонній антивірус — що обрати у 2024?",
     "✈️ Чеклист: Безпека перед подорожжю з ноутбуком"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "4de24165-5ec6-48aa-aad4-f57da3a6704d",
+    "type": "extra",
+    "started_at": "2026-11-23T16:00:56.650Z",
+    "expires_at": "2026-11-23T16:15:56.650Z"
+  },
   "pending": null,
   "last_message_id": 688,
   "engage_ab_index": 29,
