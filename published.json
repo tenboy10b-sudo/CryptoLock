@@ -174,14 +174,15 @@
     "shcho-oznachaie-kod-pomylky-windows",
     "yak-skynute-windows-do-zavodskykh",
     "windows-subsystem-android-nalashtuvannya",
-    "how-to-fix-windows-11-wont-boot"
+    "how-to-fix-windows-11-wont-boot",
+    "nalashtuvannya-storage-spaces-windows"
   ],
-  "count": 175,
+  "count": 176,
   "promo_index": 102,
   "last_post": {
-    "slug": "how-to-fix-windows-11-wont-boot",
-    "title": "Windows 11 Won't Boot: Complete Fix Guide for 2025-2026",
-    "time": "2026-11-22T08:01:11.299Z"
+    "slug": "nalashtuvannya-storage-spaces-windows",
+    "title": "Як налаштувати Windows Storage Spaces для надійності як RAID",
+    "time": "2026-11-23T08:01:18.285Z"
   },
   "engage_index": 79,
   "extra_index": 149,
@@ -199,22 +200,9 @@
     "🛡️ Windows Defender vs сторонній антивірус — що обрати у 2024?",
     "✈️ Чеклист: Безпека перед подорожжю з ноутбуком"
   ],
-  "lock": {
-    "execution_id": "4aaf49f8-38de-448c-8834-38478e13d870",
-    "type": "content",
-    "started_at": "2026-11-23T08:01:05.700Z",
-    "expires_at": "2026-11-23T08:16:05.700Z"
-  },
-  "pending": {
-    "execution_id": "4aaf49f8-38de-448c-8834-38478e13d870",
-    "type": "content",
-    "identifier": "nalashtuvannya-storage-spaces-windows",
-    "payload": {
-      "text": "💾 **Storage Spaces: програмний RAID у Windows**\n\nХочете захистити дані без дорогого RAID-контролера? Windows Storage Spaces — ваш варіант!\n\n**Основні кроки налаштування:**\n\n🔹 **Створення пулу через GUI:**\nНалаштування → Система → Сховище → Керування дисковими просторами. Додайте 2+ диски, виберіть тип стійкості: \"Двостороннє дзеркало\" (як RAID 1) або \"Парність\" (як RAID 5).\n\n🔹 **Через PowerShell (швидше!):**\n```powershell\nNew-StoragePool -FriendlyName \"MyPool\" -PhysicalDisks (Get-PhysicalDisk -CanPool $true)\nNew-VirtualDisk -StoragePoolFriendlyName \"MyPool\" -FriendlyName \"MirrorDisk\" -ResiliencySettingName Mirror -Size 500GB\n```\n\n🔹 **Заміна несправного диска:**\nСистема попередить про проблему. Просто вийміть старий диск, додайте новий через Storage Spaces, і відновлення відбудеться автоматично.\n\n**Коли використовувати:**\n✅ Домашні сервери та робочі станції\n✅ Коли потрібна гнучкість без спеціального заліза\n❌ НЕ для критичних серверів (апаратний RAID швидший і надійніший)\n\n**Обмеження:** нижча продуктивність порівняно з апаратним RAID, особливо на парності.\n\n🔗 https://cryptolockua.com/nalashtuvannya-storage-spaces-windows\n\n#Windows #StorageSpaces #RAID #SystemAdmin"
-    },
-    "created_at": "2026-11-23T08:01:18.285Z"
-  },
-  "last_message_id": 686,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 687,
   "engage_ab_index": 29,
   "poll_recent_topics": [
     "Як часто ви робите резервні копії важливих файлів?",
@@ -227,7 +215,7 @@
   "auditshield": {
     "v": 1,
     "seq": 3,
-    "posts_since": 4,
+    "posts_since": 5,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-21T10:01:01.069Z",
     "manual_last_at": null,
