@@ -206,7 +206,15 @@
     "started_at": "2026-11-24T08:01:06.600Z",
     "expires_at": "2026-11-24T08:16:06.600Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "4d47ca4a-337d-42d4-ab14-b487fcf5bf6f",
+    "type": "content",
+    "identifier": "nalashtuvannya-dhcp-servera-windows",
+    "payload": {
+      "text": "🖧 **Налаштування DHCP сервера на Windows Server**\n\nЯкщо твоя мережа росте, час автоматизувати видачу IP-адрес! Ось як швидко піднати DHCP сервер:\n\n**Основні кроки:**\n\n1️⃣ **Встановлення ролі** через PowerShell:\n```powershell\nInstall-WindowsFeature DHCP -IncludeManagementTools\n```\n\n2️⃣ **Створюємо скоп** (діапазон адрес):\n```powershell\nAdd-DhcpServerv4Scope -Name \"LAN\" -StartRange 192.168.1.100 -EndRange 192.168.1.200 -SubnetMask 255.255.255.0\n```\n\n3️⃣ **Резервування для серверів** – прив'язуємо MAC до IP, щоб критичні пристрої завжди отримували одну адресу\n\n4️⃣ **Налаштування опцій**: вкажи DNS, шлюз, NTP-сервер через опції скопа. Для PXE-завантаження додай опцію 66 (TFTP сервер)\n\n5️⃣ **Failover між серверами** – налаштуй реплікацію з другим DHCP, щоб мережа не впала при збої\n\n⚠️ **Перевіряй журнали** у `%SystemRoot%\\System32\\dhcp\\` – там побачиш конфлікти IP та проблеми з видачею адрес.\n\n**Порада безпеки:** авторизуй DHCP сервер в AD, щоб неавторизовані сервери не роздавали IP у твоїй мережі!\n\n#Windows #DHCP #WindowsServer #сисадмін"
+    },
+    "created_at": "2026-11-24T08:01:18.715Z"
+  },
   "last_message_id": 689,
   "engage_ab_index": 29,
   "poll_recent_topics": [
