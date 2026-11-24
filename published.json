@@ -175,14 +175,15 @@
     "yak-skynute-windows-do-zavodskykh",
     "windows-subsystem-android-nalashtuvannya",
     "how-to-fix-windows-11-wont-boot",
-    "nalashtuvannya-storage-spaces-windows"
+    "nalashtuvannya-storage-spaces-windows",
+    "nalashtuvannya-dhcp-servera-windows"
   ],
-  "count": 176,
+  "count": 177,
   "promo_index": 103,
   "last_post": {
-    "slug": "nalashtuvannya-storage-spaces-windows",
-    "title": "Як налаштувати Windows Storage Spaces для надійності як RAID",
-    "time": "2026-11-23T08:01:18.285Z"
+    "slug": "nalashtuvannya-dhcp-servera-windows",
+    "title": "Як налаштувати DHCP сервер на Windows Server",
+    "time": "2026-11-24T08:01:18.715Z"
   },
   "engage_index": 79,
   "extra_index": 150,
@@ -200,22 +201,9 @@
     "✈️ Чеклист: Безпека перед подорожжю з ноутбуком",
     "🔵 Синій екран смерті (BSOD) з помилкою DRIVER_IRQL_NOT_LESS_OR_EQUAL"
   ],
-  "lock": {
-    "execution_id": "4d47ca4a-337d-42d4-ab14-b487fcf5bf6f",
-    "type": "content",
-    "started_at": "2026-11-24T08:01:06.600Z",
-    "expires_at": "2026-11-24T08:16:06.600Z"
-  },
-  "pending": {
-    "execution_id": "4d47ca4a-337d-42d4-ab14-b487fcf5bf6f",
-    "type": "content",
-    "identifier": "nalashtuvannya-dhcp-servera-windows",
-    "payload": {
-      "text": "🖧 **Налаштування DHCP сервера на Windows Server**\n\nЯкщо твоя мережа росте, час автоматизувати видачу IP-адрес! Ось як швидко піднати DHCP сервер:\n\n**Основні кроки:**\n\n1️⃣ **Встановлення ролі** через PowerShell:\n```powershell\nInstall-WindowsFeature DHCP -IncludeManagementTools\n```\n\n2️⃣ **Створюємо скоп** (діапазон адрес):\n```powershell\nAdd-DhcpServerv4Scope -Name \"LAN\" -StartRange 192.168.1.100 -EndRange 192.168.1.200 -SubnetMask 255.255.255.0\n```\n\n3️⃣ **Резервування для серверів** – прив'язуємо MAC до IP, щоб критичні пристрої завжди отримували одну адресу\n\n4️⃣ **Налаштування опцій**: вкажи DNS, шлюз, NTP-сервер через опції скопа. Для PXE-завантаження додай опцію 66 (TFTP сервер)\n\n5️⃣ **Failover між серверами** – налаштуй реплікацію з другим DHCP, щоб мережа не впала при збої\n\n⚠️ **Перевіряй журнали** у `%SystemRoot%\\System32\\dhcp\\` – там побачиш конфлікти IP та проблеми з видачею адрес.\n\n**Порада безпеки:** авторизуй DHCP сервер в AD, щоб неавторизовані сервери не роздавали IP у твоїй мережі!\n\n#Windows #DHCP #WindowsServer #сисадмін"
-    },
-    "created_at": "2026-11-24T08:01:18.715Z"
-  },
-  "last_message_id": 689,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 690,
   "engage_ab_index": 29,
   "poll_recent_topics": [
     "Як часто ви робите резервні копії важливих файлів?",
@@ -228,7 +216,7 @@
   "auditshield": {
     "v": 1,
     "seq": 3,
-    "posts_since": 7,
+    "posts_since": 8,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-21T10:01:01.069Z",
     "manual_last_at": null,
