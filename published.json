@@ -200,7 +200,12 @@
     "✈️ Чеклист: Безпека перед подорожжю з ноутбуком",
     "🔵 Синій екран смерті (BSOD) з помилкою DRIVER_IRQL_NOT_LESS_OR_EQUAL"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "4d47ca4a-337d-42d4-ab14-b487fcf5bf6f",
+    "type": "content",
+    "started_at": "2026-11-24T08:01:06.600Z",
+    "expires_at": "2026-11-24T08:16:06.600Z"
+  },
   "pending": null,
   "last_message_id": 689,
   "engage_ab_index": 29,
