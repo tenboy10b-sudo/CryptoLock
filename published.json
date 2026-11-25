@@ -176,14 +176,15 @@
     "windows-subsystem-android-nalashtuvannya",
     "how-to-fix-windows-11-wont-boot",
     "nalashtuvannya-storage-spaces-windows",
-    "nalashtuvannya-dhcp-servera-windows"
+    "nalashtuvannya-dhcp-servera-windows",
+    "how-to-map-network-drive-windows"
   ],
-  "count": 177,
+  "count": 178,
   "promo_index": 103,
   "last_post": {
-    "slug": "nalashtuvannya-dhcp-servera-windows",
-    "title": "Як налаштувати DHCP сервер на Windows Server",
-    "time": "2026-11-24T08:01:18.715Z"
+    "slug": "how-to-map-network-drive-windows",
+    "title": "How to Map a Network Drive in Windows 10 and 11",
+    "time": "2026-11-25T08:01:11.967Z"
   },
   "engage_index": 80,
   "extra_index": 151,
@@ -201,22 +202,9 @@
     "🔵 Синій екран смерті (BSOD) з помилкою DRIVER_IRQL_NOT_LESS_OR_EQUAL",
     "🔋 **Команда дня: powercfg /batteryreport**"
   ],
-  "lock": {
-    "execution_id": "56874149-8168-4f60-8f3c-9eee4c6a9bde",
-    "type": "content",
-    "started_at": "2026-11-25T08:01:02.081Z",
-    "expires_at": "2026-11-25T08:16:02.081Z"
-  },
-  "pending": {
-    "execution_id": "56874149-8168-4f60-8f3c-9eee4c6a9bde",
-    "type": "content",
-    "identifier": "how-to-map-network-drive-windows",
-    "payload": {
-      "text": "💾 Як підключити мережеву папку як диск у Windows\n\nЧасто працюєте з мережевими папками? Підключіть їх як локальний диск — це значно зручніше!\n\n**Три способи на вибір:**\n\n**1️⃣ Через Провідник (GUI)**\nВідкрийте Провідник → ПКМ на \"Цей комп'ютер\" → \"Підключити мережевий диск\" → Виберіть букву диска та вкажіть шлях `\\\\сервер\\папка`. Поставте галочку \"Відновлювати підключення при вході\" для постійного доступу.\n\n**2️⃣ Через Command Prompt**\n```\nnet use Z: \\\\сервер\\папка /persistent:yes\n```\n\n**3️⃣ Через PowerShell**\n```powershell\nNew-PSDrive -Name \"Z\" -PSProvider FileSystem -Root \"\\\\сервер\\папка\" -Persist\n```\n\n**Корисні поради:**\n- Параметр `/persistent:yes` зберігає підключення після перезавантаження\n- Для відключення: `net use Z: /delete`\n- Переконайтеся, що мережева папка доступна і у вас є права\n\nМережеві диски значно спрощують роботу з файловими серверами та NAS-сховищами!\n\n#Windows #WindowsTips #Мережа #SysAdmin"
-    },
-    "created_at": "2026-11-25T08:01:11.967Z"
-  },
-  "last_message_id": 692,
+  "lock": null,
+  "pending": null,
+  "last_message_id": 693,
   "engage_ab_index": 30,
   "poll_recent_topics": [
     "Як часто ви робите резервні копії важливих файлів?",
@@ -229,7 +217,7 @@
   "auditshield": {
     "v": 1,
     "seq": 3,
-    "posts_since": 10,
+    "posts_since": 11,
     "initialized_at": "2026-10-28T10:01:13.223Z",
     "last_published_at": "2026-11-21T10:01:01.069Z",
     "manual_last_at": null,
