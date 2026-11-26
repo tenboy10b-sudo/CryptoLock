@@ -203,10 +203,10 @@
     "🔋 **Команда дня: powercfg /batteryreport**"
   ],
   "lock": {
-    "execution_id": "505a6285-8c98-4bd7-936c-e6f6f40cd69c",
-    "type": "extra",
-    "started_at": "2026-11-25T16:01:00.349Z",
-    "expires_at": "2026-11-25T16:16:00.349Z"
+    "execution_id": "21dfc39c-6731-44c3-95eb-a7ade6a93236",
+    "type": "content",
+    "started_at": "2026-11-26T08:01:05.280Z",
+    "expires_at": "2026-11-26T08:16:05.280Z"
   },
   "pending": {
     "execution_id": "505a6285-8c98-4bd7-936c-e6f6f40cd69c",
