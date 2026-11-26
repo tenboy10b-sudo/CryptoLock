@@ -203,7 +203,12 @@
     "🔵 Синій екран смерті (BSOD) з помилкою DRIVER_IRQL_NOT_LESS_OR_EQUAL",
     "🔋 **Команда дня: powercfg /batteryreport**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "8a85bc2d-a325-479b-bb4f-45ee3f09eb21",
+    "type": "middle",
+    "started_at": "2026-11-26T10:01:03.353Z",
+    "expires_at": "2026-11-26T10:16:03.353Z"
+  },
   "pending": null,
   "last_message_id": 696,
   "engage_ab_index": 30,
