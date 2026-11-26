@@ -209,7 +209,24 @@
     "started_at": "2026-11-26T10:01:03.353Z",
     "expires_at": "2026-11-26T10:16:03.353Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "8a85bc2d-a325-479b-bb4f-45ee3f09eb21",
+    "type": "middle",
+    "identifier": "engage-ab-poll:30",
+    "payload": {
+      "poll": {
+        "question": "Чи використовуєте ви окремий обліковий запис (без прав адміністратора) для щоденної роботи?",
+        "options": [
+          "Так, завжди працюю без прав адміна",
+          "Ні, постійно під адміністратором",
+          "Іноді перемикаюсь",
+          "Не знав про таку практику"
+        ],
+        "isQuiz": false
+      }
+    },
+    "created_at": "2026-11-26T10:01:08.310Z"
+  },
   "last_message_id": 696,
   "engage_ab_index": 30,
   "poll_recent_topics": [
