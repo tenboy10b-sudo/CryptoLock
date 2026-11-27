@@ -209,7 +209,15 @@
     "started_at": "2026-11-27T08:01:15.472Z",
     "expires_at": "2026-11-27T08:16:15.472Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "84a77759-97f8-44a3-adf8-57d3adbf4eb2",
+    "type": "content",
+    "identifier": "how-to-disable-windows-update",
+    "payload": {
+      "text": "⏸️ **Як призупинити Windows Update у Windows 10/11**\n\nІноді оновлення Windows встановлюються в найневідповідніший момент або навіть ламають систему. Ось як взяти їх під контроль:\n\n**Тимчасова пауза (найпростіше):**\nПараметри → Windows Update → Призупинити оновлення на 1-5 тижнів\n\n**Через Службу:**\n1. Win+R → `services.msc`\n2. Знайдіть \"Windows Update\"\n3. Тип запуску → \"Вимкнено\"\n4. Зупинити службу\n\n**Для Pro/Enterprise (Group Policy):**\n`gpedit.msc` → Конфігурація комп'ютера → Адміністративні шаблони → Компоненти Windows → Windows Update → \"Налаштування автоматичного оновлення\" → Вимкнено\n\n**Блокування конкретного оновлення через PowerShell:**\n```powershell\nwusa /uninstall /kb:НОМЕР_ОНОВЛЕННЯ\n```\n\n⚠️ **Важливо:** Повне вимкнення оновлень знижує безпеку системи. Краще використовуйте паузу та встановлюйте оновлення у зручний час.\n\n💡 Порада: перед важливою роботою завжди ставте оновлення на паузу на тиждень!\n\n#Windows #WindowsUpdate #tips #безпека\n\n🔗 https://cryptolockua.com/en/how-to-disable-windows-update"
+    },
+    "created_at": "2026-11-27T08:01:28.760Z"
+  },
   "last_message_id": 698,
   "engage_ab_index": 31,
   "poll_recent_topics": [
