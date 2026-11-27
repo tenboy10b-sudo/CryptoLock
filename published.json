@@ -210,7 +210,15 @@
     "started_at": "2026-11-27T10:01:03.490Z",
     "expires_at": "2026-11-27T10:16:03.490Z"
   },
-  "pending": null,
+  "pending": {
+    "execution_id": "d592432a-bfa9-4cc1-9614-0fc9d0757eea",
+    "type": "middle",
+    "identifier": "standalone-topic:Тимчасові файли і підозрілі директорії",
+    "payload": {
+      "text": "🗂️ **Перевірка тимчасових файлів і підозрілих директорій**\n\n**Навіщо:** Шкідливе ПЗ часто розпаковується у тимчасові папки (%TEMP%, %TMP%, AppData) і звідти запускається. Регулярна перевірка допоможе виявити підозрілу активність.\n\n**Як перевірити:**\n\n**1. Огляд тимчасових папок вручну:**\nВідкрийте Провідник і введіть у адресний рядок:\n```\n%TEMP%\n%TMP%\n%USERPROFILE%\\AppData\\Local\\Temp\n```\nПерегляньте файли з розширеннями .exe, .dll, .bat, .vbs, .ps1\n\n**2. Пошук підозрілих процесів через PowerShell:**\n```powershell\nGet-Process | Where-Object {$_.Path -like \"*\\Temp\\*\" -or $_.Path -like \"*\\AppData\\*\"} | Select-Object Name, Path, Id\n```\n\n**3. Перевірка автозапуску з тимчасових папок:**\n```powershell\nGet-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\nGet-ItemProperty HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n```\n\n**На що звернути увагу:**\n- Файли .exe у TEMP з випадковими іменами (наприклад, \"x7f3kd.exe\")\n- Процеси, що працюють з тимчасових папок тривалий час\n- Записи автозапуску, що посилаються на AppData або Temp\n- Великі файли у тимчасових директоріях\n\n**Якщо знайшов підозріле:**\n1. Скопіюй повний шлях до файлу\n2. Перевір процес у Диспетчері завдань → завершити\n3. Перевір файл на VirusTotal\n4. Видали файл і очисти тимчасові папки через Параметри → Система → Пам'ять\n\n#windows #безпека #tips"
+    },
+    "created_at": "2026-11-27T10:01:17.822Z"
+  },
   "last_message_id": 699,
   "engage_ab_index": 31,
   "poll_recent_topics": [
