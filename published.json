@@ -203,7 +203,12 @@
     "🔋 **Команда дня: powercfg /batteryreport**",
     "🎯 **Мало хто знає, що в Windows є буфер обміну з історією — можна зберігати до 25 скопійованих елементів**"
   ],
-  "lock": null,
+  "lock": {
+    "execution_id": "84a77759-97f8-44a3-adf8-57d3adbf4eb2",
+    "type": "content",
+    "started_at": "2026-11-27T08:01:15.472Z",
+    "expires_at": "2026-11-27T08:16:15.472Z"
+  },
   "pending": null,
   "last_message_id": 698,
   "engage_ab_index": 31,
